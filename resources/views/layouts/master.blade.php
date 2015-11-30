@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="@yield('css-file')" type="text/css" />
 
     </head>
-    <body ng-app="parametresApp">
+    <body ng-app="@yield('angularApp')">
         <div id="main">
             @include('components.header')
             @include('components.menu')
