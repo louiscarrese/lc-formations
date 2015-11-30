@@ -1,0 +1,48 @@
+
+td, th {
+    border: 1px solid $rgba-complement-1;
+    padding: 0.2em 0.5em;
+    vertical-align: middle;
+}
+
+thead tr {
+    background-color: $rgba-primary-3;
+}
+
+tbody tr:nth-child(even) {
+  background: $rgba-primary-4;
+}
+tbody tr:nth-child(odd) {
+  background: $rgba-complement-4;
+}
+
+td.centered {
+    text-align: center;
+}
+
+table input[type='text'] {
+    width: 100%;
+    size: 1;
+}
+
+thead .sort-up {
+    @include sprite($fleche-haut);
+    display: inline-block;
+    margin-left: 2px;
+}
+
+thead .sort-down {
+    @include sprite($fleche-bas);
+    display: inline-block;
+    margin-left: 2px;
+}
+.table-container {
+    display: inline-block;
+    margin-bottom: 2em;
+}
+
+.table-filter {
+    margin: 1em 0em 0.5em 0em;
+    width: 100%;
+
+}

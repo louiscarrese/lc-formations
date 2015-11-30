@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: ModuleFormation
+        psr4_prefix: ModuleFormation
+        src_path: app

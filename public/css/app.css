@@ -1,0 +1,252 @@
+@charset "UTF-8";
+/* First, we reset CSS */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+*/
+/*
+The `sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of SCSS
+
+@include sprites($spritesheet-sprites);
+*/
+body {
+  margin: 1em 2em;
+  font-family: sans-serif;
+  background-color: #fcfcfc;
+  color: #0a0a0a; }
+
+a {
+  text-decoration: none;
+  color: inherit; }
+
+a:hover {
+  text-decoration: underline; }
+
+h1 {
+  font-size: 3em;
+  color: #fdaa00; }
+
+h2 {
+  font-size: 2em;
+  color: #0d318b; }
+
+.contains-float:after {
+  clear: both;
+  content: "";
+  display: block; }
+
+input[type=text] {
+  border: 1px solid #030409;
+  font-family: sans-serif;
+  font-size: 0.9em;
+  border-radius: 2px; }
+
+.clickable {
+  cursor: pointer; }
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/MaterialIcons-Regular.eot);
+  /* For IE6-8 */
+  src: local("Material Icons"), local("MaterialIcons-Regular"), url(../fonts/MaterialIcons-Regular.woff2) format("woff2"), url(../fonts/MaterialIcons-Regular.woff) format("woff"), url(../fonts/MaterialIcons-Regular.ttf) format("truetype"); }
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga'; }
+
+#main {
+  display: inline-block; }
+
+.main-block {
+  padding: 0.5em 1em; }
+
+#header {
+  height: 64px;
+  line-height: 64px;
+  vertical-align: middle;
+  margin-bottom: 1em; }
+
+#jm-logo {
+  background-image: url(../images/sprite.png);
+  background-position: -256px -127px;
+  width: 64px;
+  height: 64px;
+  float: left; }
+
+h1 {
+  float: left;
+  margin-left: 1em; }
+
+#header-buttons {
+  float: right; }
+  #header-buttons i {
+    height: 64px;
+    line-height: 64px;
+    vertical-align: middle;
+    font-size: 2em; }
+
+/* Le UL général */
+.menu {
+  display: inline-table;
+  position: relative;
+  z-index: 2;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+  margin-bottom: 1em;
+  /* Les éléments de premier niveau */ }
+  .menu li {
+    background-color: #fffcf7;
+    float: left;
+    margin-left: -1px;
+    margin-top: -1px;
+    height: 2em;
+    border: 1px solid #0d0a03;
+    border-radius: 2px;
+    padding: 0 1em;
+    transition: background 0.1s ease-in-out; }
+    .menu li:hover {
+      text: #030409;
+      background-color: #fdaa00; }
+    .menu li a {
+      display: block; }
+    .menu li i {
+      vertical-align: middle; }
+
+td, th {
+  border: 1px solid #030409;
+  padding: 0.2em 0.5em;
+  vertical-align: middle; }
+
+thead tr {
+  background-color: #ffb51c; }
+
+tbody tr:nth-child(even) {
+  background: #fffcf7; }
+
+tbody tr:nth-child(odd) {
+  background: #f8faff; }
+
+td.centered {
+  text-align: center; }
+
+table input[type='text'] {
+  width: 100%;
+  size: 1; }
+
+thead .sort-up {
+  background-image: url(../images/sprite.png);
+  background-position: -332px -127px;
+  width: 12px;
+  height: 8px;
+  display: inline-block;
+  margin-left: 2px; }
+
+thead .sort-down {
+  background-image: url(../images/sprite.png);
+  background-position: -320px -127px;
+  width: 12px;
+  height: 8px;
+  display: inline-block;
+  margin-left: 2px; }
+
+.table-container {
+  display: inline-block;
+  margin-bottom: 2em; }
+
+.table-filter {
+  margin: 1em 0em 0.5em 0em;
+  width: 100%; }
+
+/*# sourceMappingURL=app.css.map */

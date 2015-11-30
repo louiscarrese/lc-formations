@@ -1,0 +1,11 @@
+#main {
+    //Le div englobant tout doit faire la taille de son contenu
+    //pour que ça s'aligne correctement
+    display: inline-block;
+}
+
+.main-block {
+    //Chaque bloc de la page se padde un peu pour faire de la place.
+    padding: 0.5em 1em;
+}
+
