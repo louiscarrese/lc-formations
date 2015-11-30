@@ -5,10 +5,10 @@
 @section('css-file', 'css/app.css')
 
 @section('content')
-    @include('components.stagiairetypes')
-    @include('components.formateurtypes')
-    @include('components.financeurtypes')
-    @include('components.tariftypes')
+    @include('components.parametres.stagiairetypes')
+    @include('components.parametres.formateurtypes')
+    @include('components.parametres.financeurtypes')
+    @include('components.parametres.tariftypes')
 
 
 @endsection
