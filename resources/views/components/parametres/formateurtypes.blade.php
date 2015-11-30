@@ -1,6 +1,6 @@
 <h2>Types de formateurs</h2>
 
-<div ng-controller="formateurTypesController as formateurTypesCtrl" class="table-container">
+<div ng-controller="formateurTypesController as formateurTypesCtrl" class="list-table-container">
     <input type="text" ng-model="formateurTypesCtrl.filterInput" placeholder="Recherche locale" class="table-filter" />
 
         <table>

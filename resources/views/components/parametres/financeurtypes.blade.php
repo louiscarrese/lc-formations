@@ -1,6 +1,6 @@
 <h2>Types de financeurs</h2>
 
-<div ng-controller="financeurTypesController as financeurTypesCtrl" class="table-container">
+<div ng-controller="financeurTypesController as financeurTypesCtrl" class="list-table-container">
     <input type="text" ng-model="financeurTypesCtrl.filterInput" placeholder="Recherche locale" class="table-filter" />
 
         <table>

@@ -1,6 +1,6 @@
 <h2>Lieux de formation</h2>
 
-<div ng-controller="lieuController as lieuCtrl" class="table-container">
+<div ng-controller="lieuController as lieuCtrl" class="list-table-container">
     <input type="text" ng-model="lieuCtrl.filterInput" placeholder="Recherche locale" class="table-filter" />
     <form>
         <table>

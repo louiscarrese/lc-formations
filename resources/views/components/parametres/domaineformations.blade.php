@@ -1,6 +1,6 @@
 <h2>Domaines de formation</h2>
 
-<div ng-controller="domaineFormationsController as domaineFormationsCtrl" class="table-container">
+<div ng-controller="domaineFormationsController as domaineFormationsCtrl" class="list-table-container">
     <input type="text" ng-model="domaineFormationsCtrl.filterInput" placeholder="Recherche locale" class="table-filter" />
     <form>
         <table>

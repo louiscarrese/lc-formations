@@ -1,6 +1,6 @@
 <h2>Types de stagiaires</h2>
 
-<div ng-controller="stagiaireTypesController as stagiaireTypesCtrl" class="table-container">
+<div ng-controller="stagiaireTypesController as stagiaireTypesCtrl" class="list-table-container">
     <input type="text" ng-model="stagiaireTypesCtrl.filterInput" placeholder="Recherche locale" class="table-filter" />
     <form>
         <table>
