@@ -1,6 +1,6 @@
 <?php
 
-namespace ModuleFormation\Http\Controllers;
+namespace ModuleFormation\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use ModuleFormation\Http\Requests;
@@ -16,12 +16,8 @@ class TarifTypeController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->acceptsJson()) {
-            $tarif_types = TarifType::all();
-            return response()->json($tarif_types);
-        } else {
-            return 'Hello !';
-        }
+        $tarif_types = TarifType::all();
+        return response()->json($tarif_types);
     }
 
 

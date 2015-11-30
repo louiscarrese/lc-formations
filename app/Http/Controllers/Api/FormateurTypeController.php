@@ -1,13 +1,12 @@
 <?php
 
-namespace ModuleFormation\Http\Controllers;
-use Log;
-use ModuleFormation\Module;
+namespace ModuleFormation\Http\Controllers\Api;
+
 use Illuminate\Http\Request;
 use ModuleFormation\Http\Requests;
 use ModuleFormation\Http\Controllers\Controller;
-
-class ModuleController extends Controller
+use ModuleFormation\FormateurType;
+class FormateurTypeController extends Controller
 {
 
     /**
@@ -15,10 +14,14 @@ class ModuleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $modules = \ModuleFormation\Module::all();
-        return response()->json($modules);
+        if($request->acceptsJson()) {
+            $formateur_types = FormateurType::all();
+            return response()->json($formateur_types);
+        } else {
+            return 'Hello !';
+        }
     }
 
 
@@ -30,12 +33,12 @@ class ModuleController extends Controller
      */
     public function store(Request $request)
     {
-        $module = new \ModuleFormation\Module;
-        $module->libelle = $request->input('libelle');
-        $module->nb_heures = $request->input('nb_heures');
-        $module->nb_jours = $request->input('nb_jours');
+        $formateur_type = new FormateurType;
+        $formateur_type->id = $request->input('id');
+        $formateur_type->libelle = $request->input('libelle');
+        $formateur_type->save();
 
-        $module->save();
+        return $response()->json($formateur_type);
     }
 
     /**
@@ -46,8 +49,8 @@ class ModuleController extends Controller
      */
     public function show($id)
     {
-        $module = \ModuleFormation\Module::findOrFail($id);
-        return response()->json($module);
+        $formateur_type = FormateurType::findOrFail($id);
+        return response()->json($formateur_type);
     }
 
     /**
@@ -59,17 +62,14 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $formateur_type = FormateurType::findOrFail($id);
 
-        $module = \ModuleFormation\Module::findOrFail($id);
+        $formateur_type->libelle = $request->input('id');
+        $formateur_type->libelle = $request->input('libelle');
 
-        $module->libelle = $request->input('libelle');
-        $module->nb_heures = $request->input('nb_heures');
-        $module->nb_jours = $request->input('nb_jours');
+        $formateur_type->save();
 
-        $module->save();
-
-        return response()->json($request);
-        //
+        return response()->json($formateur_type);
     }
 
     /**
@@ -80,6 +80,6 @@ class ModuleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        FormateurType::destroy($id);
     }
 }

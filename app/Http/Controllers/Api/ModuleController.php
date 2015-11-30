@@ -1,12 +1,13 @@
 <?php
 
-namespace ModuleFormation\Http\Controllers;
-
+namespace ModuleFormation\Http\Controllers\Api;
+use Log;
+use ModuleFormation\Module;
 use Illuminate\Http\Request;
 use ModuleFormation\Http\Requests;
 use ModuleFormation\Http\Controllers\Controller;
-use ModuleFormation\FinanceurType;
-class FinanceurTypeController extends Controller
+
+class ModuleController extends Controller
 {
 
     /**
@@ -16,12 +17,8 @@ class FinanceurTypeController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->acceptsJson()) {
-            $financeur_types = FinanceurType::all();
-            return response()->json($financeur_types);
-        } else {
-            return 'Hello !';
-        }
+        $modules = \ModuleFormation\Module::all();
+        return response()->json($modules);
     }
 
 
@@ -33,11 +30,12 @@ class FinanceurTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $financeur_type = new FinanceurType;
-        $financeur_type->libelle = $request->input('libelle');
-        $financeur_type->save();
+        $module = new \ModuleFormation\Module;
+        $module->libelle = $request->input('libelle');
+        $module->nb_heures = $request->input('nb_heures');
+        $module->nb_jours = $request->input('nb_jours');
 
-        return $response()->json($financeur_type);
+        $module->save();
     }
 
     /**
@@ -48,8 +46,8 @@ class FinanceurTypeController extends Controller
      */
     public function show($id)
     {
-        $financeur_type = FinanceurType::findOrFail($id);
-        return response()->json($financeur_type);
+        $module = \ModuleFormation\Module::findOrFail($id);
+        return response()->json($module);
     }
 
     /**
@@ -61,14 +59,17 @@ class FinanceurTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $financeur_type = FinanceurType::findOrFail($id);
 
-        $financeur_type->libelle = $request->input('id');
-        $financeur_type->libelle = $request->input('libelle');
+        $module = \ModuleFormation\Module::findOrFail($id);
 
-        $financeur_type->save();
+        $module->libelle = $request->input('libelle');
+        $module->nb_heures = $request->input('nb_heures');
+        $module->nb_jours = $request->input('nb_jours');
 
-        return response()->json($financeur_type);
+        $module->save();
+
+        return response()->json($request);
+        //
     }
 
     /**
@@ -79,6 +80,6 @@ class FinanceurTypeController extends Controller
      */
     public function destroy($id)
     {
-        FinanceurType::destroy($id);
+        //
     }
 }

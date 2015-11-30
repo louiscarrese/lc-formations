@@ -1,12 +1,12 @@
 <?php
 
-namespace ModuleFormation\Http\Controllers;
+namespace ModuleFormation\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use ModuleFormation\Http\Requests;
 use ModuleFormation\Http\Controllers\Controller;
-use ModuleFormation\FormateurType;
-class FormateurTypeController extends Controller
+use ModuleFormation\FinanceurType;
+class FinanceurTypeController extends Controller
 {
 
     /**
@@ -17,8 +17,8 @@ class FormateurTypeController extends Controller
     public function index(Request $request)
     {
         if($request->acceptsJson()) {
-            $formateur_types = FormateurType::all();
-            return response()->json($formateur_types);
+            $financeur_types = FinanceurType::all();
+            return response()->json($financeur_types);
         } else {
             return 'Hello !';
         }
@@ -33,12 +33,11 @@ class FormateurTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $formateur_type = new FormateurType;
-        $formateur_type->id = $request->input('id');
-        $formateur_type->libelle = $request->input('libelle');
-        $formateur_type->save();
+        $financeur_type = new FinanceurType;
+        $financeur_type->libelle = $request->input('libelle');
+        $financeur_type->save();
 
-        return $response()->json($formateur_type);
+        return $response()->json($financeur_type);
     }
 
     /**
@@ -49,8 +48,8 @@ class FormateurTypeController extends Controller
      */
     public function show($id)
     {
-        $formateur_type = FormateurType::findOrFail($id);
-        return response()->json($formateur_type);
+        $financeur_type = FinanceurType::findOrFail($id);
+        return response()->json($financeur_type);
     }
 
     /**
@@ -62,14 +61,14 @@ class FormateurTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $formateur_type = FormateurType::findOrFail($id);
+        $financeur_type = FinanceurType::findOrFail($id);
 
-        $formateur_type->libelle = $request->input('id');
-        $formateur_type->libelle = $request->input('libelle');
+        $financeur_type->libelle = $request->input('id');
+        $financeur_type->libelle = $request->input('libelle');
 
-        $formateur_type->save();
+        $financeur_type->save();
 
-        return response()->json($formateur_type);
+        return response()->json($financeur_type);
     }
 
     /**
@@ -80,6 +79,6 @@ class FormateurTypeController extends Controller
      */
     public function destroy($id)
     {
-        FormateurType::destroy($id);
+        FinanceurType::destroy($id);
     }
 }

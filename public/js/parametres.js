@@ -402,7 +402,7 @@ function myCustomFilter() {
 
 
     function stagiaireTypesServiceFactory($resource) {
-        return $resource('http://192.168.33.10/laravel/public/stagiaire_type/:id', null, {
+        return $resource('http://192.168.33.10/laravel/public/api/stagiaire_type/:id', null, {
             'update' : { method: 'PUT' }
         });
     }
@@ -411,17 +411,17 @@ function myCustomFilter() {
 })();
 */
 function formateurTypesServiceFactory($resource) {
-    return $resource('http://192.168.33.10/laravel/public/formateur_type/:id', null, {
+    return $resource('http://192.168.33.10/laravel/public/api/formateur_type/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 function financeurTypesServiceFactory($resource) {
-    return $resource('http://192.168.33.10/laravel/public/financeur_type/:id', null, {
+    return $resource('http://192.168.33.10/laravel/public/api/financeur_type/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 function tarifTypesServiceFactory($resource) {
-    return $resource('http://192.168.33.10/laravel/public/tarif_type/:id', null, {
+    return $resource('http://192.168.33.10/laravel/public/api/tarif_type/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
