@@ -27,9 +27,24 @@ elixir(function(mix) {
             'services/formateurtypes-service.js',
             'services/financeurtypes-service.js',
             'services/tariftypes-service.js',
+            'services/lieu-service.js',
+            'services/domaineformations-service.js',
             'controllers/editableTable-controller.js',
             'app/parametresApp.js'
             ], 'public/js/parametres.js')
+/*
+        .scripts([
+                'lib/angular.min.js',
+                'lib/angular-resource.min.js',
+                'directives/myForceInteger-directive.js',
+                'directives/mySortableHeader-directive.js',
+                'directives/myEditable-directive.js',
+                'filters/myCustomFilter-filter.js',
+                'services/modules-service.js',
+                'controllers/editableTable-controller.js',
+                'app/modulesApp.js'
+                ], 'public/js/modules.js')
+*/
     .spritesmith('resources/assets/img/sprites', {
         imgOutput: 'public/images',
         cssOutput: 'resources/assets/sass/theme',

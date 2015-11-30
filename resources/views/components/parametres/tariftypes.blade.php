@@ -2,7 +2,7 @@
 
 <div ng-controller="tarifTypesController as tarifTypesCtrl" class="table-container">
     <input type="text" ng-model="tarifTypesCtrl.filterInput" placeholder="Recherche locale" class="table-filter" />
-
+    <form>
         <table>
             <thead>
                 <tr>

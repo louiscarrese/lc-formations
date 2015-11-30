@@ -4,6 +4,8 @@ angular.module('parametresServices', ['ngResource'])
     .factory('formateurTypesService', ['$resource', formateurTypesServiceFactory])
     .factory('financeurTypesService', ['$resource', financeurTypesServiceFactory])
     .factory('tarifTypesService', ['$resource', tarifTypesServiceFactory])
+    .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
+    .factory('lieuService', ['$resource', lieuServiceFactory])
 ;
 //Les controllers
 angular.module('parametresControllers', [])
@@ -11,6 +13,8 @@ angular.module('parametresControllers', [])
     .controller('formateurTypesController', ['$filter', 'formateurTypesService', editableTableController])
     .controller('financeurTypesController', ['$filter', 'financeurTypesService', editableTableController])
     .controller('tarifTypesController', ['$filter', 'tarifTypesService', editableTableController])
+    .controller('domaineFormationsController', ['$filter', 'domaineFormationsService', editableTableController])
+    .controller('lieuController', ['$filter', 'lieuService', editableTableController])
 ;
 
 //Les filtres

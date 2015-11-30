@@ -425,6 +425,18 @@ function tarifTypesServiceFactory($resource) {
         'update' : { method: 'PUT' }
     });
 }
+function lieuServiceFactory($resource) {
+    return $resource('http://192.168.33.10/laravel/public/api/lieu/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+function domaineFormationsServiceFactory($resource) {
+    return $resource('http://192.168.33.10/laravel/public/api/domaine_formation/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
 /*
 (function() {
     */
@@ -564,6 +576,8 @@ angular.module('parametresServices', ['ngResource'])
     .factory('formateurTypesService', ['$resource', formateurTypesServiceFactory])
     .factory('financeurTypesService', ['$resource', financeurTypesServiceFactory])
     .factory('tarifTypesService', ['$resource', tarifTypesServiceFactory])
+    .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
+    .factory('lieuService', ['$resource', lieuServiceFactory])
 ;
 //Les controllers
 angular.module('parametresControllers', [])
@@ -571,6 +585,8 @@ angular.module('parametresControllers', [])
     .controller('formateurTypesController', ['$filter', 'formateurTypesService', editableTableController])
     .controller('financeurTypesController', ['$filter', 'financeurTypesService', editableTableController])
     .controller('tarifTypesController', ['$filter', 'tarifTypesService', editableTableController])
+    .controller('domaineFormationsController', ['$filter', 'domaineFormationsService', editableTableController])
+    .controller('lieuController', ['$filter', 'lieuService', editableTableController])
 ;
 
 //Les filtres
