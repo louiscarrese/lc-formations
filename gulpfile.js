@@ -32,7 +32,6 @@ elixir(function(mix) {
             'controllers/editableTable-controller.js',
             'app/parametresApp.js'
             ], 'public/js/parametres.js')
-/*
         .scripts([
                 'lib/angular.min.js',
                 'lib/angular-resource.min.js',
@@ -44,7 +43,6 @@ elixir(function(mix) {
                 'controllers/editableTable-controller.js',
                 'app/modulesApp.js'
                 ], 'public/js/modules.js')
-*/
     .spritesmith('resources/assets/img/sprites', {
         imgOutput: 'public/images',
         cssOutput: 'resources/assets/sass/theme',

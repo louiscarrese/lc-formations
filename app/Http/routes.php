@@ -47,3 +47,4 @@ Route::get('/', function () {
 
 //"Pages"
 Route::get('/parametres', 'ParametresController@index');
+Route::get('/modules', 'ModulesController@index');
