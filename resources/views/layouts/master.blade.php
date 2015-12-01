@@ -2,9 +2,8 @@
 <html>
     <head>
         <title>Formations - @yield('title')</title>
-        <script src="@yield('js-file')"></script>
+        <script type="text/javascript" src="@yield('js-file')"></script>
         <link rel="stylesheet" href="@yield('css-file')" type="text/css" />
-
     </head>
     <body ng-app="@yield('angularApp')">
         <div id="main">

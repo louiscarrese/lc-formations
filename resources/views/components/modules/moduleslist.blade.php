@@ -23,7 +23,7 @@
                     <span>@{{module.id}}</span>
                 </td>
                 <td>
-                    <span>@{{module.id}}</span>
+                    <span>@{{module.libelle}}</span>
                 </td>
                 <td>
                     <span><i class="material-icons clickable">info_outline</i></span>

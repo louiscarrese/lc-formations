@@ -33,16 +33,29 @@ elixir(function(mix) {
             'app/parametresApp.js'
             ], 'public/js/parametres.js')
         .scripts([
-                'lib/angular.min.js',
-                'lib/angular-resource.min.js',
-                'directives/myForceInteger-directive.js',
-                'directives/mySortableHeader-directive.js',
-                'directives/myEditable-directive.js',
-                'filters/myCustomFilter-filter.js',
-                'services/modules-service.js',
-                'controllers/editableTable-controller.js',
-                'app/modulesApp.js'
-                ], 'public/js/modules.js')
+            'lib/angular.min.js',
+            'lib/angular-resource.min.js',
+            'directives/myForceInteger-directive.js',
+            'directives/mySortableHeader-directive.js',
+            'directives/myEditable-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/modules-service.js',
+            'controllers/editableTable-controller.js',
+            'app/modulesApp.js'
+            ], 'public/js/modules-list.js')
+        .scripts([
+            'lib/angular.min.js',
+            'lib/angular-resource.min.js',
+            'directives/myForceInteger-directive.js',
+            'directives/mySortableHeader-directive.js',
+            'directives/myEditable-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/modules-service.js',
+            'services/domaineformations-service.js',
+            'services/editmode-service.js',
+            'controllers/moduledetail-controller.js',
+            'app/moduleDetailApp.js'
+            ], 'public/js/modules-detail.js')
     .spritesmith('resources/assets/img/sprites', {
         imgOutput: 'public/images',
         cssOutput: 'resources/assets/sass/theme',
