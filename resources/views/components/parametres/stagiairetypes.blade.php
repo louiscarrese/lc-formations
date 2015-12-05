@@ -31,7 +31,7 @@
             <tbody>
                 <tr ng-repeat="type in stagiaireTypesCtrl.data | myCustomFilter:stagiaireTypesCtrl.filterInput:'id':'libelle' track by type.id">
                     <td class="centered">
-                        <my-editable type="integer" model="type.id" editing-flag="type.editing" />
+                        <my-editable type="integer" model="type.id" editing-flag="type.editing" size="1" />
                     </td>
                     <td>
                         <my-editable type="text" model="type.libelle" editing-flag="type.editing" />

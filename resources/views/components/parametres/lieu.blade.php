@@ -19,7 +19,7 @@
             <tbody>
                 <tr ng-repeat="lieu in lieuCtrl.data | myCustomFilter:lieuCtrl.filterInput:'id':'libelle' track by lieu.id">
                     <td class="centered">
-                        <my-editable type="integer" model="lieu.id" editing-flag="lieu.editing" />
+                        <my-editable type="integer" model="lieu.id" editing-flag="lieu.editing" size="1" />
                     </td>
                     <td>
                         <my-editable type="text" model="lieu.libelle" editing-flag="lieu.editing" />

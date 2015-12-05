@@ -19,7 +19,7 @@
             <tbody>
                 <tr ng-repeat="type in formateurTypesCtrl.data | myCustomFilter:formateurTypesCtrl.filterInput:'id':'libelle' track by type.id">
                     <td class="centered">
-                        <my-editable type="integer" model="type.id" editing-flag="type.editing" />
+                        <my-editable type="integer" model="type.id" editing-flag="type.editing" size="1" />
                     </td>
                     <td>
                         <my-editable type="text" model="type.libelle" editing-flag="type.editing" />
@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" ng-model="formateurTypesCtrl.addObject.id" size="1"/>
+                        <input type="text" ng-model="formateurTypesCtrl.addObject.id" size="1" />
                     </td>
                     <td>
                         <input type="text" ng-model="formateurTypesCtrl.addObject.libelle" size="1"/>

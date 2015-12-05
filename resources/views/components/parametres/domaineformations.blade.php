@@ -19,7 +19,7 @@
             <tbody>
                 <tr ng-repeat="domaine in domaineFormationsCtrl.data | myCustomFilter:domaineFormationsCtrl.filterInput:'id':'libelle' track by domaine.id">
                     <td class="centered">
-                        <my-editable type="integer" model="domaine.id" editing-flag="domaine.editing" />
+                        <my-editable type="integer" model="domaine.id" editing-flag="domaine.editing" size="1"/>
                     </td>
                     <td>
                         <my-editable type="text" model="domaine.libelle" editing-flag="domaine.editing" />
