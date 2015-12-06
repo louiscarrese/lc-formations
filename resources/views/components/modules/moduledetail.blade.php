@@ -1,6 +1,7 @@
 <div ng-controller="modulesDetailController as moduleCtrl">
 
 <!-- TODO: Trouver un moyen de changer le titre suivant si on est en création ou en modification -->
+
 <h2>Module !</h2>
     <div class="detail-table-container">
         <table>
@@ -55,9 +56,13 @@
             <tr>
                 <td>Domaine de formation</td>
                 <td>
-                    <my-editable type="dropdown" source="moduleCtrl.domaine_formations" model="moduleCtrl.domaine_formation_id" editing-flag="moduleCtrl.editing"></my-editable>
+                    <my-editable type="dropdown" source="moduleCtrl.domaine_formations" model="moduleCtrl.data.domaine_formation_id" editing-flag="moduleCtrl.editing"></my-editable>
                 </td>
             </tr>
         </table>
+        <span ng-show="moduleCtrl.mode === 'create'" ng-click="moduleCtrl.create()"><i class="material-icons clickable">done</i></span>
+        <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.update()"><i class="material-icons clickable">done</i></span>
+        <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.cancel()"><i class="material-icons clickable">clear</i></span>
+        <span ng-show="moduleCtrl.mode !== 'create'" ng-click="moduleCtrl.delete()"><i class="material-icons clickable">delete</i></span>
     </div>
 </div>
