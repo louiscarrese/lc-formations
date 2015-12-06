@@ -1,7 +1,7 @@
 angular.module('modulesDetailServices', ['ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
-    .factory('editModeService', ['$location', editModeServiceFactory])
+    .factory('editModeService', [editModeServiceFactory])
 ;
 
 angular.module('modulesDetailControllers', [])
@@ -22,8 +22,5 @@ angular.module('modulesDetailDirectives', [])
 //Le module principal
 angular.module('modulesDetailApp', 
     ['modulesDetailControllers', 'modulesDetailServices', 'modulesDetailFilters', 'modulesDetailDirectives'])
-    .config(function($locationProvider){
-        $locationProvider.html5Mode({enabled: true, requireBase: false});
-    })
 ;
 
