@@ -53,7 +53,7 @@ elixir(function(mix) {
             'services/modules-service.js',
             'services/domaineformations-service.js',
             'services/editmode-service.js',
-            'controllers/moduledetail-controller.js',
+            'controllers/detail-controller.js',
             'app/moduleDetailApp.js'
             ], 'public/js/modules-detail.js')
     .spritesmith('resources/assets/img/sprites', {
