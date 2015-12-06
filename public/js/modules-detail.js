@@ -514,51 +514,97 @@ function editModeServiceFactory() {
 function moduleDetailController(editModeService, modulesService, domaineFormationsService) {
     var self = this;
 
-    var urlData = editModeService.initFromUrl(modulesService, function(mode, data) {
+    self.internalKey = 0;
+
+    //CRUD
+    self.create = create;
+    self.cancel = cancel;
+    self.update = update;
+    self.delete = del;
+
+    //Utilities
+    self.edit = edit;
+    self.getSuccess = getSuccess;
+
+    //Initialize data
+    editModeService.initFromUrl(modulesService, function(mode, data) {
         //Store computed data
         self.data = data;
-        self.mode = mode;
 
         //Are we editing ?
+        self.mode = mode;
         if(self.mode === 'read') {
             self.editing = false;
         } else {
             self.editing = true;
         }
 
-        //Ease up label retrieval
-        if(self.data.domaine_formation_id != undefined) {
-            self.data.module_formation_label = self.data.domaine_formation.libelle;
-        }
+        self.getSuccess(data);
     });
 
     self.domaine_formations = domaineFormationsService.query();
 
-    self.create = function() {
-        modulesService.save(self.data, self.createSuccess, self.createError);
+
+    //CRUD
+
+    function create() {
+        modulesService.save(self.data, 
+            function(value, responseHeaders) {
+                self.data = value;
+                self.mode = 'read';
+                self.editing = false;
+            }, 
+            function(httpResponseHeaders) {
+                alert('Error ! ');
+            });
     };
 
-    self.createSuccess = function(value, responseHeaders) {
-        self.data = value;
-        self.mode = 'read';
-        self.editing = false;
+
+    function cancel() {
+        modulesService.get({id:self.internalKey}, function(value, responseHeaders) {
+            self.editing = false;
+            self.mode = 'read';
+            self.getSuccess(value);
+        });
     }
 
-    self.createError = function(httpResponseHeaders) {
-        alert('Error ! ');
+    function update() {
+        self.data.$update({id:self.internalKey}, 
+            function(value, responseHeaders) {
+                self.getSuccess(value);
+                self.editing = false;
+                self.mode = 'read';
+            },
+            function(httpResponseHeaders) {
+                alert('error');
+            });
     }
 
-    self.cancel = function() {
-        alert('cancel');
+    function del() {
+        self.data.$delete({id:self.internalKey},
+            function(value, responseHeaders) {
+                window.location.href="/modules";
+            },
+            function(httpResponseHeaders) {
+                alert('error');
+            })
     }
 
-    self.update = function() {
-        alert('update');
+
+    //Utilities
+    function edit() {
+        self.editing = true;
+        self.mode = 'edit';
     }
 
-    self.delete = function() {
-        alert('delete');
+    function getSuccess(data) {
+        self.data = data;
+        self.internalKey = data.id
+        if(self.data.domaine_formation_id != undefined) {
+            self.data.module_formation_label = self.data.domaine_formation.libelle;
+        }
     }
+
 
 }
 angular.module('modulesDetailServices', ['ngResource'])

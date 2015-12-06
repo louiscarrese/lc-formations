@@ -40,9 +40,9 @@ class ModuleController extends Controller
         $module->materiel = $request->input('materiel');
         $module->domaine_formation_id = $request->input('domaine_formation_id');
 
-
-
         $module->save();
+
+        return response()->json($module);
     }
 
     /**
@@ -66,8 +66,7 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $module = \ModuleFormation\Module::findOrFail($id);
+        $module = \ModuleFormation\Module::with('domaine_formation')->findOrFail($id);
 
         $module->id = $request->input('id');
         $module->libelle = $request->input('libelle');
@@ -81,7 +80,10 @@ class ModuleController extends Controller
 
         $module->save();
 
-        return response()->json($request);
+        //Get it again, so we auto-update linked objects 
+        $module = \ModuleFormation\Module::with('domaine_formation')->findOrFail($request->input('id'));
+
+        return response()->json($module);
         //
     }
 
@@ -93,6 +95,6 @@ class ModuleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        \ModuleFormation\Module::destroy($id);
     }
 }

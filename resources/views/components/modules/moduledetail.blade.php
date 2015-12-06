@@ -60,6 +60,7 @@
                 </td>
             </tr>
         </table>
+        <span ng-show="moduleCtrl.mode === 'read'" ng-click="moduleCtrl.edit()"><i class="material-icons clickable">create</i></span>
         <span ng-show="moduleCtrl.mode === 'create'" ng-click="moduleCtrl.create()"><i class="material-icons clickable">done</i></span>
         <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.update()"><i class="material-icons clickable">done</i></span>
         <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.cancel()"><i class="material-icons clickable">clear</i></span>
