@@ -53,7 +53,7 @@ class ModuleController extends Controller
      */
     public function show($id)
     {
-        $module = \ModuleFormation\Module::findOrFail($id);
+        $module = \ModuleFormation\Module::with('domaine_formation')->findOrFail($id);
         return response()->json($module);
     }
 

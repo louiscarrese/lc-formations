@@ -343,8 +343,11 @@ function myEditableDirective() {
         scope: {
             type: '@',
             model: '=',
+            modelLabel: '=',
             editingFlag: '=',
-            source: '='
+            source: '=',
+            sourceId: '=',
+            sourceLabel: '='
         },
         template: function(tElem, tAttr) {
             var filteredAttr = this.stripScopeAttributes(tAttr);
@@ -363,8 +366,10 @@ function myEditableDirective() {
                     template += '<input type="checkbox" ng-disabled="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
                     break;
                 case 'dropdown':
-                    template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</span>';
-                    template += '<select ng-show="editingFlag" ng-options="item.id as item.libelle for item in source" ng-model="model" ' + this.attrToHtml(filteredAttr) + '></select>';
+                    var ngOptionsString = 'item.' + tAttr.sourceId + ' as item.' + tAttr.sourceLabel + ' for item in source';
+
+                    template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{modelLabel}}</span>';
+                    template += '<select ng-show="editingFlag" ng-options="' + ngOptionsString + '" ng-model="model" ' + this.attrToHtml(filteredAttr) + '></select>';
                     break;
                 default:
                     template += "Erreur de type !";
@@ -392,7 +397,8 @@ function myEditableDirective() {
                 ret += key + '="' + attr[key] + '" ';
             }
             return ret;
-        }
+        },
+
     };
 };
 function myCustomFilter() {
@@ -432,32 +438,25 @@ function domaineFormationsServiceFactory($resource) {
 
 function editModeServiceFactory() {
     return {
-        initFromUrl: function(service) {
-            var ret = {};
+        initFromUrl: function(service, callback) {
+            var data = {};
 
-            ret.mode = this.getModeFromUrl();
-            console.log(ret.mode);
-            ret.editing = false;
+            var mode = this.getModeFromUrl();
 
-            if(ret.mode === 'create') {
-                ret.data = this.getDataFromUrl();
-                ret.editing = true;
+            if(mode === 'create') {
+                data = this.getDataFromUrl();
             } else {
                 var id = this.getId();
-                console.log(id + ' isNumber ? : ' + this.isNumber(id));
                 if(this.isNumber(id)) {
                     service.get({id:id}, function(value, responseHeaders) {
-                        ret.data = value;
+                        callback(mode, value);
                     });
                 } else {
-                    ret.data = {};
-                }
-                if(ret.mode === 'edit') {
-                    ret.editing = true;
+                    data = {};
                 }
             }
 
-            return ret;
+            callback(mode, data);
         },
 
         getModeFromUrl: function() {
@@ -475,7 +474,7 @@ function editModeServiceFactory() {
         },
 
         getDataFromUrl: function () {
-            var urlParse = this.parseUrl(window.location);
+            var urlParser = this.parseUrl(window.location);
             var params = this.parseParameters(urlParser.search);
             return params;
         },
@@ -503,7 +502,8 @@ function editModeServiceFactory() {
 
         parseParameters: function(paramString) {
             var result = {};
-            paramString.split("&").forEach(function(part) {
+
+            paramString.substring(1).split("&").forEach(function(part) {
                 var item = part.split("=");
                 result[item[0]] = decodeURIComponent(item[1]);
             });
@@ -514,12 +514,23 @@ function editModeServiceFactory() {
 function moduleDetailController(editModeService, modulesService, domaineFormationsService) {
     var self = this;
 
-    var urlData = editModeService.initFromUrl(modulesService);
+    var urlData = editModeService.initFromUrl(modulesService, function(mode, data) {
+        //Store computed data
+        self.data = data;
+        self.mode = mode;
 
-    self.data = urlData.data;
+        //Are we editing ?
+        if(self.mode === 'read') {
+            self.editing = false;
+        } else {
+            self.editing = true;
+        }
 
-    self.mode = urlData.mode;
-    self.editing = urlData.editing;
+        //Ease up label retrieval
+        if(self.data.domaine_formation_id != undefined) {
+            self.data.module_formation_label = self.data.domaine_formation.libelle;
+        }
+    });
 
     self.domaine_formations = domaineFormationsService.query();
 

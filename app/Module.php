@@ -15,7 +15,7 @@ class Module extends Model
         return $this->hasMany('ModuleFormation\Tarif');
     }
 
-    function domaine() {
+    function domaine_formation() {
         return $this->belongsTo('ModuleFormation\DomaineFormation');
     }
 

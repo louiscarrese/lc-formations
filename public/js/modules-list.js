@@ -343,8 +343,11 @@ function myEditableDirective() {
         scope: {
             type: '@',
             model: '=',
+            modelLabel: '=',
             editingFlag: '=',
-            source: '='
+            source: '=',
+            sourceId: '=',
+            sourceLabel: '='
         },
         template: function(tElem, tAttr) {
             var filteredAttr = this.stripScopeAttributes(tAttr);
@@ -363,8 +366,10 @@ function myEditableDirective() {
                     template += '<input type="checkbox" ng-disabled="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
                     break;
                 case 'dropdown':
-                    template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</span>';
-                    template += '<select ng-show="editingFlag" ng-options="item.id as item.libelle for item in source" ng-model="model" ' + this.attrToHtml(filteredAttr) + '></select>';
+                    var ngOptionsString = 'item.' + tAttr.sourceId + ' as item.' + tAttr.sourceLabel + ' for item in source';
+
+                    template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{modelLabel}}</span>';
+                    template += '<select ng-show="editingFlag" ng-options="' + ngOptionsString + '" ng-model="model" ' + this.attrToHtml(filteredAttr) + '></select>';
                     break;
                 default:
                     template += "Erreur de type !";
@@ -392,7 +397,8 @@ function myEditableDirective() {
                 ret += key + '="' + attr[key] + '" ';
             }
             return ret;
-        }
+        },
+
     };
 };
 function myCustomFilter() {

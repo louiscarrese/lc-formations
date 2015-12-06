@@ -1,12 +1,23 @@
 function moduleDetailController(editModeService, modulesService, domaineFormationsService) {
     var self = this;
 
-    var urlData = editModeService.initFromUrl(modulesService);
+    var urlData = editModeService.initFromUrl(modulesService, function(mode, data) {
+        //Store computed data
+        self.data = data;
+        self.mode = mode;
 
-    self.data = urlData.data;
+        //Are we editing ?
+        if(self.mode === 'read') {
+            self.editing = false;
+        } else {
+            self.editing = true;
+        }
 
-    self.mode = urlData.mode;
-    self.editing = urlData.editing;
+        //Ease up label retrieval
+        if(self.data.domaine_formation_id != undefined) {
+            self.data.module_formation_label = self.data.domaine_formation.libelle;
+        }
+    });
 
     self.domaine_formations = domaineFormationsService.query();
 
