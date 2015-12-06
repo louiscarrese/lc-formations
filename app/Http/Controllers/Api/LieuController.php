@@ -63,7 +63,7 @@ class LieuController extends Controller
     {
         $financeur_type = Lieu::findOrFail($id);
 
-        $financeur_type->libelle = $request->input('id');
+        $financeur_type->id = $request->input('id');
         $financeur_type->libelle = $request->input('libelle');
 
         $financeur_type->save();

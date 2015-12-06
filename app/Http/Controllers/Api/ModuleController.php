@@ -32,8 +32,15 @@ class ModuleController extends Controller
     {
         $module = new \ModuleFormation\Module;
         $module->libelle = $request->input('libelle');
-        $module->nb_heures = $request->input('nb_heures');
         $module->nb_jours = $request->input('nb_jours');
+        $module->heure_debut = $request->input('heure_debut');
+        $module->heure_fin = $request->input('heure_fin');
+        $module->effectif_max = $request->input('effectif_max');
+        $module->objectifs_pedagogiques = $request->input('objectifs_pedagogiques');
+        $module->materiel = $request->input('materiel');
+        $module->domaine_formation_id = $request->input('domaine_formation_id');
+
+
 
         $module->save();
     }
@@ -62,9 +69,15 @@ class ModuleController extends Controller
 
         $module = \ModuleFormation\Module::findOrFail($id);
 
+        $module->id = $request->input('id');
         $module->libelle = $request->input('libelle');
-        $module->nb_heures = $request->input('nb_heures');
         $module->nb_jours = $request->input('nb_jours');
+        $module->heure_debut = $request->input('heure_debut');
+        $module->heure_fin = $request->input('heure_fin');
+        $module->effectif_max = $request->input('effectif_max');
+        $module->objectifs_pedagogiques = $request->input('objectifs_pedagogiques');
+        $module->materiel = $request->input('materiel');
+        $module->domaine_formation_id = $request->input('domaine_formation_id');
 
         $module->save();
 

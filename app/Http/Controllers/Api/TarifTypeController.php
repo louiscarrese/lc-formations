@@ -59,7 +59,7 @@ class TarifTypeController extends Controller
     {
         $tarif_type = TarifType::findOrFail($id);
 
-        $tarif_type->libelle = $request->input('id');
+        $tarif_type->id = $request->input('id');
         $tarif_type->libelle = $request->input('libelle');
 
         $tarif_type->save();

@@ -64,7 +64,7 @@ class FormateurTypeController extends Controller
     {
         $formateur_type = FormateurType::findOrFail($id);
 
-        $formateur_type->libelle = $request->input('id');
+        $formateur_type->id = $request->input('id');
         $formateur_type->libelle = $request->input('libelle');
 
         $formateur_type->save();
