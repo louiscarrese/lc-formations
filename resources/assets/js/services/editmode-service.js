@@ -1,31 +1,24 @@
 function editModeServiceFactory() {
     return {
-        initFromUrl: function(service) {
-            var ret = {};
+        initFromUrl: function(service, callback) {
+            var data = {};
 
-            ret.mode = this.getModeFromUrl();
-            console.log(ret.mode);
-            ret.editing = false;
+            var mode = this.getModeFromUrl();
 
-            if(ret.mode === 'create') {
-                ret.data = this.getDataFromUrl();
-                ret.editing = true;
+            if(mode === 'create') {
+                data = this.getDataFromUrl();
             } else {
                 var id = this.getId();
-                console.log(id + ' isNumber ? : ' + this.isNumber(id));
                 if(this.isNumber(id)) {
                     service.get({id:id}, function(value, responseHeaders) {
-                        ret.data = value;
+                        callback(mode, value);
                     });
                 } else {
-                    ret.data = {};
-                }
-                if(ret.mode === 'edit') {
-                    ret.editing = true;
+                    data = {};
                 }
             }
 
-            return ret;
+            callback(mode, data);
         },
 
         getModeFromUrl: function() {
@@ -43,7 +36,7 @@ function editModeServiceFactory() {
         },
 
         getDataFromUrl: function () {
-            var urlParse = this.parseUrl(window.location);
+            var urlParser = this.parseUrl(window.location);
             var params = this.parseParameters(urlParser.search);
             return params;
         },
@@ -71,7 +64,8 @@ function editModeServiceFactory() {
 
         parseParameters: function(paramString) {
             var result = {};
-            paramString.split("&").forEach(function(part) {
+
+            paramString.substring(1).split("&").forEach(function(part) {
                 var item = part.split("=");
                 result[item[0]] = decodeURIComponent(item[1]);
             });
