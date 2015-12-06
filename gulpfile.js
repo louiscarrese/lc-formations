@@ -53,6 +53,7 @@ elixir(function(mix) {
             'services/modules-service.js',
             'services/domaineformations-service.js',
             'services/editmode-service.js',
+            'services/moduledetail-service.js',
             'controllers/detail-controller.js',
             'app/moduleDetailApp.js'
             ], 'public/js/modules-detail.js')

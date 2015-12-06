@@ -56,7 +56,7 @@
             <tr>
                 <td>Domaine de formation</td>
                 <td>
-                    <my-editable type="dropdown" source="moduleCtrl.domaine_formations" source-id="id" source-label="libelle" model="moduleCtrl.data.domaine_formation_id" model-label="moduleCtrl.data.module_formation_label" editing-flag="moduleCtrl.editing"></my-editable>
+                    <my-editable type="dropdown" source="moduleCtrl.linkedData.domaineFormations" source-id="id" source-label="libelle" model="moduleCtrl.data.domaine_formation_id" model-label="moduleCtrl.data.module_formation_label" editing-flag="moduleCtrl.editing"></my-editable>
                 </td>
             </tr>
         </table>

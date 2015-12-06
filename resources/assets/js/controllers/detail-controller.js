@@ -1,4 +1,4 @@
-function moduleDetailController(editModeService, modulesService, domaineFormationsService) {
+function detailController(editModeService, dataService, detailService) {
     var self = this;
 
     self.internalKey = 0;
@@ -14,7 +14,7 @@ function moduleDetailController(editModeService, modulesService, domaineFormatio
     self.getSuccess = getSuccess;
 
     //Initialize data
-    editModeService.initFromUrl(modulesService, function(mode, data) {
+    editModeService.initFromUrl(dataService, function(mode, data) {
         //Store computed data
         self.data = data;
 
@@ -29,13 +29,13 @@ function moduleDetailController(editModeService, modulesService, domaineFormatio
         self.getSuccess(data);
     });
 
-    self.domaine_formations = domaineFormationsService.query();
+    self.linkedData = detailService.getLinkedData();
 
 
     //CRUD
 
     function create() {
-        modulesService.save(self.data, 
+        dataService.save(self.data, 
             function(value, responseHeaders) {
                 self.data = value;
                 self.mode = 'read';
@@ -48,7 +48,7 @@ function moduleDetailController(editModeService, modulesService, domaineFormatio
 
 
     function cancel() {
-        modulesService.get({id:self.internalKey}, function(value, responseHeaders) {
+        dataService.get({id:self.internalKey}, function(value, responseHeaders) {
             self.editing = false;
             self.mode = 'read';
             self.getSuccess(value);
@@ -70,7 +70,7 @@ function moduleDetailController(editModeService, modulesService, domaineFormatio
     function del() {
         self.data.$delete({id:self.internalKey},
             function(value, responseHeaders) {
-                window.location.href="/modules";
+                window.location.href=detailService.getListUrl();
             },
             function(httpResponseHeaders) {
                 alert('error');
@@ -86,10 +86,9 @@ function moduleDetailController(editModeService, modulesService, domaineFormatio
 
     function getSuccess(data) {
         self.data = data;
-        self.internalKey = data.id
-        if(self.data.domaine_formation_id != undefined) {
-            self.data.module_formation_label = self.data.domaine_formation.libelle;
-        }
+        self.internalKey = detailService.getInternalKey(self.data);
+
+        self.data = detailService.getSuccess(self.data);
     }
 
 
