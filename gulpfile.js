@@ -23,12 +23,12 @@ elixir(function(mix) {
             'directives/mySortableHeader-directive.js',
             'directives/myEditable-directive.js',
             'filters/myCustomFilter-filter.js',
-            'services/stagiairetypes-service.js',
-            'services/formateurtypes-service.js',
-            'services/financeurtypes-service.js',
-            'services/tariftypes-service.js',
-            'services/lieu-service.js',
-            'services/domaineformations-service.js',
+            'services/data/stagiairetypes-service.js',
+            'services/data/formateurtypes-service.js',
+            'services/data/financeurtypes-service.js',
+            'services/data/tariftypes-service.js',
+            'services/data/lieu-service.js',
+            'services/data/domaineformations-service.js',
             'controllers/editableTable-controller.js',
             'app/parametresApp.js'
             ], 'public/js/parametres.js')
@@ -39,7 +39,7 @@ elixir(function(mix) {
             'directives/mySortableHeader-directive.js',
             'directives/myEditable-directive.js',
             'filters/myCustomFilter-filter.js',
-            'services/modules-service.js',
+            'services/data/modules-service.js',
             'controllers/editableTable-controller.js',
             'app/modulesApp.js'
             ], 'public/js/modules-list.js')
@@ -50,10 +50,10 @@ elixir(function(mix) {
             'directives/mySortableHeader-directive.js',
             'directives/myEditable-directive.js',
             'filters/myCustomFilter-filter.js',
-            'services/modules-service.js',
-            'services/domaineformations-service.js',
+            'services/data/modules-service.js',
+            'services/data/domaineformations-service.js',
             'services/editmode-service.js',
-            'services/moduledetail-service.js',
+            'services/details/moduledetail-service.js',
             'controllers/detail-controller.js',
             'app/moduleDetailApp.js'
             ], 'public/js/modules-detail.js')

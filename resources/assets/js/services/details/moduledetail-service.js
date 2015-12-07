@@ -23,4 +23,4 @@ function moduleDetailServiceFactory(domaineFormationsService) {
             return '/modules';
         }
     }
-}
+} 
