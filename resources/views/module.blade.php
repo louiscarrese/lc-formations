@@ -8,4 +8,5 @@
 @section('content')
     @include('components.details.module')
 
+    @include('components.lists.sessions')
 @endsection
