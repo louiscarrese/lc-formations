@@ -1,6 +1,6 @@
 <h2>Modules</h2>
 
-<div ng-controller="modulesListController as modulesListCtrl" class="table-container">
+<div ng-controller="modulesListController as modulesListCtrl" class="list-table-container">
     <input type="text" ng-model="modulesListCtrl.filterInput" placeholder="Recherche locale" class="table-filter" />
 
     <table>
@@ -12,13 +12,19 @@
                 <td class="clickable">
                     <my-sortable-header set="modulesListCtrl.setSort('libelle')" get="modulesListCtrl.getSort('libelle')">Libellé</my-sortable-header>
                 </td>
+                <td class="clickable">
+                    <my-sortable-header set="modulesListCtrl.setSort('domaine_formation_id')" get="modulesListCtrl.getSort('domaine_formation_id')">Domaine</my-sortable-header>
+                </td>
                 <td>
                     <!-- Details -->
+                </td>
+                <td>
+                    <!-- Edit -->
                 </td>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="module in modulesListCtrl.data | myCustomFilter:modulesListCtrl.gilterInput:'id':'libelle' track by module.id">
+            <tr ng-repeat="module in modulesListCtrl.data | myCustomFilter:modulesListCtrl.filterInput:'id':'libelle':'domaine_formation.libelle' track by module.id">
                 <td class="centered">
                     <span>@{{module.id}}</span>
                 </td>
@@ -26,22 +32,32 @@
                     <span>@{{module.libelle}}</span>
                 </td>
                 <td>
-                    <span><i class="material-icons clickable">info_outline</i></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <!-- vide car id auto -->
+                    <span>@{{module.domaine_formation.libelle}}</span>
                 </td>
                 <td>
-                    <input type="text" ng-model="modulesListCtrl.addObject.libelle" />
+                    <span>
+                        <a ng-href="/modules/@{{module.id}}">
+                            <i class="material-icons clickable">info_outline</i>
+                        </a>
+                    </span>
                 </td>
-                <td class="centered">
-                    <span ng-click="modulesListCtrl.add()"><i class="material-icons clickable">add</i></span>
+                <td>
+                    <span>
+                        <a ng-href="/modules/@{{module.id}}?edit=true">
+                            <i class="material-icons clickable">create</i>
+                        </a>
+                    </span>
                 </td>
-
             </tr>
         </tbody>
     </table>
+
+    <div class="global-actions">
+        <span>
+            <a ng-href="/modules/create">
+                <i class="material-icons clickable">add</i>
+            </a>
+        </span>
+    </div>
    <div class="error-message">@{{modulesListCtrl.errorMessage}}</div>
 </div>
