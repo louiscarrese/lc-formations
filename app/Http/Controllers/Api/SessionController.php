@@ -1,6 +1,6 @@
 <?php
 
-namespace ModuleFormation\Http\Controllers;
+namespace ModuleFormation\Http\Controllers\Api;
 
 use Log;
 use DB;
@@ -11,6 +11,13 @@ use ModuleFormation\Http\Controllers\Controller;
 class SessionController extends Controller
 {
 
+
+    public function index(Request $request) 
+    {
+        $sessions = \ModuleFormation\Session::all();
+
+        return response()->json($sessions);
+    }
 
     /**
      * Store a newly created resource in storage.

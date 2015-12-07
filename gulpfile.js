@@ -52,9 +52,11 @@ elixir(function(mix) {
             'filters/myCustomFilter-filter.js',
             'services/data/modules-service.js',
             'services/data/domaineformations-service.js',
+            'services/data/sessions-service.js',
             'services/editmode-service.js',
             'services/details/moduledetail-service.js',
             'controllers/detail-controller.js',
+            'controllers/editableTable-controller.js',
             'app/moduleDetailApp.js'
             ], 'public/js/modules-detail.js')
     .spritesmith('resources/assets/img/sprites', {

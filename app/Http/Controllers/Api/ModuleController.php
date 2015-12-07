@@ -17,7 +17,7 @@ class ModuleController extends Controller
      */
     public function index(Request $request)
     {
-        $modules = \ModuleFormation\Module::all();
+        $modules = \ModuleFormation\Module::with('domaine_formation')->get();
         return response()->json($modules);
     }
 

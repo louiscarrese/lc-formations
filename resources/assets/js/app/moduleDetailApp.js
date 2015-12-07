@@ -1,12 +1,14 @@
 angular.module('modulesDetailServices', ['ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
-    .factory('editModeService', [editModeServiceFactory])
     .factory('moduleDetailService', ['domaineFormationsService', moduleDetailServiceFactory])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('editModeService', [editModeServiceFactory])
 ;
 
 angular.module('modulesDetailControllers', [])
         .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
+        .controller('sessionsTableController', ['$filter', 'sessionsService', editableTableController])
 ;
 
 angular.module('modulesDetailFilters', [])
