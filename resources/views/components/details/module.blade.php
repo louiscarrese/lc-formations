@@ -1,4 +1,4 @@
-<div ng-controller="modulesDetailController as moduleCtrl">
+<div ng-controller="detailController as moduleCtrl">
 
 <!-- TODO: Trouver un moyen de changer le titre suivant si on est en création ou en modification -->
 

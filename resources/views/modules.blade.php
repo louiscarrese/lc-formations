@@ -6,7 +6,7 @@
 @section('angularApp', 'modulesListApp')
 
 @section('content')
-    @include('components.modules.moduleslist')
+    @include('components.lists.modules')
 
 
 

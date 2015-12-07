@@ -6,8 +6,6 @@
 @section('angularApp', 'modulesDetailApp')
 
 @section('content')
-    @include('components.modules.moduledetail')
-
-
+    @include('components.details.module')
 
 @endsection
