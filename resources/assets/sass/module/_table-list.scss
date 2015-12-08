@@ -1,11 +1,11 @@
 
 .list-table-container {
+    @extend .table-container;
+
     display: inline-block;
-    margin-bottom: 2em;
+
     td, th {
         border: 1px solid $rgba-complement-1;
-        padding: 0.2em 0.5em;
-        vertical-align: middle;
     }
 
     thead tr {
@@ -19,14 +19,6 @@
       background: $rgba-complement-4;
     }
 
-    td.centered {
-        text-align: center;
-    }
-
-    table input[type='text'] {
-        width: 100%;
-        size: 1;
-    }
 
     thead .sort-up {
         @include sprite($fleche-haut);
@@ -45,6 +37,11 @@
         width: 100%;
 
     }
+
+    table input[type='text'] {
+        width: 100%;
+    }
+
 }
 
 

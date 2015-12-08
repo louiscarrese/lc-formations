@@ -31,7 +31,6 @@ function detailController(editModeService, dataService, detailService) {
 
     self.linkedData = detailService.getLinkedData();
 
-
     //CRUD
 
     function create() {
@@ -88,7 +87,9 @@ function detailController(editModeService, dataService, detailService) {
         self.data = data;
         self.internalKey = detailService.getInternalKey(self.data);
 
-        self.data = detailService.getSuccess(self.data);
+        var successData = detailService.getSuccess(self.data);
+        self.titleText = successData.titleText;
+
     }
 
 

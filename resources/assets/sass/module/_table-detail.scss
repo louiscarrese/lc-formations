@@ -1,0 +1,25 @@
+.detail-table-container {
+    @extend .table-container;
+
+    display: inline-block;
+
+
+    td, th {
+        border: 0px;
+        padding: 0.2em 0.5em;
+        vertical-align: middle;
+
+    }
+
+    td.key {
+        text-align: right;
+
+    }
+
+    pre, textarea{
+        font-family: inherit;
+    }
+
+
+}
+
