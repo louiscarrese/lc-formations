@@ -358,6 +358,10 @@ function myEditableDirective() {
                     template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</span>';
                     template += '<input type="text" ng-show="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
                     break;
+                case 'textarea':
+                    template += '<pre ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</pre>';
+                    template += '<textarea ng-show="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '></textarea>';
+                    break;
                 case 'integer':
                     template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</span>';
                     template += '<input type="text" ng-show="editingFlag" ng-model="model" my-force-integer ' + this.attrToHtml(filteredAttr) + '/>';
@@ -410,16 +414,27 @@ function myCustomFilter() {
         for(elemId = 0; elemId < input.length; elemId++) {
             //Pour chaque champ à analyser
             for(fieldId = 2; fieldId < arguments.length; fieldId++) {
-                var stringValue = angular.lowercase('' + input[elemId][arguments[fieldId]]);
+                //On découpe, au cas où ça serait un sous objet (genre objet.propriete)
+                var fieldPath = arguments[fieldId].split('.');
+                //On démarre sur l'élément du tableau
+                var fieldValue = input[elemId];
+                //On descend chaque champ de l'arborescence
+                for(var i = 0; i < fieldPath.length; i++) {
+                    fieldValue = fieldValue[fieldPath[i]];
+                }
 
+                //On converti en string lowercase
+                var stringValue = angular.lowercase('' + fieldValue);
+
+                //On cherche le filtre dans la valeur
                 if(stringValue.indexOf(lowerFilter) !== -1) {
                     outArray.push(input[elemId]);
+                    //Si on l'a trouvé une fois, on peut passer à l'élément de tableau suivant
                     break;
                 }
             }
         }
         return outArray;
-
     }
 
 }
@@ -435,6 +450,13 @@ function domaineFormationsServiceFactory($resource) {
         'update' : { method: 'PUT' }
     });
 }
+
+function sessionsServiceFactory($resource) {
+    return $resource('/api/session/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
 
 function editModeServiceFactory() {
     return {
@@ -526,10 +548,16 @@ function moduleDetailServiceFactory(domaineFormationsService) {
         },
 
         getSuccess: function(data) {
+            //Modify data
             if(data.domaine_formation_id != undefined) {
                 data.module_formation_label = data.domaine_formation.libelle;
             }
-            return data;
+
+            //Build the return structure
+            return {
+                'titleText': data.libelle != undefined ? data.libelle : "Création d'un module"
+            }
+
         },
 
         getListUrl: function() {
@@ -569,7 +597,6 @@ function detailController(editModeService, dataService, detailService) {
     });
 
     self.linkedData = detailService.getLinkedData();
-
 
     //CRUD
 
@@ -627,20 +654,157 @@ function detailController(editModeService, dataService, detailService) {
         self.data = data;
         self.internalKey = detailService.getInternalKey(self.data);
 
-        self.data = detailService.getSuccess(self.data);
+        var successData = detailService.getSuccess(self.data);
+        self.titleText = successData.titleText;
+
     }
 
 
 }
+/*
+(function() {
+    */
+/*
+    angular.module('stagiaireTypesModule')
+        .controller('editableTableController', ['service', editableTableController]);
+*/
+
+
+    function editableTableController($filter, service) {
+        var self = this;
+        self.orderBy = $filter('orderBy');
+
+        self.data = service.query(function() {
+            angular.forEach(self.data, function(value, key) {
+                value.internalKey = value.id;
+                self.sort();
+            });
+        });
+
+        self.addObject = {};
+
+        self.errorMessage = "";
+        self.filterInput = "";
+
+        self.sortProp = "id";
+        self.sortReverse = false;
+
+        self.setSort = function(key) {
+            if(self.sortProp == key) {
+                self.sortReverse = !self.sortReverse;
+            } else {
+                self.sortProp = key;
+                self.sortReverse = false;
+            }
+            self.sort();
+        };
+        self.getSort = function(key) {
+            if(self.sortProp === key) {
+                return self.sortReverse;
+            } else {
+                return null;
+            }
+        };
+
+        self.sort = function() {
+            self.data = self.orderBy(self.data, self.sortProp, self.sortReverse);
+        }
+
+        /**
+         * Update
+         */
+        self.update = function(type) {
+            type.$update({id: type.internalKey}, self.updateSuccess, self.updateError);
+        };
+
+        self.updateSuccess = function(value, responseHeaders) {
+            value.internalKey = value.id;
+            value.editing = false;
+            self.sort();
+
+        };
+
+        self.updateError = function(httpResponse) {
+            self.error("Erreur à l'enregistrement");
+        };
+
+        /**
+         * Delete
+         */
+        self.delete = function(type) {
+            type.$delete({id: type.internalKey}, self.deleteSuccess, self.deleteError);
+        };
+
+        self.deleteSuccess = function(value, responseHeaders) {
+            self.data.splice(self.data.indexOf(value), 1);
+        };
+
+        self.deleteError = function(httpResponse) {
+            self.error("Erreur à la suppression");
+        };
+        /**
+         * Add
+         */
+        self.add = function() {
+            service.save(self.addObject, self.addSuccess, self.addError);
+        };
+
+        self.addSuccess = function(value, responseHeaders) {
+            value.internalKey = value.id;
+            self.data.push(value);
+            self.sort();
+            self.addObject = {};
+        };
+
+        self.addError  = function(httpResponse) {
+            self.error("Erreur à l'ajout");
+
+        };
+
+        /**
+         * Cancel
+         */
+        self.cancel = function(type) {
+            service.get({id: type.internalKey}, function(value, responseHeaders) {
+                value.editing = false;
+                value.internalKey = value.id;
+                self.data[self.data.indexOf(type)] = value;
+            });
+        };
+
+        /** 
+         * Get
+         */
+        self.get = function(type) {
+            service.get({id: type.id}, function(value, responseHeaders) {
+                value.internalKey = value.id;
+                self.data[self.data.indexOf(type)] = value;
+            });
+        };
+
+        /**
+         * Utilities
+         */
+        self.error = function(message) {
+            self.errorMessage = message;
+        };
+    } 
+
+/*
+})(); 
+*/
+
 angular.module('modulesDetailServices', ['ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
-    .factory('editModeService', [editModeServiceFactory])
     .factory('moduleDetailService', ['domaineFormationsService', moduleDetailServiceFactory])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('editModeService', [editModeServiceFactory])
 ;
 
 angular.module('modulesDetailControllers', [])
         .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
+        .controller('sessionsTableController', ['$filter', 'sessionsService', editableTableController])
 ;
 
 angular.module('modulesDetailFilters', [])
