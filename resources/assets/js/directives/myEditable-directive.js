@@ -19,6 +19,10 @@ function myEditableDirective() {
                     template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</span>';
                     template += '<input type="text" ng-show="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
                     break;
+                case 'textarea':
+                    template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</span>';
+                    template += '<textarea ng-show="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '></textarea>';
+                    break;
                 case 'integer':
                     template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</span>';
                     template += '<input type="text" ng-show="editingFlag" ng-model="model" my-force-integer ' + this.attrToHtml(filteredAttr) + '/>';
