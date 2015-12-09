@@ -8,7 +8,8 @@ function myEditableDirective() {
             editingFlag: '=',
             source: '=',
             sourceId: '=',
-            sourceLabel: '='
+            sourceLabel: '=',
+            change: '='
         },
         template: function(tElem, tAttr) {
             var filteredAttr = this.stripScopeAttributes(tAttr);
@@ -34,7 +35,12 @@ function myEditableDirective() {
                     var ngOptionsString = 'item.' + tAttr.sourceId + ' as item.' + tAttr.sourceLabel + ' for item in source';
 
                     template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{modelLabel}}</span>';
-                    template += '<select ng-show="editingFlag" ng-options="' + ngOptionsString + '" ng-model="model" ' + this.attrToHtml(filteredAttr) + '></select>';
+                    template += '<select ng-show="editingFlag" ng-options="' + ngOptionsString + '"';
+                    template += ' ng-model="model"';
+                    if(tAttr['change'] != undefined) {
+                        template += ' ng-change="change()"';
+                    }
+                    template +=' ' + this.attrToHtml(filteredAttr) + '></select>';
                     break;
                 default:
                     template += "Erreur de type !";
