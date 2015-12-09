@@ -207,7 +207,8 @@ h1 {
       vertical-align: middle; }
 
 .table-container, .list-table-container, .detail-table-container {
-  margin-bottom: 2em; }
+  margin-bottom: 2em;
+  margin-top: 1em; }
   .table-container td, .list-table-container td, .detail-table-container td, .table-container th, .list-table-container th, .detail-table-container th {
     padding: 0.2em 0.5em;
     vertical-align: middle; }
@@ -244,19 +245,26 @@ h1 {
   .list-table-container table input[type='text'] {
     width: 100%; }
 
-.detail-table-container {
-  display: inline-block; }
-  .detail-table-container td, .detail-table-container th {
-    border: 0px;
-    padding: 0.2em 0.5em;
-    vertical-align: middle; }
-  .detail-table-container td.key {
-    text-align: right;
-    font-weight: 600; }
-  .detail-table-container pre, .detail-table-container textarea {
-    font-family: inherit; }
+.detail-table-container table {
+  width: 100%; }
 
-.global-actions i {
-  font-size: 2em; }
+.detail-table-container td, .detail-table-container th {
+  border: 0px;
+  padding: 0.2em 0.5em;
+  vertical-align: middle; }
+
+.detail-table-container td.key {
+  font-weight: 600; }
+
+.detail-table-container pre, .detail-table-container textarea {
+  font-family: inherit; }
+
+.detail-table-container .full-width {
+  width: 100%; }
+
+.global-actions {
+  text-align: right; }
+  .global-actions i {
+    font-size: 2em; }
 
 /*# sourceMappingURL=app.css.map */

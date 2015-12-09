@@ -1,8 +1,11 @@
 .detail-table-container {
     @extend .table-container;
 
-    display: inline-block;
+//    display: inline-block;
 
+    table {
+        width: 100%;
+    }
 
     td, th {
         border: 0px;
@@ -12,7 +15,7 @@
     }
 
     td.key {
-        text-align: right;
+//        text-align: right;
         font-weight: 600;
 
     }
@@ -21,6 +24,9 @@
         font-family: inherit;
     }
 
+    .full-width {
+        width: 100%;
+    }
 
 }
 

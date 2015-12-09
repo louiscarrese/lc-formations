@@ -2,7 +2,7 @@
 
 <!-- TODO: Trouver un moyen de changer le titre suivant si on est en création ou en modification -->
 
-<h2>@{{moduleCtrl.titleText}}</h2>
+    <h2>@{{moduleCtrl.titleText}}</h2>
     <div class="detail-table-container">
         <table>
             <tr>
@@ -14,7 +14,7 @@
             <tr>
                 <td class="key">Libellé</td>
                 <td class="value">
-                    <my-editable type="text" model="moduleCtrl.data.libelle" editing-flag="moduleCtrl.editing" size="40"></my-editable>
+                    <my-editable type="text" model="moduleCtrl.data.libelle" editing-flag="moduleCtrl.editing" size="40" class="full-width"></my-editable>
                 </td>
             </tr>
             <tr>
@@ -50,22 +50,23 @@
             <tr>
                 <td class="key">Objectifs pédagogiques</td>
                 <td class="value">
-                    <my-editable type="textarea" model="moduleCtrl.data.objectifs_pedagogiques" editing-flag="moduleCtrl.editing" rows="5" cols="50"></my-editable>
+                    <my-editable type="textarea" model="moduleCtrl.data.objectifs_pedagogiques" editing-flag="moduleCtrl.editing" rows="5" cols="50" class="full-width"></my-editable>
                 </td>
             </tr>
             <tr>
                 <td class="key">Matériel</td>
                 <td class="value">
-                    <my-editable type="textarea" model="moduleCtrl.data.materiel" editing-flag="moduleCtrl.editing" rows="5" cols="50"></my-editable>
+                    <my-editable type="textarea" model="moduleCtrl.data.materiel" editing-flag="moduleCtrl.editing" rows="5" cols="50" class="full-width"></my-editable>
                 </td>
             </tr>
         </table>
-        <div class="global-actions">
-            <span ng-show="moduleCtrl.mode === 'read'" ng-click="moduleCtrl.edit()"><i class="icon clickable">edit</i></span>
-            <span ng-show="moduleCtrl.mode === 'create'" ng-click="moduleCtrl.create()"><i class="icon clickable">validate</i></span>
-            <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.update()"><i class="icon clickable">validate</i></span>
-            <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.cancel()"><i class="icon clickable">undo</i></span>
-            <span ng-show="moduleCtrl.mode !== 'create'" ng-click="moduleCtrl.delete()"><i class="icon clickable">delete</i></span>
-        </div>
+
+    </div>
+    <div class="global-actions">
+        <span ng-show="moduleCtrl.mode === 'read'" ng-click="moduleCtrl.edit()"><i class="icon clickable">edit</i></span>
+        <span ng-show="moduleCtrl.mode === 'create'" ng-click="moduleCtrl.create()"><i class="icon clickable">validate</i></span>
+        <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.update()"><i class="icon clickable">validate</i></span>
+        <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.cancel()"><i class="icon clickable">undo</i></span>
+        <span ng-show="moduleCtrl.mode !== 'create'" ng-click="moduleCtrl.delete()"><i class="icon clickable">delete</i></span>
     </div>
 </div>
