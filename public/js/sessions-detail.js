@@ -444,6 +444,13 @@ function myCustomFilter() {
     }
 
 }
+function sessionsServiceFactory($resource) {
+    return $resource('/api/session/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+
 function modulesServiceFactory($resource) {
     return $resource('/api/module/:id', null, {
         'update' : { method: 'PUT' }
@@ -451,6 +458,236 @@ function modulesServiceFactory($resource) {
 }
 
 
+function editModeServiceFactory() {
+    return {
+        initFromUrl: function(service, callback) {
+            var data = {};
+
+            var mode = this.getModeFromUrl();
+
+            if(mode === 'create') {
+                data = this.getDataFromUrl();
+            } else {
+                var id = this.getId();
+                if(this.isNumber(id)) {
+                    service.get({id:id}, function(value, responseHeaders) {
+                        callback(mode, value);
+                    });
+                } else {
+                    data = {};
+                }
+            }
+
+            callback(mode, data);
+        },
+
+        getModeFromUrl: function() {
+            var urlParser = this.parseUrl(window.location);
+            if(urlParser.pathname.substr(-'create'.length) === 'create') {
+                return 'create';
+            } else {
+                var params = this.parseParameters(urlParser.search);
+                if(params.hasOwnProperty('edit') && params.edit === 'true') {
+                    return 'edit';
+                } else {
+                    return 'read';
+                }
+            }
+        },
+
+        getDataFromUrl: function () {
+            var urlParser = this.parseUrl(window.location);
+            var params = this.parseParameters(urlParser.search);
+            return params;
+        },
+
+        getId: function() {
+            var urlParse = this.parseUrl(window.location);
+            var path = urlParse.pathname;
+            var pathComponents = path.split('/');
+
+            var id = pathComponents[pathComponents.length - 1];
+
+            return id;
+        },
+
+        isNumber: function(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        },
+
+        parseUrl: function(url) {
+            var parser = document.createElement('a');
+            parser.href = url;
+
+            return parser;
+        },
+
+        parseParameters: function(paramString) {
+            var result = {};
+
+            paramString.substring(1).split("&").forEach(function(part) {
+                var item = part.split("=");
+                result[item[0]] = decodeURIComponent(item[1]);
+            });
+            return result;
+        }
+};
+}
+function sessionDetailServiceFactory(modulesService) {
+    return {
+        getLinkedData: function() {
+            var modules = modulesService.query();
+
+            return {
+                'modules': modules
+            };
+        },
+
+        getInternalKey: function(data) {
+            return data.id;
+        },
+
+        getSuccess: function(data) {
+            //Modify data
+            if(data.module_id != undefined) {
+                data.module_label = data.module.libelle;
+            }
+
+            //Build the return structure
+            return {
+                'titleText': data.libelle != undefined ? data.libelle : "Création d'une session"
+            }
+
+        },
+
+        getListUrl: function() {
+            return '/sessions';
+        },
+
+        addListeners: function(controller) {
+            controller.onModuleChange = function(controller) {
+                //Get the various informations we'll need
+                var moduleId = controller.data.module_id;
+                var modules = controller.linkedData.modules;
+
+                //Get the module
+                var module = {};
+                for(var i = 0; i < modules.length; i++) {
+                    if(modules[i].id === moduleId) {
+                        module = modules[i];
+                    }
+                }
+
+                //Strip the module of its useless properties
+                delete(module.id);
+
+                //Copy everything
+                angular.extend(controller.data, module);
+
+            }
+        }
+
+    }
+}
+function detailController(editModeService, dataService, detailService) {
+    var self = this;
+
+    self.internalKey = 0;
+
+    //CRUD
+    self.create = create;
+    self.cancel = cancel;
+    self.update = update;
+    self.delete = del;
+
+    //Utilities
+    self.edit = edit;
+    self.getSuccess = getSuccess;
+
+
+    //Initialize data
+    editModeService.initFromUrl(dataService, function(mode, data) {
+        //Store computed data
+        self.data = data;
+
+        //Are we editing ?
+        self.mode = mode;
+        if(self.mode === 'read') {
+            self.editing = false;
+        } else {
+            self.editing = true;
+        }
+
+        self.getSuccess(data);
+    });
+
+    self.linkedData = detailService.getLinkedData();
+
+    detailService.addListeners(this);
+
+    //CRUD
+
+    function create() {
+        dataService.save(self.data, 
+            function(value, responseHeaders) {
+                self.data = value;
+                self.mode = 'read';
+                self.editing = false;
+            }, 
+            function(httpResponseHeaders) {
+                alert('Error ! ');
+            });
+    };
+
+
+    function cancel() {
+        dataService.get({id:self.internalKey}, function(value, responseHeaders) {
+            self.editing = false;
+            self.mode = 'read';
+            self.getSuccess(value);
+        });
+    }
+
+    function update() {
+        self.data.$update({id:self.internalKey}, 
+            function(value, responseHeaders) {
+                self.getSuccess(value);
+                self.editing = false;
+                self.mode = 'read';
+            },
+            function(httpResponseHeaders) {
+                alert('error');
+            });
+    }
+
+    function del() {
+        self.data.$delete({id:self.internalKey},
+            function(value, responseHeaders) {
+                window.location.href=detailService.getListUrl();
+            },
+            function(httpResponseHeaders) {
+                alert('error');
+            })
+    }
+
+
+    //Utilities
+    function edit() {
+        self.editing = true;
+        self.mode = 'edit';
+    }
+
+    function getSuccess(data) {
+        self.data = data;
+        self.internalKey = detailService.getInternalKey(self.data);
+
+        var successData = detailService.getSuccess(self.data);
+        self.titleText = successData.titleText;
+
+    }
+
+
+}
 /*
 (function() {
     */
@@ -584,29 +821,32 @@ function modulesServiceFactory($resource) {
 })(); 
 */
 
-angular.module('modulesListServices', ['ngResource'])
+angular.module('sessionsDetailServices', ['ngResource'])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('modulesService', ['$resource', modulesServiceFactory])
+    .factory('sessionDetailService', ['modulesService', sessionDetailServiceFactory])
+    .factory('editModeService', [editModeServiceFactory])
 ;
 
-angular.module('modulesListControllers', [])
-    .controller('modulesListController', ['$filter', 'modulesService', editableTableController])
+angular.module('sessionsDetailControllers', [])
+        .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', detailController])
 ;
 
-angular.module('modulesListFilters', [])
+angular.module('sessionsDetailFilters', [])
     .filter('myCustomFilter', myCustomFilter)
 ;
 
 //Les directives
-angular.module('modulesListDirectives', [])
+angular.module('sessionsDetailDirectives', [])
     .directive('myEditable', myEditableDirective)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
-
-    ;
+;
 
 //Le module principal
-angular.module('modulesListApp', 
-    ['modulesListControllers', 'modulesListServices', 'modulesListFilters', 'modulesListDirectives']);
+angular.module('sessionsDetailApp', 
+    ['sessionsDetailControllers', 'sessionsDetailServices', 'sessionsDetailFilters', 'sessionsDetailDirectives'])
+;
 
 
-//# sourceMappingURL=modules-list.js.map
+//# sourceMappingURL=sessions-detail.js.map

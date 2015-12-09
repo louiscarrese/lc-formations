@@ -49,3 +49,5 @@ Route::get('/', function () {
 Route::get('/parametres', 'ParametresController@index');
 Route::resource('/modules', 'ModulesController', 
     ['only' => ['index', 'create', 'show']]);
+Route::resource('/sessions', 'SessionsController', 
+    ['only' => ['index', 'create', 'show']]);

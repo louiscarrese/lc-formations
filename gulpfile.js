@@ -50,6 +50,17 @@ elixir(function(mix) {
             'directives/mySortableHeader-directive.js',
             'directives/myEditable-directive.js',
             'filters/myCustomFilter-filter.js',
+            'services/data/sessions-service.js',
+            'controllers/editableTable-controller.js',
+            'app/sessionsApp.js'
+            ], 'public/js/sessions-list.js')
+        .scripts([
+            'lib/angular.min.js',
+            'lib/angular-resource.min.js',
+            'directives/myForceInteger-directive.js',
+            'directives/mySortableHeader-directive.js',
+            'directives/myEditable-directive.js',
+            'filters/myCustomFilter-filter.js',
             'services/data/modules-service.js',
             'services/data/domaineformations-service.js',
             'services/data/sessions-service.js',
@@ -59,6 +70,21 @@ elixir(function(mix) {
             'controllers/editableTable-controller.js',
             'app/moduleDetailApp.js'
             ], 'public/js/modules-detail.js')
+        .scripts([
+            'lib/angular.min.js',
+            'lib/angular-resource.min.js',
+            'directives/myForceInteger-directive.js',
+            'directives/mySortableHeader-directive.js',
+            'directives/myEditable-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/data/sessions-service.js',
+            'services/data/modules-service.js',
+            'services/editmode-service.js',
+            'services/details/sessiondetail-service.js',
+            'controllers/detail-controller.js',
+            'controllers/editableTable-controller.js',
+            'app/sessionDetailApp.js'
+            ], 'public/js/sessions-detail.js')
     .spritesmith('resources/assets/img/sprites', {
         imgOutput: 'public/images',
         cssOutput: 'resources/assets/sass/theme',

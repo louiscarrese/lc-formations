@@ -4,7 +4,7 @@
         <li><a href="#">Stagiaires</a></li>
         <li><a href="#">Formateurs</a></li>
         <li><a href="/modules">Modules</a></li>
-        <li><a href="#">Sessions</a></li>
+        <li><a href="/sessions">Sessions</a></li>
         <li><a href="#">Inscriptions</a></li>
         <li>
             <form method="get" action="universal_search.php" id="search-form">

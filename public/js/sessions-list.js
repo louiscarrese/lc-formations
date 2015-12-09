@@ -444,8 +444,8 @@ function myCustomFilter() {
     }
 
 }
-function modulesServiceFactory($resource) {
-    return $resource('/api/module/:id', null, {
+function sessionsServiceFactory($resource) {
+    return $resource('/api/session/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
@@ -584,20 +584,20 @@ function modulesServiceFactory($resource) {
 })(); 
 */
 
-angular.module('modulesListServices', ['ngResource'])
-    .factory('modulesService', ['$resource', modulesServiceFactory])
+angular.module('sessionsListServices', ['ngResource'])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
 ;
 
-angular.module('modulesListControllers', [])
-    .controller('modulesListController', ['$filter', 'modulesService', editableTableController])
+angular.module('sessionsListControllers', [])
+    .controller('sessionsListController', ['$filter', 'sessionsService', editableTableController])
 ;
 
-angular.module('modulesListFilters', [])
+angular.module('sessionsListFilters', [])
     .filter('myCustomFilter', myCustomFilter)
 ;
 
 //Les directives
-angular.module('modulesListDirectives', [])
+angular.module('sessionsListDirectives', [])
     .directive('myEditable', myEditableDirective)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
@@ -605,8 +605,8 @@ angular.module('modulesListDirectives', [])
     ;
 
 //Le module principal
-angular.module('modulesListApp', 
-    ['modulesListControllers', 'modulesListServices', 'modulesListFilters', 'modulesListDirectives']);
+angular.module('sessionsListApp', 
+    ['sessionsListControllers', 'sessionsListServices', 'sessionsListFilters', 'sessionsListDirectives']);
 
 
-//# sourceMappingURL=modules-list.js.map
+//# sourceMappingURL=sessions-list.js.map

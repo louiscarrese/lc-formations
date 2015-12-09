@@ -13,6 +13,7 @@ function detailController(editModeService, dataService, detailService) {
     self.edit = edit;
     self.getSuccess = getSuccess;
 
+
     //Initialize data
     editModeService.initFromUrl(dataService, function(mode, data) {
         //Store computed data
@@ -30,6 +31,8 @@ function detailController(editModeService, dataService, detailService) {
     });
 
     self.linkedData = detailService.getLinkedData();
+
+    detailService.addListeners(this);
 
     //CRUD
 

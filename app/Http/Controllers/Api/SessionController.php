@@ -25,17 +25,19 @@ class SessionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $moduleId)
+    public function store(Request $request)
     {
 
         DB::beginTransaction();
 
         $session = new \ModuleFormation\Session;
         $session->libelle = $request->input('libelle');
-        $session->nb_heures = $request->input('nb_heures');
         $session->nb_jours = $request->input('nb_jours');
+        $session->effectif_max = $request->input('effectif_max');
+        $session->objectifs_pedagogiques = $request->input('objectifs_pedagogiques');
+        $session->materiel = $request->input('materiel');
 
-        $module = \ModuleFormation\Module::findOrFail($moduleId);
+        $module = \ModuleFormation\Module::findOrFail($request->input('module_id'));
         $module->sessions()->save($session);
 
 
@@ -60,9 +62,9 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($moduleId, $sessionId)
+    public function show($sessionId)
     {
-        $session = \ModuleFormation\Session::with('session_jours')->findOrFail($sessionId);
+        $session = \ModuleFormation\Session::with('module')->findOrFail($sessionId);
         return response()->json($session);
     }
 
@@ -73,7 +75,7 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $sessionId, $moduleId)
+    public function update(Request $request, $sessionId)
     {
         $session = \ModuleFormation\Session::findOrFail($sessionId);
 
