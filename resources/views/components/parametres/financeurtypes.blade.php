@@ -25,12 +25,12 @@
                         <my-editable type="text" model="type.libelle" editing-flag="type.editing" />
                     </td>
                     <td>
-                        <span ng-hide="type.editing" ng-click="type.editing = true"><i class="material-icons clickable">create</i></span>
-                        <span ng-show="type.editing" ng-click="financeurTypesCtrl.update(type)"><i class="material-icons clickable">done</i></span>
+                        <span ng-hide="type.editing" ng-click="type.editing = true"><i class="icon clickable">edit</i></span>
+                        <span ng-show="type.editing" ng-click="financeurTypesCtrl.update(type)"><i class="icon clickable">validate</i></span>
                     </td>
                     <td>
-                        <span ng-hide="type.editing" ng-click="financeurTypesCtrl.delete(type)"><i class="material-icons clickable">delete</i></span>
-                        <span ng-show="type.editing" ng-click="financeurTypesCtrl.cancel(type)"><i class="material-icons clickable">clear</i></span>
+                        <span ng-hide="type.editing" ng-click="financeurTypesCtrl.delete(type)"><i class="icon clickable">delete</i></span>
+                        <span ng-show="type.editing" ng-click="financeurTypesCtrl.cancel(type)"><i class="icon clickable">undo</i></span>
                     </td>
                 </tr>
                 <tr>
@@ -41,7 +41,7 @@
                         <input type="text" ng-model="financeurTypesCtrl.addObject.libelle" />
                     </td>
                     <td class="centered">
-                        <span ng-click="financeurTypesCtrl.add()"><i class="material-icons clickable">add</i></span>
+                        <span ng-click="financeurTypesCtrl.add()"><i class="icon clickable">add</i></span>
                     </td>
 
                 </tr>

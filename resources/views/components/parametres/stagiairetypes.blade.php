@@ -49,12 +49,12 @@
                         <my-editable type="checkbox" model="type.is_demandeur_emploi" editing-flag="!type.editing" />
                     </td>
                     <td>
-                        <span ng-hide="type.editing" ng-click="type.editing = true"><i class="material-icons clickable">create</i></span>
-                        <span ng-show="type.editing" ng-click="stagiaireTypesCtrl.update(type)"><i class="material-icons clickable">done</i></span>
+                        <span ng-hide="type.editing" ng-click="type.editing = true"><i class="icon clickable">edit</i></span>
+                        <span ng-show="type.editing" ng-click="stagiaireTypesCtrl.update(type)"><i class="icon clickable">validate</i></span>
                     </td>
                     <td>
-                        <span ng-hide="type.editing" ng-click="stagiaireTypesCtrl.delete(type)"><i class="material-icons clickable">delete</i></span>
-                        <span ng-show="type.editing" ng-click="stagiaireTypesCtrl.cancel(type)"><i class="material-icons clickable">clear</i></span>
+                        <span ng-hide="type.editing" ng-click="stagiaireTypesCtrl.delete(type)"><i class="icon clickable">delete</i></span>
+                        <span ng-show="type.editing" ng-click="stagiaireTypesCtrl.cancel(type)"><i class="icon clickable">undo</i></span>
                     </td>
                 </tr>
                 <tr>
@@ -77,7 +77,7 @@
                         <input type="checkbox" ng-model="stagiaireTypesCtrl.addObject.is_demandeur_emploi" />
                     </td>
                     <td class="centered">
-                        <span ng-click="stagiaireTypesCtrl.add()"><i class="material-icons clickable">add</i></span>
+                        <span ng-click="stagiaireTypesCtrl.add()"><i class="icon clickable">add</i></span>
                     </td>
 
                 </tr>

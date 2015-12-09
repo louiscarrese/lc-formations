@@ -25,12 +25,12 @@
                         <my-editable type="text" model="domaine.libelle" editing-flag="domaine.editing" />
                     </td>
                     <td>
-                        <span ng-hide="domaine.editing" ng-click="domaine.editing = true"><i class="material-icons clickable">create</i></span>
-                        <span ng-show="domaine.editing" ng-click="domaineFormationsCtrl.update(domaine)"><i class="material-icons clickable">done</i></span>
+                        <span ng-hide="domaine.editing" ng-click="domaine.editing = true"><i class="icon clickable">edit</i></span>
+                        <span ng-show="domaine.editing" ng-click="domaineFormationsCtrl.update(domaine)"><i class="icon clickable">validate</i></span>
                     </td>
                     <td>
-                        <span ng-hide="domaine.editing" ng-click="domaineFormationsCtrl.delete(domaine)"><i class="material-icons clickable">delete</i></span>
-                        <span ng-show="domaine.editing" ng-click="domaineFormationsCtrl.cancel(domaine)"><i class="material-icons clickable">clear</i></span>
+                        <span ng-hide="domaine.editing" ng-click="domaineFormationsCtrl.delete(domaine)"><i class="icon clickable">delete</i></span>
+                        <span ng-show="domaine.editing" ng-click="domaineFormationsCtrl.cancel(domaine)"><i class="icon clickable">undo</i></span>
                     </td>
                 </tr>
                 <tr>
@@ -41,7 +41,7 @@
                         <input type="text" ng-model="domaineFormationsCtrl.addObject.libelle" />
                     </td>
                     <td class="centered">
-                        <span ng-click="domaineFormationsCtrl.add()"><i class="material-icons clickable">add</i></span>
+                        <span ng-click="domaineFormationsCtrl.add()"><i class="icon clickable">add</i></span>
                     </td>
 
                 </tr>

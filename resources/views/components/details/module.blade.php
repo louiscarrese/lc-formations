@@ -61,11 +61,11 @@
             </tr>
         </table>
         <div class="global-actions">
-            <span ng-show="moduleCtrl.mode === 'read'" ng-click="moduleCtrl.edit()"><i class="material-icons clickable">create</i></span>
-            <span ng-show="moduleCtrl.mode === 'create'" ng-click="moduleCtrl.create()"><i class="material-icons clickable">done</i></span>
-            <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.update()"><i class="material-icons clickable">done</i></span>
-            <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.cancel()"><i class="material-icons clickable">clear</i></span>
-            <span ng-show="moduleCtrl.mode !== 'create'" ng-click="moduleCtrl.delete()"><i class="material-icons clickable">delete</i></span>
+            <span ng-show="moduleCtrl.mode === 'read'" ng-click="moduleCtrl.edit()"><i class="icon clickable">edit</i></span>
+            <span ng-show="moduleCtrl.mode === 'create'" ng-click="moduleCtrl.create()"><i class="icon clickable">validate</i></span>
+            <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.update()"><i class="icon clickable">validate</i></span>
+            <span ng-show="moduleCtrl.mode === 'edit'" ng-click="moduleCtrl.cancel()"><i class="icon clickable">undo</i></span>
+            <span ng-show="moduleCtrl.mode !== 'create'" ng-click="moduleCtrl.delete()"><i class="icon clickable">delete</i></span>
         </div>
     </div>
 </div>

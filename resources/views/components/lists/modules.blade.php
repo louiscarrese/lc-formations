@@ -37,14 +37,14 @@
                 <td>
                     <span>
                         <a ng-href="/modules/@{{module.id}}">
-                            <i class="material-icons clickable">info_outline</i>
+                            <i class="icon clickable">info</i>
                         </a>
                     </span>
                 </td>
                 <td>
                     <span>
                         <a ng-href="/modules/@{{module.id}}?edit=true">
-                            <i class="material-icons clickable">create</i>
+                            <i class="icon clickable">edit</i>
                         </a>
                     </span>
                 </td>
@@ -55,7 +55,7 @@
     <div class="global-actions">
         <span>
             <a ng-href="/modules/create">
-                <i class="material-icons clickable">add</i>
+                <i class="icon clickable">add</i>
             </a>
         </span>
     </div>

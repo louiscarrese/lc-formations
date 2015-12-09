@@ -9,7 +9,7 @@
         <li>
             <form method="get" action="universal_search.php" id="search-form">
                 <input id="search-input" name="search-input" type="text" placeholder="Recherche universelle"/>
-                <i class="material-icons clickable" onclick="document.getElementById('search-form').submit();">search</i>
+                <i class="icon clickable" onclick="document.getElementById('search-form').submit();">search</i>
             </form>
         </li>
     </ul>
