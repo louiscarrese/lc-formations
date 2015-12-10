@@ -1,7 +1,5 @@
 <div ng-controller="detailController as detailCtrl">
 
-<!-- TODO: Trouver un moyen de changer le titre suivant si on est en création ou en modification -->
-
     <h2>@{{detailCtrl.titleText}}</h2>
     <div class="detail-table-container">
         <table>
@@ -59,15 +57,10 @@
                     <my-editable type="textarea" model="detailCtrl.data.materiel" editing-flag="detailCtrl.editing" rows="5" cols="50" class="full-width"></my-editable>
                 </td>
             </tr>
-            <tr>
-                <td class="key">Vérification</td>
-                <td class="value">
-                    <span>@{{detailCtrl.data.module_id}}</span>
-                </td>
-            </tr>
         </table>
 
     </div>
+
     <div class="global-actions">
         <span ng-show="detailCtrl.mode === 'read'" ng-click="detailCtrl.edit()"><i class="icon clickable">edit</i></span>
         <span ng-show="detailCtrl.mode === 'create'" ng-click="detailCtrl.create()"><i class="icon clickable">validate</i></span>
@@ -75,4 +68,81 @@
         <span ng-show="detailCtrl.mode === 'edit'" ng-click="detailCtrl.cancel()"><i class="icon clickable">undo</i></span>
         <span ng-show="detailCtrl.mode !== 'create'" ng-click="detailCtrl.delete()"><i class="icon clickable">delete</i></span>
     </div>
+
+    <h3>Jours</h3>
+    <div ng-controller="sessionJoursController as sessionJoursCtrl" ng-show="detailCtrl.mode != 'create'" ng-init="sessionJoursCtrl.parent = detailCtrl" class="list-table-container">
+        <table>
+            <thead>
+                <tr>
+                    <td class="clickable">
+                        <my-sortable-header set="sessionJoursCtrl.setSort('id')" get="sessionJoursCtrl.getSort('id')">Id</my-sortable-header>
+                    </td>
+                    <td class="clickable">
+                        <my-sortable-header set="sessionJoursCtrl.setSort('date')" get="sessionJoursCtrl.getSort('date')">Date</my-sortable-header>
+                    </td>
+                    <td class="clickable">
+                        <my-sortable-header set="sessionJoursCtrl.setSort('heure_debut')" get="sessionJoursCtrl.getSort('heure_debut')">Début</my-sortable-header>
+                    </td>
+                    <td class="clickable">
+                        <my-sortable-header set="sessionJoursCtrl.setSort('heure_fin')" get="sessionJoursCtrl.getSort('heure_fin')">Fin</my-sortable-header>
+                    </td>
+                    <td class="clickable">
+                        <my-sortable-header set="sessionJoursCtrl.setSort('lieu_id')" get="sessionJoursCtrl.getSort('lieu_id')">Lieu</my-sortable-header>
+                    </td>
+                    <td><!--Edit--></td>
+                    <td><!--Delete--></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="jour in sessionJoursCtrl.data">
+                    <td class="centered">
+                        <my-editable type="integer" model="jour.id" editing-flag="jour.editing" size="1"/>
+                    </td>
+                    <td>
+                        <my-editable type="text" model="jour.date" editing-flag="jour.editing" />
+                    </td>
+                    <td>
+                        <my-editable type="text" model="jour.heure_debut" editing-flag="jour.editing" />
+                    </td>
+                    <td>
+                        <my-editable type="text" model="jour.heure_fin" editing-flag="jour.editing" />
+                    </td>
+                    <td>
+                        <my-editable type="dropdown" source="sessionJoursCtrl.linkedData.lieus" source-id="id" source-label="libelle" model="jour.lieu_id" model-label="jour.lieu_label" editing-flag="jour.editing" />
+                    </td>
+                    <td>
+                        <span ng-hide="jour.editing" ng-click="jour.editing = true"><i class="icon clickable">edit</i></span>
+                        <span ng-show="jour.editing" ng-click="sessionJoursCtrl.update(jour)"><i class="icon clickable">validate</i></span>
+                    </td>
+                    <td>
+                        <span ng-hide="jour.editing" ng-click="sessionJoursCtrl.delete(jour)"><i class="icon clickable">delete</i></span>
+                        <span ng-show="jour.editing" ng-click="sessionJoursCtrl.cancel(jour)"><i class="icon clickable">undo</i></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- vide car id auto -->
+                    </td>
+                    <td>
+                        <input type="text" ng-model="sessionJoursCtrl.addObject.date" />
+                    </td>
+                    <td>
+                        <input type="text" ng-model="sessionJoursCtrl.addObject.heure_debut" />
+                    </td>
+                    <td>
+                        <input type="text" ng-model="sessionJoursCtrl.addObject.heure_fin" />
+                    </td>
+                    <td>
+                        <select ng-options="item.id as item.libelle for item in sessionJoursCtrl.linkedData.lieus" ng-model="sessionJoursCtrl.addObject.lieu_id" />
+                    </td>
+                    <td class="centered">
+                        <span ng-click="sessionJoursCtrl.add()"><i class="icon clickable">add</i></span>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
 </div>

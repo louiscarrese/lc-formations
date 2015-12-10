@@ -30,16 +30,18 @@ function detailController(editModeService, dataService, detailService) {
         self.getSuccess(data);
     });
 
-    self.linkedData = detailService.getLinkedData();
-
-    detailService.addListeners(this);
-
+    if(detailService != undefined) {
+        if(typeof detailService.getLinkedData == 'function')
+            self.linkedData = detailService.getLinkedData();
+        if(typeof detailService.addListeners == 'function')
+            detailService.addListeners(this);
+    }
     //CRUD
 
     function create() {
         dataService.save(self.data, 
             function(value, responseHeaders) {
-                self.data = value;
+                self.getSuccess(value);
                 self.mode = 'read';
                 self.editing = false;
             }, 
@@ -72,7 +74,8 @@ function detailController(editModeService, dataService, detailService) {
     function del() {
         self.data.$delete({id:self.internalKey},
             function(value, responseHeaders) {
-                window.location.href=detailService.getListUrl();
+                if(detailService != undefined && typeof detailService.getListUrl == 'function')
+                    window.location.href=detailService.getListUrl();
             },
             function(httpResponseHeaders) {
                 alert('error');
@@ -88,10 +91,13 @@ function detailController(editModeService, dataService, detailService) {
 
     function getSuccess(data) {
         self.data = data;
-        self.internalKey = detailService.getInternalKey(self.data);
+        if(detailService != undefined && typeof detailService.getInternalKey == 'function')
+            self.internalKey = detailService.getInternalKey(self.data);
 
-        var successData = detailService.getSuccess(self.data);
-        self.titleText = successData.titleText;
+        if(detailService != undefined && typeof detailService.getSuccess == 'function') {
+            var successData = detailService.getSuccess(self.data);
+            self.titleText = successData.titleText;
+        }
 
     }
 

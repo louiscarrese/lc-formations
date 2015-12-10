@@ -37,6 +37,8 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
 
     Route::resource('session', 'SessionController',
         ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+    Route::resource('session_jour', 'SessionJourController',
+        ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 });
 
 

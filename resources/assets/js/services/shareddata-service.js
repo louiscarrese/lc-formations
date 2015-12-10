@@ -1,0 +1,5 @@
+function sharedDataServiceFactory() {
+    return {
+        data: {}
+    };
+}

@@ -78,9 +78,13 @@ elixir(function(mix) {
             'directives/myEditable-directive.js',
             'filters/myCustomFilter-filter.js',
             'services/data/sessions-service.js',
+            'services/data/sessionjours-service.js',
             'services/data/modules-service.js',
+            'services/data/lieu-service.js',
             'services/editmode-service.js',
+            'services/shareddata-service.js',
             'services/details/sessiondetail-service.js',
+            'services/tables/sessionjours-service.js',
             'controllers/detail-controller.js',
             'controllers/editableTable-controller.js',
             'app/sessionDetailApp.js'

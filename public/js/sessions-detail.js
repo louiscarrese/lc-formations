@@ -451,12 +451,24 @@ function sessionsServiceFactory($resource) {
 }
 
 
+function sessionJoursServiceFactory($resource) {
+    return $resource('/api/session_jour/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
 function modulesServiceFactory($resource) {
     return $resource('/api/module/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
+
+function lieuServiceFactory($resource) {
+    return $resource('/api/lieu/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
 
 function editModeServiceFactory() {
     return {
@@ -533,7 +545,12 @@ function editModeServiceFactory() {
         }
 };
 }
-function sessionDetailServiceFactory(modulesService) {
+function sharedDataServiceFactory() {
+    return {
+        data: {}
+    };
+}
+function sessionDetailServiceFactory(sharedDataService, modulesService) {
     return {
         getLinkedData: function() {
             var modules = modulesService.query();
@@ -552,6 +569,9 @@ function sessionDetailServiceFactory(modulesService) {
             if(data.module_id != undefined) {
                 data.module_label = data.module.libelle;
             }
+
+            sharedDataService.data.session_id = data.id;
+
 
             //Build the return structure
             return {
@@ -589,6 +609,33 @@ function sessionDetailServiceFactory(modulesService) {
 
     }
 }
+function sessionJoursTableServiceFactory(sharedDataService, lieuService) {
+    return {
+        getLinkedData: function() {
+            var lieus = lieuService.query();
+
+            return {
+                'lieus': lieus
+            }
+        },
+
+        getSuccess: function(data) {
+            //Modify data
+            if(data.lieu_id != undefined) {
+                data.lieu_label = data.lieu.libelle;
+            }
+
+            //Build the return structure
+            return {
+            };
+        },
+
+        preSend: function(data, parentController) {
+            data.session_id = sharedDataService.data.session_id;
+        }
+
+    };
+}
 function detailController(editModeService, dataService, detailService) {
     var self = this;
 
@@ -621,16 +668,18 @@ function detailController(editModeService, dataService, detailService) {
         self.getSuccess(data);
     });
 
-    self.linkedData = detailService.getLinkedData();
-
-    detailService.addListeners(this);
-
+    if(detailService != undefined) {
+        if(typeof detailService.getLinkedData == 'function')
+            self.linkedData = detailService.getLinkedData();
+        if(typeof detailService.addListeners == 'function')
+            detailService.addListeners(this);
+    }
     //CRUD
 
     function create() {
         dataService.save(self.data, 
             function(value, responseHeaders) {
-                self.data = value;
+                self.getSuccess(value);
                 self.mode = 'read';
                 self.editing = false;
             }, 
@@ -663,7 +712,8 @@ function detailController(editModeService, dataService, detailService) {
     function del() {
         self.data.$delete({id:self.internalKey},
             function(value, responseHeaders) {
-                window.location.href=detailService.getListUrl();
+                if(detailService != undefined && typeof detailService.getListUrl == 'function')
+                    window.location.href=detailService.getListUrl();
             },
             function(httpResponseHeaders) {
                 alert('error');
@@ -679,10 +729,13 @@ function detailController(editModeService, dataService, detailService) {
 
     function getSuccess(data) {
         self.data = data;
-        self.internalKey = detailService.getInternalKey(self.data);
+        if(detailService != undefined && typeof detailService.getInternalKey == 'function')
+            self.internalKey = detailService.getInternalKey(self.data);
 
-        var successData = detailService.getSuccess(self.data);
-        self.titleText = successData.titleText;
+        if(detailService != undefined && typeof detailService.getSuccess == 'function') {
+            var successData = detailService.getSuccess(self.data);
+            self.titleText = successData.titleText;
+        }
 
     }
 
@@ -693,17 +746,17 @@ function detailController(editModeService, dataService, detailService) {
     */
 /*
     angular.module('stagiaireTypesModule')
-        .controller('editableTableController', ['service', editableTableController]);
+        .controller('editableTableController', ['dataService', editableTableController]);
 */
 
 
-    function editableTableController($filter, service) {
+    function editableTableController($filter, dataService, tableService, sharedDataService) {
         var self = this;
         self.orderBy = $filter('orderBy');
 
-        self.data = service.query(function() {
+        self.data = dataService.query(function() {
             angular.forEach(self.data, function(value, key) {
-                value.internalKey = value.id;
+                self.getSuccess(value);
                 self.sort();
             });
         });
@@ -715,6 +768,10 @@ function detailController(editModeService, dataService, detailService) {
 
         self.sortProp = "id";
         self.sortReverse = false;
+
+        if(tableService != undefined) {
+            self.linkedData = tableService.getLinkedData();
+        }
 
         self.setSort = function(key) {
             if(self.sortProp == key) {
@@ -737,15 +794,26 @@ function detailController(editModeService, dataService, detailService) {
             self.data = self.orderBy(self.data, self.sortProp, self.sortReverse);
         }
 
+        self.getSuccess = function(value) {
+            value.internalKey = value.id;
+            if(tableService != undefined) {
+                tableService.getSuccess(value);
+            }
+        }
+
         /**
          * Update
          */
         self.update = function(type) {
+            if(tableService != undefined) {
+                tableService.preSend(type);
+            }
             type.$update({id: type.internalKey}, self.updateSuccess, self.updateError);
         };
 
         self.updateSuccess = function(value, responseHeaders) {
-            value.internalKey = value.id;
+
+            self.getSuccess(value);
             value.editing = false;
             self.sort();
 
@@ -773,11 +841,14 @@ function detailController(editModeService, dataService, detailService) {
          * Add
          */
         self.add = function() {
-            service.save(self.addObject, self.addSuccess, self.addError);
+            if(tableService != undefined) {
+                tableService.preSend(self.addObject);
+            }
+            dataService.save(self.addObject, self.addSuccess, self.addError);
         };
 
         self.addSuccess = function(value, responseHeaders) {
-            value.internalKey = value.id;
+            self.getSuccess(value);
             self.data.push(value);
             self.sort();
             self.addObject = {};
@@ -792,7 +863,7 @@ function detailController(editModeService, dataService, detailService) {
          * Cancel
          */
         self.cancel = function(type) {
-            service.get({id: type.internalKey}, function(value, responseHeaders) {
+            dataService.get({id: type.internalKey}, function(value, responseHeaders) {
                 value.editing = false;
                 value.internalKey = value.id;
                 self.data[self.data.indexOf(type)] = value;
@@ -803,7 +874,7 @@ function detailController(editModeService, dataService, detailService) {
          * Get
          */
         self.get = function(type) {
-            service.get({id: type.id}, function(value, responseHeaders) {
+            dataService.get({id: type.id}, function(value, responseHeaders) {
                 value.internalKey = value.id;
                 self.data[self.data.indexOf(type)] = value;
             });
@@ -823,13 +894,18 @@ function detailController(editModeService, dataService, detailService) {
 
 angular.module('sessionsDetailServices', ['ngResource'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('sessionJoursService', ['$resource', sessionJoursServiceFactory])
     .factory('modulesService', ['$resource', modulesServiceFactory])
-    .factory('sessionDetailService', ['modulesService', sessionDetailServiceFactory])
+    .factory('sessionDetailService', ['sharedDataService', 'modulesService', sessionDetailServiceFactory])
+    .factory('lieuService', ['$resource', lieuServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
+    .factory('sharedDataService', [sharedDataServiceFactory])
+    .factory('sessionJoursTableService', ['sharedDataService', 'lieuService', sessionJoursTableServiceFactory])
 ;
 
 angular.module('sessionsDetailControllers', [])
         .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', detailController])
+        .controller('sessionJoursController', ['$filter', 'sessionJoursService', 'sessionJoursTableService', editableTableController])
 ;
 
 angular.module('sessionsDetailFilters', [])

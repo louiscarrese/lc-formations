@@ -8,7 +8,7 @@ angular.module('modulesDetailServices', ['ngResource'])
 
 angular.module('modulesDetailControllers', [])
         .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
-        .controller('sessionsTableController', ['$filter', 'sessionsService', editableTableController])
+        .controller('sessionsListController', ['$filter', 'sessionsService', editableTableController])
 ;
 
 angular.module('modulesDetailFilters', [])

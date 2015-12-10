@@ -1,4 +1,4 @@
-function sessionDetailServiceFactory(modulesService) {
+function sessionDetailServiceFactory(sharedDataService, modulesService) {
     return {
         getLinkedData: function() {
             var modules = modulesService.query();
@@ -17,6 +17,9 @@ function sessionDetailServiceFactory(modulesService) {
             if(data.module_id != undefined) {
                 data.module_label = data.module.libelle;
             }
+
+            sharedDataService.data.session_id = data.id;
+
 
             //Build the return structure
             return {

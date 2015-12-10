@@ -27,33 +27,19 @@ class SessionController extends Controller
      */
     public function store(Request $request)
     {
-
-        DB::beginTransaction();
-
         $session = new \ModuleFormation\Session;
         $session->libelle = $request->input('libelle');
         $session->nb_jours = $request->input('nb_jours');
         $session->effectif_max = $request->input('effectif_max');
         $session->objectifs_pedagogiques = $request->input('objectifs_pedagogiques');
         $session->materiel = $request->input('materiel');
+        $session->module_id = $request->input('module_id');
 
-        $module = \ModuleFormation\Module::findOrFail($request->input('module_id'));
-        $module->sessions()->save($session);
+        $session->save();
 
-
-        $jour_index = 0;
-        while($request->has('jours.' . $jour_index . '.date')) {
-            $jour_input = 'jours.' . $jour_index . '.';
-            $jour = new \ModuleFormation\SessionJour;
-            $jour->date = $request->input($jour_input . 'date');
-            $jour->lieu = $request->input($jour_input . 'lieu');
-            $jour->heure_debut = $request->input($jour_input . 'heure_debut');
-            $jour->heure_fin = $request->input($jour_input . 'heure_fin');
-
-            $session->session_jours()->save($jour);
-        }
-
-        DB::commit();
+        //Regrab it with its module
+        $session = \ModuleFormation\Session::with('module')->findOrFail($session->id);
+        return response()->json($session);
     }
 
     /**
@@ -82,24 +68,16 @@ class SessionController extends Controller
         $session->libelle = $request->input('libelle');
         $session->nb_heures = $request->input('nb_heures');
         $session->nb_jours = $request->input('nb_jours');
+        $session->effectif_max = $request->input('effectif_max');
+        $session->objectifs_pedagogiques = $request->input('objectifs_pedagogiques');
+        $session->materiel = $request->input('materiel');
+        $session->module_id = $request->input('module_id');
 
-        $session->session_jours()->delete();
+        $session->save();
 
-        $jours = array();
-        $jour_index = 0;
-        while($request->has('jours.' . $jour_index . '.date')) {
-            $jour_input = 'jours.' . $jour_index . '.';
-            $jour = new \ModuleFormation\SessionJour;
-            $jour->date = $request->input($jour_input . 'date');
-            $jour->date = $request->input($jour_input . 'lieu');
-            $jour->heure_debut = $request->input($jour_input . 'heure_debut');
-            $jour->heure_fin = $request->input($jour_input . 'heure_fin');
-
-            $jours[] = $jour;
-
-            $jour_index++;
-        }
-
+        //Regrab it with its module
+        $session = \ModuleFormation\Session::with('module')->findOrFail($sessionId);
+        return response()->json($session);
     }
 
     /**
@@ -110,6 +88,7 @@ class SessionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        \ModuleFormation\Session::destroy($id);
+
     }
 }

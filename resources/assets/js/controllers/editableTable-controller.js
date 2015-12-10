@@ -3,17 +3,17 @@
     */
 /*
     angular.module('stagiaireTypesModule')
-        .controller('editableTableController', ['service', editableTableController]);
+        .controller('editableTableController', ['dataService', editableTableController]);
 */
 
 
-    function editableTableController($filter, service) {
+    function editableTableController($filter, dataService, tableService, sharedDataService) {
         var self = this;
         self.orderBy = $filter('orderBy');
 
-        self.data = service.query(function() {
+        self.data = dataService.query(function() {
             angular.forEach(self.data, function(value, key) {
-                value.internalKey = value.id;
+                self.getSuccess(value);
                 self.sort();
             });
         });
@@ -25,6 +25,10 @@
 
         self.sortProp = "id";
         self.sortReverse = false;
+
+        if(tableService != undefined) {
+            self.linkedData = tableService.getLinkedData();
+        }
 
         self.setSort = function(key) {
             if(self.sortProp == key) {
@@ -47,15 +51,26 @@
             self.data = self.orderBy(self.data, self.sortProp, self.sortReverse);
         }
 
+        self.getSuccess = function(value) {
+            value.internalKey = value.id;
+            if(tableService != undefined) {
+                tableService.getSuccess(value);
+            }
+        }
+
         /**
          * Update
          */
         self.update = function(type) {
+            if(tableService != undefined) {
+                tableService.preSend(type);
+            }
             type.$update({id: type.internalKey}, self.updateSuccess, self.updateError);
         };
 
         self.updateSuccess = function(value, responseHeaders) {
-            value.internalKey = value.id;
+
+            self.getSuccess(value);
             value.editing = false;
             self.sort();
 
@@ -83,11 +98,14 @@
          * Add
          */
         self.add = function() {
-            service.save(self.addObject, self.addSuccess, self.addError);
+            if(tableService != undefined) {
+                tableService.preSend(self.addObject);
+            }
+            dataService.save(self.addObject, self.addSuccess, self.addError);
         };
 
         self.addSuccess = function(value, responseHeaders) {
-            value.internalKey = value.id;
+            self.getSuccess(value);
             self.data.push(value);
             self.sort();
             self.addObject = {};
@@ -102,7 +120,7 @@
          * Cancel
          */
         self.cancel = function(type) {
-            service.get({id: type.internalKey}, function(value, responseHeaders) {
+            dataService.get({id: type.internalKey}, function(value, responseHeaders) {
                 value.editing = false;
                 value.internalKey = value.id;
                 self.data[self.data.indexOf(type)] = value;
@@ -113,7 +131,7 @@
          * Get
          */
         self.get = function(type) {
-            service.get({id: type.id}, function(value, responseHeaders) {
+            dataService.get({id: type.id}, function(value, responseHeaders) {
                 value.internalKey = value.id;
                 self.data[self.data.indexOf(type)] = value;
             });

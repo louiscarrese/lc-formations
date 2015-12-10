@@ -27,6 +27,6 @@ function moduleDetailServiceFactory(domaineFormationsService) {
 
         getListUrl: function() {
             return '/modules';
-        }
+        },
     }
 }
