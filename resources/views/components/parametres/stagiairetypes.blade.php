@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="type in stagiaireTypesCtrl.data | myCustomFilter:stagiaireTypesCtrl.filterInput:'id':'libelle' track by type.id">
+                <tr ng-repeat="type in stagiaireTypesCtrl.data | myCustomFilter:stagiaireTypesCtrl.filterInput:'id':'libelle' track by type.id" ng-form="stagiaireTypesCtrl.form_@{{type.id}}">
                     <td class="centered">
                         <my-editable type="integer" model="type.id" editing-flag="type.editing" size="1" />
                     </td>
@@ -50,14 +50,14 @@
                     </td>
                     <td>
                         <span ng-hide="type.editing" ng-click="type.editing = true"><i class="icon clickable">edit</i></span>
-                        <span ng-show="type.editing" ng-click="stagiaireTypesCtrl.update(type)"><i class="icon clickable">validate</i></span>
+                        <span ng-show="type.editing" ng-click="stagiaireTypesCtrl.editSubmit(type)"><i class="icon clickable">validate</i></span>
                     </td>
                     <td>
                         <span ng-hide="type.editing" ng-click="stagiaireTypesCtrl.delete(type)"><i class="icon clickable">delete</i></span>
                         <span ng-show="type.editing" ng-click="stagiaireTypesCtrl.cancel(type)"><i class="icon clickable">undo</i></span>
                     </td>
                 </tr>
-                <tr>
+                <tr ng-form="stagiaireTypesCtrl.form_add">
                     <td>
                         <!-- vide car id auto -->
                     </td>
@@ -77,7 +77,7 @@
                         <input type="checkbox" ng-model="stagiaireTypesCtrl.addObject.is_demandeur_emploi" />
                     </td>
                     <td class="centered">
-                        <span ng-click="stagiaireTypesCtrl.add()"><i class="icon clickable">add</i></span>
+                        <span ng-click="stagiaireTypesCtrl.addSubmit()"><i class="icon clickable">add</i></span>
                     </td>
 
                 </tr>

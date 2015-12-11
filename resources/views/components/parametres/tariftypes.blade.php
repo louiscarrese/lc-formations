@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="type in tarifTypesCtrl.data | myCustomFilter:tarifTypesCtrl.filterInput:'id':'libelle' track by type.id">
+                <tr ng-repeat="type in tarifTypesCtrl.data | myCustomFilter:tarifTypesCtrl.filterInput:'id':'libelle' track by type.id" ng-form="tarifTypesCtrl.form_@{{type.id}}">
                     <td class="centered">
                         <my-editable type="integer" model="type.id" editing-flag="type.editing" size="1" />
                     </td>
@@ -26,14 +26,14 @@
                     </td>
                     <td>
                         <span ng-hide="type.editing" ng-click="type.editing = true"><i class="icon clickable">edit</i></span>
-                        <span ng-show="type.editing" ng-click="tarifTypesCtrl.update(type)"><i class="icon clickable">validate</i></span>
+                        <span ng-show="type.editing" ng-click="tarifTypesCtrl.editSubmit(type)"><i class="icon clickable">validate</i></span>
                     </td>
                     <td>
                         <span ng-hide="type.editing" ng-click="tarifTypesCtrl.delete(type)"><i class="icon clickable">delete</i></span>
                         <span ng-show="type.editing" ng-click="tarifTypesCtrl.cancel(type)"><i class="icon clickable">undo</i></span>
                     </td>
                 </tr>
-                <tr>
+                <tr ng-form="tarifTypesCtrl.form_add">
                     <td>
                         <!-- vide car id auto -->
                     </td>
@@ -41,7 +41,7 @@
                         <input type="text" ng-model="tarifTypesCtrl.addObject.libelle" />
                     </td>
                     <td class="centered">
-                        <span ng-click="tarifTypesCtrl.add()"><i class="icon clickable">add</i></span>
+                        <span ng-click="tarifTypesCtrl.addSubmit()"><i class="icon clickable">add</i></span>
                     </td>
 
                 </tr>

@@ -25,7 +25,7 @@
                     </td>
                     <td>
                         <span ng-hide="domaine.editing" ng-click="domaine.editing = true"><i class="icon clickable">edit</i></span>
-                        <span ng-show="domaine.editing"><button type="submit" ng-click="domaineFormationsCtrl.editSubmit(domaine)"><i class="icon clickable">validate</i></button></span>
+                        <span ng-show="domaine.editing" ng-click="domaineFormationsCtrl.editSubmit(domaine)"><i class="icon clickable">validate</i></span>
                     </td>
                     <td>
                         <span ng-hide="domaine.editing" ng-click="domaineFormationsCtrl.delete(domaine)"><i class="icon clickable">delete</i></span>
@@ -40,12 +40,11 @@
                         <input type="text" ng-model="domaineFormationsCtrl.addObject.libelle" required/>
                     </td>
                     <td class="centered">
-                        <span ng-click="domaineFormationsCtrl.add()"><button type="submit" ng-click="domaineFormationsCtrl.addSubmit()"><i class="icon clickable">add</i></button></span>
+                        <span ng-click="domaineFormationsCtrl.addSubmit()"><i class="icon clickable">add</i></span>
                     </td>
 
                 </tr>
             </tbody>
         </table>
     <div class="error-message">@{{domaineFormationsCtrl.errorMessage}}</div>
-
 </div>

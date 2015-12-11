@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="type in formateurTypesCtrl.data | myCustomFilter:formateurTypesCtrl.filterInput:'id':'libelle' track by type.id">
+                <tr ng-repeat="type in formateurTypesCtrl.data | myCustomFilter:formateurTypesCtrl.filterInput:'id':'libelle' track by type.id" ng-form="formateurTypesCtrl.form_@{{type.id}}">
                     <td class="centered">
                         <my-editable type="integer" model="type.id" editing-flag="type.editing" size="1" />
                     </td>
@@ -26,14 +26,14 @@
                     </td>
                     <td>
                         <span ng-hide="type.editing" ng-click="type.editing = true"><i class="icon clickable">edit</i></span>
-                        <span ng-show="type.editing" ng-click="formateurTypesCtrl.update(type)"><i class="icon clickable">validate</i></span>
+                        <span ng-show="type.editing" ng-click="formateurTypesCtrl.editSubmit(type)"><i class="icon clickable">validate</i></span>
                     </td>
                     <td>
                         <span ng-hide="type.editing" ng-click="formateurTypesCtrl.delete(type)"><i class="icon clickable">delete</i></span>
                         <span ng-show="type.editing" ng-click="formateurTypesCtrl.cancel(type)"><i class="icon clickable">undo</i></span>
                     </td>
                 </tr>
-                <tr>
+                <tr ng-form="formateurTypesCtrl.form_add">
                     <td>
                         <input type="text" ng-model="formateurTypesCtrl.addObject.id" size="1" />
                     </td>
@@ -41,7 +41,7 @@
                         <input type="text" ng-model="formateurTypesCtrl.addObject.libelle" size="1"/>
                     </td>
                     <td class="centered">
-                        <span ng-click="formateurTypesCtrl.add()"><i class="icon clickable">add</i></span>
+                        <span ng-click="formateurTypesCtrl.addSubmit()"><i class="icon clickable">add</i></span>
                     </td>
 
                 </tr>

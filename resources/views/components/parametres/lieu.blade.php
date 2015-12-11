@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="lieu in lieuCtrl.data | myCustomFilter:lieuCtrl.filterInput:'id':'libelle' track by lieu.id">
+                <tr ng-repeat="lieu in lieuCtrl.data | myCustomFilter:lieuCtrl.filterInput:'id':'libelle' track by lieu.id" ng-form="lieuCtrl.form_@{{lieu.id}}">
                     <td class="centered">
                         <my-editable type="integer" model="lieu.id" editing-flag="lieu.editing" size="1" />
                     </td>
@@ -26,14 +26,14 @@
                     </td>
                     <td>
                         <span ng-hide="lieu.editing" ng-click="lieu.editing = true"><i class="icon clickable">edit</i></span>
-                        <span ng-show="lieu.editing" ng-click="lieuCtrl.update(lieu)"><i class="icon clickable">validate</i></span>
+                        <span ng-show="lieu.editing" ng-click="lieuCtrl.editSubmit(lieu)"><i class="icon clickable">validate</i></span>
                     </td>
                     <td>
                         <span ng-hide="lieu.editing" ng-click="lieuCtrl.delete(lieu)"><i class="icon clickable">delete</i></span>
                         <span ng-show="lieu.editing" ng-click="lieuCtrl.cancel(lieu)"><i class="icon clickable">undo</i></span>
                     </td>
                 </tr>
-                <tr>
+                <tr ng-form="lieuCtrl.form_add">
                     <td>
                         <!-- vide car id auto -->
                     </td>
@@ -41,7 +41,7 @@
                         <input type="text" ng-model="lieuCtrl.addObject.libelle" />
                     </td>
                     <td class="centered">
-                        <span ng-click="lieuCtrl.add()"><i class="icon clickable">add</i></span>
+                        <span ng-click="lieuCtrl.addSubmit()"><i class="icon clickable">add</i></span>
                     </td>
 
                 </tr>

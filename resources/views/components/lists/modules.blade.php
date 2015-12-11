@@ -59,5 +59,4 @@
             </a>
         </span>
     </div>
-   <div class="error-message">@{{modulesListCtrl.errorMessage}}</div>
 </div>

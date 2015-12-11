@@ -94,7 +94,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="jour in sessionJoursCtrl.data">
+                <tr ng-repeat="jour in sessionJoursCtrl.data" ng-form="sessionJoursCtrl.form_@{{jour.id}}">
                     <td class="centered">
                         <my-editable type="integer" model="jour.id" editing-flag="jour.editing" size="1"/>
                     </td>
@@ -112,14 +112,14 @@
                     </td>
                     <td>
                         <span ng-hide="jour.editing" ng-click="jour.editing = true"><i class="icon clickable">edit</i></span>
-                        <span ng-show="jour.editing" ng-click="sessionJoursCtrl.update(jour)"><i class="icon clickable">validate</i></span>
+                        <span ng-show="jour.editing" ng-click="sessionJoursCtrl.editSubmit(jour)"><i class="icon clickable">validate</i></span>
                     </td>
                     <td>
                         <span ng-hide="jour.editing" ng-click="sessionJoursCtrl.delete(jour)"><i class="icon clickable">delete</i></span>
                         <span ng-show="jour.editing" ng-click="sessionJoursCtrl.cancel(jour)"><i class="icon clickable">undo</i></span>
                     </td>
                 </tr>
-                <tr>
+                <tr ng-form="sessionJoursCtrl.form_add">
                     <td>
                         <!-- vide car id auto -->
                     </td>
@@ -136,7 +136,7 @@
                         <select ng-options="item.id as item.libelle for item in sessionJoursCtrl.linkedData.lieus" ng-model="sessionJoursCtrl.addObject.lieu_id" />
                     </td>
                     <td class="centered">
-                        <span ng-click="sessionJoursCtrl.add()"><i class="icon clickable">add</i></span>
+                        <span ng-click="sessionJoursCtrl.addSubmit()"><i class="icon clickable">add</i></span>
                     </td>
 
                 </tr>
