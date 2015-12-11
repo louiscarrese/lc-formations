@@ -33,7 +33,7 @@ class TarifTypeController extends Controller
         $tarif_type->libelle = $request->input('libelle');
         $tarif_type->save();
 
-        return $response()->json($tarif_type);
+        return response()->json($tarif_type);
     }
 
     /**

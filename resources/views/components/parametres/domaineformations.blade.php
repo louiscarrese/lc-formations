@@ -2,7 +2,6 @@
 
 <div ng-controller="domaineFormationsController as domaineFormationsCtrl" class="list-table-container">
     <input type="text" ng-model="domaineFormationsCtrl.filterInput" placeholder="Recherche locale" class="table-filter" />
-    <form>
         <table>
             <thead>
                 <tr>
@@ -22,7 +21,7 @@
                         <my-editable type="integer" model="domaine.id" editing-flag="domaine.editing" size="1"/>
                     </td>
                     <td>
-                        <my-editable type="text" model="domaine.libelle" editing-flag="domaine.editing" />
+                        <my-editable type="text" model="domaine.libelle" editing-flag="domaine.editing" required />
                     </td>
                     <td>
                         <span ng-hide="domaine.editing" ng-click="domaine.editing = true"><i class="icon clickable">edit</i></span>
@@ -47,7 +46,6 @@
                 </tr>
             </tbody>
         </table>
-    </form>
     <div class="error-message">@{{domaineFormationsCtrl.errorMessage}}</div>
 
 </div>

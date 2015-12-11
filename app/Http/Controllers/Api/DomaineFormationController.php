@@ -37,7 +37,7 @@ class DomaineFormationController extends Controller
         $financeur_type->libelle = $request->input('libelle');
         $financeur_type->save();
 
-        return $response()->json($financeur_type);
+        return response()->json($financeur_type);
     }
 
     /**

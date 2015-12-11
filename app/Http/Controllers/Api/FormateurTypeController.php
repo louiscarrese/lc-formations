@@ -38,7 +38,7 @@ class FormateurTypeController extends Controller
         $formateur_type->libelle = $request->input('libelle');
         $formateur_type->save();
 
-        return $response()->json($formateur_type);
+        return response()->json($formateur_type);
     }
 
     /**
