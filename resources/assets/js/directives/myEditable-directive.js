@@ -29,7 +29,7 @@ function myEditableDirective() {
                     template += '<input type="text" ng-show="editingFlag" ng-model="model" my-force-integer ' + this.attrToHtml(filteredAttr) + '/>';
                     break;
                 case 'checkbox':
-                    template += '<input type="checkbox" ng-disabled="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
+                    template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
                     break;
                 case 'dropdown':
                     var ngOptionsString = 'item.' + tAttr.sourceId + ' as item.' + tAttr.sourceLabel + ' for item in source';
