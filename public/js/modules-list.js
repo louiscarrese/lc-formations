@@ -368,7 +368,7 @@ function myEditableDirective() {
                     template += '<input type="text" ng-show="editingFlag" ng-model="model" my-force-integer ' + this.attrToHtml(filteredAttr) + '/>';
                     break;
                 case 'checkbox':
-                    template += '<input type="checkbox" ng-disabled="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
+                    template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
                     break;
                 case 'dropdown':
                     var ngOptionsString = 'item.' + tAttr.sourceId + ' as item.' + tAttr.sourceLabel + ' for item in source';
@@ -608,8 +608,8 @@ function editableTableController($filter, dataService, tableService, sharedDataS
      */
      function cancel(type) {
         dataService.get({id: type.internalKey}, function(value, responseHeaders) {
+            self.getSuccess(value);
             value.editing = false;
-            value.internalKey = value.id;
             self.data[self.data.indexOf(type)] = value;
         });
     };
@@ -619,7 +619,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
      */
      function get(type) {
         dataService.get({id: type.id}, function(value, responseHeaders) {
-            value.internalKey = value.id;
+            self.getSuccess(value);
             self.data[self.data.indexOf(type)] = value;
         });
     };

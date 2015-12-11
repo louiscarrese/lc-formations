@@ -68,81 +68,59 @@
         <span ng-show="detailCtrl.mode === 'edit'" ng-click="detailCtrl.cancel()"><i class="icon clickable">undo</i></span>
         <span ng-show="detailCtrl.mode !== 'create'" ng-click="detailCtrl.delete()"><i class="icon clickable">delete</i></span>
     </div>
-
-    <h3>Jours</h3>
-    <div ng-controller="sessionJoursController as sessionJoursCtrl" ng-show="detailCtrl.mode != 'create'" ng-init="sessionJoursCtrl.parent = detailCtrl" class="list-table-container">
-        <table>
-            <thead>
-                <tr>
-                    <td class="clickable">
-                        <my-sortable-header set="sessionJoursCtrl.setSort('id')" get="sessionJoursCtrl.getSort('id')">Id</my-sortable-header>
-                    </td>
-                    <td class="clickable">
-                        <my-sortable-header set="sessionJoursCtrl.setSort('date')" get="sessionJoursCtrl.getSort('date')">Date</my-sortable-header>
-                    </td>
-                    <td class="clickable">
-                        <my-sortable-header set="sessionJoursCtrl.setSort('heure_debut')" get="sessionJoursCtrl.getSort('heure_debut')">Début</my-sortable-header>
-                    </td>
-                    <td class="clickable">
-                        <my-sortable-header set="sessionJoursCtrl.setSort('heure_fin')" get="sessionJoursCtrl.getSort('heure_fin')">Fin</my-sortable-header>
-                    </td>
-                    <td class="clickable">
-                        <my-sortable-header set="sessionJoursCtrl.setSort('lieu_id')" get="sessionJoursCtrl.getSort('lieu_id')">Lieu</my-sortable-header>
-                    </td>
-                    <td><!--Edit--></td>
-                    <td><!--Delete--></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="jour in sessionJoursCtrl.data" ng-form="sessionJoursCtrl.form_@{{jour.id}}">
-                    <td class="centered">
-                        <my-editable type="integer" model="jour.id" editing-flag="jour.editing" size="1"/>
-                    </td>
-                    <td>
-                        <my-editable type="text" model="jour.date" editing-flag="jour.editing" />
-                    </td>
-                    <td>
-                        <my-editable type="text" model="jour.heure_debut" editing-flag="jour.editing" />
-                    </td>
-                    <td>
-                        <my-editable type="text" model="jour.heure_fin" editing-flag="jour.editing" />
-                    </td>
-                    <td>
-                        <my-editable type="dropdown" source="sessionJoursCtrl.linkedData.lieus" source-id="id" source-label="libelle" model="jour.lieu_id" model-label="jour.lieu_label" editing-flag="jour.editing" />
-                    </td>
-                    <td>
-                        <span ng-hide="jour.editing" ng-click="jour.editing = true"><i class="icon clickable">edit</i></span>
-                        <span ng-show="jour.editing" ng-click="sessionJoursCtrl.editSubmit(jour)"><i class="icon clickable">validate</i></span>
-                    </td>
-                    <td>
-                        <span ng-hide="jour.editing" ng-click="sessionJoursCtrl.delete(jour)"><i class="icon clickable">delete</i></span>
-                        <span ng-show="jour.editing" ng-click="sessionJoursCtrl.cancel(jour)"><i class="icon clickable">undo</i></span>
-                    </td>
-                </tr>
-                <tr ng-form="sessionJoursCtrl.form_add">
-                    <td>
-                        <!-- vide car id auto -->
-                    </td>
-                    <td>
-                        <input type="text" ng-model="sessionJoursCtrl.addObject.date" />
-                    </td>
-                    <td>
-                        <input type="text" ng-model="sessionJoursCtrl.addObject.heure_debut" />
-                    </td>
-                    <td>
-                        <input type="text" ng-model="sessionJoursCtrl.addObject.heure_fin" />
-                    </td>
-                    <td>
-                        <select ng-options="item.id as item.libelle for item in sessionJoursCtrl.linkedData.lieus" ng-model="sessionJoursCtrl.addObject.lieu_id" />
-                    </td>
-                    <td class="centered">
-                        <span ng-click="sessionJoursCtrl.addSubmit()"><i class="icon clickable">add</i></span>
-                    </td>
-
-                </tr>
-            </tbody>
-        </table>
+    <div ng-show="detailCtrl.mode != create">
+        @include('components.EditableTable',
+            ['controllerName' => 'sessionJoursController',
+             'title' => 'Jours',
+             'fields' => [
+                'id' => [
+                    'label' => 'Id',
+                    'isId' => true,
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'integer',
+                    'addLine' => false,
+                    'tdClass' => 'centered',
+                    'additionalAttributes' => 'size=1',
+                ], //id
+                'date' => [
+                    'label' => 'Date',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'text', //TODO : date
+                    'addLine' => true,
+                ], //date
+                'heure_debut' => [
+                    'label' => 'Début',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'text', //TODO : time
+                    'addLine' => true,
+                ], //heure_debut
+                'heure_fin' => [
+                    'label' => 'Fin',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'text', //TODO : time
+                    'addLine' => true,
+                ], //heure_fin
+                'lieu_id' => [
+                    'label' => 'Lieu',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'dropdown',
+                    'dropdownDatasource' => 'linkedData.lieus', //relative to the controller
+                    'dropdownDataId' => 'id', //relative to an item in the dropdownDatasource
+                    'dropdownDataLabel' => 'libelle', //relative to an item in the dropdownDatasource
+                    'dropdownLabel' => 'lieu_label', //relative to an item in the controller data
+                    'addLine' => true,
+                ], //heure_debut
+             ] //fields
+             ])
     </div>
-
-
 </div>
