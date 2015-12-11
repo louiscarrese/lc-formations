@@ -36,9 +36,11 @@ class SessionJourController extends Controller
         $session_jours->heure_fin = $request->input('heure_fin');
 
         $session_jours->lieu_id = $request->input('lieu_id');
+        $session_jours->session_id = $request->input('session_id');
 
-        $session = \ModuleFormation\Session::findOrFail($request->input('session_id'));
-        $session->session_jours()->save($session_jours);
+        $session_jours->save();
+
+        $session_jours = \ModuleFormation\SessionJour::with('lieu')->findOrFail($session_jours->id);
 
         return response()->json($session_jours);
     }
