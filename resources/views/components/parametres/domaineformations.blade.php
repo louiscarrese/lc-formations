@@ -37,7 +37,7 @@
                         <!-- vide car id auto -->
                     </td>
                     <td>
-                        <input type="text" ng-model="domaineFormationsCtrl.addObject.libelle" />
+                        <input type="text" ng-model="domaineFormationsCtrl.addObject.libelle" required/>
                     </td>
                     <td class="centered">
                         <span ng-click="domaineFormationsCtrl.add()"><button type="submit" ng-click="domaineFormationsCtrl.addSubmit()"><i class="icon clickable">add</i></button></span>
