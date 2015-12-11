@@ -820,6 +820,8 @@ function editableTableController($filter, dataService, tableService, sharedDataS
                 self.data.push(value);
                 self.sort();
                 self.addObject = {};
+                self.form_add.$setPristine();
+                self.form_add.$setUntouched();
             }, 
             function(httpResponse) {
                 self.error("Erreur à l'ajout");
