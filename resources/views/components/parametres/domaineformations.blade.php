@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="domaine in domaineFormationsCtrl.data | myCustomFilter:domaineFormationsCtrl.filterInput:'id':'libelle' track by domaine.id">
+                <tr ng-repeat="domaine in domaineFormationsCtrl.data | myCustomFilter:domaineFormationsCtrl.filterInput:'id':'libelle' track by domaine.id" ng-form="domaineFormationsCtrl.form_@{{domaine.id}}">
                     <td class="centered">
                         <my-editable type="integer" model="domaine.id" editing-flag="domaine.editing" size="1"/>
                     </td>
@@ -25,14 +25,14 @@
                     </td>
                     <td>
                         <span ng-hide="domaine.editing" ng-click="domaine.editing = true"><i class="icon clickable">edit</i></span>
-                        <span ng-show="domaine.editing" ng-click="domaineFormationsCtrl.update(domaine)"><i class="icon clickable">validate</i></span>
+                        <span ng-show="domaine.editing"><button type="submit" ng-click="domaineFormationsCtrl.editSubmit(domaine)"><i class="icon clickable">validate</i></button></span>
                     </td>
                     <td>
                         <span ng-hide="domaine.editing" ng-click="domaineFormationsCtrl.delete(domaine)"><i class="icon clickable">delete</i></span>
                         <span ng-show="domaine.editing" ng-click="domaineFormationsCtrl.cancel(domaine)"><i class="icon clickable">undo</i></span>
                     </td>
                 </tr>
-                <tr>
+                <tr ng-form="domaineFormationsCtrl.form_add" ng-submit="domaineFormationsCtrl.addSubmit()">
                     <td>
                         <!-- vide car id auto -->
                     </td>
@@ -40,7 +40,7 @@
                         <input type="text" ng-model="domaineFormationsCtrl.addObject.libelle" />
                     </td>
                     <td class="centered">
-                        <span ng-click="domaineFormationsCtrl.add()"><i class="icon clickable">add</i></span>
+                        <span ng-click="domaineFormationsCtrl.add()"><button type="submit" ng-click="domaineFormationsCtrl.addSubmit()"><i class="icon clickable">add</i></button></span>
                     </td>
 
                 </tr>

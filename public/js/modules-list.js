@@ -511,6 +511,32 @@ function modulesServiceFactory($resource) {
             }
         }
 
+        self.editSubmit = function(value) {
+            //Validation
+            console.log(self);
+            console.log('form_' + value.internalKey);
+            var form = self['form_' + value.internalKey];
+            if(form.$valid) {
+                //Send update
+                self.update(value);
+            } else  {
+                alert('erreur dans le formulaire');
+            }
+        }
+        self.addSubmit = function() {
+            //Validation
+            console.log(self);
+            console.log('form_' + value.internalKey);
+            var form = self['form_add'];
+            if(form.$valid) {
+                //Send update
+                self.add(self.addObject);
+            } else  {
+                alert('erreur dans le formulaire');
+            }
+        }
+
+
         /**
          * Update
          */
