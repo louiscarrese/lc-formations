@@ -155,8 +155,8 @@ function editableTableController($filter, dataService, tableService, sharedDataS
      */
      function cancel(type) {
         dataService.get({id: type.internalKey}, function(value, responseHeaders) {
+            self.getSuccess(value);
             value.editing = false;
-            value.internalKey = value.id;
             self.data[self.data.indexOf(type)] = value;
         });
     };
@@ -166,7 +166,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
      */
      function get(type) {
         dataService.get({id: type.id}, function(value, responseHeaders) {
-            value.internalKey = value.id;
+            self.getSuccess(value);
             self.data[self.data.indexOf(type)] = value;
         });
     };
