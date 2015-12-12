@@ -352,39 +352,42 @@ function myEditableDirective() {
         },
         template: function(tElem, tAttr) {
             var filteredAttr = this.stripScopeAttributes(tAttr);
+            var htmlAttrs = this.attrToHtml(filteredAttr);
             var template = '';
 
             switch(tAttr['type']) {
                 case 'text': 
-                    template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</span>';
-                    template += '<input type="text" ng-show="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
+                    template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{model}}</span>';
+                    template += '<input type="text" ng-show="editingFlag" ng-model="model" ' + htmlAttrs + '/>';
                     break;
                 case 'textarea':
-                    template += '<pre ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</pre>';
-                    template += '<textarea ng-show="editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '></textarea>';
+                    template += '<pre ng-hide="editingFlag" ' + htmlAttrs + '>{{model}}</pre>';
+                    template += '<textarea ng-show="editingFlag" ng-model="model" ' + htmlAttrs + '></textarea>';
                     break;
                 case 'integer':
-                    template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{model}}</span>';
-                    template += '<input type="text" ng-show="editingFlag" ng-model="model" my-force-integer ' + this.attrToHtml(filteredAttr) + '/>';
+                    template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{model}}</span>';
+                    template += '<input type="text" ng-show="editingFlag" ng-model="model" my-force-integer ' + htmlAttrs + '/>';
                     break;
                 case 'checkbox':
-                    template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="model" ' + this.attrToHtml(filteredAttr) + '/>';
+                    template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="model" ' + htmlAttrs + '/>';
                     break;
                 case 'dropdown':
                     var ngOptionsString = 'item.' + tAttr.sourceId + ' as item.' + tAttr.sourceLabel + ' for item in source';
 
-                    template += '<span ng-hide="editingFlag" ' + this.attrToHtml(filteredAttr) + '>{{modelLabel}}</span>';
+                    template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{modelLabel}}</span>';
                     template += '<select ng-show="editingFlag" ng-options="' + ngOptionsString + '"';
                     template += ' ng-model="model"';
                     if(tAttr['change'] != undefined) {
                         template += ' ng-change="change()"';
                     }
-                    template +=' ' + this.attrToHtml(filteredAttr) + '></select>';
+                    template +=' ' + htmlAttrs + '></select>';
                     break;
                 default:
                     template += "Erreur de type !";
                     break;
             }
+
+
             return template;
 
         },
@@ -522,15 +525,13 @@ function editableTableController($filter, dataService, tableService, sharedDataS
         }
     }
 
-    function editSubmit(value) {
+    function editSubmit(index, value) {
         //Validation
-        var form = self['form_' + value.internalKey];
+        var form = self['form_' + index];
         if(form.$valid) {
             //Send update
             self.update(value);
-        } else  {
-            alert('erreur dans le formulaire');
-        }
+        } 
     }
 
     function addSubmit() {
@@ -539,8 +540,6 @@ function editableTableController($filter, dataService, tableService, sharedDataS
         if(form.$valid) {
             //Send update
             self.create(self.addObject);
-        } else  {
-            alert('erreur dans le formulaire');
         }
     }
 

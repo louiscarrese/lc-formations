@@ -28,6 +28,7 @@
                 'editable' => true,
                 'type' => 'text',
                 'addLine' => true,
+                'validation' => 'required',
             ], //libelle
             'is_salarie' => [
                 'label' => 'Salarié',

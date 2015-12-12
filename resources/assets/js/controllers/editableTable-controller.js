@@ -69,15 +69,13 @@ function editableTableController($filter, dataService, tableService, sharedDataS
         }
     }
 
-    function editSubmit(value) {
+    function editSubmit(index, value) {
         //Validation
-        var form = self['form_' + value.internalKey];
+        var form = self['form_' + index];
         if(form.$valid) {
             //Send update
             self.update(value);
-        } else  {
-            alert('erreur dans le formulaire');
-        }
+        } 
     }
 
     function addSubmit() {
@@ -86,8 +84,6 @@ function editableTableController($filter, dataService, tableService, sharedDataS
         if(form.$valid) {
             //Send update
             self.create(self.addObject);
-        } else  {
-            alert('erreur dans le formulaire');
         }
     }
 

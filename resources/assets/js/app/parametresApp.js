@@ -32,5 +32,5 @@ angular.module('parametresDirectives', [])
 
 //Le module principal
 angular.module('parametresApp', 
-    ['parametresControllers', 'parametresServices', 'parametresFilters', 'parametresDirectives']);
+    ['parametresControllers', 'parametresServices', 'parametresFilters', 'parametresDirectives', 'ngMessages']);
 
