@@ -46,11 +46,15 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
                     }
                 }
 
-                //Strip the module of its useless properties
-                delete(module.id);
+                //Copy data
+                controller.data.libelle = module.libelle;
+                controller.data.nb_jours = module.nb_jours;
+                controller.data.heure_debut = module.heure_debut;
+                controller.data.heure_fin = module.heure_fin;
+                controller.data.effectif_max = module.effectif_max;
+                controller.data.objectifs_pedagogiques = module.objectifs_pedagogiques;
+                controller.data.materiel = module.materiel;
 
-                //Copy everything
-                angular.extend(controller.data, module);
 
             }
         }
