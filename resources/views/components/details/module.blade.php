@@ -1,12 +1,12 @@
 <div ng-controller="detailController as moduleCtrl">
-    <form name="mainForm" novalidate>
+    <form name="moduleCtrl.mainForm" novalidate>
     <h2>@{{moduleCtrl.titleText}}</h2>
     <div class="detail-table-container">
         <table>
             <tr>
                 <td class="key">Id</td>
                 <td class="value validated">
-                    <my-editable type="integer" ng-model="moduleCtrl.data.id" editing-flag="moduleCtrl.editing" size="1" required></my-editable>
+                    <my-editable type="integer" ng-model="moduleCtrl.data.id" editing-flag="moduleCtrl.editing" size="1"></my-editable>
                 </td>
             </tr>
             <tr>

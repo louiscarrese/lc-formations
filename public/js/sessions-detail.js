@@ -726,15 +726,18 @@ function detailController(editModeService, dataService, detailService) {
     //CRUD
 
     function create() {
-        dataService.save(self.data, 
-            function(value, responseHeaders) {
-                self.getSuccess(value);
-                self.mode = 'read';
-                self.editing = false;
-            }, 
-            function(httpResponseHeaders) {
-                alert('Error ! ');
-            });
+        if(self['mainForm'].$valid) {
+            dataService.save(self.data, 
+                function(value, responseHeaders) {
+                    self.getSuccess(value);
+                    self.mode = 'read';
+                    self.editing = false;
+                }, 
+                function(httpResponseHeaders) {
+                    alert('Error ! ');
+                }
+            );
+        }
     };
 
 
@@ -747,15 +750,18 @@ function detailController(editModeService, dataService, detailService) {
     }
 
     function update() {
-        self.data.$update({id:self.internalKey}, 
-            function(value, responseHeaders) {
-                self.getSuccess(value);
-                self.editing = false;
-                self.mode = 'read';
-            },
-            function(httpResponseHeaders) {
-                alert('error');
-            });
+        if(self['mainForm'].$valid) {
+            self.data.$update({id:self.internalKey}, 
+                function(value, responseHeaders) {
+                    self.getSuccess(value);
+                    self.editing = false;
+                    self.mode = 'read';
+                },
+                function(httpResponseHeaders) {
+                    alert('error');
+                }
+            );
+        }
     }
 
     function del() {
