@@ -24,7 +24,7 @@
             <tr>
                 <td class="key">Sexe</td>
                 <td class="value validated">
-                    <my-editable type="integer" ng-model="detailCtrl.data.sexe" editing-flag="detailCtrl.editing" size="1"></my-editable>
+                    <my-editable type="radio" ng-model="detailCtrl.data.sexe" editing-flag="detailCtrl.editing" values="['M', 'F']"></my-editable>
                 </td>
             </tr>
             <tr>
