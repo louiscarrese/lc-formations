@@ -574,7 +574,12 @@ function editModeServiceFactory() {
         }
 };
 }
-function moduleDetailServiceFactory(domaineFormationsService) {
+function sharedDataServiceFactory() {
+    return {
+        data: {}
+    };
+}
+function moduleDetailServiceFactory(sharedDataService, domaineFormationsService) {
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
@@ -594,6 +599,8 @@ function moduleDetailServiceFactory(domaineFormationsService) {
                 data.module_formation_label = data.domaine_formation.libelle;
             }
 
+            sharedDataService.data.module_id = data.id;
+
             //Build the return structure
             return {
                 'titleText': data.libelle != undefined ? data.libelle : "Création d'un module"
@@ -605,6 +612,18 @@ function moduleDetailServiceFactory(domaineFormationsService) {
             return '/modules';
         },
     }
+}
+function sessionsTableServiceFactory(sharedDataService) {
+    return {
+        queryParameters: function() {
+            var ret = {};
+            if(sharedDataService.data.module_id) {
+                ret['module_id'] = sharedDataService.data.module_id;
+            }
+            return ret;
+        }
+
+    };
 }
 function detailController(editModeService, dataService, detailService) {
     var self = this;
@@ -713,7 +732,7 @@ function detailController(editModeService, dataService, detailService) {
 
 
 }
-function editableTableController($filter, dataService, tableService, sharedDataService) {
+function editableTableController($filter, dataService, tableService) {
     var self = this;
 
     //Functions
@@ -749,7 +768,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
     self.sortReverse = false;
     self.data = query();
 
-    if(tableService != undefined) {
+    if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
         self.linkedData = tableService.getLinkedData();
     }
 
@@ -777,7 +796,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
 
     function getSuccess(value) {
         value.internalKey = value.id;
-        if(tableService != undefined) {
+        if(tableService != undefined && typeof tableService.getSuccess == 'function') {
             tableService.getSuccess(value);
         }
     }
@@ -817,7 +836,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
      * Update
      */
      function update(type) {
-        if(tableService != undefined) {
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
             tableService.preSend(type);
         }
 
@@ -851,7 +870,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
      * Add
      */
      function create() {
-        if(tableService != undefined) {
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
             tableService.preSend(self.addObject);
         }
         dataService.save(self.addObject, 
@@ -903,14 +922,16 @@ function editableTableController($filter, dataService, tableService, sharedDataS
 angular.module('modulesDetailServices', ['ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
-    .factory('moduleDetailService', ['domaineFormationsService', moduleDetailServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('sharedDataService', [sharedDataServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
+    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', moduleDetailServiceFactory])
+    .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
 ;
 
 angular.module('modulesDetailControllers', [])
         .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
-        .controller('sessionsListController', ['$filter', 'sessionsService', editableTableController])
+        .controller('sessionsListController', ['$filter', 'sessionsService', 'sessionsTableService', editableTableController])
 ;
 
 angular.module('modulesDetailFilters', [])

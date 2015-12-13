@@ -14,7 +14,17 @@ class SessionController extends Controller
 
     public function index(Request $request) 
     {
-        $sessions = \ModuleFormation\Session::all();
+        //Initialize the request
+        $sessions_req = \ModuleFormation\Session::with('module');
+
+        //Add parameters if any
+        if($request->input('module_id')) {
+            $sessions_req = $sessions_req->where('module_id', $request->input('module_id'));
+        }
+
+        //Execute request
+        $sessions = $sessions_req->get();
+
 
         return response()->json($sessions);
     }

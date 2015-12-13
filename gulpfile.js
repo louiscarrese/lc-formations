@@ -69,7 +69,9 @@ elixir(function(mix) {
             'services/data/domaineformations-service.js',
             'services/data/sessions-service.js',
             'services/editmode-service.js',
+            'services/shareddata-service.js',
             'services/details/moduledetail-service.js',
+            'services/tables/sessions-service.js',
             'controllers/detail-controller.js',
             'controllers/editableTable-controller.js',
             'app/moduleDetailApp.js'

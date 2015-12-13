@@ -68,4 +68,10 @@
         <span ng-show="moduleCtrl.mode !== 'create'" ng-click="moduleCtrl.delete()"><i class="icon clickable">delete</i></span>
     </div>
     </form>
+
+
+    <div ng-if="moduleCtrl.inited" ng-show="moduleCtrl.mode != create">
+        @include('components.lists.sessions')
+    </div>
+
 </div>

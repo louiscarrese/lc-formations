@@ -485,7 +485,7 @@ function modulesServiceFactory($resource) {
 }
 
 
-function editableTableController($filter, dataService, tableService, sharedDataService) {
+function editableTableController($filter, dataService, tableService) {
     var self = this;
 
     //Functions
@@ -521,7 +521,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
     self.sortReverse = false;
     self.data = query();
 
-    if(tableService != undefined) {
+    if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
         self.linkedData = tableService.getLinkedData();
     }
 
@@ -549,7 +549,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
 
     function getSuccess(value) {
         value.internalKey = value.id;
-        if(tableService != undefined) {
+        if(tableService != undefined && typeof tableService.getSuccess == 'function') {
             tableService.getSuccess(value);
         }
     }
@@ -589,7 +589,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
      * Update
      */
      function update(type) {
-        if(tableService != undefined) {
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
             tableService.preSend(type);
         }
 
@@ -623,7 +623,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
      * Add
      */
      function create() {
-        if(tableService != undefined) {
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
             tableService.preSend(self.addObject);
         }
         dataService.save(self.addObject, 

@@ -1,4 +1,4 @@
-function moduleDetailServiceFactory(domaineFormationsService) {
+function moduleDetailServiceFactory(sharedDataService, domaineFormationsService) {
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
@@ -17,6 +17,8 @@ function moduleDetailServiceFactory(domaineFormationsService) {
             if(data.domaine_formation_id != undefined) {
                 data.module_formation_label = data.domaine_formation.libelle;
             }
+
+            sharedDataService.data.module_id = data.id;
 
             //Build the return structure
             return {
