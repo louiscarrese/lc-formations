@@ -368,7 +368,7 @@ function myEditableDirective() {
             var filteredAttr = this.stripScopeAttributes(tAttr);
             var htmlAttrs = this.attrToHtml(filteredAttr);
             var fieldName = this.getFieldName(tAttr.ngModel);
-            
+
             var template = '';
             switch(tAttr['type']) {
                 case 'text': 
@@ -388,7 +388,7 @@ function myEditableDirective() {
                     break;
                 case 'dropdown':
                     var ngOptionsString = 'item.' + tAttr.sourceId + ' as item.' + tAttr.sourceLabel + ' for item in source';
-
+ 
                     template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{modelLabel}}</span>';
                     template += '<select ng-show="editingFlag" ng-options="' + ngOptionsString + '"';
                     template += ' ng-model="model" name="' + fieldName + '" ';
@@ -443,7 +443,7 @@ function myEditableDirective() {
 
         getFieldName: function(modelName) {
             var names = modelName.split('.');
-            return names[1];
+            return names[names.length-1];
         }
     };
 };

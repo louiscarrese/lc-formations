@@ -12,5 +12,31 @@
         text-align: center;
     }
 
+    //Validation error
+    td.validated .tooltip {
+        display: none;
+
+        @include fadein(0.2s);
+        @include fadeout(0.2s);
+    }
+    td.validated:hover .tooltip {
+        display: block;
+        position: absolute;
+
+        background-color: transparentize($rgba-error, 0.2);
+        border: 1px solid $rgba-complement-1;
+        @include border-radius(3px);
+
+        margin: 0.2em 1em;
+        padding: 0.2em 0.5em;
+
+        line-height: 1.5em;
+        text-align: left;
+
+    }
+
+    input.ng-invalid.ng-touched {
+        border: 1px solid $rgba-error;
+    }
 
 }

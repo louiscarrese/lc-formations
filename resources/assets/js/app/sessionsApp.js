@@ -20,5 +20,5 @@ angular.module('sessionsListDirectives', [])
 
 //Le module principal
 angular.module('sessionsListApp', 
-    ['sessionsListControllers', 'sessionsListServices', 'sessionsListFilters', 'sessionsListDirectives']);
+    ['sessionsListControllers', 'sessionsListServices', 'sessionsListFilters', 'sessionsListDirectives', 'ngMessages']);
 

@@ -27,6 +27,6 @@ angular.module('sessionsDetailDirectives', [])
 
 //Le module principal
 angular.module('sessionsDetailApp', 
-    ['sessionsDetailControllers', 'sessionsDetailServices', 'sessionsDetailFilters', 'sessionsDetailDirectives'])
+    ['sessionsDetailControllers', 'sessionsDetailServices', 'sessionsDetailFilters', 'sessionsDetailDirectives', 'ngMessages'])
 ;
 

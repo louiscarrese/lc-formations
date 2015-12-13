@@ -36,6 +36,7 @@ elixir(function(mix) {
         .scripts([
             'lib/angular.min.js',
             'lib/angular-resource.min.js',
+            'lib/angular-messages.min.js', 
             'directives/myForceInteger-directive.js',
             'directives/mySortableHeader-directive.js',
             'directives/myEditable-directive.js',
@@ -47,6 +48,7 @@ elixir(function(mix) {
         .scripts([
             'lib/angular.min.js',
             'lib/angular-resource.min.js',
+            'lib/angular-messages.min.js', 
             'directives/myForceInteger-directive.js',
             'directives/mySortableHeader-directive.js',
             'directives/myEditable-directive.js',
@@ -58,6 +60,7 @@ elixir(function(mix) {
         .scripts([
             'lib/angular.min.js',
             'lib/angular-resource.min.js',
+            'lib/angular-messages.min.js', 
             'directives/myForceInteger-directive.js',
             'directives/mySortableHeader-directive.js',
             'directives/myEditable-directive.js',
@@ -74,6 +77,7 @@ elixir(function(mix) {
         .scripts([
             'lib/angular.min.js',
             'lib/angular-resource.min.js',
+            'lib/angular-messages.min.js', 
             'directives/myForceInteger-directive.js',
             'directives/mySortableHeader-directive.js',
             'directives/myEditable-directive.js',

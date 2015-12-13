@@ -20,5 +20,5 @@ angular.module('modulesListDirectives', [])
 
 //Le module principal
 angular.module('modulesListApp', 
-    ['modulesListControllers', 'modulesListServices', 'modulesListFilters', 'modulesListDirectives']);
+    ['modulesListControllers', 'modulesListServices', 'modulesListFilters', 'modulesListDirectives', 'ngMessages']);
 

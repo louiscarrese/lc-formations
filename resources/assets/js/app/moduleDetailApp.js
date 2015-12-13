@@ -24,6 +24,5 @@ angular.module('modulesDetailDirectives', [])
 
 //Le module principal
 angular.module('modulesDetailApp', 
-    ['modulesDetailControllers', 'modulesDetailServices', 'modulesDetailFilters', 'modulesDetailDirectives'])
+    ['modulesDetailControllers', 'modulesDetailServices', 'modulesDetailFilters', 'modulesDetailDirectives', 'ngMessages'])
 ;
-

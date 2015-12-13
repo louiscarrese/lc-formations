@@ -1,59 +1,59 @@
 <div ng-controller="detailController as detailCtrl">
-    <form name="mainForm">
+    <form name="mainForm" novalidate>
     <h2>@{{detailCtrl.titleText}}</h2>
     <div class="detail-table-container">
         <table>
             <tr>
                 <td class="key">Id</td>
-                <td class="value">
-                    <my-editable type="integer" ng-model="detailCtrl.data.id" editing-flag="detailCtrl.editing" size="1"></my-editable>
+                <td class="value validated">
+                    <my-editable type="integer" ng-model="detailCtrl.data.id" editing-flag="detailCtrl.editing" size="1" required></my-editable>
                 </td>
             </tr>
             <tr>
                 <td class="key">Module</td>
-                <td class="value">
+                <td class="value validated">
                     <my-editable type="dropdown" source="detailCtrl.linkedData.modules" source-id="id" source-label="libelle" ng-model="detailCtrl.data.module_id" model-label="detailCtrl.data.module_label" editing-flag="detailCtrl.editing" change="detailCtrl.onModuleChange(detailCtrl)"></my-editable>
                 </td>
             </tr>
             <tr>
                 <td class="key">Libellé</td>
-                <td class="value">
-                    <my-editable type="text" ng-model="detailCtrl.data.libelle" editing-flag="detailCtrl.editing" size="40" class="full-width"></my-editable>
+                <td class="value validated">
+                    <my-editable type="text" ng-model="detailCtrl.data.libelle" editing-flag="detailCtrl.editing" size="40" class="full-width" required></my-editable>
                 </td>
             </tr>
             <tr>
                 <td class="key">Nombre de jours</td>
-                <td class="value">
-                    <my-editable type="integer" ng-model="detailCtrl.data.nb_jours" editing-flag="detailCtrl.editing" size="1"></my-editable>
+                <td class="value validated">
+                    <my-editable type="integer" ng-model="detailCtrl.data.nb_jours" editing-flag="detailCtrl.editing" size="1" required></my-editable>
                 </td>
             </tr>
             <tr>
                 <td class="key">Heure de début</td>
-                <td class="value">
+                <td class="value validated">
                     <my-editable type="text" ng-model="detailCtrl.data.heure_debut" editing-flag="detailCtrl.editing" size="7"></my-editable>
                 </td>
             </tr>
             <tr>
                 <td class="key">Heure de fin</td>
-                <td class="value">
+                <td class="value validated">
                     <my-editable type="text" ng-model="detailCtrl.data.heure_fin" editing-flag="detailCtrl.editing" size="7"></my-editable>
                 </td>
             </tr>
             <tr>
                 <td class="key">Effectif maximum</td>
-                <td class="value">
+                <td class="value validated">
                     <my-editable type="integer" ng-model="detailCtrl.data.effectif_max" editing-flag="detailCtrl.editing" size="1"></my-editable>
                 </td>
             </tr>
             <tr>
                 <td class="key">Objectifs pédagogiques</td>
-                <td class="value">
+                <td class="value validated">
                     <my-editable type="textarea" ng-model="detailCtrl.data.objectifs_pedagogiques" editing-flag="detailCtrl.editing" rows="5" cols="50" class="full-width"></my-editable>
                 </td>
             </tr>
             <tr>
                 <td class="key">Matériel</td>
-                <td class="value">
+                <td class="value validated">
                     <my-editable type="textarea" ng-model="detailCtrl.data.materiel" editing-flag="detailCtrl.editing" rows="5" cols="50" class="full-width"></my-editable>
                 </td>
             </tr>
