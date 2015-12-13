@@ -79,28 +79,16 @@
                 @foreach($fields as $fieldId => $field)
                     <td class="validated {{$field['tdClass'] or ''}}">
                         @if($field['addLine'])
-                            {{--  
-                                There must be a better way to simulate a switch
-                                We can't just copy $field['type'] because we'll have custom types and things like <select>
-                             --}}
                             @if($field['type'] == 'text')
-                                <input type="text" ng-model="ctrl.addObject.{{$fieldId}}" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}} name="{{$fieldId}}" />
+                                <my-editable type="text" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
                             @elseif($field['type'] == 'integer')
-                                <input type="text" ng-model="ctrl.addObject.{{$fieldId}}"{{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}} name="{{$fieldId}}" my-force-integer />
+                                <my-editable type="integer" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
                             @elseif($field['type'] == 'checkbox')
-                                <input type="checkbox" ng-model="ctrl.addObject.{{$fieldId}}" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}} name="{{$fieldId}}" />
+                                <my-editable type="checkbox" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
                             @elseif($field['type'] == 'dropdown')
-                                <select ng-options="opt.id as opt.libelle for opt in ctrl.{{$field['dropdownDatasource']}}" ng-model="ctrl.addObject.{{$fieldId}}" {{$field['validation'] or ''}} name="{{$fieldId}}" />
+                                <my-editable type="dropdown" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" source="ctrl.{{$field['dropdownDatasource']}}" source-id="{{$field['dropdownDataId']}}" source-label="{{$field['dropdownDataLabel']}}" model-label="ctrl.addObject.{{$field['dropdownLabel']}}" {{$field['additionalAttributes'] or ''}}></my-editable>
                             @endif
-                            {{-- Validation messages --}}
-                            <div class="tooltip" ng-messages="ctrl.form_add.{{$fieldId}}.$error" ng-if="ctrl.form_add.{{$fieldId}}.$invalid && ctrl.form_add.{{$fieldId}}.$touched">
-                                <p ng-message="required">Ce champ est obligatoire</p>
-                                <p ng-message="minlength">Ce champ est trop court</p>
-                                <p ng-message="maxlength">Ce champ est trop long</p>
-                                <p ng-message="email">Ce champ n'est pas un email valide</p>
-                                <p ng-message="number">Ce champ n'est pas un nombre valide</p>
-                                <p ng-message="date">Ce champ n'est pas une date valide</p>
-                            </div>                        
+
                         @endif
                     </td>
                 @endforeach
