@@ -15,12 +15,6 @@
     //Validation error
     td.validated .tooltip {
         display: none;
-
-        @include fadein(0.2s);
-        @include fadeout(0.2s);
-    }
-    td.validated:hover .tooltip {
-        display: block;
         position: absolute;
 
         background-color: transparentize($rgba-error, 0.2);
@@ -32,7 +26,9 @@
 
         line-height: 1.5em;
         text-align: left;
-
+    }
+    td.validated:hover .tooltip {
+        display: block;
     }
 
     input.ng-invalid.ng-touched {

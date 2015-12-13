@@ -50,9 +50,7 @@ function myEditableDirective() {
                     break;
             }
 
-
-
-            template += '<div class="tooltip" ng-messages="form.' + fieldName + '.$error" ng-if="form.' + fieldName + '.$invalid">';
+            template += '<div class="tooltip" ng-messages="form.' + fieldName + '.$error" ng-if="form.' + fieldName + '.$invalid && form.' + fieldName + '.$touched">';
             template += '<p ng-message="required">Ce champ est obligatoire</p>';
             template += '<p ng-message="minlength">Ce champ est trop court</p>';
             template += '<p ng-message="maxlength">Ce champ est trop long</p>';
