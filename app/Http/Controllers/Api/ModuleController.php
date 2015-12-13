@@ -42,6 +42,9 @@ class ModuleController extends Controller
 
         $module->save();
 
+        //Get it again, so we auto-update linked objects 
+        $module = \ModuleFormation\Module::with('domaine_formation')->findOrFail($module->id);
+
         return response()->json($module);
     }
 
