@@ -20,6 +20,7 @@
                 'addLine' => false,
                 'tdClass' => 'centered',
                 'additionalAttributes' => 'size=1',
+                'validation' => 'required'
             ], //id
             'libelle' => [
                 'label' => 'Libellé',
@@ -83,6 +84,7 @@
                 'addLine' => true,
                 'tdClass' => 'centered',
                 'additionalAttributes' => 'size=1',
+                'validation' => 'required',
             ], //id
             'libelle' => [
                 'label' => 'Libellé',
@@ -91,6 +93,7 @@
                 'editable' => true,
                 'type' => 'text',
                 'addLine' => true,
+                'validation' => 'required',
             ], //libelle
         ], //fields
     ])
@@ -109,6 +112,7 @@
                 'addLine' => false,
                 'tdClass' => 'centered',
                 'additionalAttributes' => 'size=1',
+                'validation' => 'required',
             ], //id
             'libelle' => [
                 'label' => 'Libellé',
@@ -117,6 +121,7 @@
                 'editable' => true,
                 'type' => 'text',
                 'addLine' => true,
+                'validation' => 'required',
             ], //libelle
         ], //fields
     ])
@@ -136,6 +141,7 @@
                 'addLine' => false,
                 'tdClass' => 'centered',
                 'additionalAttributes' => 'size=1',
+                'validation' => 'required',
             ], //id
             'libelle' => [
                 'label' => 'Libellé',
@@ -144,6 +150,7 @@
                 'editable' => true,
                 'type' => 'text',
                 'addLine' => true,
+                'validation' => 'required',
             ], //libelle
         ], //fields
     ])
@@ -162,6 +169,7 @@
                 'addLine' => false,
                 'tdClass' => 'centered',
                 'additionalAttributes' => 'size=1',
+                'validation' => 'required',
             ], //id
             'libelle' => [
                 'label' => 'Libellé',
@@ -170,6 +178,7 @@
                 'editable' => true,
                 'type' => 'text',
                 'addLine' => true,
+                'validation' => 'required',
             ], //libelle
         ], //fields
     ])
@@ -188,6 +197,7 @@
                 'addLine' => false,
                 'tdClass' => 'centered',
                 'additionalAttributes' => 'size=1',
+                'validation' => 'required',
             ], //id
             'libelle' => [
                 'label' => 'Libellé',
@@ -196,6 +206,7 @@
                 'editable' => true,
                 'type' => 'text',
                 'addLine' => true,
+                'validation' => 'required',
             ], //libelle
         ], //fields
     ])
@@ -214,6 +225,7 @@
                 'addLine' => false,
                 'tdClass' => 'centered',
                 'additionalAttributes' => 'size=1',
+                'validation' => 'required',
             ], //id
             'libelle' => [
                 'label' => 'Libellé',
@@ -222,6 +234,7 @@
                 'editable' => true,
                 'type' => 'text',
                 'addLine' => true,
+                'validation' => 'required',
             ], //libelle
         ], //fields
     ])

@@ -83,6 +83,7 @@
                     'addLine' => false,
                     'tdClass' => 'centered',
                     'additionalAttributes' => 'size=1',
+                    'validation' => 'required',
                 ], //id
                 'date' => [
                     'label' => 'Date',
@@ -91,6 +92,7 @@
                     'editable' => true,
                     'type' => 'text', //TODO : date
                     'addLine' => true,
+                    'validation' => 'required',
                 ], //date
                 'heure_debut' => [
                     'label' => 'Début',
@@ -99,6 +101,7 @@
                     'editable' => true,
                     'type' => 'text', //TODO : time
                     'addLine' => true,
+                    'validation' => 'required',
                 ], //heure_debut
                 'heure_fin' => [
                     'label' => 'Fin',
@@ -107,6 +110,7 @@
                     'editable' => true,
                     'type' => 'text', //TODO : time
                     'addLine' => true,
+                    'validation' => 'required',
                 ], //heure_fin
                 'lieu_id' => [
                     'label' => 'Lieu',
@@ -119,6 +123,7 @@
                     'dropdownDataLabel' => 'libelle', //relative to an item in the dropdownDatasource
                     'dropdownLabel' => 'lieu_label', //relative to an item in the controller data
                     'addLine' => true,
+                    'validation' => 'required',
                 ], //heure_debut
              ] //fields
              ])
