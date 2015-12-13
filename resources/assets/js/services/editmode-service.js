@@ -7,6 +7,7 @@ function editModeServiceFactory() {
 
             if(mode === 'create') {
                 data = this.getDataFromUrl();
+                callback(mode, data);
             } else {
                 var id = this.getId();
                 if(this.isNumber(id)) {
@@ -15,10 +16,10 @@ function editModeServiceFactory() {
                     });
                 } else {
                     data = {};
+                    callback(mode, data);
                 }
             }
 
-            callback(mode, data);
         },
 
         getModeFromUrl: function() {

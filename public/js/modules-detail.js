@@ -509,6 +509,7 @@ function editModeServiceFactory() {
 
             if(mode === 'create') {
                 data = this.getDataFromUrl();
+                callback(mode, data);
             } else {
                 var id = this.getId();
                 if(this.isNumber(id)) {
@@ -517,10 +518,10 @@ function editModeServiceFactory() {
                     });
                 } else {
                     data = {};
+                    callback(mode, data);
                 }
             }
 
-            callback(mode, data);
         },
 
         getModeFromUrl: function() {
@@ -622,6 +623,7 @@ function detailController(editModeService, dataService, detailService) {
     self.edit = edit;
     self.getSuccess = getSuccess;
 
+    self.data = {};
 
     //Initialize data
     editModeService.initFromUrl(dataService, function(mode, data) {
@@ -637,6 +639,7 @@ function detailController(editModeService, dataService, detailService) {
         }
 
         self.getSuccess(data);
+        self.inited = true;
     });
 
     if(detailService != undefined) {
@@ -722,6 +725,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
     self.getSort = getSort;
     self.sort = sort;
 
+    self.query = query;
     self.create = create;
     self.cancel = cancel;
     self.update = update;
@@ -735,12 +739,8 @@ function editableTableController($filter, dataService, tableService, sharedDataS
     self.addSubmit = addSubmit;
 
     //Data
-    self.data = dataService.query(function() {
-        angular.forEach(self.data, function(value, key) {
-            self.getSuccess(value);
-            self.sort();
-        });
-    });
+
+    self.queryParameters = {};
 
     self.addObject = {};
 
@@ -749,6 +749,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
 
     self.sortProp = "id";
     self.sortReverse = false;
+    self.data = query();
 
     if(tableService != undefined) {
         self.linkedData = tableService.getLinkedData();
@@ -801,6 +802,18 @@ function editableTableController($filter, dataService, tableService, sharedDataS
         }
     }
 
+    function query() {
+        if(tableService != undefined && typeof tableService.queryParameters == 'function') {
+            self.queryParameters = tableService.queryParameters();
+        }
+        
+        return dataService.query(self.queryParameters, function() {
+            angular.forEach(self.data, function(value, key) {
+                self.getSuccess(value);
+                self.sort();
+            });
+        });
+    }
 
     /**
      * Update

@@ -8,6 +8,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
     self.getSort = getSort;
     self.sort = sort;
 
+    self.query = query;
     self.create = create;
     self.cancel = cancel;
     self.update = update;
@@ -21,12 +22,8 @@ function editableTableController($filter, dataService, tableService, sharedDataS
     self.addSubmit = addSubmit;
 
     //Data
-    self.data = dataService.query(function() {
-        angular.forEach(self.data, function(value, key) {
-            self.getSuccess(value);
-            self.sort();
-        });
-    });
+
+    self.queryParameters = {};
 
     self.addObject = {};
 
@@ -35,6 +32,7 @@ function editableTableController($filter, dataService, tableService, sharedDataS
 
     self.sortProp = "id";
     self.sortReverse = false;
+    self.data = query();
 
     if(tableService != undefined) {
         self.linkedData = tableService.getLinkedData();
@@ -87,6 +85,18 @@ function editableTableController($filter, dataService, tableService, sharedDataS
         }
     }
 
+    function query() {
+        if(tableService != undefined && typeof tableService.queryParameters == 'function') {
+            self.queryParameters = tableService.queryParameters();
+        }
+        
+        return dataService.query(self.queryParameters, function() {
+            angular.forEach(self.data, function(value, key) {
+                self.getSuccess(value);
+                self.sort();
+            });
+        });
+    }
 
     /**
      * Update

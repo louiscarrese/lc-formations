@@ -68,7 +68,7 @@
         <span ng-show="detailCtrl.mode === 'edit'" ng-click="detailCtrl.cancel()"><i class="icon clickable">undo</i></span>
         <span ng-show="detailCtrl.mode !== 'create'" ng-click="detailCtrl.delete()"><i class="icon clickable">delete</i></span>
     </div>
-    <div ng-show="detailCtrl.mode != create">
+    <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != create">
         @include('components.EditableTable',
             ['controllerName' => 'sessionJoursController',
              'title' => 'Jours',

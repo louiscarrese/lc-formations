@@ -13,6 +13,7 @@ function detailController(editModeService, dataService, detailService) {
     self.edit = edit;
     self.getSuccess = getSuccess;
 
+    self.data = {};
 
     //Initialize data
     editModeService.initFromUrl(dataService, function(mode, data) {
@@ -28,6 +29,7 @@ function detailController(editModeService, dataService, detailService) {
         }
 
         self.getSuccess(data);
+        self.inited = true;
     });
 
     if(detailService != undefined) {

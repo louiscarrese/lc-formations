@@ -21,6 +21,14 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService) {
 
         preSend: function(data, parentController) {
             data.session_id = sharedDataService.data.session_id;
+        },
+
+        queryParameters: function() {
+            var ret = {};
+            if(sharedDataService.data.session_id) {
+                ret['session_id'] = sharedDataService.data.session_id;
+            }
+            return ret;
         }
 
     };

@@ -17,7 +17,18 @@ class SessionJourController extends Controller
      */
     public function index(Request $request)
     {
-        $session_jours = \ModuleFormation\SessionJour::with('lieu')->get();
+        //Initialize the request
+        $session_jours_req = \ModuleFormation\SessionJour::with('lieu');
+
+        //Add parameters if any
+        if($request->input('session_id')) {
+            $session_jours_req = $session_jours_req->where('session_id', $request->input('session_id'));
+        }
+
+        //Execute request
+        $session_jours = $session_jours_req->get();
+
+
         return response()->json($session_jours);
     }
 
