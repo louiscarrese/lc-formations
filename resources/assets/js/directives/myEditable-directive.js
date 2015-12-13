@@ -9,7 +9,8 @@ function myEditableDirective() {
             source: '=',
             sourceId: '=',
             sourceLabel: '=',
-            change: '='
+            change: '=',
+            values: '='
         },
         require: ['^form'],
         template: function(tElem, tAttr) {
@@ -44,6 +45,13 @@ function myEditableDirective() {
                         template += ' ng-change="change()"';
                     }
                     template +=' ' + htmlAttrs + '></select>';
+                    break;
+                case 'radio':
+                    template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{model}}</span>';
+
+                    template += '<label ng-repeat="item in values" ng-show="editingFlag">';
+                    template += '<input type="radio" name="' + fieldName + '" ng-model="$parent.model" value="{{item}}">{{item}}</input>';
+                    template += '</label>';
                     break;
                 default:
                     template += "Erreur de type !";
