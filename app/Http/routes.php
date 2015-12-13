@@ -39,6 +39,10 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
         ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
     Route::resource('session_jour', 'SessionJourController',
         ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+
+    Route::resource('formateur', 'FormateurController', 
+        ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+
 });
 
 
@@ -52,4 +56,6 @@ Route::get('/parametres', 'ParametresController@index');
 Route::resource('/modules', 'ModulesController', 
     ['only' => ['index', 'create', 'show']]);
 Route::resource('/sessions', 'SessionsController', 
+    ['only' => ['index', 'create', 'show']]);
+Route::resource('/formateurs', 'FormateursController', 
     ['only' => ['index', 'create', 'show']]);

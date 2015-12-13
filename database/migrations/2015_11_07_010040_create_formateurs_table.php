@@ -26,8 +26,8 @@ class CreateFormateursTable extends Migration
             $table->string('tel_fixe')->nullable();
             $table->string('email')->nullable();
 
-            $table->integer('type')->unsigned();
-            $table->foreign('type')->references('id')->on('formateur_types');
+            $table->integer('formateur_type_id')->unsigned();
+            $table->foreign('formateur_type_id')->references('id')->on('formateur_types');
 
             $table->timestamps();
         });

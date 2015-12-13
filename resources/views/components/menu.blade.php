@@ -2,7 +2,7 @@
     <ul class="menu">
         <li><a href="#">Pré-inscriptions</a></li>
         <li><a href="#">Stagiaires</a></li>
-        <li><a href="#">Formateurs</a></li>
+        <li><a href="/formateurs">Formateurs</a></li>
         <li><a href="/modules">Modules</a></li>
         <li><a href="/sessions">Sessions</a></li>
         <li><a href="#">Inscriptions</a></li>

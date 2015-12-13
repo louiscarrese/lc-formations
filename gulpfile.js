@@ -65,6 +65,18 @@ elixir(function(mix) {
             'directives/mySortableHeader-directive.js',
             'directives/myEditable-directive.js',
             'filters/myCustomFilter-filter.js',
+            'services/data/formateurs-service.js',
+            'controllers/editableTable-controller.js',
+            'app/formateursApp.js'
+            ], 'public/js/formateurs-list.js')
+        .scripts([
+            'lib/angular.min.js',
+            'lib/angular-resource.min.js',
+            'lib/angular-messages.min.js', 
+            'directives/myForceInteger-directive.js',
+            'directives/mySortableHeader-directive.js',
+            'directives/myEditable-directive.js',
+            'filters/myCustomFilter-filter.js',
             'services/data/modules-service.js',
             'services/data/domaineformations-service.js',
             'services/data/sessions-service.js',
@@ -96,6 +108,22 @@ elixir(function(mix) {
             'controllers/editableTable-controller.js',
             'app/sessionDetailApp.js'
             ], 'public/js/sessions-detail.js')
+        .scripts([
+            'lib/angular.min.js',
+            'lib/angular-resource.min.js',
+            'lib/angular-messages.min.js', 
+            'directives/myForceInteger-directive.js',
+            'directives/mySortableHeader-directive.js',
+            'directives/myEditable-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/data/formateurs-service.js',
+            'services/data/formateurtypes-service.js',
+            'services/editmode-service.js',
+            'services/shareddata-service.js',
+            'services/details/formateurdetail-service.js',
+            'controllers/detail-controller.js',
+            'app/formateurDetailApp.js'
+            ], 'public/js/formateurs-detail.js')
     .spritesmith('resources/assets/img/sprites', {
         imgOutput: 'public/images',
         cssOutput: 'resources/assets/sass/theme',

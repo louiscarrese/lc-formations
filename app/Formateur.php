@@ -15,6 +15,9 @@ class Formateur extends Model
         return $this->hasMany('ModuleFormation\Module');
     }
 
+    public function formateur_type() {
+        return $this->belongsTo('ModuleFormation\FormateurType');
+    }
 
     //Un peu périlleux, pas dit que ça marche
     public function sessions() {
