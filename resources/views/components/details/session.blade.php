@@ -6,59 +6,58 @@
             <tr>
                 <td class="key">Id</td>
                 <td class="value validated">
-                    <my-editable type="integer" ng-model="detailCtrl.data.id" editing-flag="detailCtrl.editing" size="1"></my-editable>
+                    <my-editable-integer ng-model="detailCtrl.data.id" editing-flag="detailCtrl.editing" size="1"></my-editable-integer>
                 </td>
             </tr>
             <tr>
                 <td class="key">Module</td>
                 <td class="value validated">
-                    <my-editable type="dropdown" source="detailCtrl.linkedData.modules" source-id="id" source-label="libelle" ng-model="detailCtrl.data.module_id" model-label="detailCtrl.data.module_label" editing-flag="detailCtrl.editing" change="detailCtrl.onModuleChange(detailCtrl)"></my-editable>
+                    <my-editable-dropdown source="detailCtrl.linkedData.modules" source-id="id" source-label="libelle" ng-model="detailCtrl.data.module_id" model-label="detailCtrl.data.module_label" editing-flag="detailCtrl.editing" change="detailCtrl.onModuleChange"></my-editable-dropdown>
                 </td>
             </tr>
             <tr>
                 <td class="key">Libellé</td>
                 <td class="value validated">
-                    <my-editable type="text" ng-model="detailCtrl.data.libelle" editing-flag="detailCtrl.editing" size="40" class="full-width" required></my-editable>
+                    <my-editable-text ng-model="detailCtrl.data.libelle" editing-flag="detailCtrl.editing" size="40" class="full-width" required></my-editable-text>
                 </td>
             </tr>
             <tr>
                 <td class="key">Nombre de jours</td>
                 <td class="value validated">
-                    <my-editable type="integer" ng-model="detailCtrl.data.nb_jours" editing-flag="detailCtrl.editing" size="1" required></my-editable>
+                    <my-editable-integer ng-model="detailCtrl.data.nb_jours" editing-flag="detailCtrl.editing" size="1" required></my-editable-integer>
                 </td>
             </tr>
             <tr>
                 <td class="key">Heure de début</td>
                 <td class="value validated">
-                    <my-editable type="text" ng-model="detailCtrl.data.heure_debut" editing-flag="detailCtrl.editing" size="7"></my-editable>
+                    <my-editable-text ng-model="detailCtrl.data.heure_debut" editing-flag="detailCtrl.editing" size="7"></my-editable-text>
                 </td>
             </tr>
             <tr>
                 <td class="key">Heure de fin</td>
                 <td class="value validated">
-                    <my-editable type="text" ng-model="detailCtrl.data.heure_fin" editing-flag="detailCtrl.editing" size="7"></my-editable>
+                    <my-editable-text ng-model="detailCtrl.data.heure_fin" editing-flag="detailCtrl.editing" size="7"></my-editable-text>
                 </td>
             </tr>
             <tr>
                 <td class="key">Effectif maximum</td>
                 <td class="value validated">
-                    <my-editable type="integer" ng-model="detailCtrl.data.effectif_max" editing-flag="detailCtrl.editing" size="1"></my-editable>
+                    <my-editable-integer ng-model="detailCtrl.data.effectif_max" editing-flag="detailCtrl.editing" size="1"></my-editable-integer>
                 </td>
             </tr>
             <tr>
                 <td class="key">Objectifs pédagogiques</td>
                 <td class="value validated">
-                    <my-editable type="textarea" ng-model="detailCtrl.data.objectifs_pedagogiques" editing-flag="detailCtrl.editing" rows="5" cols="50" class="full-width"></my-editable>
+                    <my-editable-textarea ng-model="detailCtrl.data.objectifs_pedagogiques" editing-flag="detailCtrl.editing" rows="5" cols="50" class="full-width"></my-editable-textarea>
                 </td>
             </tr>
             <tr>
                 <td class="key">Matériel</td>
                 <td class="value validated">
-                    <my-editable type="textarea" ng-model="detailCtrl.data.materiel" editing-flag="detailCtrl.editing" rows="5" cols="50" class="full-width"></my-editable>
+                    <my-editable-textarea ng-model="detailCtrl.data.materiel" editing-flag="detailCtrl.editing" rows="5" cols="50" class="full-width"></my-editable-textarea>
                 </td>
             </tr>
         </table>
-
     </div>
 
     <div class="global-actions">
@@ -68,6 +67,8 @@
         <span ng-show="detailCtrl.mode === 'edit'" ng-click="detailCtrl.cancel()"><i class="icon clickable">undo</i></span>
         <span ng-show="detailCtrl.mode !== 'create'" ng-click="detailCtrl.delete()"><i class="icon clickable">delete</i></span>
     </div>
+    </form>
+    <form name="detailCtrl.sessionJourForm">
     <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != create">
         @include('components.EditableTable',
             ['controllerName' => 'sessionJoursController',

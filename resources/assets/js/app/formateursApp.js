@@ -12,9 +12,7 @@ angular.module('formateursListFilters', [])
 
 //Les directives
 angular.module('formateursListDirectives', [])
-    .directive('myEditable', myEditableDirective)
     .directive('mySortableHeader', mySortableHeaderDirective)
-    .directive('myForceInteger', myForceIntegerDirective)
 
     ;
 

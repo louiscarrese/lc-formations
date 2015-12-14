@@ -50,13 +50,13 @@
                     <td class="validated {{$field['tdClass'] or ''}}">
                         @if($field['editable'])
                             @if($field['type'] == 'text')
-                                <my-editable type="text" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
+                                <my-editable-text type="text" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
                             @elseif($field['type'] == 'integer')
-                                <my-editable type="integer" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
+                                <my-editable-integer type="integer" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
                             @elseif($field['type'] == 'checkbox')
-                                <my-editable type="checkbox" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
+                                <my-editable-checkbox type="checkbox" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
                             @elseif($field['type'] == 'dropdown')
-                                <my-editable type="dropdown" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" source="ctrl.{{$field['dropdownDatasource']}}" source-id="{{$field['dropdownDataId']}}" source-label="{{$field['dropdownDataLabel']}}" model-label="elem.{{$field['dropdownLabel']}}" {{$field['additionalAttributes'] or ''}}></my-editable>
+                                <my-editable-dropdown type="dropdown" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" source="ctrl.{{$field['dropdownDatasource']}}" source-id="{{$field['dropdownDataId']}}" source-label="{{$field['dropdownDataLabel']}}" model-label="elem.{{$field['dropdownLabel']}}" {{$field['additionalAttributes'] or ''}}></my-editable>
                             @endif
                         @else
                             <span {{$field['additionalAttributes'] or ''}}>@{{elem.{{$fieldId}}}}</span>
@@ -80,13 +80,13 @@
                     <td class="validated {{$field['tdClass'] or ''}}">
                         @if($field['addLine'])
                             @if($field['type'] == 'text')
-                                <my-editable type="text" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
+                                <my-editable-text type="text" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
                             @elseif($field['type'] == 'integer')
-                                <my-editable type="integer" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
+                                <my-editable-integer type="integer" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
                             @elseif($field['type'] == 'checkbox')
-                                <my-editable type="checkbox" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
+                                <my-editable-checkbox type="checkbox" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
                             @elseif($field['type'] == 'dropdown')
-                                <my-editable type="dropdown" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" source="ctrl.{{$field['dropdownDatasource']}}" source-id="{{$field['dropdownDataId']}}" source-label="{{$field['dropdownDataLabel']}}" model-label="ctrl.addObject.{{$field['dropdownLabel']}}" {{$field['additionalAttributes'] or ''}}></my-editable>
+                                <my-editable-dropdown type="dropdown" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" source="ctrl.{{$field['dropdownDatasource']}}" source-id="{{$field['dropdownDataId']}}" source-label="{{$field['dropdownDataLabel']}}" model-label="ctrl.addObject.{{$field['dropdownLabel']}}" {{$field['additionalAttributes'] or ''}}></my-editable>
                             @endif
 
                         @endif

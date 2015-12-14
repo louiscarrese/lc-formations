@@ -20,7 +20,12 @@ angular.module('sessionsDetailFilters', [])
 
 //Les directives
 angular.module('sessionsDetailDirectives', [])
-    .directive('myEditable', myEditableDirective)
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
 ;
@@ -29,4 +34,3 @@ angular.module('sessionsDetailDirectives', [])
 angular.module('sessionsDetailApp', 
     ['sessionsDetailControllers', 'sessionsDetailServices', 'sessionsDetailFilters', 'sessionsDetailDirectives', 'ngMessages'])
 ;
-

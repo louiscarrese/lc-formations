@@ -12,9 +12,7 @@ angular.module('sessionsListFilters', [])
 
 //Les directives
 angular.module('sessionsListDirectives', [])
-    .directive('myEditable', myEditableDirective)
     .directive('mySortableHeader', mySortableHeaderDirective)
-    .directive('myForceInteger', myForceIntegerDirective)
 
     ;
 

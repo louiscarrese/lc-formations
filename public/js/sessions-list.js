@@ -320,17 +320,6 @@ this.deregister=function(b){var a=b.$$ngMessageNode;delete b.$$ngMessageNode;var
 m("AE")).directive("ngMessageExp",m("A"))})(window,window.angular);
 //# sourceMappingURL=angular-messages.min.js.map
 
-function myForceIntegerDirective(){
-    return {
-        require: 'ngModel',
-        link: function(scope, ele, attr, ctrl){
-            ctrl.$parsers.unshift(function(viewValue){
-                return parseInt(viewValue, 10);
-            });
-        }
-    };
-}
-
 function mySortableHeaderDirective() {
     return {
         restrict: 'E',
@@ -350,109 +339,6 @@ function mySortableHeaderDirective() {
         }
     };
 }
-function myEditableDirective() {
-    return {
-        restrict: 'E',
-        scope: {
-            type: '@',
-            model: '=ngModel',
-            modelLabel: '=',
-            editingFlag: '=',
-            source: '=',
-            sourceId: '=',
-            sourceLabel: '=',
-            change: '=',
-            values: '='
-        },
-        require: ['^form'],
-        template: function(tElem, tAttr) {
-            var filteredAttr = this.stripScopeAttributes(tAttr);
-            var htmlAttrs = this.attrToHtml(filteredAttr);
-            var fieldName = this.getFieldName(tAttr.ngModel);
-
-            var template = '';
-            switch(tAttr['type']) {
-                case 'text': 
-                    template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{model}}</span>';
-                    template += '<input type="text" ng-show="editingFlag" ng-model="model" name="' + fieldName + '" ' + htmlAttrs + '/>';
-                    break;
-                case 'textarea':
-                    template += '<pre ng-hide="editingFlag" ' + htmlAttrs + '>{{model}}</pre>';
-                    template += '<textarea ng-show="editingFlag" ng-model="model" name="' + fieldName + '" ' + htmlAttrs + '></textarea>';
-                    break;
-                case 'integer':
-                    template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{model}}</span>';
-                    template += '<input type="text" ng-show="editingFlag" ng-model="model" name="' + fieldName + '" my-force-integer ' + htmlAttrs + '/>';
-                    break;
-                case 'checkbox':
-                    template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="model" name="' + fieldName + '" ' + htmlAttrs + '/>';
-                    break;
-                case 'dropdown':
-                    var ngOptionsString = 'item.' + tAttr.sourceId + ' as item.' + tAttr.sourceLabel + ' for item in source';
- 
-                    template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{modelLabel}}</span>';
-                    template += '<select ng-show="editingFlag" ng-options="' + ngOptionsString + '"';
-                    template += ' ng-model="model" name="' + fieldName + '" ';
-                    if(tAttr['change'] != undefined) {
-                        template += ' ng-change="change()"';
-                    }
-                    template +=' ' + htmlAttrs + '></select>';
-                    break;
-                case 'radio':
-                    template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{model}}</span>';
-
-                    template += '<label ng-repeat="item in values" ng-show="editingFlag">';
-                    template += '<input type="radio" name="' + fieldName + '" ng-model="$parent.model" value="{{item}}">{{item}}</input>';
-                    template += '</label>';
-                    break;
-                default:
-                    template += "Erreur de type !";
-                    break;
-            }
-
-            template += '<div class="tooltip" ng-messages="form.' + fieldName + '.$error" ng-if="form.' + fieldName + '.$invalid && form.' + fieldName + '.$touched">';
-            template += '<p ng-message="required">Ce champ est obligatoire</p>';
-            template += '<p ng-message="minlength">Ce champ est trop court</p>';
-            template += '<p ng-message="maxlength">Ce champ est trop long</p>';
-            template += '<p ng-message="email">Ce champ n\'est pas un email valide</p>';
-            template += '<p ng-message="number">Ce champ n\'est pas un nombre valide</p>';
-            template += '<p ng-message="date">Ce champ n\'est pas une date valide</p>';
-            template += '</div>';
-
-            return template;
-
-        },
-        link: function(scope, element, attrs, ctrls) {
-            scope.form = ctrls[0];
-        },
-
-        stripScopeAttributes: function(tAttr) {
-            var ret = {};
-            for(var attr in tAttr) {
-                if(tAttr.hasOwnProperty(attr)) {
-                    if(!this.scope.hasOwnProperty(attr)) {
-                        ret[attr] = tAttr[attr];
-                    }
-                }
-            }
-            return ret;
-        },
-
-        attrToHtml: function(attr) {
-            var ret = '';
-            for(var key in attr) {
-                ret += key + '="' + attr[key] + '" ';
-            }
-            return ret;
-        },
- 
-
-        getFieldName: function(modelName) {
-            var names = modelName.split('.');
-            return names[names.length-1];
-        }
-    };
-};
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -694,9 +580,7 @@ angular.module('sessionsListFilters', [])
 
 //Les directives
 angular.module('sessionsListDirectives', [])
-    .directive('myEditable', myEditableDirective)
     .directive('mySortableHeader', mySortableHeaderDirective)
-    .directive('myForceInteger', myForceIntegerDirective)
 
     ;
 

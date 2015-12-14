@@ -350,6 +350,250 @@ function mySortableHeaderDirective() {
         }
     };
 }
+function myEditableDirectiveCommons() {
+    return {
+
+        validationTemplate: function(fieldName) {
+            var template = '';
+
+            template += '<div class="tooltip" ng-messages="form.' + fieldName + '.$error" ng-if="form.' + fieldName + '.$invalid && form.' + fieldName + '.$touched">';
+            template += '<p ng-message="required">Ce champ est obligatoire</p>';
+            template += '<p ng-message="minlength">Ce champ est trop court</p>';
+            template += '<p ng-message="maxlength">Ce champ est trop long</p>';
+            template += '<p ng-message="email">Ce champ n\'est pas un email valide</p>';
+            template += '<p ng-message="number">Ce champ n\'est pas un nombre valide</p>';
+            template += '<p ng-message="date">Ce champ n\'est pas une date valide</p>';
+            template += '</div>';
+
+            return template;
+        },
+
+        stripScopeAttributes: function(tAttr) {
+            var ret = {};
+
+            for(var attr in tAttr) {
+                if(tAttr.hasOwnProperty(attr)) {
+                    if(!this.scope.hasOwnProperty(attr)) {
+                        ret[attr] = tAttr[attr];
+                    }
+                }
+            }
+            return ret;
+        },
+
+        attrToHtml: function(attr) {
+            var ret = '';
+            for(var key in attr) {
+                ret += key + '="' + attr[key] + '" ';
+            }
+            return ret;
+        },
+ 
+
+        getFieldName: function(modelName) {
+            var names = modelName.split('.');
+            return names[names.length-1];
+        }
+    }
+}
+function myEditableDirectiveText() {
+
+    var directive = {
+        restrict: 'E',
+        
+        scope: 
+        {
+            ngModel: '=',
+            editingFlag: '=',
+        },
+        controller: function($scope) {},
+        require: ['^form'],
+        template: function(tElem, tAttr) {
+            var filteredAttr = this.stripScopeAttributes(tAttr);
+            var htmlAttrs = this.attrToHtml(filteredAttr);
+            var fieldName = this.getFieldName(tAttr['ngModel']);
+
+            var template = '';
+            template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
+            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '/>';
+            template += this.validationTemplate();
+
+            return template;
+        },
+        link: function(scope, element, attrs, ctrls) {
+            scope.form = ctrls[0];
+        }
+    };
+
+    directive = angular.extend(directive, myEditableDirectiveCommons());
+
+    return directive;
+}
+function myEditableDirectiveInteger() {
+    var directive = {
+        restrict: 'E',
+        scope: {
+            ngModel: '=',
+            editingFlag: '=',
+        },
+        require: ['^form'],
+        template: function(tElem, tAttr) {
+            var filteredAttr = this.stripScopeAttributes(tAttr);
+            var htmlAttrs = this.attrToHtml(filteredAttr);
+            var fieldName = this.getFieldName(tAttr.ngModel);
+
+            var template = '';
+
+            template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
+            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' my-force-integer/>';
+
+            template += this.validationTemplate();
+            return template;
+        },
+        link: function(scope, element, attrs, ctrls) {
+            scope.form = ctrls[0];
+        }
+    };
+
+    directive = angular.extend(directive, myEditableDirectiveCommons());
+
+    return directive;
+}
+function myEditableDirectiveTextarea() {
+    var directive = {
+        restrict: 'E',
+        scope: {
+            ngModel: '=',
+            editingFlag: '=',
+        },
+        require: ['^form'],
+        template: function(tElem, tAttr) {
+            var filteredAttr = this.stripScopeAttributes(tAttr);
+            var htmlAttrs = this.attrToHtml(filteredAttr);
+            var fieldName = this.getFieldName(tAttr.ngModel);
+
+            var template = '';
+
+            template += '<pre ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</pre>';
+            template += '<textarea ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '></textarea>';
+
+            template += this.validationTemplate();
+            return template;
+        },
+        link: function(scope, element, attrs, ctrls) {
+            scope.form = ctrls[0];
+        }
+    };
+
+    directive = angular.extend(directive, myEditableDirectiveCommons());
+
+    return directive;
+}
+function myEditableDirectiveCheckbox() {
+    var directive = {
+        restrict: 'E',
+        scope: {
+            ngModel: '=',
+            editingFlag: '=',
+        },
+        require: ['^form'],
+        template: function(tElem, tAttr) {
+            var filteredAttr = this.stripScopeAttributes(tAttr);
+            var htmlAttrs = this.attrToHtml(filteredAttr);
+            var fieldName = this.getFieldName(tAttr.ngModel);
+
+            var template = '';
+
+            template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '/>';
+
+            template += this.validationTemplate();
+            return template;
+        },
+        link: function(scope, element, attrs, ctrls) {
+            scope.form = ctrls[0];
+        }
+    };
+
+    directive = angular.extend(directive, myEditableDirectiveCommons());
+
+    return directive;
+}
+function myEditableDirectiveDropdown() {
+    var directive = {
+        restrict: 'E',
+        scope: {
+            ngModel: '=',
+            modelLabel: '=',
+            editingFlag: '=',
+            source: '=',
+            sourceId: '@',
+            sourceLabel: '@',
+            change: '=',
+        },
+        require: ['^form', 'ngModel'],
+        template: function(tElem, tAttr) {
+            var filteredAttr = this.stripScopeAttributes(tAttr);
+            var htmlAttrs = this.attrToHtml(filteredAttr);
+            var fieldName = this.getFieldName(tAttr.ngModel);
+
+            var ngOptionsString = 'item.' + tAttr.sourceId + ' as item.' + tAttr.sourceLabel + ' for item in source';
+
+            var template = '';
+ 
+            template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{modelLabel}}</span>';
+            template += '<select ng-show="editingFlag" ng-options="' + ngOptionsString + '"';
+            template += ' ng-model="ngModel" name="' + fieldName + '" ';
+            if(tAttr['change'] != undefined) {
+                template += ' ng-change="change(ngModel)"';
+            }
+            template +=' ' + htmlAttrs + '></select>';
+
+            template += this.validationTemplate();
+            return template;
+        },
+        link: function(scope, element, attrs, ctrls) {
+            scope.form = ctrls[0];
+        },
+    };
+
+    directive = angular.extend(directive, myEditableDirectiveCommons());
+
+    return directive;
+}
+function myEditableDirectiveRadio() {
+    var directive = {
+        restrict: 'E',
+        scope: {
+            ngModel: '=',
+            editingFlag: '=',
+            values: '=',
+        },
+        require: ['^form'],
+        template: function(tElem, tAttr) {
+            var filteredAttr = this.stripScopeAttributes(tAttr);
+            var htmlAttrs = this.attrToHtml(filteredAttr);
+            var fieldName = this.getFieldName(tAttr.ngModel);
+
+            var template = '';
+
+            template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
+            template += '<label ng-repeat="item in values" ng-show="editingFlag">';
+            template += '<input type="radio" name="' + fieldName + '" ng-model="$parent.ngModel" value="{{item}}">{{item}}</input>';
+            template += '</label>';
+
+            template += this.validationTemplate();
+            return template;
+        },
+        link: function(scope, element, attrs, ctrls) {
+            scope.form = ctrls[0];
+        }
+    };
+
+    directive = angular.extend(directive, myEditableDirectiveCommons());
+
+    return directive;
+}
+
 function myEditableDirective() {
     return {
         restrict: 'E',
@@ -404,6 +648,10 @@ function myEditableDirective() {
                     template += '<label ng-repeat="item in values" ng-show="editingFlag">';
                     template += '<input type="radio" name="' + fieldName + '" ng-model="$parent.model" value="{{item}}">{{item}}</input>';
                     template += '</label>';
+                    break;
+                case 'multiselect':
+                    template += '';
+
                     break;
                 default:
                     template += "Erreur de type !";
@@ -741,7 +989,12 @@ angular.module('formateursDetailFilters', [])
 
 //Les directives
 angular.module('formateursDetailDirectives', [])
-    .directive('myEditable', myEditableDirective)
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
 ;

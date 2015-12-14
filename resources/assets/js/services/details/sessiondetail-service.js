@@ -33,12 +33,9 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
         },
 
         addListeners: function(controller) {
-            controller.onModuleChange = function(controller) {
-                //Get the various informations we'll need
-                var moduleId = controller.data.module_id;
-                var modules = controller.linkedData.modules;
-
+            controller.onModuleChange = function(moduleId) {
                 //Get the module
+                var modules = controller.linkedData.modules;
                 var module = {};
                 for(var i = 0; i < modules.length; i++) {
                     if(modules[i].id === moduleId) {
@@ -54,10 +51,7 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
                 controller.data.effectif_max = module.effectif_max;
                 controller.data.objectifs_pedagogiques = module.objectifs_pedagogiques;
                 controller.data.materiel = module.materiel;
-
-
             }
         }
-
     }
 }

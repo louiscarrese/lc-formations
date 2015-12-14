@@ -12,9 +12,7 @@ angular.module('modulesListFilters', [])
 
 //Les directives
 angular.module('modulesListDirectives', [])
-    .directive('myEditable', myEditableDirective)
     .directive('mySortableHeader', mySortableHeaderDirective)
-    .directive('myForceInteger', myForceIntegerDirective)
 
     ;
 

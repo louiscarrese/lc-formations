@@ -24,7 +24,12 @@ angular.module('parametresFilters', [])
 
 //Les directives
 angular.module('parametresDirectives', [])
-    .directive('myEditable', myEditableDirective)
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
 
