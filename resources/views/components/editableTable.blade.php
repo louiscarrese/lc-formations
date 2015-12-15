@@ -21,7 +21,7 @@
 
 <div ng-controller="{{$controllerName}} as ctrl" <? echo((isset($adaptToContent) && $adaptToContent) ? ' class="adapt-to-content"' : ''); ?>>
     <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="form-control" />
-    <form name="mainForm" novalidate>
+    <form name="ctrl.mainForm" novalidate>
     <table class="table table-striped table-condensed">
         <thead>
             <tr>
@@ -47,7 +47,7 @@
             <tr ng-repeat="elem in ctrl.data | {{$filter}}" ng-form="ctrl.form_@{{$index}}">
                 {{-- Each field --}}
                 @foreach($fields as $fieldId => $field)
-                    <td class="validated {{$field['tdClass'] or ''}}">
+                    <td class="validated form-group {{$field['tdClass'] or ''}}" ng-class="{ 'has-error': ctrl.form_@{{$index}}.{{$fieldId}}.$invalid && ctrl.form_@{{$index}}.{{$fieldId}}.$touched }">
                         @if($field['editable'])
                             @include('components.myEditable', [
                                 'controllerName' => 'ctrl',
@@ -75,7 +75,7 @@
             {{-- Add line --}}
             <tr ng-form="ctrl.form_add">
                 @foreach($fields as $fieldId => $field)
-                    <td class="validated {{$field['tdClass'] or ''}}">
+                    <td class="validated form-group {{$field['tdClass'] or ''}}" ng-class="{ 'has-error': ctrl.form_add.{{$fieldId}}.$invalid && ctrl.form_add.{{$fieldId}}.$touched }">
                         @if($field['addLine'])
                             @include('components.myEditable', [
                                 'controllerName' => 'ctrl',

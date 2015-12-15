@@ -25,6 +25,7 @@
                 'type' => 'text',
                 'sizeLabel' => 2,
                 'sizeValue' => 5,
+                'validation' => 'required'
             ],
             'nb_jours' => [
                 'label' => 'Nombre de jours',
@@ -55,67 +56,64 @@
         ] //fields
     ])
 
-
-    <form name="detailCtrl.sessionJourForm">
-        <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != 'create'">
-            @include('components.EditableTable',
-                ['controllerName' => 'sessionJoursController',
-                 'title' => 'Jours',
-                 'fields' => [
-                    'id' => [
-                        'label' => 'Id',
-                        'isId' => true,
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'integer',
-                        'addLine' => false,
-                        'tdClass' => 'centered',
-                        'additionalAttributes' => 'size=1',
-                        'validation' => 'required',
-                    ], //id
-                    'date' => [
-                        'label' => 'Date',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'text', //TODO : date
-                        'addLine' => true,
-                        'validation' => 'required',
-                    ], //date
-                    'heure_debut' => [
-                        'label' => 'Début',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'text', //TODO : time
-                        'addLine' => true,
-                        'validation' => 'required',
-                    ], //heure_debut
-                    'heure_fin' => [
-                        'label' => 'Fin',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'text', //TODO : time
-                        'addLine' => true,
-                        'validation' => 'required',
-                    ], //heure_fin
-                    'lieu_id' => [
-                        'label' => 'Lieu',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'dropdown',
-                        'dropdownDatasource' => 'linkedData.lieus', //relative to the controller
-                        'dropdownDataId' => 'id', //relative to an item in the dropdownDatasource
-                        'dropdownDataLabel' => 'libelle', //relative to an item in the dropdownDatasource
-                        'dropdownLabel' => 'lieu_label', //relative to an item in the controller data
-                        'addLine' => true,
-                        'validation' => 'required',
-                    ], //heure_debut
-                 ] //fields
-                 ])
-        </div>
-    </form>
+    <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != 'create'">
+        @include('components.EditableTable',
+            ['controllerName' => 'sessionJoursController',
+             'title' => 'Jours',
+             'fields' => [
+                'id' => [
+                    'label' => 'Id',
+                    'isId' => true,
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'integer',
+                    'addLine' => false,
+                    'tdClass' => 'centered',
+                    'additionalAttributes' => 'size=1',
+                    'validation' => 'required',
+                ], //id
+                'date' => [
+                    'label' => 'Date',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'text', //TODO : date
+                    'addLine' => true,
+                    'validation' => 'required',
+                ], //date
+                'heure_debut' => [
+                    'label' => 'Début',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'text', //TODO : time
+                    'addLine' => true,
+                    'validation' => 'required',
+                ], //heure_debut
+                'heure_fin' => [
+                    'label' => 'Fin',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'text', //TODO : time
+                    'addLine' => true,
+                    'validation' => 'required',
+                ], //heure_fin
+                'lieu_id' => [
+                    'label' => 'Lieu',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'dropdown',
+                    'dropdownDatasource' => 'linkedData.lieus', //relative to the controller
+                    'dropdownDataId' => 'id', //relative to an item in the dropdownDatasource
+                    'dropdownDataLabel' => 'libelle', //relative to an item in the dropdownDatasource
+                    'dropdownLabel' => 'lieu_label', //relative to an item in the controller data
+                    'addLine' => true,
+                    'validation' => 'required',
+                ], //heure_debut
+             ] //fields
+             ])
+    </div>
 <div>

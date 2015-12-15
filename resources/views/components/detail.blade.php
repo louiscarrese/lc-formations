@@ -2,7 +2,7 @@
 
 <form name="{{$controller}}.mainForm" novalidate class="form-horizontal form-condensed row">
     @foreach($fields as $fieldId => $field)
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': {{$controller}}.mainForm.{{$fieldId}}.$invalid && {{$controller}}.mainForm.{{$fieldId}}.$touched }">
             <label class="control-label col-sm-{{$field['sizeLabel']}}">{{$field['label']}}</label>
             <div class="col-sm-{{$field['sizeValue']}} detail-value">
                 @include('components.myEditable', [
