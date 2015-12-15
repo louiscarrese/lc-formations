@@ -442,7 +442,7 @@ function myEditableDirectiveText() {
 
             var template = '';
             template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
-            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '/>';
+            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
             template += this.validationTemplate();
 
             return template;
@@ -472,7 +472,7 @@ function myEditableDirectiveInteger() {
             var template = '';
 
             template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
-            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' my-force-integer/>';
+            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" my-force-integer/>';
 
             template += this.validationTemplate();
             return template;
@@ -502,7 +502,7 @@ function myEditableDirectiveTextarea() {
             var template = '';
 
             template += '<pre ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</pre>';
-            template += '<textarea ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '></textarea>';
+            template += '<textarea ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm"></textarea>';
 
             template += this.validationTemplate();
             return template;
@@ -531,7 +531,7 @@ function myEditableDirectiveCheckbox() {
 
             var template = '';
 
-            template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '/>';
+            template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '"/>';
 
             template += this.validationTemplate();
             return template;
@@ -573,7 +573,7 @@ function myEditableDirectiveDropdown() {
             if(tAttr['change'] != undefined) {
                 template += ' ng-change="change(ngModel)"';
             }
-            template +=' ' + htmlAttrs + '></select>';
+            template +=' ' + htmlAttrs + ' class="form-control"></select>';
 
             template += this.validationTemplate();
             return template;

@@ -13,7 +13,7 @@ function myEditableDirectiveCheckbox() {
 
             var template = '';
 
-            template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '/>';
+            template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '"/>';
 
             template += this.validationTemplate();
             return template;

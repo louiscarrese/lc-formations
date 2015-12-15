@@ -20,20 +20,20 @@
 <h2>{{$title}}</h2>
 
 <div ng-controller="{{$controllerName}} as ctrl" class="list-table-container">
-    <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="table-filter" />
+    <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="form-control" />
     <form name="mainForm" novalidate>
-    <table>
+    <table class="table table-striped table-condensed table-nonfluid">
         <thead>
             <tr>
                 {{-- Configured Headers --}}
                 @foreach($fields as $fieldId => $field)
                     @if($field['sortable'])
-                        <td class="clickable">
+                        <th class="clickable {{$field['tdClass'] or ''}}">
                             <my-sortable-header set="ctrl.setSort('{{$fieldId}}')"
                                                 get="ctrl.getSort('{{$fieldId}}')"
                             >
                             {{$field['label']}}
-                        </td>
+                        </th>
                     @else
                         <td><span>{{$field['label']}}</span></td>
                     @endif
@@ -65,12 +65,12 @@
                 @endforeach
                 {{-- action columns --}}
                 <td>
-                    <span ng-hide="elem.editing" ng-click="elem.editing = true"><i class="icon clickable">edit</i></span>
-                    <span ng-show="elem.editing" ng-click="ctrl.editSubmit($index, elem)"><i class="icon clickable">validate</i></span>
+                    <span ng-hide="elem.editing" ng-click="elem.editing = true" class="glyphicon glyphicon-edit clickable"></span>
+                    <span ng-show="elem.editing" ng-click="ctrl.editSubmit($index, elem)" class="glyphicon glyphicon-ok clickable"></span>
                 </td>
                 <td>
-                    <span ng-hide="elem.editing" ng-click="ctrl.delete(elem)"><i class="icon clickable">delete</i></span>
-                    <span ng-show="elem.editing" ng-click="ctrl.cancel(elem)"><i class="icon clickable">undo</i></span>
+                    <span ng-hide="elem.editing" ng-click="ctrl.delete(elem)" class="glyphicon glyphicon-trash clickable"></span>
+                    <span ng-show="elem.editing" ng-click="ctrl.cancel(elem)"class="glyphicon glyphicon-remove clickable"></span>
                 </td>
             </tr>
 
@@ -93,8 +93,9 @@
                     </td>
                 @endforeach
                 <td class="centered">
-                    <span ng-click="ctrl.addSubmit()"><i class="icon clickable">add</i></span>
+                    <span ng-click="ctrl.addSubmit()" class="glyphicon glyphicon-plus clickable"></span>
                 </td>
+                <td></td>
             </tr>
         </tbody>
     </table>

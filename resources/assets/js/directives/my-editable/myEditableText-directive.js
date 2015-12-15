@@ -17,7 +17,7 @@ function myEditableDirectiveText() {
 
             var template = '';
             template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
-            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '/>';
+            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
             template += this.validationTemplate();
 
             return template;
