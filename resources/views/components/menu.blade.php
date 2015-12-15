@@ -1,16 +1,16 @@
-<div id="menu" class="main-block">
-    <ul class="menu">
+<nav id="menu" class="navbar navbar-default">
+    <ul class="nav navbar-nav">
         <li><a href="#">Pré-inscriptions</a></li>
         <li><a href="#">Stagiaires</a></li>
         <li><a href="/formateurs">Formateurs</a></li>
         <li><a href="/modules">Modules</a></li>
         <li><a href="/sessions">Sessions</a></li>
         <li><a href="#">Inscriptions</a></li>
-        <li>
-            <form method="get" action="universal_search.php" id="search-form">
-                <input id="search-input" name="search-input" type="text" placeholder="Recherche universelle"/>
-                <i class="icon clickable" onclick="document.getElementById('search-form').submit();">search</i>
-            </form>
-        </li>
     </ul>
-</div>
+    <form method="get" action="universal_search.php" id="search-form" class="navbar-form navbar-right">
+        <div class="form-group">
+            <input id="search-input" name="search-input" type="text" placeholder="Recherche universelle" size="35" class="form-control"/>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"</button>
+        </div>
+    </form>
+</nav>

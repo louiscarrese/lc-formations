@@ -14,7 +14,7 @@ require('laravel-elixir-spritesmith');
 
 elixir(function(mix) {
     mix
-        .sass('app.scss')
+        .less('app.less')
 
         .scripts([
             '/vendor/angular/angular.min.js', 
@@ -165,5 +165,5 @@ elixir(function(mix) {
     });
 });
 
-elixir.Task.find('sass').watch('resources/assets/sass/**/');
+elixir.Task.find('less').watch('resources/assets/less/**/');
 elixir.Task.find('sprite').watch('resources/assets/img/sprites/**/');
