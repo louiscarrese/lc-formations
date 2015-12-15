@@ -19,10 +19,10 @@
 
 <h2>{{$title}}</h2>
 
-<div ng-controller="{{$controllerName}} as ctrl" class="list-table-container">
+<div ng-controller="{{$controllerName}} as ctrl" <? echo((isset($adaptToContent) && $adaptToContent) ? ' class="adapt-to-content"' : ''); ?>>
     <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="form-control" />
     <form name="mainForm" novalidate>
-    <table class="table table-striped table-condensed table-nonfluid">
+    <table class="table table-striped table-condensed">
         <thead>
             <tr>
                 {{-- Configured Headers --}}

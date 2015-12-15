@@ -5135,6 +5135,9 @@ button.close {
 body {
   margin-top: 1em;
 }
+.adapt-to-content {
+  display: inline-block;
+}
 #search-form {
   margin-right: 0;
 }
@@ -5147,8 +5150,19 @@ body {
 .table-nonfluid {
   width: auto !important;
 }
-.list-table-container {
-  display: inline-block;
+table .glyphicon {
+  color: #2e1700;
+}
+.global-actions .glyphicon {
+  color: #2e1700;
+  font-size: 2em;
+}
+.form-condensed .form-group {
+  margin-bottom: 0.2em;
+}
+.detail-value span {
+  height: 31px;
+  line-height: 31px;
 }
 
 /*# sourceMappingURL=app.css.map */

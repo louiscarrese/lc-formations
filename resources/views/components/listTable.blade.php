@@ -15,17 +15,17 @@
 ?>
 <h2>{{$title}}</h2>
 
-<div ng-controller="{{$controllerName}} as ctrl" class="list-table-container">
-    <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="table-filter" />
+<div ng-controller="{{$controllerName}} as ctrl">
+    <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="form-control" />
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 @foreach($fields as $fieldId => $field)
                     @if($field['sortable'])
-                        <td class="clickable">
+                        <th class="clickable {{$field['tdClass'] or ''}}">
                             <my-sortable-header set="ctrl.setSort('{{$fieldId}}')" get="ctrl.getSort('{{$fieldId}}')">{{$field['label']}}</my-sortable-header>
-                        </td>
+                        </th>
                     @else
                         <td><span>{{$field['label']}}</span></td>
                     @endif
@@ -51,14 +51,14 @@
                 <td>
                     <span>
                         <a ng-href="{{$detailUri}}/<? echo '{{item.'.$id.'}}'; ?>">
-                            <i class="icon clickable">info</i>
+                            <span class="glyphicon glyphicon-info"></span>
                         </a>
                     </span>
                 </td>
                 <td>
                     <span>
                         <a ng-href="{{$detailUri}}/<? echo '{{item.'.$id.'}}'; ?>?edit=true">
-                            <i class="icon clickable">edit</i>
+                            <span class="glyphicon glyphicon-edit"></span>
                         </a>
                     </span>
                 </td>
@@ -66,11 +66,9 @@
         </tbody>
     </table>
 
-    <div class="global-actions">
-        <span>
-            <a ng-href="{{$detailUri}}/create">
-                <i class="icon clickable">add</i>
-            </a>
-        </span>
+    <div class="global-actions clearfix">
+        <a ng-href="{{$detailUri}}/create" class="pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
     </div>
 </div>

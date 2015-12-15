@@ -9,6 +9,7 @@
     @include('components.editableTable',
         ['controllerName' => 'stagiaireTypesController',
          'title' => 'Types de stagiaires',
+         'adaptToContent' => true,
          'fields' => [
             'id' => [
                 'label' => 'Id',
@@ -73,6 +74,7 @@
     @include('components.editableTable',
         ['controllerName' => 'formateurTypesController',
          'title' => 'Types de formateurs',
+         'adaptToContent' => true,
          'fields' => [
             'id' => [
                 'label' => 'Id',
@@ -101,6 +103,7 @@
     @include('components.editableTable',
         ['controllerName' => 'financeurTypesController',
          'title' => 'Types de formateurs',
+         'adaptToContent' => true,
          'fields' => [
             'id' => [
                 'label' => 'Id',
@@ -130,6 +133,7 @@
     @include('components.editableTable',
         ['controllerName' => 'financeurTypesController',
          'title' => 'Types de financeurs',
+         'adaptToContent' => true,
          'fields' => [
             'id' => [
                 'label' => 'Id',
@@ -158,6 +162,7 @@
     @include('components.editableTable',
         ['controllerName' => 'tarifTypesController',
          'title' => 'Types de tarifs',
+         'adaptToContent' => true,
          'fields' => [
             'id' => [
                 'label' => 'Id',
@@ -186,6 +191,7 @@
     @include('components.editableTable',
         ['controllerName' => 'domaineFormationsController',
          'title' => 'Domaines de formation',
+         'adaptToContent' => true,
          'fields' => [
             'id' => [
                 'label' => 'Id',
@@ -214,6 +220,7 @@
     @include('components.editableTable',
         ['controllerName' => 'lieuController',
          'title' => 'Lieux de formation',
+         'adaptToContent' => true,
          'fields' => [
             'id' => [
                 'label' => 'Id',

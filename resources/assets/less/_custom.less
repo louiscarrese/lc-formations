@@ -2,6 +2,10 @@ body {
     margin-top: 1em;
 }
 
+.adapt-to-content {
+    display: inline-block;
+}
+
 #search-form {
     margin-right: 0;
 }
@@ -17,6 +21,23 @@ body {
    width: auto !important;
 }
 
-.list-table-container {
-    display: inline-block;
+table .glyphicon {
+    color: @text-color;
+}
+
+.global-actions {
+    .glyphicon {
+        color: @text-color;
+        font-size: 2em;
+    }
+}
+
+
+.form-condensed .form-group {
+    margin-bottom: 0.2em;
+
+}
+.detail-value span {
+    height: @input-height-base - 3;
+    line-height: @input-height-base - 3;
 }
