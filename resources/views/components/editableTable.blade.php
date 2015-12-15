@@ -49,15 +49,13 @@
                 @foreach($fields as $fieldId => $field)
                     <td class="validated {{$field['tdClass'] or ''}}">
                         @if($field['editable'])
-                            @if($field['type'] == 'text')
-                                <my-editable-text type="text" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
-                            @elseif($field['type'] == 'integer')
-                                <my-editable-integer type="integer" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
-                            @elseif($field['type'] == 'checkbox')
-                                <my-editable-checkbox type="checkbox" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
-                            @elseif($field['type'] == 'dropdown')
-                                <my-editable-dropdown type="dropdown" ng-model="elem.{{$fieldId}}" editing-flag="elem.editing" source="ctrl.{{$field['dropdownDatasource']}}" source-id="{{$field['dropdownDataId']}}" source-label="{{$field['dropdownDataLabel']}}" model-label="elem.{{$field['dropdownLabel']}}" {{$field['additionalAttributes'] or ''}}></my-editable>
-                            @endif
+                            @include('components.myEditable', [
+                                'controllerName' => 'ctrl',
+                                'element' => 'elem',
+                                'editingFlag' => 'elem.editing',
+                                'fieldId' => $fieldId,
+                                'field' => $field
+                            ])
                         @else
                             <span {{$field['additionalAttributes'] or ''}}>@{{elem.{{$fieldId}}}}</span>
                         @endif
@@ -79,16 +77,13 @@
                 @foreach($fields as $fieldId => $field)
                     <td class="validated {{$field['tdClass'] or ''}}">
                         @if($field['addLine'])
-                            @if($field['type'] == 'text')
-                                <my-editable-text type="text" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
-                            @elseif($field['type'] == 'integer')
-                                <my-editable-integer type="integer" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
-                            @elseif($field['type'] == 'checkbox')
-                                <my-editable-checkbox type="checkbox" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable>
-                            @elseif($field['type'] == 'dropdown')
-                                <my-editable-dropdown type="dropdown" ng-model="ctrl.addObject.{{$fieldId}}" editing-flag="true" source="ctrl.{{$field['dropdownDatasource']}}" source-id="{{$field['dropdownDataId']}}" source-label="{{$field['dropdownDataLabel']}}" model-label="ctrl.addObject.{{$field['dropdownLabel']}}" {{$field['additionalAttributes'] or ''}}></my-editable>
-                            @endif
-
+                            @include('components.myEditable', [
+                                'controllerName' => 'ctrl',
+                                'element' => 'addObject',
+                                'editingFlag' => 'true',
+                                'fieldId' => $fieldId,
+                                'field' => $field
+                            ])
                         @endif
                     </td>
                 @endforeach
