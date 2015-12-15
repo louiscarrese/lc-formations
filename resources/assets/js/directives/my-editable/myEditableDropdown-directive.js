@@ -20,15 +20,15 @@ function myEditableDirectiveDropdown() {
 
             var template = '';
  
-            template += '<span ng-hide="editingFlag" ' + htmlAttrs + '>{{modelLabel}}</span>';
+            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{modelLabel}}</p>';
             template += '<select ng-show="editingFlag" ng-options="' + ngOptionsString + '"';
             template += ' ng-model="ngModel" name="' + fieldName + '" ';
             if(tAttr['change'] != undefined) {
                 template += ' ng-change="change(ngModel)"';
             }
-            template +=' ' + htmlAttrs + '></select>';
+            template +=' ' + htmlAttrs + ' class="form-control"></select>';
 
-            template += this.validationTemplate();
+            template += this.validationTemplate(fieldName);
             return template;
         },
         link: function(scope, element, attrs, ctrls) {
