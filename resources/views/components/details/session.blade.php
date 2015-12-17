@@ -67,10 +67,11 @@
                     'sortable' => true,
                     'filterable' => true,
                     'editable' => true,
-                    'type' => 'text', //TODO : date
+                    'type' => 'date', 
+                    'format' => 'dd/MM/yyyy',
                     'addLine' => true,
                     'validation' => 'required',
-                    'size' => 1,
+                    'size' => 2,
                 ], //date
                 'heure_debut' => [
                     'label' => 'Début',
@@ -118,7 +119,7 @@
                     'displayed' => '<nom> <prenom>',
                     'placeholder' => 'Formateurs',
                     'addLine' => true,
-                    'size' => 6,
+                    'size' => 5,
                 ]
              ] //fields
              ])

@@ -23,6 +23,7 @@ angular.module('sessionsDetailFilters', [])
 angular.module('sessionsDetailDirectives', [])
     .directive('myEditableText', myEditableDirectiveText)
     .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableDate', ['$filter', myEditableDirectiveDate])
     .directive('myEditableTextarea', myEditableDirectiveTextarea)
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
@@ -34,5 +35,6 @@ angular.module('sessionsDetailDirectives', [])
 
 //Le module principal
 angular.module('sessionsDetailApp', 
-    ['sessionsDetailControllers', 'sessionsDetailServices', 'sessionsDetailFilters', 'sessionsDetailDirectives', 'ngMessages', 'rt.select2'])
+    ['sessionsDetailControllers', 'sessionsDetailServices', 'sessionsDetailFilters', 'sessionsDetailDirectives', 'ngMessages', 'ui.bootstrap', 'rt.select2'])
+
 ;

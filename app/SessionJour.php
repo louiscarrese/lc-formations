@@ -18,5 +18,7 @@ class SessionJour extends Model
         return $this->belongsTo('ModuleFormation\Lieu');
     }
 
-
+    public function setDate($dateIn) {
+        $this->attributes['date'] = Carbon::createFromFormat('Y-m-d\TH:i:s.uO', $dateIn);
+    }
 }

@@ -18,7 +18,21 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
                     data.formateurs_id.push(data.formateurs[i].id);
                 }
             }
-            
+
+            /** Treat dates manually because fuck */
+            //1. copy the data
+            var dateString = data.date;
+            //2. ditch the time
+            dateString = dateString.split(' ')[0];
+            //3.split it
+            var dateParts = dateString.split('-');
+            //4.Make it an ISO 8601 string
+            var iso8601String = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2] + 'T00:00:00Z';
+            //4. get a real date 
+            var date = new Date(iso8601String);
+            data.date = date;
+
+
             //Build the return structure
             return {
             };
