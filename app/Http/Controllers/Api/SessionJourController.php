@@ -18,7 +18,7 @@ class SessionJourController extends Controller
     public function index(Request $request)
     {
         //Initialize the request
-        $session_jours_req = \ModuleFormation\SessionJour::with('lieu');
+        $session_jours_req = \ModuleFormation\SessionJour::with('lieu', 'formateurs');
 
         //Add parameters if any
         if($request->input('session_id')) {
@@ -51,7 +51,13 @@ class SessionJourController extends Controller
 
         $session_jours->save();
 
-        $session_jours = \ModuleFormation\SessionJour::with('lieu')->findOrFail($session_jours->id);
+        foreach($request->input('formateurs_id') as $formateur_id) {
+            $formateur = \ModuleFormation\Formateur::findOrFail($formateur_id);
+            $session_jours->formateurs()->save($formateur);
+        }
+
+
+        $session_jours = \ModuleFormation\SessionJour::with('lieu', 'formateurs')->findOrFail($session_jours->id);
 
         return response()->json($session_jours);
     }
@@ -64,7 +70,7 @@ class SessionJourController extends Controller
      */
     public function show($id)
     {
-        $session_jours = \ModuleFormation\SessionJour::with('lieu')->findOrFail($id);
+        $session_jours = \ModuleFormation\SessionJour::with('lieu', 'formateurs')->findOrFail($id);
         return response()->json($session_jours);
     }
 
@@ -77,7 +83,7 @@ class SessionJourController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $session_jours = \ModuleFormation\SessionJour::with('lieu')->findOrFail($id);
+        $session_jours = \ModuleFormation\SessionJour::findOrFail($id);
 
         $session_jours->id = $request->input('id');
         $session_jours->date = $request->input('date');
@@ -88,8 +94,14 @@ class SessionJourController extends Controller
 
         $session_jours->save();
 
+        $session_jours->formateurs()->detach();
+        foreach($request->input('formateurs_id') as $formateur_id) {
+            $formateur = \ModuleFormation\Formateur::findOrFail($formateur_id);
+            $session_jours->formateurs()->save($formateur);
+        }
+
         //Get it again, so we auto-update linked objects 
-        $session_jours = \ModuleFormation\SessionJour::with('lieu')->findOrFail($request->input('id'));
+        $session_jours = \ModuleFormation\SessionJour::with('lieu', 'formateurs')->findOrFail($request->input('id'));
 
         return response()->json($session_jours);
         //
@@ -103,6 +115,7 @@ class SessionJourController extends Controller
      */
     public function destroy($id)
     {
+        \ModuleFormation\SessionJour::findOrFail($id)->formateurs()->detach();
         \ModuleFormation\SessionJour::destroy($id);
     }
 }

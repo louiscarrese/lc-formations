@@ -4,14 +4,11 @@
     $filter = 'myCustomFilter:ctrl.filterInput';
 
     //Keep the identifying property
-    $id = '';
     foreach($fields as $fieldId => $field) {
         if(isset($field['filterable']) && $field['filterable']) 
             $filter .= ":'" . $fieldId . "'";
-        if(isset($field['isId']) && $field['isId'])
-            $id = $fieldId;
     }
-    $filter .= ' track by item.' . $id;
+    $filter .= ' track by item.' . $idField;
 ?>
 <h2>{{$title}}</h2>
 

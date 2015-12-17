@@ -11,7 +11,7 @@ class SessionJour extends Model
     }
 
     public function formateurs() {
-        return $this->hasMany('ModuleFormation\Formateur');
+        return $this->belongsToMany('ModuleFormation\Formateur')->withTimestamps();
     }
 
     public function lieu() {

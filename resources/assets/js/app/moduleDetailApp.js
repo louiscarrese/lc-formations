@@ -31,5 +31,5 @@ angular.module('modulesDetailDirectives', [])
 
 //Le module principal
 angular.module('modulesDetailApp', 
-    ['modulesDetailControllers', 'modulesDetailServices', 'modulesDetailFilters', 'modulesDetailDirectives', 'ngMessages'])
+    ['modulesDetailControllers', 'modulesDetailServices', 'modulesDetailFilters', 'modulesDetailDirectives', 'ngMessages', 'rt.select2'])
 ;

@@ -28,5 +28,5 @@ angular.module('formateursDetailDirectives', [])
 
 //Le module principal
 angular.module('formateursDetailApp', 
-    ['formateursDetailControllers', 'formateursDetailServices', 'formateursDetailFilters', 'formateursDetailDirectives', 'ngMessages'])
+    ['formateursDetailControllers', 'formateursDetailServices', 'formateursDetailFilters', 'formateursDetailDirectives', 'ngMessages', 'rt.select2'])
 ;

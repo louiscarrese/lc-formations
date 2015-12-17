@@ -1,22 +1,28 @@
-function sessionJoursTableServiceFactory(sharedDataService, lieuService) {
+function sessionJoursTableServiceFactory(sharedDataService, lieuService, formateursService) {
     return {
         getLinkedData: function() {
             var lieus = lieuService.query();
+            var formateurs = formateursService.query();
 
             return {
-                'lieus': lieus
+                'lieus': lieus,
+                'formateurs': formateurs
             }
         },
 
         getSuccess: function(data) {
-            //Modify data
-            if(data.lieu_id != undefined) {
-                data.lieu_label = data.lieu.libelle;
-            }
 
+            if(data.formateurs != undefined) {
+                data.formateurs_id = [];
+                for(var i = 0; i < data.formateurs.length; i++) {
+                    data.formateurs_id.push(data.formateurs[i].id);
+                }
+            }
+            
             //Build the return structure
             return {
             };
+
         },
 
         preSend: function(data, parentController) {

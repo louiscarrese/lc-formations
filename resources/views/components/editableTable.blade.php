@@ -4,22 +4,18 @@
     $filter = 'myCustomFilter:ctrl.filterInput';
 
     //Keep the identifying property
-    $id = '';
     foreach($fields as $fieldId => $field) {
         if(isset($field['filterable']) && $field['filterable']) 
             $filter .= ":'" . $fieldId . "'";
-        if(isset($field['isId']) && $field['isId'])
-            $id = $fieldId;
     }
-    $filter .= ' track by elem.' . $id;
+    $filter .= ' track by elem.' . $idField;
 
-    //And we compute the name for each tr form because nested {{}} are horrible
-    $form_name = 'form_{{elem.' . $id . '}}';
 ?>
 
 <h2>{{$title}}</h2>
 
 <div ng-controller="{{$controllerName}} as ctrl" <? echo((isset($adaptToContent) && $adaptToContent) ? ' class="adapt-to-content"' : ''); ?>>
+
     <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="form-control" />
     <form name="ctrl.mainForm" novalidate>
     <table class="table table-striped table-condensed">
@@ -28,14 +24,14 @@
                 {{-- Configured Headers --}}
                 @foreach($fields as $fieldId => $field)
                     @if($field['sortable'])
-                        <th class="clickable {{$field['tdClass'] or ''}}">
+                        <th class="clickable {{$field['tdClass'] or ''}} col-sm-{{$field['size']}}">
                             <my-sortable-header set="ctrl.setSort('{{$fieldId}}')"
                                                 get="ctrl.getSort('{{$fieldId}}')"
                             >
                             {{$field['label']}}
                         </th>
                     @else
-                        <td><span>{{$field['label']}}</span></td>
+                        <th {{$field['tdClass'] or ''}}><span>{{$field['label']}}</span></th>
                     @endif
                 @endforeach
                 {{-- action headers --}}
@@ -79,7 +75,7 @@
                         @if($field['addLine'])
                             @include('components.myEditable', [
                                 'controllerName' => 'ctrl',
-                                'element' => 'addObject',
+                                'element' => 'ctrl.addObject',
                                 'editingFlag' => 'true',
                                 'fieldId' => $fieldId,
                                 'field' => $field

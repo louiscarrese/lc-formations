@@ -12,7 +12,7 @@ class CreateFormateurSessionJoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('formateur_session_jours', function (Blueprint $table) {
+        Schema::create('formateur_session_jour', function (Blueprint $table) {
             $table->integer('formateur_id')->unsigned();
             $table->foreign('formateur_id')->references('id')->on('formateurs');
 

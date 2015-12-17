@@ -79,12 +79,12 @@
             'formateur_type_id' => [
                 'label' => 'Type',
                 'type' => 'dropdown',
-                'dropdownDatasource' => 'linkedData.formateur_type', //relative to the controller
-                'dropdownDataId' => 'id', //relative to an item in the dropdownDatasource
-                'dropdownDataLabel' => 'libelle', //relative to an item in the dropdownDatasource
-                'dropdownLabel' => 'formateur_type_label', //relative to an item in the controller data 
+                'datasource' => 'linkedData.formateur_type', //relative to the controller
+                'dataId' => 'id', //relative to an item in the dropdownDatasource
+                'modelObject' => 'formateur_type', //relative to an item in the controller data 
+                'displayed' => '<libelle>',
                 'sizeLabel' => 2,
-                'sizeValue' => 2,
+                'sizeValue' => 3,
             ],
         ]
     ])

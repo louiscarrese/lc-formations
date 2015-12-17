@@ -8,7 +8,7 @@ class Formateur extends Model
 {
 
     public function session_jours() {
-        return $this->hasMany('ModuleFormation\SessionJour');
+        return $this->belongsToMany('ModuleFormation\SessionJour')->withTimestamps();
     }
 
     public function modules() {

@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
 -->
         <link rel="stylesheet" href="@yield('css-file')" type="text/css" />
+
     </head>
     <body ng-app="@yield('angularApp')">
         <div id="main" class="container">

@@ -13,10 +13,6 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService)
         },
 
         getSuccess: function(data) {
-            //Modify data
-            if(data.domaine_formation_id != undefined) {
-                data.module_formation_label = data.domaine_formation.libelle;
-            }
 
             sharedDataService.data.module_id = data.id;
 

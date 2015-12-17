@@ -12,7 +12,7 @@ class CreateFinanceurInscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('financeur_inscriptions', function (Blueprint $table) {
+        Schema::create('financeur_inscription', function (Blueprint $table) {
             $table->integer('financeur_id')->unsigned();
             $table->foreign('financeur_id')->references('id')->on('financeurs');
 

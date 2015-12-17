@@ -14,6 +14,7 @@
                 'type' => 'text',
                 'sizeLabel' => 2,
                 'sizeValue' => 5,
+                'validation' => 'required'
             ],
             'nb_jours' => [
                 'label' => 'Nombre de jours',
@@ -48,10 +49,11 @@
             'domaine_formation_id' => [
                 'label' => 'Type',
                 'type' => 'dropdown',
-                'dropdownDatasource' => 'linkedData.domaineFormations', //relative to the controller
-                'dropdownDataId' => 'id', //relative to an item in the dropdownDatasource
-                'dropdownDataLabel' => 'libelle', //relative to an item in the dropdownDatasource
-                'dropdownLabel' => 'module_formation_label', //relative to an item in the controller data 
+                'datasource' => 'linkedData.domaineFormations', //relative to the controller
+                'dataId' => 'id', //relative to an item in the datasource
+                'modelObject' => 'module_formation', //relative to an item in the controller data 
+                'change' => '',
+                'displayed' => '<libelle>',
                 'sizeLabel' => 2,
                 'sizeValue' => 2,
             ],

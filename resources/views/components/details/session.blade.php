@@ -1,9 +1,9 @@
 <div ng-controller="detailController as detailCtrl">
     @include('components.detail', [
         'controller' => 'detailCtrl',
+        'idField' => 'id',
         'fields' => [
             'id' => [
-                'isId' => true,
                 'label' => 'Id',
                 'type' => 'integer',
                 'sizeLabel' => 2,
@@ -12,11 +12,11 @@
             'module_id' => [
                 'label' => 'Module',
                 'type' => 'dropdown',
-                'dropdownDatasource' => 'linkedData.modules', //relative to the controller
-                'dropdownDataId' => 'id', //relative to an item in the dropdownDatasource
-                'dropdownDataLabel' => 'libelle', //relative to an item in the dropdownDatasource
-                'dropdownLabel' => 'module_label', //relative to an item in the controller data 
+                'datasource' => 'linkedData.modules', //relative to the controller
+                'dataId' => 'id', //relative to an item in the datasource
+                'modelObject' => 'module', //relative to an item in the controller data 
                 'change' => 'detailCtrl.onModuleChange',
+                'displayed' => '<libelle>',
                 'sizeLabel' => 2,
                 'sizeValue' => 5,
             ],
@@ -59,20 +59,9 @@
     <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != 'create'">
         @include('components.EditableTable',
             ['controllerName' => 'sessionJoursController',
+             'idField' => 'id',
              'title' => 'Jours',
              'fields' => [
-                'id' => [
-                    'label' => 'Id',
-                    'isId' => true,
-                    'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'integer',
-                    'addLine' => false,
-                    'tdClass' => 'centered',
-                    'additionalAttributes' => 'size=1',
-                    'validation' => 'required',
-                ], //id
                 'date' => [
                     'label' => 'Date',
                     'sortable' => true,
@@ -81,6 +70,7 @@
                     'type' => 'text', //TODO : date
                     'addLine' => true,
                     'validation' => 'required',
+                    'size' => 1,
                 ], //date
                 'heure_debut' => [
                     'label' => 'Début',
@@ -90,6 +80,7 @@
                     'type' => 'text', //TODO : time
                     'addLine' => true,
                     'validation' => 'required',
+                    'size' => 1,
                 ], //heure_debut
                 'heure_fin' => [
                     'label' => 'Fin',
@@ -99,6 +90,7 @@
                     'type' => 'text', //TODO : time
                     'addLine' => true,
                     'validation' => 'required',
+                    'size' => 1,
                 ], //heure_fin
                 'lieu_id' => [
                     'label' => 'Lieu',
@@ -106,13 +98,28 @@
                     'filterable' => true,
                     'editable' => true,
                     'type' => 'dropdown',
-                    'dropdownDatasource' => 'linkedData.lieus', //relative to the controller
-                    'dropdownDataId' => 'id', //relative to an item in the dropdownDatasource
-                    'dropdownDataLabel' => 'libelle', //relative to an item in the dropdownDatasource
-                    'dropdownLabel' => 'lieu_label', //relative to an item in the controller data
+                    'datasource' => 'linkedData.lieus', //relative to the controller
+                    'dataId' => 'id', //relative to an item in the datasource
+                    'modelObject' => 'lieu', //where to find the subobject in the controller
+                    'displayed' => '<libelle>',
                     'addLine' => true,
                     'validation' => 'required',
-                ], //heure_debut
+                    'size' => 3,
+                ], //lieu_id
+
+                 'formateurs_id' => [
+                    'label' => 'Formateurs',
+                    'sortable' => false,
+                    'editable' => true,
+                    'type' => 'multiselect',
+                    'datasource' => 'linkedData.formateurs',
+                    'dataId' => 'id',
+                    'modelObjects' => 'formateurs',
+                    'displayed' => '<nom> <prenom>',
+                    'placeholder' => 'Formateurs',
+                    'addLine' => true,
+                    'size' => 6,
+                ]
              ] //fields
              ])
     </div>

@@ -13,10 +13,6 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
         },
 
         getSuccess: function(data) {
-            //Modify data
-            if(data.module_id != undefined) {
-                data.module_label = data.module.libelle;
-            }
 
             sharedDataService.data.session_id = data.id;
 
@@ -34,6 +30,7 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
 
         addListeners: function(controller) {
             controller.onModuleChange = function(moduleId) {
+
                 //Get the module
                 var modules = controller.linkedData.modules;
                 var module = {};
