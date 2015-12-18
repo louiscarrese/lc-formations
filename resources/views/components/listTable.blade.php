@@ -47,14 +47,14 @@
                 @endforeach
                 <td>
                     <span>
-                        <a ng-href="{{$detailUri}}/<? echo '{{item.'.$id.'}}'; ?>">
+                        <a ng-href="{{$detailUri}}/<? echo '{{item.'.$idField.'}}'; ?>">
                             <span class="glyphicon glyphicon-info"></span>
                         </a>
                     </span>
                 </td>
                 <td>
                     <span>
-                        <a ng-href="{{$detailUri}}/<? echo '{{item.'.$id.'}}'; ?>?edit=true">
+                        <a ng-href="{{$detailUri}}/<? echo '{{item.'.$idField.'}}'; ?>?edit=true">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
                     </span>

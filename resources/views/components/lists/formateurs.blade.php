@@ -3,9 +3,9 @@
         'title' => 'Formateurs',
         'controllerName' => 'formateursListController',
         'detailUri' => '/formateurs',
+        'idField' => 'id',
         'fields' => [
             'id' => [
-                'isId' => true,
                 'label' => 'Id',
                 'sortable' => true,
                 'filterable' => true,

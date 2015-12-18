@@ -3,9 +3,9 @@
         'title' => 'Sessions',
         'controllerName' => 'sessionsListController',
         'detailUri' => '/sessions',
+        'idField' => 'id',
         'fields' => [
             'id' => [
-                'isId' => true,
                 'label' => 'Id',
                 'sortable' => true,
                 'filterable' => true,

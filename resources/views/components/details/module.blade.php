@@ -3,7 +3,6 @@
         'controller' => 'moduleCtrl',
         'fields' => [
             'id' => [
-                'isId' => true,
                 'label' => 'Id',
                 'type' => 'integer',
                 'sizeLabel' => 2,
