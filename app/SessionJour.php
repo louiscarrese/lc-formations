@@ -3,6 +3,7 @@
 namespace ModuleFormation;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class SessionJour extends Model
 {
@@ -11,12 +12,15 @@ class SessionJour extends Model
     }
 
     public function formateurs() {
-        return $this->hasMany('ModuleFormation\Formateur');
+        return $this->belongsToMany('ModuleFormation\Formateur')->withTimestamps();
     }
 
     public function lieu() {
         return $this->belongsTo('ModuleFormation\Lieu');
     }
 
+    public function setDateAttribute($dateIn) {
+        $this->attributes['date'] = Carbon::createFromFormat('d/m/Y', $dateIn);
+    }
 
 }

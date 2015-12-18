@@ -13,10 +13,6 @@ function formateurDetailServiceFactory(sharedDataService, formateurTypesService)
         },
 
         getSuccess: function(data) {
-            //Modify data
-            if(data.formateur_type != undefined) {
-                data.formateur_type_label = data.formateur_type.libelle;
-            }
 
             //Build the return structure
             return {

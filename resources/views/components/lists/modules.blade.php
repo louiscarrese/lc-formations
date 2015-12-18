@@ -3,9 +3,9 @@
         'title' => 'Modules',
         'controllerName' => 'modulesListController',
         'detailUri' => '/modules',
+        'idField' => 'id',
         'fields' => [
             'id' => [
-                'isId' => true,
                 'label' => 'Id',
                 'sortable' => true,
                 'filterable' => true,

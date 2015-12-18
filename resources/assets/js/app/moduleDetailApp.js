@@ -4,7 +4,8 @@ angular.module('modulesDetailServices', ['ngResource'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sharedDataService', [sharedDataServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
-    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', moduleDetailServiceFactory])
+    .factory('dateTimeService', [dateTimeServiceFactory])
+    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'dateTimeService', moduleDetailServiceFactory])
     .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
 ;
 
@@ -21,6 +22,7 @@ angular.module('modulesDetailFilters', [])
 angular.module('modulesDetailDirectives', [])
     .directive('myEditableText', myEditableDirectiveText)
     .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTime', ['$filter', myEditableDirectiveTime])
     .directive('myEditableTextarea', myEditableDirectiveTextarea)
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
@@ -31,5 +33,5 @@ angular.module('modulesDetailDirectives', [])
 
 //Le module principal
 angular.module('modulesDetailApp', 
-    ['modulesDetailControllers', 'modulesDetailServices', 'modulesDetailFilters', 'modulesDetailDirectives', 'ngMessages'])
+    ['modulesDetailControllers', 'modulesDetailServices', 'modulesDetailFilters', 'modulesDetailDirectives', 'ngMessages', 'rt.select2', 'ui.bootstrap'])
 ;

@@ -13,24 +13,8 @@ function detailController(editModeService, dataService, detailService) {
     self.edit = edit;
     self.getSuccess = getSuccess;
 
+    //Just so we don't have 'undefined' in places 
     self.data = {};
-
-    //Initialize data
-    editModeService.initFromUrl(dataService, function(mode, data) {
-        //Store computed data
-        self.data = data;
-
-        //Are we editing ?
-        self.mode = mode;
-        if(self.mode === 'read') {
-            self.editing = false;
-        } else {
-            self.editing = true;
-        }
-
-        self.getSuccess(data);
-        self.inited = true;
-    });
 
     if(detailService != undefined) {
         if(typeof detailService.getLinkedData == 'function')
@@ -38,8 +22,25 @@ function detailController(editModeService, dataService, detailService) {
         if(typeof detailService.addListeners == 'function')
             detailService.addListeners(this);
     }
-    //CRUD
 
+    //Initialize data
+    editModeService.initFromUrl(dataService, function(mode, data) {
+        //Set mode
+        self.mode = mode;
+        if(self.mode === 'read') {
+            self.editing = false;
+        } else {
+            self.editing = true;
+        }
+
+        //Do something with the data
+        self.getSuccess(data);
+
+        //Ok, we can go on
+        self.inited = true;
+    });
+
+    //CRUD
     function create() {
         if(self['mainForm'].$valid) {
             dataService.save(self.data, 

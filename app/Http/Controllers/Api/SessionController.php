@@ -76,7 +76,6 @@ class SessionController extends Controller
         $session = \ModuleFormation\Session::findOrFail($sessionId);
 
         $session->libelle = $request->input('libelle');
-        $session->nb_heures = $request->input('nb_heures');
         $session->nb_jours = $request->input('nb_jours');
         $session->effectif_max = $request->input('effectif_max');
         $session->objectifs_pedagogiques = $request->input('objectifs_pedagogiques');

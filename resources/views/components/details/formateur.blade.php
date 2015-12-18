@@ -1,90 +1,92 @@
 <div ng-controller="detailController as detailCtrl">
-    <form name="detailCtrl.mainForm" novalidate>
-    <h2>@{{detailCtrl.titleText}}</h2>
-    <div class="detail-table-container">
-        <table>
-            <tr>
-                <td class="key">Id</td>
-                <td class="value validated">
-                    <my-editable-integer ng-model="detailCtrl.data.id" editing-flag="detailCtrl.editing" size="1"></my-editable-integer>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Nom</td>
-                <td class="value validated">
-                    <my-editable-text ng-model="detailCtrl.data.nom" editing-flag="detailCtrl.editing" size="15" required></my-editable-text>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Prénom</td>
-                <td class="value validated">
-                    <my-editable-text ng-model="detailCtrl.data.prenom" editing-flag="detailCtrl.editing" size="15" required></my-editable-text>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Sexe</td>
-                <td class="value validated">
-                    <my-editable-radio ng-model="detailCtrl.data.sexe" editing-flag="detailCtrl.editing" values="['M', 'F']"></my-editable-radio>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Date de naissance</td>
-                <td class="value validated">
-                    <my-editable-text ng-model="detailCtrl.data.date_naissance" editing-flag="detailCtrl.editing" size="10"></my-editable-text>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Adresse</td>
-                <td class="value validated">
-                    <my-editable-text ng-model="detailCtrl.data.adresse" editing-flag="detailCtrl.editing" class="full-width"></my-editable-text>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Code postal</td>
-                <td class="value validated">
-                    <my-editable-text ng-model="detailCtrl.data.code_postal" editing-flag="detailCtrl.editing" size="5"></my-editable-text>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Ville</td>
-                <td class="value validated">
-                    <my-editable-text ng-model="detailCtrl.data.ville" editing-flag="detailCtrl.editing" size="10"></my-editable-text>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Téléphone fixe</td>
-                <td class="value validated">
-                    <my-editable-text ng-model="detailCtrl.data.tel_fixe" editing-flag="detailCtrl.editing" size="10"></my-editable-text>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Téléphone portable</td>
-                <td class="value validated">
-                    <my-editable-text ng-model="detailCtrl.data.tel_portable" editing-flag="detailCtrl.editing" size="10"></my-editable-text>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Email</td>
-                <td class="value validated">
-                    <my-editable-text ng-model="detailCtrl.data.email" editing-flag="detailCtrl.editing" size="15"></my-editable-text>
-                </td>
-            </tr>
-            <tr>
-                <td class="key">Type</td>
-                <td class="value validated">
-                    <my-editable-dropdown source="detailCtrl.linkedData.formateur_type" source-id="id" source-label="libelle" ng-model="detailCtrl.data.formateur_type_id" model-label="detailCtrl.data.formateur_type_label" editing-flag="detailCtrl.editing"></my-editable-dropdown>
-                </td>
-            </tr>
-        </table>
+    @include('components.detail', [
+        'controller' => 'detailCtrl',
+        'fields' => [
+            'id' => [
+                'isId' => true,
+                'label' => 'Id',
+                'type' => 'integer',
+                'sizeLabel' => 2,
+                'sizeValue' => 1,
+            ],
+            'nom' => [
+                'label' => 'Nom',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 2,
+            ],
+            'prenom' => [
+                'label' => 'Prenom',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 2,
+            ],
+            'sexe' => [
+                'label' => 'Sexe',
+                'type' => 'radio',
+                'values' => '["M", "F"]',
+                'sizeLabel' => 2,
+                'sizeValue' => 2,
+            ],
+            'date_naissance' => [
+                'label' => 'Date de naissance',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 2,
+            ],
+            'adresse' => [
+                'label' => 'Adresse',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 5,
+            ],
+            'code_postal' => [
+                'label' => 'Code postal',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 1,
+            ],
+            'ville' => [
+                'label' => 'Ville',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 2,
+            ],
+            'tel_fixe' => [
+                'label' => 'Téléphone fixe',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 2,
+            ],
+            'tel_portable' => [
+                'label' => 'Téléphone portable',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 2,
+            ],
+            'email' => [
+                'label' => 'Email',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 3,
+            ],
+            'tel_fixe' => [
+                'label' => 'Téléphone fixe',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 2,
+            ],
+            'formateur_type_id' => [
+                'label' => 'Type',
+                'type' => 'dropdown',
+                'datasource' => 'linkedData.formateur_type', //relative to the controller
+                'dataId' => 'id', //relative to an item in the dropdownDatasource
+                'modelObject' => 'formateur_type', //relative to an item in the controller data 
+                'displayed' => '<libelle>',
+                'sizeLabel' => 2,
+                'sizeValue' => 3,
+            ],
+        ]
+    ])
 
-    </div>
-
-    <div class="global-actions">
-        <span ng-show="detailCtrl.mode === 'read'" ng-click="detailCtrl.edit()"><i class="icon clickable">edit</i></span>
-        <span ng-show="detailCtrl.mode === 'create'" ng-click="detailCtrl.create()"><i class="icon clickable">validate</i></span>
-        <span ng-show="detailCtrl.mode === 'edit'" ng-click="detailCtrl.update()"><i class="icon clickable">validate</i></span>
-        <span ng-show="detailCtrl.mode === 'edit'" ng-click="detailCtrl.cancel()"><i class="icon clickable">undo</i></span>
-        <span ng-show="detailCtrl.mode !== 'create'" ng-click="detailCtrl.delete()"><i class="icon clickable">delete</i></span>
-    </div>
-</form>
 </div>

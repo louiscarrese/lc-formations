@@ -14,14 +14,12 @@ require('laravel-elixir-spritesmith');
 
 elixir(function(mix) {
     mix
-        .sass('app.scss')
+        .less('app.less')
 
         .scripts([
             '/vendor/angular/angular.min.js', 
             '/vendor/angular-resource/angular-resource.min.js', 
             '/vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-ui-select/dist/select.min.js',
-            'vendor/angular-sanitize/angular-sanitize.min.js',
             '/directives/myForceInteger-directive.js',
             '/directives/mySortableHeader-directive.js',
             '/directives/my-editable/myEditable-commons.js',
@@ -45,8 +43,6 @@ elixir(function(mix) {
             'vendor/angular/angular.min.js', 
             'vendor/angular-resource/angular-resource.min.js', 
             'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-ui-select/dist/select.min.js',
-            'vendor/angular-sanitize/angular-sanitize.min.js',
             'directives/mySortableHeader-directive.js',
             'filters/myCustomFilter-filter.js',
             'services/data/modules-service.js',
@@ -57,8 +53,6 @@ elixir(function(mix) {
             'vendor/angular/angular.min.js', 
             'vendor/angular-resource/angular-resource.min.js', 
             'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-ui-select/dist/select.min.js',
-            'vendor/angular-sanitize/angular-sanitize.min.js',
             'directives/mySortableHeader-directive.js',
             'filters/myCustomFilter-filter.js',
             'services/data/sessions-service.js',
@@ -69,8 +63,6 @@ elixir(function(mix) {
             'vendor/angular/angular.min.js', 
             'vendor/angular-resource/angular-resource.min.js', 
             'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-ui-select/dist/select.min.js',
-            'vendor/angular-sanitize/angular-sanitize.min.js',
             'directives/mySortableHeader-directive.js',
             'filters/myCustomFilter-filter.js',
             'services/data/formateurs-service.js',
@@ -78,20 +70,25 @@ elixir(function(mix) {
             'app/formateursApp.js'
             ], 'public/js/formateurs-list.js')
         .scripts([
+            'vendor/jquery/dist/jquery.min.js',
+            'vendor/select2/select2.js',
             'vendor/angular/angular.min.js', 
             'vendor/angular-resource/angular-resource.min.js', 
             'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-ui-select/dist/select.min.js',
-            'vendor/angular-sanitize/angular-sanitize.min.js',
+            'vendor/angular-select2/dist/angular-select2.js',
+            'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
             'directives/myForceInteger-directive.js',
             'directives/mySortableHeader-directive.js',
             'directives/my-editable/myEditable-commons.js',
             'directives/my-editable/myEditableText-directive.js',
             'directives/my-editable/myEditableInteger-directive.js',
+            'directives/my-editable/myEditableDate-directive.js',
+            'directives/my-editable/myEditableTime-directive.js',
             'directives/my-editable/myEditableTextarea-directive.js',
             'directives/my-editable/myEditableCheckbox-directive.js',
             'directives/my-editable/myEditableDropdown-directive.js',
             'directives/my-editable/myEditableRadio-directive.js',
+            'directives/my-editable/myEditableMultiselect-directive.js',
             'filters/myCustomFilter-filter.js',
             'services/data/modules-service.js',
             'services/data/domaineformations-service.js',
@@ -105,20 +102,25 @@ elixir(function(mix) {
             'app/moduleDetailApp.js'
             ], 'public/js/modules-detail.js')
         .scripts([
-            'vendor/angular/angular.min.js', 
+            'vendor/jquery/dist/jquery.min.js',
+            'vendor/select2/select2.js',
+            'vendor/angular/angular.js', 
             'vendor/angular-resource/angular-resource.min.js', 
             'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-ui-select/dist/select.min.js',
-            'vendor/angular-sanitize/angular-sanitize.min.js',
+            'vendor/angular-select2/dist/angular-select2.js',
+            'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
             'directives/myForceInteger-directive.js',
             'directives/mySortableHeader-directive.js',
             'directives/my-editable/myEditable-commons.js',
             'directives/my-editable/myEditableText-directive.js',
             'directives/my-editable/myEditableInteger-directive.js',
+            'directives/my-editable/myEditableDate-directive.js',
+            'directives/my-editable/myEditableTime-directive.js',
             'directives/my-editable/myEditableTextarea-directive.js',
             'directives/my-editable/myEditableCheckbox-directive.js',
             'directives/my-editable/myEditableDropdown-directive.js',
             'directives/my-editable/myEditableRadio-directive.js',
+            'directives/my-editable/myEditableMultiselect-directive.js',
             'filters/myCustomFilter-filter.js',
             'services/data/sessions-service.js',
             'services/data/sessionjours-service.js',
@@ -134,11 +136,12 @@ elixir(function(mix) {
             'app/sessionDetailApp.js'
             ], 'public/js/sessions-detail.js')
         .scripts([
-            'vendor/angular/angular.min.js', 
+            'vendor/jquery/dist/jquery.min.js',
+            'vendor/select2/select2.js',
+            'vendor/angular/angular.js', 
             'vendor/angular-resource/angular-resource.min.js', 
             'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-ui-select/dist/select.min.js',
-            'vendor/angular-sanitize/angular-sanitize.min.js',
+            'vendor/angular-select2/dist/angular-select2.js',
             'directives/myForceInteger-directive.js',
             'directives/mySortableHeader-directive.js',
             'directives/my-editable/myEditable-commons.js',
@@ -157,13 +160,15 @@ elixir(function(mix) {
             'controllers/detail-controller.js',
             'app/formateurDetailApp.js'
             ], 'public/js/formateurs-detail.js')
+/*
     .spritesmith('resources/assets/img/sprites', {
         imgOutput: 'public/images',
         cssOutput: 'resources/assets/sass/theme',
         cssName: '_sprite.scss',
         imgPath: '../images/sprite.png'
     });
+*/
 });
 
-elixir.Task.find('sass').watch('resources/assets/sass/**/');
-elixir.Task.find('sprite').watch('resources/assets/img/sprites/**/');
+elixir.Task.find('less').watch('resources/assets/less/**/');
+//elixir.Task.find('sprite').watch('resources/assets/img/sprites/**/');

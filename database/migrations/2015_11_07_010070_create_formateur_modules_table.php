@@ -12,7 +12,7 @@ class CreateFormateurModulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('formateur_modules', function (Blueprint $table) {
+        Schema::create('formateur_module', function (Blueprint $table) {
             $table->integer('formateur_id')->unsigned();
             $table->foreign('formateur_id')->references('id')->on('formateurs');
 

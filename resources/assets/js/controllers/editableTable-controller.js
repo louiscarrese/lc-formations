@@ -32,11 +32,11 @@ function editableTableController($filter, dataService, tableService) {
 
     self.sortProp = "id";
     self.sortReverse = false;
-    self.data = query();
 
     if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
         self.linkedData = tableService.getLinkedData();
     }
+    self.data = query();
 
     function setSort(key) {
         if(self.sortProp == key) {
@@ -93,8 +93,8 @@ function editableTableController($filter, dataService, tableService) {
         return dataService.query(self.queryParameters, function() {
             angular.forEach(self.data, function(value, key) {
                 self.getSuccess(value);
-                self.sort();
             });
+            self.sort();
         });
     }
 
