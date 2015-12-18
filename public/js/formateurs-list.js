@@ -334,8 +334,8 @@ function mySortableHeaderDirective() {
             var template = '';
 
             template += '<span ng-click="setSort()" ng-transclude></span>';
-            template += '<div ng-click="setSort()" ng-show="getSort() === false" class="sort-up"></div>';
-            template += '<div ng-click="setSort()" ng-show="getSort() === true" class="sort-down"></div>';
+            template += '<span ng-show="getSort() === false" class="sort-arrow glyphicon glyphicon-triangle-top"></span>';
+            template += '<span ng-show="getSort() === true" class="sort-arrow glyphicon glyphicon-triangle-bottom"></span>';
 
             return template;
         }

@@ -23,19 +23,13 @@
             ],
             'heure_debut' => [
                 'label' => 'Heure de début',
-                'type' => 'text',
+                'type' => 'time',
                 'sizeLabel' => 2,
                 'sizeValue' => 1,
             ],
             'heure_fin' => [
                 'label' => 'Heure de fin',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
-             'heure_debut' => [
-                'label' => 'Heure de début',
-                'type' => 'text',
+                'type' => 'time',
                 'sizeLabel' => 2,
                 'sizeValue' => 1,
             ],

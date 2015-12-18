@@ -41580,13 +41580,13 @@ angular.module("template/timepicker/timepicker.html", []).run(["$templateCache",
     "    </tr>\n" +
     "    <tr>\n" +
     "      <td class=\"form-group\" ng-class=\"{'has-error': invalidHours}\">\n" +
-    "        <input style=\"width:50px;\" type=\"text\" ng-model=\"hours\" ng-change=\"updateHours()\" class=\"form-control text-center\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\">\n" +
+    "        <input style=\"width:36px;\" type=\"text\" ng-model=\"hours\" ng-change=\"updateHours()\" class=\"form-control text-center input-sm\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\">\n" +
     "      </td>\n" +
     "      <td>:</td>\n" +
     "      <td class=\"form-group\" ng-class=\"{'has-error': invalidMinutes}\">\n" +
-    "        <input style=\"width:50px;\" type=\"text\" ng-model=\"minutes\" ng-change=\"updateMinutes()\" class=\"form-control text-center\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\">\n" +
+    "        <input style=\"width:36px;\" type=\"text\" ng-model=\"minutes\" ng-change=\"updateMinutes()\" class=\"form-control text-center input-sm\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\">\n" +
     "      </td>\n" +
-    "      <td ng-show=\"showMeridian\"><button type=\"button\" ng-class=\"{disabled: noToggleMeridian()}\" class=\"btn btn-default text-center\" ng-click=\"toggleMeridian()\" ng-disabled=\"noToggleMeridian()\" tabindex=\"{{::tabindex}}\">{{meridian}}</button></td>\n" +
+    "      <td ng-show=\"showMeridian\"><button type=\"button\" ng-class=\"{disabled: noToggleMeridian()}\" class=\"btn btn-default text-center input-sm\" ng-click=\"toggleMeridian()\" ng-disabled=\"noToggleMeridian()\" tabindex=\"{{::tabindex}}\">{{meridian}}</button></td>\n" +
     "    </tr>\n" +
     "    <tr class=\"text-center\" ng-show=\"::showSpinners\">\n" +
     "      <td><a ng-click=\"decrementHours()\" ng-class=\"{disabled: noDecrementHours()}\" class=\"btn btn-link\" ng-disabled=\"noDecrementHours()\" tabindex=\"{{::tabindex}}\"><span class=\"glyphicon glyphicon-chevron-down\"></span></a></td>\n" +
@@ -41638,8 +41638,8 @@ function mySortableHeaderDirective() {
             var template = '';
 
             template += '<span ng-click="setSort()" ng-transclude></span>';
-            template += '<div ng-click="setSort()" ng-show="getSort() === false" class="sort-up"></div>';
-            template += '<div ng-click="setSort()" ng-show="getSort() === true" class="sort-down"></div>';
+            template += '<span ng-show="getSort() === false" class="sort-arrow glyphicon glyphicon-triangle-top"></span>';
+            template += '<span ng-show="getSort() === true" class="sort-arrow glyphicon glyphicon-triangle-bottom"></span>';
 
             return template;
         }
@@ -41766,16 +41766,16 @@ function myEditableDirectiveDate($filter) {
             dateFormat: '@',
         },
         controller: function($scope) {},
-        require: ['^form'],
+        require: ['^form', 'ngModel'],
         template: function(tElem, tAttr) {
             var filteredAttr = this.stripScopeAttributes(tAttr);
             var htmlAttrs = this.attrToHtml(filteredAttr);
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{(formatDate(ngModel))}}</p>';
+            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
             template += '<p class="input-group" ng-show="editingFlag" ' + htmlAttrs + '>';
-            template += '<input type="text" class="form-control" ng-model="ngModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
+            template += '<input type="text" class="form-control" ng-model="localModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
             template += 'is-open="status.opened" ';
             template += 'show-button-bar="false" '; 
             template += '/>';
@@ -41791,12 +41791,80 @@ function myEditableDirectiveDate($filter) {
         link: function(scope, element, attrs, ctrls) {
             scope.form = ctrls[0];
             scope.status = {};
+            scope.localModel = null;
+
             scope.open = function($event) {
                 scope.status.opened = true;
             };
-            scope.formatDate = function(date) {
-                return $filter('date')(date, attrs['dateFormat']);
-            }
+
+            var unbind = scope.$watch('ngModel', function(newValue, oldValue) {
+                if(newValue != undefined) {
+                    scope.localModel = new Date(newValue);
+                    unbind();
+                }
+            });
+
+            scope.$watch('localModel', function(newValue, oldValue) {
+                    ctrls[1].$setViewValue($filter('date')(newValue, attrs['dateFormat']));
+            });
+        }
+    };
+
+    directive = angular.extend(directive, myEditableDirectiveCommons());
+
+    return directive;
+}
+function myEditableDirectiveTime($filter) {
+    function stringtoUTCTime(input) {
+        console.log('got : ' + input);
+        var iso8601String = '1970-01-01T' + input;
+
+        var time = new Date(iso8601String);
+
+        return time; 
+    }
+
+    var directive = {
+        restrict: 'E',
+        
+        scope: 
+        {
+            ngModel: '=',
+            editingFlag: '=',
+        },
+        controller: function($scope) {},
+        require: ['^form', 'ngModel'],
+        template: function(tElem, tAttr) {
+            var filteredAttr = this.stripScopeAttributes(tAttr);
+            var htmlAttrs = this.attrToHtml(filteredAttr);
+            var fieldName = this.getFieldName(tAttr['ngModel']);
+
+            var template = '';
+            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
+            template += '<uib-timepicker ng-model="localModel" ng-show="editingFlag" ';
+            template += 'minute-step="15" show-meridian="false" show-spinners="false">'
+            template += '</uib-timepicker>'
+            template += this.validationTemplate(fieldName);
+
+            return template;
+        },
+        link: function(scope, element, attrs, ctrls) {
+            scope.form = ctrls[0];
+            scope.localModel = new Date();
+
+            var unbind = scope.$watch('ngModel', function(newValue, oldValue) {
+                if(newValue != oldValue) {
+                    scope.localModel = stringtoUTCTime(newValue);
+                    unbind();
+                }
+            });
+
+            scope.$watch('localModel', function(newValue, oldValue) {
+                if(newValue != oldValue) {
+                    ctrls[1].$setViewValue($filter('date')(newValue, 'HH:mm:ss'));
+                }
+            });
+
         }
     };
 
@@ -42248,20 +42316,6 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
                     data.formateurs_id.push(data.formateurs[i].id);
                 }
             }
-
-            /** Treat dates manually because fuck */
-            //1. copy the data
-            var dateString = data.date;
-            //2. ditch the time
-            dateString = dateString.split(' ')[0];
-            //3.split it
-            var dateParts = dateString.split('-');
-            //4.Make it an ISO 8601 string
-            var iso8601String = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2] + 'T00:00:00Z';
-            //4. get a real date 
-            var date = new Date(iso8601String);
-            data.date = date;
-
 
             //Build the return structure
             return {
