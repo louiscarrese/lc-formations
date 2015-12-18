@@ -15,7 +15,7 @@
         </div>
     @endforeach
     <div class="global-actions pull-right">
-        <span ng-show="{{$controller}}.mode === 'read'" ng-click="{{$controller}}.edit()" class="clickable glyphicon glyphicon-edit"></span>
+        <span ng-show="{{$controller}}.mode === 'read'" ng-click="{{$controller}}.setModeEdit()" class="clickable glyphicon glyphicon-edit"></span>
         <span ng-show="{{$controller}}.mode === 'create'" ng-click="{{$controller}}.create()" class="clickable glyphicon glyphicon-ok"></span>
         <span ng-show="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.update()" class="clickable glyphicon glyphicon-ok"></span>
         <span ng-show="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.cancel()" class="clickable glyphicon glyphicon-remove"></span>

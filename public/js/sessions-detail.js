@@ -42349,8 +42349,9 @@ function detailController(editModeService, dataService, detailService) {
     self.delete = del;
 
     //Utilities
-    self.edit = edit;
     self.getSuccess = getSuccess;
+    self.setModeRead = setModeRead;
+    self.setModeEdit = setModeEdit;
 
     //Just so we don't have 'undefined' in places 
     self.data = {};
@@ -42385,8 +42386,7 @@ function detailController(editModeService, dataService, detailService) {
             dataService.save(self.data, 
                 function(value, responseHeaders) {
                     self.getSuccess(value);
-                    self.mode = 'read';
-                    self.editing = false;
+                    self.setModeRead();
                 }, 
                 function(httpResponseHeaders) {
                     alert('Error ! ');
@@ -42398,9 +42398,8 @@ function detailController(editModeService, dataService, detailService) {
 
     function cancel() {
         dataService.get({id:self.internalKey}, function(value, responseHeaders) {
-            self.editing = false;
-            self.mode = 'read';
             self.getSuccess(value);
+            self.setModeRead();
         });
     }
 
@@ -42409,8 +42408,7 @@ function detailController(editModeService, dataService, detailService) {
             self.data.$update({id:self.internalKey}, 
                 function(value, responseHeaders) {
                     self.getSuccess(value);
-                    self.editing = false;
-                    self.mode = 'read';
+                    self.setModeRead();
                 },
                 function(httpResponseHeaders) {
                     alert('error');
@@ -42430,13 +42428,7 @@ function detailController(editModeService, dataService, detailService) {
             })
     }
 
-
     //Utilities
-    function edit() {
-        self.editing = true;
-        self.mode = 'edit';
-    }
-
     function getSuccess(data) {
         self.data = data;
         if(detailService != undefined && typeof detailService.getInternalKey == 'function')
@@ -42449,7 +42441,41 @@ function detailController(editModeService, dataService, detailService) {
 
     }
 
+    function setModeRead() {
 
+        var urlParse = document.createElement('a');
+        urlParse.href = window.location;
+        //Remove any url parameter
+        urlParse.search = '';
+        //If we come from state 'create'
+        if(self.mode == 'create') {
+            //Replace /create with /id
+            urlParse.pathname = urlParse.pathname.replace('/create', '/' + self.internalKey);
+        } 
+        window.history.replaceState({}, document.title, urlParse.href);
+
+        self.mode = 'read';
+        self.editing = false;
+
+    }
+
+    function setModeEdit() {
+        var urlParse = document.createElement('a');
+        urlParse.href = window.location;
+
+        if(urlParse.search.length == 0) {
+            urlParse.search = '?edit=true';
+        } else {
+            urlParse.search += '&edit=true';
+        }
+
+        window.history.replaceState({}, document.title, urlParse.href);
+
+        self.editing = true;
+        self.mode = 'edit';
+
+
+    }
 }
 function editableTableController($filter, dataService, tableService) {
     var self = this;
