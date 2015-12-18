@@ -10,16 +10,16 @@ function myEditableDirectiveDate($filter) {
             dateFormat: '@',
         },
         controller: function($scope) {},
-        require: ['^form'],
+        require: ['^form', 'ngModel'],
         template: function(tElem, tAttr) {
             var filteredAttr = this.stripScopeAttributes(tAttr);
             var htmlAttrs = this.attrToHtml(filteredAttr);
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{(formatDate(ngModel))}}</p>';
+            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
             template += '<p class="input-group" ng-show="editingFlag" ' + htmlAttrs + '>';
-            template += '<input type="text" class="form-control" ng-model="ngModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
+            template += '<input type="text" class="form-control" ng-model="localModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
             template += 'is-open="status.opened" ';
             template += 'show-button-bar="false" '; 
             template += '/>';
@@ -35,12 +35,22 @@ function myEditableDirectiveDate($filter) {
         link: function(scope, element, attrs, ctrls) {
             scope.form = ctrls[0];
             scope.status = {};
+            scope.localModel = null;
+
             scope.open = function($event) {
                 scope.status.opened = true;
             };
-            scope.formatDate = function(date) {
-                return $filter('date')(date, attrs['dateFormat']);
-            }
+
+            var unbind = scope.$watch('ngModel', function(newValue, oldValue) {
+                if(newValue != undefined) {
+                    scope.localModel = new Date(newValue);
+                    unbind();
+                }
+            });
+
+            scope.$watch('localModel', function(newValue, oldValue) {
+                    ctrls[1].$setViewValue($filter('date')(newValue, attrs['dateFormat']));
+            });
         }
     };
 
