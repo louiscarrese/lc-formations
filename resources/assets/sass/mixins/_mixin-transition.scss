@@ -1,6 +1,0 @@
-@mixin transition($property, $time, $algo: ease-in-out) {
-    -webkit-transition: $property $time $algo;
-    -moz-transition: $property $time $algo;
-    -o-transition: $property $time $algo;
-    transition: $property $time $algo;
-}
