@@ -1,10 +1,11 @@
 angular.module('modulesDetailServices', ['ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
+    .factory('formateursService', ['$resource', formateursServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sharedDataService', [sharedDataServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
-    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', moduleDetailServiceFactory])
+    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', moduleDetailServiceFactory])
     .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
 ;
 
@@ -26,6 +27,7 @@ angular.module('modulesDetailDirectives', [])
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
     .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableMultiselect', myEditableDirectiveMultiselect)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
 ;

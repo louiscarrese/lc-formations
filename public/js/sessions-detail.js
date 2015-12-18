@@ -41816,7 +41816,6 @@ function myEditableDirectiveDate($filter) {
 }
 function myEditableDirectiveTime($filter) {
     function stringtoUTCTime(input) {
-        console.log('got : ' + input);
         var iso8601String = '1970-01-01T' + input;
 
         var time = new Date(iso8601String);

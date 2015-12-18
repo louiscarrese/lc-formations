@@ -13094,7 +13094,6 @@ function myEditableDirectiveDate($filter) {
 }
 function myEditableDirectiveTime($filter) {
     function stringtoUTCTime(input) {
-        console.log('got : ' + input);
         var iso8601String = '1970-01-01T' + input;
 
         var time = new Date(iso8601String);
@@ -13420,6 +13419,12 @@ function domaineFormationsServiceFactory($resource) {
     });
 }
 
+function formateursServiceFactory($resource) {
+    return $resource('/api/formateur/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
 function sessionsServiceFactory($resource) {
     return $resource('/api/session/:id', null, {
         'update' : { method: 'PUT' }
@@ -13508,13 +13513,15 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
-function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, dateTimeService) {
+function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, formateursService) {
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
+            var formateurs = formateursService.query();
 
             return {
-                'domaineFormations': domaineFormations
+                'domaineFormations': domaineFormations,
+                'formateurs': formateurs,
             };
         },
 
@@ -13525,6 +13532,13 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService,
         getSuccess: function(data) {
 
             sharedDataService.data.module_id = data.id;
+
+            if(data.formateurs != undefined) {
+                data.formateurs_id = [];
+                for(var i = 0; i < data.formateurs.length; i++) {
+                    data.formateurs_id.push(data.formateurs[i].id);
+                }
+            }
 
             //Build the return structure
             return {
@@ -13880,10 +13894,11 @@ function editableTableController($filter, dataService, tableService) {
 angular.module('modulesDetailServices', ['ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
+    .factory('formateursService', ['$resource', formateursServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sharedDataService', [sharedDataServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
-    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', moduleDetailServiceFactory])
+    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', moduleDetailServiceFactory])
     .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
 ;
 
@@ -13905,6 +13920,7 @@ angular.module('modulesDetailDirectives', [])
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
     .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableMultiselect', myEditableDirectiveMultiselect)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
 ;

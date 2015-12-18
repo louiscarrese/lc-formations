@@ -19,5 +19,7 @@ class Module extends Model
         return $this->belongsTo('ModuleFormation\DomaineFormation');
     }
 
-
+    function formateurs() {
+        return $this->belongsToMany('ModuleFormation\Formateur')->withTimestamps();
+    }
 }

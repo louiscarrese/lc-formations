@@ -2,12 +2,6 @@
     @include('components.detail', [
         'controller' => 'moduleCtrl',
         'fields' => [
-            'id' => [
-                'label' => 'Id',
-                'type' => 'integer',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
             'libelle' => [
                 'label' => 'Libellé',
                 'type' => 'text',
@@ -64,10 +58,23 @@
                 'sizeLabel' => 2,
                 'sizeValue' => 10,
             ],
+            'formateurs_id' => [
+                'label' => 'Formateurs habituels',
+                'type' => 'multiselect',
+                'datasource' => 'linkedData.formateurs',
+                'dataId' => 'id',
+                'modelObjects' => 'formateurs',
+                'displayed' => '<nom> <prenom>',
+                'placeholder' => 'Formateurs',
+                'sizeLabel' => 2,
+                'sizeValue' => 10,
+
+
+            ]
         ]
     ])
 
-    <div ng-if="moduleCtrl.inited" ng-show="moduleCtrl.mode != 'create'">
+    <div ng-if="moduleCtrl.inited && moduleCtrl.mode != 'create'">
         @include('components.lists.sessions')
     </div>
 

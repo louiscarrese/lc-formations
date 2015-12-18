@@ -17,7 +17,7 @@ class ModuleController extends Controller
      */
     public function index(Request $request)
     {
-        $modules = \ModuleFormation\Module::with('domaine_formation')->get();
+        $modules = \ModuleFormation\Module::with('domaine_formation', 'formateurs')->get();
         return response()->json($modules);
     }
 
@@ -42,8 +42,13 @@ class ModuleController extends Controller
 
         $module->save();
 
+        foreach($request->input('formateurs_id') as $formateur_id) {
+            $formateur = \ModuleFormation\Formateur::findOrFail($formateur_id);
+            $module->formateurs()->save($formateur);
+        }
+
         //Get it again, so we auto-update linked objects 
-        $module = \ModuleFormation\Module::with('domaine_formation')->findOrFail($module->id);
+        $module = \ModuleFormation\Module::with('domaine_formation', 'formateurs')->findOrFail($module->id);
 
         return response()->json($module);
     }
@@ -56,7 +61,7 @@ class ModuleController extends Controller
      */
     public function show($id)
     {
-        $module = \ModuleFormation\Module::with('domaine_formation')->findOrFail($id);
+        $module = \ModuleFormation\Module::with('domaine_formation', 'formateurs')->findOrFail($id);
         return response()->json($module);
     }
 
@@ -69,7 +74,7 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $module = \ModuleFormation\Module::with('domaine_formation')->findOrFail($id);
+        $module = \ModuleFormation\Module::findOrFail($id);
 
         $module->id = $request->input('id');
         $module->libelle = $request->input('libelle');
@@ -83,8 +88,14 @@ class ModuleController extends Controller
 
         $module->save();
 
+        $module->formateurs()->detach();
+        foreach($request->input('formateurs_id') as $formateur_id) {
+            $formateur = \ModuleFormation\Formateur::findOrFail($formateur_id);
+            $module->formateurs()->save($formateur);
+        }
+
         //Get it again, so we auto-update linked objects 
-        $module = \ModuleFormation\Module::with('domaine_formation')->findOrFail($request->input('id'));
+        $module = \ModuleFormation\Module::with('domaine_formation', 'formateurs')->findOrFail($request->input('id'));
 
         return response()->json($module);
         //
@@ -98,6 +109,7 @@ class ModuleController extends Controller
      */
     public function destroy($id)
     {
+        \ModuleFormation\Module::findOrFail($id)->formateurs()->detach();
         \ModuleFormation\Module::destroy($id);
     }
 }

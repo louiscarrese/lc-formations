@@ -92,6 +92,7 @@ elixir(function(mix) {
             'filters/myCustomFilter-filter.js',
             'services/data/modules-service.js',
             'services/data/domaineformations-service.js',
+            'services/data/formateurs-service.js',
             'services/data/sessions-service.js',
             'services/editmode-service.js',
             'services/shareddata-service.js',

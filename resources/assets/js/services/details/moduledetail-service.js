@@ -1,10 +1,12 @@
-function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, dateTimeService) {
+function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, formateursService) {
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
+            var formateurs = formateursService.query();
 
             return {
-                'domaineFormations': domaineFormations
+                'domaineFormations': domaineFormations,
+                'formateurs': formateurs,
             };
         },
 
@@ -15,6 +17,13 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService,
         getSuccess: function(data) {
 
             sharedDataService.data.module_id = data.id;
+
+            if(data.formateurs != undefined) {
+                data.formateurs_id = [];
+                for(var i = 0; i < data.formateurs.length; i++) {
+                    data.formateurs_id.push(data.formateurs[i].id);
+                }
+            }
 
             //Build the return structure
             return {
