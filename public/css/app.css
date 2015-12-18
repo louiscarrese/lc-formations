@@ -1294,7 +1294,8 @@ mark,
 .text-left {
   text-align: left;
 }
-.text-right {
+.text-right,
+td.list-action {
   text-align: right;
 }
 .text-center {
@@ -5177,6 +5178,10 @@ pre {
 }
 .sort-arrow {
   margin-left: 0.2em;
+}
+td.list-action {
+  width: 1px;
+  white-space: nowrap;
 }
 
 /*# sourceMappingURL=app.css.map */

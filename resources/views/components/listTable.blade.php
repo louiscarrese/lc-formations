@@ -45,14 +45,14 @@
                         <span><? echo '{{item.'.$displayedField.'}}'; ?></span>
                     </td>
                 @endforeach
-                <td>
+                <td class="list-action">
                     <span>
                         <a ng-href="{{$detailUri}}/<? echo '{{item.'.$idField.'}}'; ?>">
-                            <span class="glyphicon glyphicon-info"></span>
+                            <span class="glyphicon glyphicon-info-sign"></span>
                         </a>
                     </span>
                 </td>
-                <td>
+                <td class="list-action">
                     <span>
                         <a ng-href="{{$detailUri}}/<? echo '{{item.'.$idField.'}}'; ?>?edit=true">
                             <span class="glyphicon glyphicon-edit"></span>
