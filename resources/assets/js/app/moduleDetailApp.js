@@ -4,8 +4,7 @@ angular.module('modulesDetailServices', ['ngResource'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sharedDataService', [sharedDataServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
-    .factory('dateTimeService', [dateTimeServiceFactory])
-    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'dateTimeService', moduleDetailServiceFactory])
+    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', moduleDetailServiceFactory])
     .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
 ;
 
