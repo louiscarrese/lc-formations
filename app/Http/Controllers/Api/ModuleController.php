@@ -48,7 +48,7 @@ class ModuleController extends Controller
         }
 
         //Get it again, so we auto-update linked objects 
-        $module = \ModuleFormation\Module::with('domaine_formation', 'formateurs')->findOrFail($module->id);
+        $module = \ModuleFormation\Module::with('domaine_formation', 'formateurs', 'tarifs')->findOrFail($module->id);
 
         return response()->json($module);
     }
@@ -61,7 +61,7 @@ class ModuleController extends Controller
      */
     public function show($id)
     {
-        $module = \ModuleFormation\Module::with('domaine_formation', 'formateurs')->findOrFail($id);
+        $module = \ModuleFormation\Module::with('domaine_formation', 'formateurs', 'tarifs')->findOrFail($id);
         return response()->json($module);
     }
 
@@ -95,7 +95,7 @@ class ModuleController extends Controller
         }
 
         //Get it again, so we auto-update linked objects 
-        $module = \ModuleFormation\Module::with('domaine_formation', 'formateurs')->findOrFail($request->input('id'));
+        $module = \ModuleFormation\Module::with('domaine_formation', 'formateurs', 'tarifs')->findOrFail($request->input('id'));
 
         return response()->json($module);
         //
@@ -110,6 +110,7 @@ class ModuleController extends Controller
     public function destroy($id)
     {
         \ModuleFormation\Module::findOrFail($id)->formateurs()->detach();
+        \ModuleFormation\Module::findOrFail($id)->tarifs()->detach();
         \ModuleFormation\Module::destroy($id);
     }
 }

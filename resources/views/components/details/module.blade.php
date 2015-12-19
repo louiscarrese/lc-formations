@@ -75,6 +75,39 @@
     ])
 
     <div ng-if="moduleCtrl.inited && moduleCtrl.mode != 'create'">
+        @include('components.editableTable', [
+            'controllerName' => 'tarifsController',
+            'idField' => 'id',
+            'title' => 'Tarifs',
+            'fields' => [
+                'tarif_type_id' => [
+                    'label' => 'Tarif',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'dropdown',
+                    'datasource' => 'linkedData.tarifTypes',
+                    'dataId' => 'id',
+                    'modelObject' => 'tarif_type',
+                    'displayed' => '<libelle>',
+                    'addLine' => true,
+                    'validation' => 'required',
+                    'size' => 3,
+                ],
+                'montant' => [
+                    'label' => 'Montant',
+                    'sortable' => false,
+                    'filterable' => false,
+                    'editable' => true,
+                    'type' => 'integer',
+                    'addLine' => true,
+                    'validation' => 'required',
+                    'size' => 3,
+                ]
+            ]
+        ])
+
+
         @include('components.lists.sessions')
     </div>
 

@@ -13425,6 +13425,17 @@ function formateursServiceFactory($resource) {
     });
 }
 
+function tarifsServiceFactory($resource) {
+    return $resource('/api/tarif/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+function tarifTypesServiceFactory($resource) {
+    return $resource('/api/tarif_type/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
 function sessionsServiceFactory($resource) {
     return $resource('/api/session/:id', null, {
         'update' : { method: 'PUT' }
@@ -13554,6 +13565,30 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService,
 }
 function sessionsTableServiceFactory(sharedDataService) {
     return {
+        queryParameters: function() {
+            var ret = {};
+            if(sharedDataService.data.module_id) {
+                ret['module_id'] = sharedDataService.data.module_id;
+            }
+            return ret;
+        }
+
+    };
+}
+function tarifsTableServiceFactory(sharedDataService, tarifTypesService) {
+    return {
+        getLinkedData: function() {
+            var tarifTypes = tarifTypesService.query();
+
+            return {
+                'tarifTypes': tarifTypes,
+            }
+        },
+
+        preSend: function(data, parentController) {
+            data.module_id = sharedDataService.data.module_id;
+        },
+
         queryParameters: function() {
             var ret = {};
             if(sharedDataService.data.module_id) {
@@ -13895,15 +13930,19 @@ angular.module('modulesDetailServices', ['ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
+    .factory('tarifsService', ['$resource', tarifsServiceFactory])
+    .factory('tarifTypesService', ['$resource', tarifTypesServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sharedDataService', [sharedDataServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
     .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', moduleDetailServiceFactory])
+    .factory('tarifsTableService', ['sharedDataService', 'tarifTypesService', tarifsTableServiceFactory])
     .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
 ;
 
 angular.module('modulesDetailControllers', [])
         .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
+        .controller('tarifsController', ['$filter', 'tarifsService', 'tarifsTableService', editableTableController])
         .controller('sessionsListController', ['$filter', 'sessionsService', 'sessionsTableService', editableTableController])
 ;
 

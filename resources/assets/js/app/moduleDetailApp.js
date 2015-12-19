@@ -2,15 +2,19 @@ angular.module('modulesDetailServices', ['ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
+    .factory('tarifsService', ['$resource', tarifsServiceFactory])
+    .factory('tarifTypesService', ['$resource', tarifTypesServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sharedDataService', [sharedDataServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
     .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', moduleDetailServiceFactory])
+    .factory('tarifsTableService', ['sharedDataService', 'tarifTypesService', tarifsTableServiceFactory])
     .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
 ;
 
 angular.module('modulesDetailControllers', [])
         .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
+        .controller('tarifsController', ['$filter', 'tarifsService', 'tarifsTableService', editableTableController])
         .controller('sessionsListController', ['$filter', 'sessionsService', 'sessionsTableService', editableTableController])
 ;
 
