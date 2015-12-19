@@ -58,11 +58,11 @@
                     </td>
                 @endforeach
                 {{-- action columns --}}
-                <td>
+                <td class="list-action">
                     <span ng-hide="elem.editing" ng-click="elem.editing = true" class="glyphicon glyphicon-edit clickable"></span>
                     <span ng-show="elem.editing" ng-click="ctrl.editSubmit($index, elem)" class="glyphicon glyphicon-ok clickable"></span>
                 </td>
-                <td>
+                <td class="list-action">
                     <span ng-hide="elem.editing" ng-click="ctrl.delete(elem)" class="glyphicon glyphicon-trash clickable"></span>
                     <span ng-show="elem.editing" ng-click="ctrl.cancel(elem)"class="glyphicon glyphicon-remove clickable"></span>
                 </td>
@@ -83,7 +83,7 @@
                         @endif
                     </td>
                 @endforeach
-                <td class="centered">
+                <td class="list-action">
                     <span ng-click="ctrl.addSubmit()" class="glyphicon glyphicon-plus clickable"></span>
                 </td>
                 <td></td>
