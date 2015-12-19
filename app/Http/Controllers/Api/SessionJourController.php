@@ -51,7 +51,7 @@ class SessionJourController extends Controller
 
         $session_jours->save();
 
-        foreach($request->input('formateurs_id') as $formateur_id) {
+        foreach($request->input('formateurs_id', []) as $formateur_id) {
             $formateur = \ModuleFormation\Formateur::findOrFail($formateur_id);
             $session_jours->formateurs()->save($formateur);
         }
@@ -95,7 +95,7 @@ class SessionJourController extends Controller
         $session_jours->save();
 
         $session_jours->formateurs()->detach();
-        foreach($request->input('formateurs_id') as $formateur_id) {
+        foreach($request->input('formateurs_id', []) as $formateur_id) {
             $formateur = \ModuleFormation\Formateur::findOrFail($formateur_id);
             $session_jours->formateurs()->save($formateur);
         }

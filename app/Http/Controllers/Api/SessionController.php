@@ -38,7 +38,6 @@ class SessionController extends Controller
     public function store(Request $request)
     {
         $session = new \ModuleFormation\Session;
-        $session->libelle = $request->input('libelle');
         $session->nb_jours = $request->input('nb_jours');
         $session->effectif_max = $request->input('effectif_max');
         $session->objectifs_pedagogiques = $request->input('objectifs_pedagogiques');
@@ -75,7 +74,6 @@ class SessionController extends Controller
     {
         $session = \ModuleFormation\Session::findOrFail($sessionId);
 
-        $session->libelle = $request->input('libelle');
         $session->nb_jours = $request->input('nb_jours');
         $session->effectif_max = $request->input('effectif_max');
         $session->objectifs_pedagogiques = $request->input('objectifs_pedagogiques');

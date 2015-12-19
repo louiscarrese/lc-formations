@@ -42,7 +42,7 @@ class ModuleController extends Controller
 
         $module->save();
 
-        foreach($request->input('formateurs_id') as $formateur_id) {
+        foreach($request->input('formateurs_id', []) as $formateur_id) {
             $formateur = \ModuleFormation\Formateur::findOrFail($formateur_id);
             $module->formateurs()->save($formateur);
         }
@@ -89,7 +89,7 @@ class ModuleController extends Controller
         $module->save();
 
         $module->formateurs()->detach();
-        foreach($request->input('formateurs_id') as $formateur_id) {
+        foreach($request->input('formateurs_id', []) as $formateur_id) {
             $formateur = \ModuleFormation\Formateur::findOrFail($formateur_id);
             $module->formateurs()->save($formateur);
         }

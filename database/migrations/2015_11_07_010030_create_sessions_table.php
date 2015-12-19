@@ -14,8 +14,8 @@ class CreateSessionsTable extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->increments('id');
+            
             //Copy from Module
-            $table->string('libelle');
             $table->integer('nb_jours'); 
             $table->integer('effectif_max')->nullable();
             $table->string('objectifs_pedagogiques')->nullable();

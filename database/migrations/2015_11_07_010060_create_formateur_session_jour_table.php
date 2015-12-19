@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormateurModulesTable extends Migration
+class CreateFormateurSessionJourTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,14 @@ class CreateFormateurModulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('formateur_module', function (Blueprint $table) {
+        Schema::create('formateur_session_jour', function (Blueprint $table) {
+            $table->increments('id');
+
             $table->integer('formateur_id')->unsigned();
             $table->foreign('formateur_id')->references('id')->on('formateurs');
 
-            $table->integer('module_id')->unsigned();
-            $table->foreign('module_id')->references('id')->on('modules');
-
-            $table->primary(['formateur_id', 'module_id']);
+            $table->integer('session_jour_id')->unsigned();
+            $table->foreign('session_jour_id')->references('id')->on('session_jours');
 
             $table->timestamps();
         });
@@ -32,6 +32,6 @@ class CreateFormateurModulesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('formateur_modules');
+        Schema::drop('formateur_session_jour');
     }
 }
