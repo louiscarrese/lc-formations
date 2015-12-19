@@ -38,7 +38,7 @@
                 'type' => 'dropdown',
                 'datasource' => 'linkedData.domaineFormations', //relative to the controller
                 'dataId' => 'id', //relative to an item in the datasource
-                'modelObject' => 'module_formation', //relative to an item in the controller data 
+                'modelObject' => 'domaine_formation', //relative to an item in the controller data 
                 'change' => '',
                 'displayed' => '<libelle>',
                 'sizeLabel' => 2,
