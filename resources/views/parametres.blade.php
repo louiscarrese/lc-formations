@@ -10,10 +10,10 @@
         ['controllerName' => 'stagiaireTypesController',
          'title' => 'Types de stagiaires',
          'adaptToContent' => true,
+         'idField' => 'id',
          'fields' => [
             'id' => [
                 'label' => 'Id',
-                'isId' => true,
                 'sortable' => true,
                 'filterable' => true,
                 'editable' => true,
@@ -75,10 +75,10 @@
         ['controllerName' => 'formateurTypesController',
          'title' => 'Types de formateurs',
          'adaptToContent' => true,
+         'idField' => 'id',
          'fields' => [
             'id' => [
                 'label' => 'Id',
-                'isId' => true,
                 'sortable' => true,
                 'filterable' => true,
                 'editable' => true,
@@ -104,10 +104,10 @@
         ['controllerName' => 'financeurTypesController',
          'title' => 'Types de formateurs',
          'adaptToContent' => true,
+         'idField' => 'id',
          'fields' => [
             'id' => [
                 'label' => 'Id',
-                'isId' => true,
                 'sortable' => true,
                 'filterable' => true,
                 'editable' => true,
@@ -134,10 +134,10 @@
         ['controllerName' => 'financeurTypesController',
          'title' => 'Types de financeurs',
          'adaptToContent' => true,
+         'idField' => 'id',
          'fields' => [
             'id' => [
                 'label' => 'Id',
-                'isId' => true,
                 'sortable' => true,
                 'filterable' => true,
                 'editable' => true,
@@ -163,10 +163,10 @@
         ['controllerName' => 'tarifTypesController',
          'title' => 'Types de tarifs',
          'adaptToContent' => true,
+         'idField' => 'id',
          'fields' => [
             'id' => [
                 'label' => 'Id',
-                'isId' => true,
                 'sortable' => true,
                 'filterable' => true,
                 'editable' => true,
@@ -191,11 +191,11 @@
     @include('components.editableTable',
         ['controllerName' => 'domaineFormationsController',
          'title' => 'Domaines de formation',
+         'idField' => 'id',
          'adaptToContent' => true,
          'fields' => [
             'id' => [
                 'label' => 'Id',
-                'isId' => true,
                 'sortable' => true,
                 'filterable' => true,
                 'editable' => true,
@@ -220,11 +220,11 @@
     @include('components.editableTable',
         ['controllerName' => 'lieuController',
          'title' => 'Lieux de formation',
+         'idField' => 'id',
          'adaptToContent' => true,
          'fields' => [
             'id' => [
                 'label' => 'Id',
-                'isId' => true,
                 'sortable' => true,
                 'filterable' => true,
                 'editable' => true,

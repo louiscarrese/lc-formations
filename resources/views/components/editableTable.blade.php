@@ -24,7 +24,7 @@
                 {{-- Configured Headers --}}
                 @foreach($fields as $fieldId => $field)
                     @if($field['sortable'])
-                        <th class="clickable {{$field['tdClass'] or ''}} col-sm-{{$field['size']}}">
+                        <th class="clickable {{$field['tdClass'] or ''}} <? echo (isset($field['size']) ? 'col-sm-' . $field['size'] : ''); ?>">
                             <my-sortable-header set="ctrl.setSort('{{$fieldId}}')"
                                                 get="ctrl.getSort('{{$fieldId}}')"
                             >
