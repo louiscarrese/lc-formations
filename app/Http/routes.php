@@ -53,6 +53,9 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
 
     Route::resource('stagiaire', 'StagiaireController', 
         ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+
+    Route::resource('inscription', 'InscriptionController', 
+        ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 });
 
 
@@ -74,4 +77,6 @@ Route::resource('/financeurs', 'FinanceursController',
 Route::resource('/employeurs', 'EmployeursController', 
     ['only' => ['index', 'create', 'show']]);
 Route::resource('/stagiaires', 'StagiairesController', 
+    ['only' => ['index', 'create', 'show']]);
+Route::resource('/inscriptions', 'InscriptionsController', 
     ['only' => ['index', 'create', 'show']]);

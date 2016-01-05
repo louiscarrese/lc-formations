@@ -33460,17 +33460,24 @@ function myCustomFilter() {
     }
 
 }
-function formateursServiceFactory($resource) {
-    return $resource('/api/formateur/:id', null, {
+function inscriptionsServiceFactory($resource) {
+    return $resource('/api/inscription/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+function stagiairesServiceFactory($resource) {
+    return $resource('/api/stagiaire/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
-function formateurTypesServiceFactory($resource) {
-    return $resource('/api/formateur_type/:id', null, {
+function sessionsServiceFactory($resource) {
+    return $resource('/api/session/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
+
+
 function editModeServiceFactory() {
     return {
         initFromUrl: function(service, callback) {
@@ -33552,13 +33559,15 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
-function formateurDetailServiceFactory(sharedDataService, formateurTypesService) {
+function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService) {
     return {
         getLinkedData: function() {
-            var formateurType = formateurTypesService.query();
+            var stagiaire = stagiairesService.query();
+            var session = sessionsService.query();
 
             return {
-                'formateur_type': formateurType
+                'stagiaire': stagiaire,
+                'session': session,
             };
         },
 
@@ -33568,15 +33577,17 @@ function formateurDetailServiceFactory(sharedDataService, formateurTypesService)
 
         getSuccess: function(data) {
 
+            sharedDataService.data.inscription_id = data.id;
+
             //Build the return structure
             return {
-                'titleText': data.libelle != undefined ? data.libelle : "Création d'un formateur"
+                'titleText': data.libelle != undefined ? data.libelle : "Création d'un inscription"
             }
 
         },
 
         getListUrl: function() {
-            return '/formateurs';
+            return '/inscriptions';
         },
     }
 }
@@ -33720,24 +33731,25 @@ function detailController(editModeService, dataService, detailService) {
 
     }
 }
-angular.module('formateursDetailServices', ['ngResource'])
-    .factory('formateursService', ['$resource', formateursServiceFactory])
-    .factory('formateurTypesService', ['$resource', formateurTypesServiceFactory])
+angular.module('inscriptionsDetailServices', ['ngResource'])
+    .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
+    .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sharedDataService', [sharedDataServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
-    .factory('formateurDetailService', ['sharedDataService', 'formateurTypesService', formateurDetailServiceFactory])
+    .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', inscriptionDetailServiceFactory])
 ;
 
-angular.module('formateursDetailControllers', [])
-        .controller('detailController', ['editModeService', 'formateursService', 'formateurDetailService', detailController])
+angular.module('inscriptionsDetailControllers', [])
+        .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', detailController])
 ;
 
-angular.module('formateursDetailFilters', [])
+angular.module('inscriptionsDetailFilters', [])
     .filter('myCustomFilter', myCustomFilter)
 ;
 
 //Les directives
-angular.module('formateursDetailDirectives', [])
+angular.module('inscriptionsDetailDirectives', [])
     .directive('myEditableText', myEditableDirectiveText)
     .directive('myEditableInteger', myEditableDirectiveInteger)
     .directive('myEditableTextarea', myEditableDirectiveTextarea)
@@ -33749,8 +33761,8 @@ angular.module('formateursDetailDirectives', [])
 ;
 
 //Le module principal
-angular.module('formateursDetailApp', 
-    ['formateursDetailControllers', 'formateursDetailServices', 'formateursDetailFilters', 'formateursDetailDirectives', 'ngMessages', 'rt.select2'])
+angular.module('inscriptionsDetailApp', 
+    ['inscriptionsDetailControllers', 'inscriptionsDetailServices', 'inscriptionsDetailFilters', 'inscriptionsDetailDirectives', 'ngMessages', 'rt.select2'])
 ;
 
-//# sourceMappingURL=formateurs-detail.js.map
+//# sourceMappingURL=inscriptions-detail.js.map

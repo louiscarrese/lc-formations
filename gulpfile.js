@@ -100,6 +100,16 @@ elixir(function(mix) {
             'app/stagiairesApp.js'
             ], 'public/js/stagiaires-list.js')
         .scripts([
+            'vendor/angular/angular.min.js', 
+            'vendor/angular-resource/angular-resource.min.js', 
+            'vendor/angular-messages/angular-messages.min.js', 
+            'directives/mySortableHeader-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/data/inscriptions-service.js',
+            'controllers/editableTable-controller.js',
+            'app/inscriptionsApp.js'
+            ], 'public/js/inscriptions-list.js')
+        .scripts([
             'vendor/jquery/dist/jquery.min.js',
             'vendor/select2/select2.js',
             'vendor/angular/angular.min.js', 
@@ -271,6 +281,32 @@ elixir(function(mix) {
             'controllers/detail-controller.js',
             'app/stagiaireDetailApp.js'
             ], 'public/js/stagiaires-detail.js')
+        .scripts([
+            'vendor/jquery/dist/jquery.min.js',
+            'vendor/select2/select2.js',
+            'vendor/angular/angular.js', 
+            'vendor/angular-resource/angular-resource.min.js', 
+            'vendor/angular-messages/angular-messages.min.js', 
+            'vendor/angular-select2/dist/angular-select2.js',
+            'directives/myForceInteger-directive.js',
+            'directives/mySortableHeader-directive.js',
+            'directives/my-editable/myEditable-commons.js',
+            'directives/my-editable/myEditableText-directive.js',
+            'directives/my-editable/myEditableInteger-directive.js',
+            'directives/my-editable/myEditableTextarea-directive.js',
+            'directives/my-editable/myEditableCheckbox-directive.js',
+            'directives/my-editable/myEditableDropdown-directive.js',
+            'directives/my-editable/myEditableRadio-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/data/inscriptions-service.js',
+            'services/data/stagiaires-service.js',
+            'services/data/sessions-service.js',
+            'services/editmode-service.js',
+            'services/shareddata-service.js',
+            'services/details/inscriptiondetail-service.js',
+            'controllers/detail-controller.js',
+            'app/inscriptionDetailApp.js'
+            ], 'public/js/inscriptions-detail.js')
 /*
     .spritesmith('resources/assets/img/sprites', {
         imgOutput: 'public/images',

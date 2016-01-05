@@ -33347,17 +33347,42 @@ function myEditableDirectiveDropdown() {
             scope.displayValue = function(value, formatString) {
                 var ret = '';
                 if(value != undefined) {
-                    var tokenizer = /(<\w+>)/g
-                    var formatString = formatString;
+                    var tokenizer = /(<[\w.]+>)/g
                     var ret = formatString;
+
+                    //Extract tokens we have to replace
                     var toReplace = formatString.match(tokenizer);
 
-                    for(var i = 0; i < toReplace.length; i++) {
-                        var fieldId = toReplace[i].replace('<', '').replace('>', '');
-                        ret = ret.replace(toReplace[i], value[fieldId]);
+                    if(toReplace != null) {
+                        //For each token we have to replace
+                        for(var i = 0; i < toReplace.length; i++) {
+                            //get the field name
+                            var fieldId = toReplace[i].replace('<', '').replace('>', '');
+
+                            //If it's a structure field (sthg.else)
+                            if(fieldId.indexOf('.') != -1) {
+                                //a place to store the objects while we go down
+                                var localValue = value;
+
+                                //Extract a path to the targeted field
+                                var fieldPath = fieldId.split('.');
+
+                                //Go down the path
+                                for(var j = 0; j < fieldPath.length; j++) {
+                                    if(localValue.hasOwnProperty(fieldPath[j])) {
+                                        localValue = localValue[fieldPath[j]];
+                                    }
+                                }
+
+                                //replace with the field value
+                                ret = ret.replace(toReplace[i], localValue);
+                            } else {
+                                //replace with the field value
+                                ret = ret.replace(toReplace[i], value[fieldId]);
+                            }
+                        }
                     }
                 }
-
                 return ret;
             };
         },

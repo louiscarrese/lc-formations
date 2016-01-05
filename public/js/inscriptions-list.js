@@ -322,17 +322,6 @@ this.deregister=function(b){var a=b.$$ngMessageNode;delete b.$$ngMessageNode;var
 m("AE")).directive("ngMessageExp",m("A"))})(window,window.angular);
 //# sourceMappingURL=angular-messages.min.js.map
 
-function myForceIntegerDirective(){
-    return {
-        require: 'ngModel',
-        link: function(scope, ele, attr, ctrl){
-            ctrl.$parsers.unshift(function(viewValue){
-                return parseInt(viewValue, 10);
-            });
-        }
-    };
-}
-
 function mySortableHeaderDirective() {
     return {
         restrict: 'E',
@@ -352,291 +341,6 @@ function mySortableHeaderDirective() {
         }
     };
 }
-function myEditableDirectiveCommons() {
-    return {
-
-        validationTemplate: function(fieldName) {
-            var template = '';
-
-            template += '<div ng-messages="form.' + fieldName + '.$error" ng-if="form.' + fieldName + '.$invalid && form.' + fieldName + '.$touched">';
-            template += '<span class="help-block" ng-message="required">Ce champ est obligatoire</span>';
-            template += '<span class="help-block" ng-message="minlength">Ce champ est trop court</span>';
-            template += '<span class="help-block" ng-message="maxlength">Ce champ est trop long</span>';
-            template += '<span class="help-block" ng-message="email">Ce champ n\'est pas un email valide</span>';
-            template += '<span class="help-block" ng-message="number">Ce champ n\'est pas un nombre valide</span>';
-            template += '<span class="help-block" ng-message="date">Ce champ n\'est pas une date valide</span>';
-            template += '</div>';
-
-            return template;
-        },
-
-        stripScopeAttributes: function(tAttr) {
-            var ret = {};
-
-            for(var attr in tAttr) {
-                if(tAttr.hasOwnProperty(attr)) {
-                    if(!this.scope.hasOwnProperty(attr)) {
-                        ret[attr] = tAttr[attr];
-                    }
-                }
-            }
-            return ret;
-        },
-
-        attrToHtml: function(attr) {
-            var ret = '';
-            for(var key in attr) {
-                ret += key + '="' + attr[key] + '" ';
-            }
-            return ret;
-        },
- 
-
-        getFieldName: function(modelName) {
-            var names = modelName.split('.');
-            return names[names.length-1];
-        }
-    }
-}
-function myEditableDirectiveText() {
-
-    var directive = {
-        restrict: 'E',
-        
-        scope: 
-        {
-            ngModel: '=',
-            editingFlag: '=',
-        },
-        controller: function($scope) {},
-        require: ['^form'],
-        template: function(tElem, tAttr) {
-            var filteredAttr = this.stripScopeAttributes(tAttr);
-            var htmlAttrs = this.attrToHtml(filteredAttr);
-            var fieldName = this.getFieldName(tAttr['ngModel']);
-
-            var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
-            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
-            template += this.validationTemplate(fieldName);
-
-            return template;
-        },
-        link: function(scope, element, attrs, ctrls) {
-            scope.form = ctrls[0];
-        }
-    };
-
-    directive = angular.extend(directive, myEditableDirectiveCommons());
-
-    return directive;
-}
-function myEditableDirectiveInteger() {
-    var directive = {
-        restrict: 'E',
-        scope: {
-            ngModel: '=',
-            editingFlag: '=',
-        },
-        require: ['^form'],
-        template: function(tElem, tAttr) {
-            var filteredAttr = this.stripScopeAttributes(tAttr);
-            var htmlAttrs = this.attrToHtml(filteredAttr);
-            var fieldName = this.getFieldName(tAttr.ngModel);
-
-            var template = '';
-
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
-            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" my-force-integer/>';
-
-            template += this.validationTemplate(fieldName);
-            return template;
-        },
-        link: function(scope, element, attrs, ctrls) {
-            scope.form = ctrls[0];
-        }
-    };
-
-    directive = angular.extend(directive, myEditableDirectiveCommons());
-
-    return directive;
-}
-function myEditableDirectiveTextarea() {
-    var directive = {
-        restrict: 'E',
-        scope: {
-            ngModel: '=',
-            editingFlag: '=',
-        },
-        require: ['^form'],
-        template: function(tElem, tAttr) {
-            var filteredAttr = this.stripScopeAttributes(tAttr);
-            var htmlAttrs = this.attrToHtml(filteredAttr);
-            var fieldName = this.getFieldName(tAttr.ngModel);
-
-            var template = '';
-
-            template += '<pre ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</pre>';
-            template += '<textarea ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm"></textarea>';
-
-            template += this.validationTemplate(fieldName);
-            return template;
-        },
-        link: function(scope, element, attrs, ctrls) {
-            scope.form = ctrls[0];
-        }
-    };
-
-    directive = angular.extend(directive, myEditableDirectiveCommons());
-
-    return directive;
-}
-function myEditableDirectiveCheckbox() {
-    var directive = {
-        restrict: 'E',
-        scope: {
-            ngModel: '=',
-            editingFlag: '=',
-        },
-        require: ['^form'],
-        template: function(tElem, tAttr) {
-            var filteredAttr = this.stripScopeAttributes(tAttr);
-            var htmlAttrs = this.attrToHtml(filteredAttr);
-            var fieldName = this.getFieldName(tAttr.ngModel);
-
-            var template = '';
-
-            template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '"/>';
-
-            template += this.validationTemplate(fieldName);
-            return template;
-        },
-        link: function(scope, element, attrs, ctrls) {
-            scope.form = ctrls[0];
-        }
-    };
-
-    directive = angular.extend(directive, myEditableDirectiveCommons());
-
-    return directive;
-}
-function myEditableDirectiveDropdown() {
-    var directive = {
-        restrict: 'E',
-        scope: {
-            ngModel: '=',
-            editingFlag: '=',
-            datasource: '=',
-            modelObject: '=',
-            sourceId: '@',
-            change: '=',
-            displayed: '@',
-            placeholder: '@'
-        },
-        require: ['^form', 'ngModel'],
-        template: function(tElem, tAttr) {
-            var filteredAttr = this.stripScopeAttributes(tAttr);
-            var htmlAttrs = this.attrToHtml(filteredAttr);
-            var fieldName = this.getFieldName(tAttr.ngModel);
-
-            var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{(displayValue(modelObject, displayed))}}</p>';
-            template += '<select2 ng-model="ngModel" class="form-control" ng-show="editingFlag" ';
-            template += 'options="{minimumResultsForSearch: -1, placeholder: placeholder}" ';
-            template += 's2-options="val.' + tAttr['sourceId'] + ' as (displayValue(val, displayed)) for val in datasource" ';
-            if(tAttr['change'] != undefined) {
-                template += 'ng-change="change(ngModel)" ';
-            }
-            template += htmlAttrs + '></select2>';
-            template += this.validationTemplate(fieldName);
-            return template;
-        },
-        link: function(scope, element, attrs, ctrls) {
-            scope.form = ctrls[0];
-
-            scope.displayValue = function(value, formatString) {
-                var ret = '';
-                if(value != undefined) {
-                    var tokenizer = /(<[\w.]+>)/g
-                    var ret = formatString;
-
-                    //Extract tokens we have to replace
-                    var toReplace = formatString.match(tokenizer);
-
-                    if(toReplace != null) {
-                        //For each token we have to replace
-                        for(var i = 0; i < toReplace.length; i++) {
-                            //get the field name
-                            var fieldId = toReplace[i].replace('<', '').replace('>', '');
-
-                            //If it's a structure field (sthg.else)
-                            if(fieldId.indexOf('.') != -1) {
-                                //a place to store the objects while we go down
-                                var localValue = value;
-
-                                //Extract a path to the targeted field
-                                var fieldPath = fieldId.split('.');
-
-                                //Go down the path
-                                for(var j = 0; j < fieldPath.length; j++) {
-                                    if(localValue.hasOwnProperty(fieldPath[j])) {
-                                        localValue = localValue[fieldPath[j]];
-                                    }
-                                }
-
-                                //replace with the field value
-                                ret = ret.replace(toReplace[i], localValue);
-                            } else {
-                                //replace with the field value
-                                ret = ret.replace(toReplace[i], value[fieldId]);
-                            }
-                        }
-                    }
-                }
-                return ret;
-            };
-        },
-    };
-
-    directive = angular.extend(directive, myEditableDirectiveCommons());
-
-    return directive;
-}
-
-function myEditableDirectiveRadio() {
-    var directive = {
-        restrict: 'E',
-        scope: {
-            ngModel: '=',
-            editingFlag: '=',
-            values: '=',
-        },
-        require: ['^form'],
-        template: function(tElem, tAttr) {
-            var filteredAttr = this.stripScopeAttributes(tAttr);
-            var htmlAttrs = this.attrToHtml(filteredAttr);
-            var fieldName = this.getFieldName(tAttr.ngModel);
-
-            var template = '';
-
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
-            template += '<label ng-repeat="item in values" ng-show="editingFlag" class="radio-inline">';
-            template += '<input type="radio" name="' + fieldName + '" ng-model="$parent.ngModel" value="{{item}}"> {{item}} </input>';
-            template += '</label>';
-
-            template += this.validationTemplate(fieldName);
-            return template;
-        },
-        link: function(scope, element, attrs, ctrls) {
-            scope.form = ctrls[0];
-        }
-    };
-
-    directive = angular.extend(directive, myEditableDirectiveCommons());
-
-    return directive;
-}
-
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -670,58 +374,11 @@ function myCustomFilter() {
     }
 
 }
-/*
-(function() {
-    'use strict';
-*/
-/*
-    angular.module('closedListServices')
-        .factory('closedListService', ['$resource', 'closedListResourceUrl', closedListServiceFactory]);
-
-    function closedListServiceFactory($resource, closedListResourceUrl) {
-        return $resource(closedListResourceUrl, null, {
-            'update': { method:'PUT' }
-        });
-    }
-    */
-
-
-    function stagiaireTypesServiceFactory($resource) {
-        return $resource('/api/stagiaire_type/:id', null, {
-            'update' : { method: 'PUT' }
-        });
-    }
-
-    /*
-})();
-*/
-function formateurTypesServiceFactory($resource) {
-    return $resource('/api/formateur_type/:id', null, {
+function inscriptionsServiceFactory($resource) {
+    return $resource('/api/inscription/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
-function financeurTypesServiceFactory($resource) {
-    return $resource('/api/financeur_type/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-function tarifTypesServiceFactory($resource) {
-    return $resource('/api/tarif_type/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-function lieuServiceFactory($resource) {
-    return $resource('/api/lieu/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-
-function domaineFormationsServiceFactory($resource) {
-    return $resource('/api/domaine_formation/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-
 function editableTableController($filter, dataService, tableService) {
     var self = this;
 
@@ -909,46 +566,27 @@ function editableTableController($filter, dataService, tableService) {
     };
 } 
 
-//Les services
-angular.module('parametresServices', ['ngResource'])
-    .factory('stagiaireTypesService', ['$resource', stagiaireTypesServiceFactory])
-    .factory('formateurTypesService', ['$resource', formateurTypesServiceFactory])
-    .factory('financeurTypesService', ['$resource', financeurTypesServiceFactory])
-    .factory('tarifTypesService', ['$resource', tarifTypesServiceFactory])
-    .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
-    .factory('lieuService', ['$resource', lieuServiceFactory])
-;
-//Les controllers
-angular.module('parametresControllers', [])
-    .controller('stagiaireTypesController', ['$filter', 'stagiaireTypesService', editableTableController])
-    .controller('formateurTypesController', ['$filter', 'formateurTypesService', editableTableController])
-    .controller('financeurTypesController', ['$filter', 'financeurTypesService', editableTableController])
-    .controller('tarifTypesController', ['$filter', 'tarifTypesService', editableTableController])
-    .controller('domaineFormationsController', ['$filter', 'domaineFormationsService', editableTableController])
-    .controller('lieuController', ['$filter', 'lieuService', editableTableController])
+angular.module('inscriptionsListServices', ['ngResource'])
+    .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
 ;
 
-//Les filtres
-angular.module('parametresFilters', [])
+angular.module('inscriptionsListControllers', [])
+    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', editableTableController])
+;
+
+angular.module('inscriptionsListFilters', [])
     .filter('myCustomFilter', myCustomFilter)
 ;
 
 //Les directives
-angular.module('parametresDirectives', [])
-    .directive('myEditableText', myEditableDirectiveText)
-    .directive('myEditableInteger', myEditableDirectiveInteger)
-    .directive('myEditableTextarea', myEditableDirectiveTextarea)
-    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
-    .directive('myEditableDropdown', myEditableDirectiveDropdown)
-    .directive('myEditableRadio', myEditableDirectiveRadio)
+angular.module('inscriptionsListDirectives', [])
     .directive('mySortableHeader', mySortableHeaderDirective)
-    .directive('myForceInteger', myForceIntegerDirective)
 
     ;
 
 //Le module principal
-angular.module('parametresApp', 
-    ['parametresControllers', 'parametresServices', 'parametresFilters', 'parametresDirectives', 'ngMessages']);
+angular.module('inscriptionsListApp', 
+    ['inscriptionsListControllers', 'inscriptionsListServices', 'inscriptionsListFilters', 'inscriptionsListDirectives', 'ngMessages']);
 
 
-//# sourceMappingURL=parametres.js.map
+//# sourceMappingURL=inscriptions-list.js.map
