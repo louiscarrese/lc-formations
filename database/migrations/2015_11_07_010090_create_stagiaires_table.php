@@ -32,7 +32,7 @@ class CreateStagiairesTable extends Migration
             $table->string('domaine_pro'); //liste fermée ?
 
             $table->integer('employeur_id')->unsigned()->nullable();
-            $table->foreign('employeur_id')->references('id')->on('modules');
+            $table->foreign('employeur_id')->references('id')->on('employeurs');
 
             $table->integer('stagiaire_type_id')->unsigned();
             $table->foreign('stagiaire_type_id')->references('id')->on('stagiaire_types');

@@ -90,6 +90,16 @@ elixir(function(mix) {
             'app/employeursApp.js'
             ], 'public/js/employeurs-list.js')
         .scripts([
+            'vendor/angular/angular.min.js', 
+            'vendor/angular-resource/angular-resource.min.js', 
+            'vendor/angular-messages/angular-messages.min.js', 
+            'directives/mySortableHeader-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/data/stagiaires-service.js',
+            'controllers/editableTable-controller.js',
+            'app/stagiairesApp.js'
+            ], 'public/js/stagiaires-list.js')
+        .scripts([
             'vendor/jquery/dist/jquery.min.js',
             'vendor/select2/select2.js',
             'vendor/angular/angular.min.js', 
@@ -233,6 +243,34 @@ elixir(function(mix) {
             'controllers/detail-controller.js',
             'app/employeurDetailApp.js'
             ], 'public/js/employeurs-detail.js')
+        .scripts([
+            'vendor/jquery/dist/jquery.min.js',
+            'vendor/select2/select2.js',
+            'vendor/angular/angular.js', 
+            'vendor/angular-resource/angular-resource.min.js', 
+            'vendor/angular-messages/angular-messages.min.js', 
+            'vendor/angular-select2/dist/angular-select2.js',
+            'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
+            'directives/myForceInteger-directive.js',
+            'directives/mySortableHeader-directive.js',
+            'directives/my-editable/myEditable-commons.js',
+            'directives/my-editable/myEditableText-directive.js',
+            'directives/my-editable/myEditableInteger-directive.js',
+            'directives/my-editable/myEditableTextarea-directive.js',
+            'directives/my-editable/myEditableCheckbox-directive.js',
+            'directives/my-editable/myEditableDropdown-directive.js',
+            'directives/my-editable/myEditableRadio-directive.js',
+            'directives/my-editable/myEditableDate-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/data/stagiaires-service.js',
+            'services/data/stagiairetypes-service.js',
+            'services/data/employeurs-service.js',
+            'services/editmode-service.js',
+            'services/shareddata-service.js',
+            'services/details/stagiairedetail-service.js',
+            'controllers/detail-controller.js',
+            'app/stagiaireDetailApp.js'
+            ], 'public/js/stagiaires-detail.js')
 /*
     .spritesmith('resources/assets/img/sprites', {
         imgOutput: 'public/images',

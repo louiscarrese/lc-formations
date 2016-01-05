@@ -1,7 +1,7 @@
 <nav id="menu" class="navbar navbar-default">
     <ul class="nav navbar-nav">
         <li><a href="#">Pré-inscriptions</a></li>
-        <li><a href="#">Stagiaires</a></li>
+        <li><a href="/stagiaires">Stagiaires</a></li>
         <li><a href="/employeurs">Employeurs</a></li>
         <li><a href="/formateurs">Formateurs</a></li>
         <li><a href="/modules">Modules</a></li>
