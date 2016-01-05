@@ -24,8 +24,8 @@ class CreateFinanceursTable extends Migration
             $table->string('tel')->nullable();
             $table->string('email')->nullable();
 
-            $table->integer('financeur_type')->unsigned();
-            $table->foreign('financeur_type')->references('id')->on('financeur_types');
+            $table->integer('financeur_type_id')->unsigned();
+            $table->foreign('financeur_type_id')->references('id')->on('financeur_types');
 
             $table->timestamps();
         });

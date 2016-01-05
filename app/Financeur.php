@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Financeur extends Model
 {
 
-    function type() {
+    function financeur_type() {
         return $this->belongsTo('ModuleFormation\FinanceurType');
     }
 
