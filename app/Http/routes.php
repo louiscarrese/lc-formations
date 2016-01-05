@@ -47,6 +47,9 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
 
     Route::resource('financeur', 'FinanceurController', 
         ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+
+    Route::resource('employeur', 'EmployeurController', 
+        ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 });
 
 
@@ -64,4 +67,6 @@ Route::resource('/sessions', 'SessionsController',
 Route::resource('/formateurs', 'FormateursController', 
     ['only' => ['index', 'create', 'show']]);
 Route::resource('/financeurs', 'FinanceursController', 
+    ['only' => ['index', 'create', 'show']]);
+Route::resource('/employeurs', 'EmployeursController', 
     ['only' => ['index', 'create', 'show']]);

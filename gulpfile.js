@@ -80,6 +80,16 @@ elixir(function(mix) {
             'app/financeursApp.js'
             ], 'public/js/financeurs-list.js')
         .scripts([
+            'vendor/angular/angular.min.js', 
+            'vendor/angular-resource/angular-resource.min.js', 
+            'vendor/angular-messages/angular-messages.min.js', 
+            'directives/mySortableHeader-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/data/employeurs-service.js',
+            'controllers/editableTable-controller.js',
+            'app/employeursApp.js'
+            ], 'public/js/employeurs-list.js')
+        .scripts([
             'vendor/jquery/dist/jquery.min.js',
             'vendor/select2/select2.js',
             'vendor/angular/angular.min.js', 
@@ -199,6 +209,30 @@ elixir(function(mix) {
             'controllers/detail-controller.js',
             'app/financeurDetailApp.js'
             ], 'public/js/financeurs-detail.js')
+        .scripts([
+            'vendor/jquery/dist/jquery.min.js',
+            'vendor/select2/select2.js',
+            'vendor/angular/angular.js', 
+            'vendor/angular-resource/angular-resource.min.js', 
+            'vendor/angular-messages/angular-messages.min.js', 
+            'vendor/angular-select2/dist/angular-select2.js',
+            'directives/myForceInteger-directive.js',
+            'directives/mySortableHeader-directive.js',
+            'directives/my-editable/myEditable-commons.js',
+            'directives/my-editable/myEditableText-directive.js',
+            'directives/my-editable/myEditableInteger-directive.js',
+            'directives/my-editable/myEditableTextarea-directive.js',
+            'directives/my-editable/myEditableCheckbox-directive.js',
+            'directives/my-editable/myEditableDropdown-directive.js',
+            'directives/my-editable/myEditableRadio-directive.js',
+            'filters/myCustomFilter-filter.js',
+            'services/data/employeurs-service.js',
+            'services/editmode-service.js',
+            'services/shareddata-service.js',
+            'services/details/employeurdetail-service.js',
+            'controllers/detail-controller.js',
+            'app/employeurDetailApp.js'
+            ], 'public/js/employeurs-detail.js')
 /*
     .spritesmith('resources/assets/img/sprites', {
         imgOutput: 'public/images',
