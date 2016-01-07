@@ -44,7 +44,7 @@
                 'sortable' => true,
                 'tdClass' => 'centered',
                 'filterable' => true,
-                'displayedField' => 'formateur_type.libelle'
+                'displayedField' => '@{{formateur_type.libelle}}'
             ],
         ]
     ])

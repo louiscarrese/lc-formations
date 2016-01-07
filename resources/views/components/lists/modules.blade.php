@@ -14,7 +14,7 @@
                 'label' => 'Domaine',
                 'sortable' => true,
                 'filterable' => true,
-                'displayedField' => 'domaine_formation.libelle',
+                'displayedField' => '@{{domaine_formation.libelle}}',
             ],
         ]
     ])

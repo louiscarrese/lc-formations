@@ -10,6 +10,8 @@
     }
     $filter .= ' track by item.' . $idField;
 ?>
+
+@inject('viewService', 'ModuleFormation\Services\ViewService')
 <h2>{{$title}}</h2>
 
 <div ng-controller="{{$controllerName}} as ctrl">
@@ -38,11 +40,9 @@
         <tbody>
             <tr ng-repeat="item in ctrl.data | {{$filter}}">
                 @foreach($fields as $fieldId => $field)
-                    <?php 
-                        $displayedField = isset($field['displayedField']) ? $field['displayedField'] : $fieldId;
-                    ?>
+
                     <td class="{{$field['tdClass'] or ''}}">
-                        <span><? echo '{{item.'.$displayedField.'}}'; ?></span>
+                        <span><?php echo $viewService->displayedField($fieldId, $field); ?></span>
                     </td>
                 @endforeach
                 <td class="list-action">

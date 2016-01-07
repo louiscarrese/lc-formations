@@ -36,7 +36,7 @@
                 'sortable' => true,
                 'tdClass' => 'centered',
                 'filterable' => true,
-                'displayedField' => 'financeur_type.libelle'
+                'displayedField' => '@{{financeur_type.libelle}}'
             ],
         ]
     ])

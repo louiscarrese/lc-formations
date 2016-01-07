@@ -30,7 +30,7 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
     protected function augmentData($data) {
         $minMaxDate = $this->sessionService->getMinMaxDates($data->id);
 
-        $data->session->libelle = $data->session->module->libelle . ' (' . $minMaxDate['first'] . ' - ' . $minMaxDate['last'] . ')';
+        $data->session->libelle = '(' . $minMaxDate['first'] . ' - ' . $minMaxDate['last'] . ')';
 
         return $data;
     }

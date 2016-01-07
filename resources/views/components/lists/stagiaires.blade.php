@@ -44,7 +44,7 @@
                 'sortable' => true,
                 'tdClass' => 'centered',
                 'filterable' => true,
-                'displayedField' => 'stagiaire_type.libelle'
+                'displayedField' => '@{{stagiaire_type.libelle}}'
             ],
         ]
     ])
