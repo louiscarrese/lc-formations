@@ -145,6 +145,17 @@ return [
         ModuleFormation\Providers\EventServiceProvider::class,
         ModuleFormation\Providers\RouteServiceProvider::class,
 
+        /*
+         * Repository Providers
+         */
+        ModuleFormation\Providers\InscriptionRepositoryProvider::class,
+
+
+        /*
+         * Service Providers
+         */
+        ModuleFormation\Providers\SessionServiceProvider::class,
+
     ],
 
     /*

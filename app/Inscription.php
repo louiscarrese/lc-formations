@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inscription extends Model
 {
+    protected $with = ['stagiaire', 'session.module'];
 
     function stagiaire() {
         return $this->belongsTo('ModuleFormation\Stagiaire');

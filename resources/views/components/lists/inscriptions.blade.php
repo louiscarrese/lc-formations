@@ -15,7 +15,7 @@
                 'sortable' => true,
                 'filterable' => true,
             ],
-            'session.module.libelle' => [
+            'session.libelle' => [
                 'label' => 'Session',
                 'sortable' => true,
                 'filterable' => true,

@@ -7,16 +7,18 @@ use DB;
 use Illuminate\Http\Request;
 use ModuleFormation\Http\Requests;
 use ModuleFormation\Http\Controllers\Controller;
+use ModuleFormation\Repositories\InscriptionRepositoryInterface;
 
 class InscriptionController extends Controller
 {
-
+    public function __construct(InscriptionRepositoryInterface $inscription)
+    {
+        $this->inscriptionRepository = $inscription;
+    }
 
     public function index(Request $request) 
     {
-        //Initialize the request
-        $inscriptions = \ModuleFormation\Inscription::with('stagiaire', 'session.module')->get();
-
+        $inscriptions = $this->inscriptionRepository->getAll();
         return response()->json($inscriptions);
     }
 
@@ -28,19 +30,8 @@ class InscriptionController extends Controller
      */
     public function store(Request $request)
     {
-        $inscription = new \ModuleFormation\Inscription;
-        $inscription->profession_structure = $request->input('profession_structure');
-        $inscription->experiences = $request->input('experiences');
-        $inscription->attentes = $request->input('attentes');
-        $inscription->suggestions = $request->input('suggestions');
-        $inscription->formations_precedentes = $request->input('formations_precedentes');
-        $inscription->stagiaire_id = $request->input('stagiaire_id');
-        $inscription->session_id = $request->input('session_id');
+        $inscription = $this->inscriptionRepository->store($this->extractData($request));
 
-        $inscription->save();
-
-        //Regrab it with its module
-        $inscription = \ModuleFormation\Inscription::with('stagiaire', 'session.module')->findOrFail($inscription->id);
         return response()->json($inscription);
     }
 
@@ -52,7 +43,8 @@ class InscriptionController extends Controller
      */
     public function show($inscriptionId)
     {
-        $inscription = \ModuleFormation\Inscription::with('stagiaire', 'session.module')->findOrFail($inscriptionId);
+        $inscription = $this->inscriptionRepository->find($inscriptionId);
+
         return response()->json($inscription);
     }
 
@@ -65,20 +57,8 @@ class InscriptionController extends Controller
      */
     public function update(Request $request, $inscriptionId)
     {
-        $inscription = \ModuleFormation\Inscription::findOrFail($inscriptionId);
+        $inscription = $this->inscriptionRepository->store($this->extractData($request), $inscriptionId);
 
-        $inscription->id = $request->input('id');
-        $inscription->profession_structure = $request->input('profession_structure');
-        $inscription->experiences = $request->input('experiences');
-        $inscription->attentes = $request->input('attentes');
-        $inscription->suggestions = $request->input('suggestions');
-        $inscription->formations_precedentes = $request->input('formations_precedentes');
-        $inscription->stagiaire_id = $request->input('stagiaire_id');
-        $inscription->session_id = $request->input('session_id');
-        $inscription->save();
-
-        //Regrab it with its module
-        $inscription = \ModuleFormation\Inscription::with('stagiaire', 'session.module')->findOrFail($inscriptionId);
         return response()->json($inscription);
     }
 
@@ -90,7 +70,21 @@ class InscriptionController extends Controller
      */
     public function destroy($id)
     {
-        \ModuleFormation\Inscription::destroy($id);
+        $this->inscriptionRepository->destroy($id);
+    }
 
+    private function extractData($request) 
+    {
+        //TODO: input validation
+        $ret['id'] = $request->input('id');
+        $ret['profession_structure'] = $request->input('profession_structure');
+        $ret['experiences'] = $request->input('experiences');
+        $ret['attentes'] = $request->input('attentes');
+        $ret['suggestions'] = $request->input('suggestions');
+        $ret['formations_precedentes'] = $request->input('formations_precedentes');
+        $ret['stagiaire_id'] = $request->input('stagiaire_id');
+        $ret['session_id'] = $request->input('session_id');
+
+        return $ret;
     }
 }
