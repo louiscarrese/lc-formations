@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Session extends Model
 {
 
+    protected $with = ['module'];
+
     public function module() {
         return $this->belongsTo('ModuleFormation\Module');
     }

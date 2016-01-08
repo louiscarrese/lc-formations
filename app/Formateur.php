@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Formateur extends Model
 {
 
+    protected $with = ['formateur_type'];
+
     public function session_jours() {
         return $this->belongsToMany('ModuleFormation\SessionJour')->withTimestamps();
     }

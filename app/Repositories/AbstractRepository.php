@@ -17,7 +17,7 @@ abstract class AbstractRepository implements RepositoryInterface {
      * This method will be called on each object returned and should be 
      * overloaded to add computed data to objects.
      */
-    protected function augmentData($data) {}
+    protected function augmentData($data) {return $data;}
 
     public function __construct($app)
     {
@@ -47,6 +47,30 @@ abstract class AbstractRepository implements RepositoryInterface {
     }
 
     /**
+     * Select resource based on criterias.
+     */
+    public function findBy($criterias) 
+    {
+        //Start with the base model
+        $data_req = $this->model;
+
+        //Add each criteria
+        foreach($criterias as $key => $value) {
+            $data_req = $data_req->where($key, $value);
+        }
+
+        //Execute request
+        $datas = $data_req->get();
+
+        //Augment data
+        foreach($datas as $data) {
+            $data = $this->augmentData($data);
+        }
+        
+        return $datas;
+    }
+
+    /**
      * Create or update (if an id is provided) an object from an array of data.
      */
     public function store($data, $id = null) {
@@ -63,7 +87,8 @@ abstract class AbstractRepository implements RepositoryInterface {
         //store the object
         $object->save();
 
-        $data = $this->augmentData($object);
+        //Refetch the object (so it updates associated data)
+        $data = $this->find($object->id);
         return $data;
     }
 
@@ -73,4 +98,5 @@ abstract class AbstractRepository implements RepositoryInterface {
     public function destroy($id) {
         return $this->model->destroy($id);
     }
+
 }

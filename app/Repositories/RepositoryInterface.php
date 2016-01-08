@@ -18,6 +18,8 @@ interface RepositoryInterface {
 
     public function find($id);
 
+    public function findBy($criterias);
+
     public function store($data, $id = null);
 
     public function destroy($id);

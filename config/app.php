@@ -148,7 +148,21 @@ return [
         /*
          * Repository Providers
          */
+        ModuleFormation\Providers\DomaineFormationRepositoryProvider::class,
+        ModuleFormation\Providers\EmployeurRepositoryProvider::class,
+        ModuleFormation\Providers\FinanceurRepositoryProvider::class,
+        ModuleFormation\Providers\FinanceurTypeRepositoryProvider::class,
+        ModuleFormation\Providers\FormateurRepositoryProvider::class,
+        ModuleFormation\Providers\FormateurTypeRepositoryProvider::class,
         ModuleFormation\Providers\InscriptionRepositoryProvider::class,
+        ModuleFormation\Providers\LieuRepositoryProvider::class,
+        ModuleFormation\Providers\ModuleRepositoryProvider::class,
+        ModuleFormation\Providers\SessionRepositoryProvider::class,
+        ModuleFormation\Providers\SessionJourRepositoryProvider::class,
+        ModuleFormation\Providers\StagiaireRepositoryProvider::class,
+        ModuleFormation\Providers\StagiaireTypeRepositoryProvider::class,
+        ModuleFormation\Providers\TarifRepositoryProvider::class,
+        ModuleFormation\Providers\TarifTypeRepositoryProvider::class,
 
 
         /*

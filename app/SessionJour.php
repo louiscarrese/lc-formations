@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 class SessionJour extends Model
 {
+    protected $with = ['lieu', 'formateurs'];
+
     public function session() {
         return $this->belongsTo('ModuleFormation\Session');
     }

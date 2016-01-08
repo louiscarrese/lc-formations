@@ -7,6 +7,7 @@ use Carbon\Carbon;
 
 class Stagiaire extends Model
 {
+    protected $with = ['stagiaire_type', 'employeur'];
 
     function employeur() {
         return $this->belongsTo('ModuleFormation\Employeur');
@@ -21,7 +22,11 @@ class Stagiaire extends Model
     }
 
     public function setDemandeurEmploiDepuisAttribute($dateIn) {
-        $this->attributes['demandeur_emploi_depuis'] = Carbon::createFromFormat('d/m/Y', $dateIn);
+        if($dateIn != null) {
+            $this->attributes['demandeur_emploi_depuis'] = Carbon::createFromFormat('d/m/Y', $dateIn);
+        } else {
+            $this->attributes['demandeur_emploi_depuis'] = null;
+        }
     }
 
 }

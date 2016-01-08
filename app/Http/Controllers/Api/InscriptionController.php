@@ -2,78 +2,16 @@
 
 namespace ModuleFormation\Http\Controllers\Api;
 
-use Log;
-use DB;
-use Illuminate\Http\Request;
-use ModuleFormation\Http\Requests;
-use ModuleFormation\Http\Controllers\Controller;
 use ModuleFormation\Repositories\InscriptionRepositoryInterface;
 
-class InscriptionController extends Controller
+class InscriptionController extends AbstractController
 {
-    public function __construct(InscriptionRepositoryInterface $inscription)
+    public function __construct(InscriptionRepositoryInterface $repository)
     {
-        $this->inscriptionRepository = $inscription;
+        $this->repository = $repository;
     }
 
-    public function index(Request $request) 
-    {
-        $inscriptions = $this->inscriptionRepository->getAll();
-        return response()->json($inscriptions);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $inscription = $this->inscriptionRepository->store($this->extractData($request));
-
-        return response()->json($inscription);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($inscriptionId)
-    {
-        $inscription = $this->inscriptionRepository->find($inscriptionId);
-
-        return response()->json($inscription);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $inscriptionId)
-    {
-        $inscription = $this->inscriptionRepository->store($this->extractData($request), $inscriptionId);
-
-        return response()->json($inscription);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $this->inscriptionRepository->destroy($id);
-    }
-
-    private function extractData($request) 
+    protected function extractData($request) 
     {
         //TODO: input validation
         $ret['id'] = $request->input('id');

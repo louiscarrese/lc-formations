@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Financeur extends Model
 {
 
+    protected $with = ['financeur_type'];
+
     function financeur_type() {
         return $this->belongsTo('ModuleFormation\FinanceurType');
     }

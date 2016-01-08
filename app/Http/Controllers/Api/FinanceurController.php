@@ -2,108 +2,30 @@
 
 namespace ModuleFormation\Http\Controllers\Api;
 
-use Log;
-use DB;
-use Illuminate\Http\Request;
-use ModuleFormation\Http\Requests;
-use ModuleFormation\Http\Controllers\Controller;
+use ModuleFormation\Repositories\FinanceurRepositoryInterface;
 
-class FinanceurController extends Controller
+class FinanceurController extends AbstractController
 {
-
-
-    public function index(Request $request) 
+    public function __construct(FinanceurRepositoryInterface $repository)
     {
-        //Initialize the request
-        $financeurs_req = \ModuleFormation\Financeur::with('financeur_type');
-
-        //Add parameters if any
-
-        //Execute request
-        $financeurs = $financeurs_req->get();
-
-
-        return response()->json($financeurs);
+        $this->repository = $repository;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    protected function extractData($request) 
     {
-        $financeur = new \ModuleFormation\Financeur;
-        $financeur->libelle = $request->input('libelle');
-        $financeur->structure = $request->input('structure');
-        $financeur->nom = $request->input('nom');
-        $financeur->prenom = $request->input('prenom');
-        $financeur->adresse = $request->input('adresse');
-        $financeur->code_postal = $request->input('code_postal');
-        $financeur->ville = $request->input('ville');
-        $financeur->tel = $request->input('tel');
-        $financeur->email = $request->input('email');
-        $financeur->financeur_type_id = $request->input('financeur_type_id');
+        //TODO: input validation
+        $ret['id'] = $request->input('id');
+        $ret['libelle'] = $request->input('libelle');
+        $ret['structure'] = $request->input('structure');
+        $ret['nom'] = $request->input('nom');
+        $ret['prenom'] = $request->input('prenom');
+        $ret['adresse'] = $request->input('adresse');
+        $ret['code_postal'] = $request->input('code_postal');
+        $ret['ville'] = $request->input('ville');
+        $ret['tel'] = $request->input('tel');
+        $ret['email'] = $request->input('email');
+        $ret['financeur_type_id'] = $request->input('financeur_type_id');
 
-        $financeur->save();
-
-        //Regrab it with its module
-        $financeur = \ModuleFormation\Financeur::with('financeur_type')->findOrFail($financeur->id);
-        return response()->json($financeur);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($financeurId)
-    {
-        $financeur = \ModuleFormation\Financeur::with('financeur_type')->findOrFail($financeurId);
-        return response()->json($financeur);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $financeurId)
-    {
-        $financeur = \ModuleFormation\Financeur::findOrFail($financeurId);
-
-        $financeur->id = $request->input('id');
-        $financeur->libelle = $request->input('libelle');
-        $financeur->structure = $request->input('structure');
-        $financeur->nom = $request->input('nom');
-        $financeur->prenom = $request->input('prenom');
-        $financeur->adresse = $request->input('adresse');
-        $financeur->code_postal = $request->input('code_postal');
-        $financeur->ville = $request->input('ville');
-        $financeur->tel = $request->input('tel');
-        $financeur->email = $request->input('email');
-        $financeur->financeur_type_id = $request->input('financeur_type_id');
-
-        $financeur->save();
-
-        //Regrab it with its module
-        $financeur = \ModuleFormation\Financeur::with('financeur_type')->findOrFail($financeurId);
-        return response()->json($financeur);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        \ModuleFormation\Financeur::destroy($id);
-
+        return $ret;
     }
 }

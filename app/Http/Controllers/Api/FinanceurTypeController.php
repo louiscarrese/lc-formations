@@ -2,83 +2,21 @@
 
 namespace ModuleFormation\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use ModuleFormation\Http\Requests;
-use ModuleFormation\Http\Controllers\Controller;
-use ModuleFormation\FinanceurType;
-class FinanceurTypeController extends Controller
+use ModuleFormation\Repositories\FinanceurTypeRepositoryInterface;
+
+class FinanceurTypeController extends AbstractController
 {
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function __construct(FinanceurTypeRepositoryInterface $repository)
     {
-        if($request->acceptsJson()) {
-            $financeur_types = FinanceurType::all();
-            return response()->json($financeur_types);
-        } else {
-            return 'Hello !';
-        }
+        $this->repository = $repository;
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    protected function extractData($request) 
     {
-        $financeur_type = new FinanceurType;
-        $financeur_type->libelle = $request->input('libelle');
-        $financeur_type->save();
+        //TODO: input validation
+        $ret['id'] = $request->input('id');
+        $ret['libelle'] = $request->input('libelle');
 
-        return response()->json($financeur_type);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $financeur_type = FinanceurType::findOrFail($id);
-        return response()->json($financeur_type);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $financeur_type = FinanceurType::findOrFail($id);
-
-        $financeur_type->id = $request->input('id');
-        $financeur_type->libelle = $request->input('libelle');
-
-        $financeur_type->save();
-
-        return response()->json($financeur_type);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        FinanceurType::destroy($id);
+        return $ret;
     }
 }
