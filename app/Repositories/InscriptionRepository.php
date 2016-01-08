@@ -5,12 +5,12 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
 {
     protected $modelClassName = 'ModuleFormation\\Inscription';
 
-    private $sessionService;
+    private $sessionRepository;
     
-    public function __construct($app, \ModuleFormation\Services\SessionServiceInterface $sessionService) 
+    public function __construct($app, \ModuleFormation\Services\SessionRepositoryInterface $sessionRepository) 
     {
         parent::__construct($app);
-        $this->sessionService = $sessionService;
+        $this->sessionRepository = $sessionRepository;
     }
 
     protected function toModel($data, $seed = null) 
@@ -32,9 +32,7 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
 
     protected function augmentData($data) 
     {
-        $minMaxDate = $this->sessionService->getMinMaxDates($data->id);
-
-        $data->session->libelle = '(' . $minMaxDate['first'] . ' - ' . $minMaxDate['last'] . ')';
+        $data->session = $this->sessionRepository->augmentData($data->session);
 
         return $data;
     }

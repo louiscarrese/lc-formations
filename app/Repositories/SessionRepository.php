@@ -5,6 +5,13 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
 {
     protected $modelClassName = 'ModuleFormation\\Session';
 
+    private $sessionService;
+
+    public function __construct($app, \ModuleFormation\Services\SessionServiceInterface $sessionService) 
+    {
+        parent::__construct($app);
+        $this->sessionService = $sessionService;
+    }
 
     protected function toModel($data, $seed = null) 
     {
@@ -19,5 +26,13 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
         $session->module_id = $data['module_id'];
 
         return $session;
+    }
+
+    protected function augmentData($data) {
+        $minMaxDate = $this->sessionService->getMinMaxDates($data->id);
+
+        $data->libelle = '(' . $minMaxDate['first'] . ' - ' . $minMaxDate['last'] . ')';
+
+        return $data;
     }
 }
