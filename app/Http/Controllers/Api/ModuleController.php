@@ -23,6 +23,7 @@ class ModuleController extends AbstractController
         $ret['objectifs_pedagogiques'] = $request->input('objectifs_pedagogiques');
         $ret['materiel'] = $request->input('materiel');
         $ret['domaine_formation_id'] = $request->input('domaine_formation_id');
+        $ret['formateurs_id'] = $request->input('formateurs_id');
         return $ret;
     }
 }
