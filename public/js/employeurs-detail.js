@@ -33558,7 +33558,7 @@ function employeurDetailServiceFactory(sharedDataService) {
 
             //Build the return structure
             return {
-                'titleText': data.libelle != undefined ? data.libelle : "Création d'un employeur"
+                'titleText': data.id != undefined ? data.raison_sociale : "Création d'un employeur"
             }
 
         },

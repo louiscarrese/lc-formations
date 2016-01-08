@@ -33579,9 +33579,15 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
 
             sharedDataService.data.inscription_id = data.id;
 
+            var titleText = "Création d'une inscription";
+            if(data.id != undefined) {
+                titleText = 'Inscription de ' + data.stagiaire.prenom + ' ' + data.stagiaire.nom;
+                titleText += ' à la formation ' + data.session.module.libelle;
+            }
+
             //Build the return structure
             return {
-                'titleText': data.libelle != undefined ? data.libelle : "Création d'un inscription"
+                'titleText': titleText
             }
 
         },

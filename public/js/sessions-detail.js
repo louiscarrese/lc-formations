@@ -42287,7 +42287,7 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
 
             //Build the return structure
             return {
-                'titleText': data.libelle != undefined ? data.libelle : "Création d'une session"
+                'titleText': data.id != undefined ? data.module.libelle + ' ' + data.libelle : "Création d'une session"
             }
 
         },

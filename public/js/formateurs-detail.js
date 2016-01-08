@@ -33570,7 +33570,7 @@ function formateurDetailServiceFactory(sharedDataService, formateurTypesService)
 
             //Build the return structure
             return {
-                'titleText': data.libelle != undefined ? data.libelle : "Création d'un formateur"
+                'titleText': data.id != undefined ? data.prenom + ' ' + data.nom : "Création d'un formateur"
             }
 
         },

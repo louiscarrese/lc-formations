@@ -18,7 +18,7 @@ function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService,
 
             //Build the return structure
             return {
-                'titleText': data.libelle != undefined ? data.libelle : "Création d'un stagiaire"
+                'titleText': data.id != undefined ? data.prenom + ' ' + data.nom : "Création d'un stagiaire"
             }
 
         },

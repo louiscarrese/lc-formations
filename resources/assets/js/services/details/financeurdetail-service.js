@@ -16,7 +16,7 @@ function financeurDetailServiceFactory(sharedDataService, financeurTypesService)
 
             //Build the return structure
             return {
-                'titleText': data.libelle != undefined ? data.libelle : "Création d'un financeur"
+                'titleText': data.id != undefined ? data.libelle : "Création d'un financeur"
             }
 
         },
