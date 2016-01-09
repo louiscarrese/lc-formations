@@ -40107,7 +40107,7 @@ function myEditableDirectiveInteger() {
 
     return directive;
 }
-function myEditableDirectiveDate($filter) {
+function myEditableDirectiveDate()) {
 
     var directive = {
         restrict: 'E',
@@ -40157,7 +40157,7 @@ function myEditableDirectiveDate($filter) {
     return directive;
 }
 
-function myEditableDirectiveTime($filter) {
+function myEditableDirectiveTime() {
     var directive = {
         restrict: 'E',
         
@@ -40185,23 +40185,6 @@ function myEditableDirectiveTime($filter) {
         },
         link: function(scope, element, attrs, ctrls) {
             scope.form = ctrls[0];
-/*
-            scope.localModel = new Date();
-
-            var unbind = scope.$watch('ngModel', function(newValue, oldValue) {
-                if(newValue != oldValue) {
-                    scope.localModel = stringtoUTCTime(newValue);
-                    unbind();
-                }
-            });
-
-            scope.$watch('localModel', function(newValue, oldValue) {
-                if(newValue != oldValue) {
-                    ctrls[1].$setViewValue($filter('date')(newValue, 'HH:mm:ss'));
-                }
-            });
-*/
-
         }
     };
 
@@ -41051,7 +41034,7 @@ angular.module('sessionsDetailFilters', [])
 angular.module('sessionsDetailDirectives', [])
     .directive('myEditableText', myEditableDirectiveText)
     .directive('myEditableInteger', myEditableDirectiveInteger)
-    .directive('myEditableDate', ['$filter', myEditableDirectiveDate])
+    .directive('myEditableDate', myEditableDirectiveDate)
     .directive('myEditableTextarea', myEditableDirectiveTextarea)
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)

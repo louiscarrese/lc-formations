@@ -40283,7 +40283,7 @@ function myEditableDirectiveRadio() {
     return directive;
 }
 
-function myEditableDirectiveDate($filter) {
+function myEditableDirectiveDate()) {
 
     var directive = {
         restrict: 'E',
