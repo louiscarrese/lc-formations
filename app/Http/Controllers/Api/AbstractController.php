@@ -11,9 +11,7 @@ abstract class AbstractController extends Controller
     protected $repository;
 
     //The list of possible filters
-    protected $filters = array();
-
-    protected abstract function extractData($request);
+    protected $filters = [];
 
     public function index(Request $request) 
     {
@@ -51,7 +49,7 @@ abstract class AbstractController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->repository->store($this->extractData($request));
+        $data = $this->repository->store($request->all());
 
         return response()->json($data);
     }
@@ -78,7 +76,7 @@ abstract class AbstractController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $this->repository->store($this->extractData($request), $id);
+        $data = $this->repository->store($request->all(), $id);
 
         return response()->json($data);
     }

@@ -7,6 +7,9 @@ class Formateur extends AbstractModel
 
     protected $with = ['formateur_type'];
 
+    protected $fillable = ['id', 'nom', 'prenom', 'sexe', 'date_naissance', 'adresse', 
+        'code_postal', 'ville', 'tel_portable', 'tel_fixe', 'email', 'formateur_type_id'];
+
     protected static $myDates = ['date_naissance'];
 
     public function session_jours() {

@@ -6,6 +6,8 @@ class SessionJour extends AbstractModel
 {
     protected $with = ['lieu', 'formateurs'];
 
+    protected $fillable = ['id', 'date', 'heure_debut', 'heure_fin', 'lieu_id', 'session_id'];
+
     protected static $myDates = ['date'];
 
     public function session() {

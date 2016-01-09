@@ -10,13 +10,4 @@ class FinanceurTypeController extends AbstractController
     {
         $this->repository = $repository;
     }
-
-    protected function extractData($request) 
-    {
-        //TODO: input validation
-        $ret['id'] = $request->input('id');
-        $ret['libelle'] = $request->input('libelle');
-
-        return $ret;
-    }
 }

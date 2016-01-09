@@ -5,15 +5,4 @@ class LieuRepository extends AbstractRepository implements LieuRepositoryInterfa
 {
     protected $modelClassName = 'ModuleFormation\\Lieu';
 
-
-    protected function toModel($data, $seed = null) 
-    {
-        $lieu = ($seed == null ? new \ModuleFormation\Lieu : $seed);
-
-        if(isset($data['id']))
-            $lieu->id = $data['id'];
-        $lieu->libelle = $data['libelle'];
-
-        return $lieu;
-    }
 }

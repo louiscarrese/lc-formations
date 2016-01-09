@@ -7,11 +7,7 @@ abstract class AbstractRepository implements RepositoryInterface {
 
     protected $model;
 
-    /**
-     * This method should map an array of data to a model object.
-     * $seed may contain an initial object already filled (to be updated).
-     */
-    protected abstract function toModel($data, $seed = null);
+    protected $relations = [];
 
     /**
      * This method will be called on each object returned and should be 
@@ -75,21 +71,38 @@ abstract class AbstractRepository implements RepositoryInterface {
      */
     public function store($data, $id = null) {
 
-        //If it's an update, get the existing object
-        $existing = null;
+        //If it's an update, refill the existing object
+        $object = null;
         if($id != null) {
-            $existing = $this->model->findOrFail($id);
-        } 
+            $object = $this->model->findOrFail($id);
+            $object->fill($data)->save();
+        } else {
+            //If it's a create, mass assign
+            $object = $this->model->create($data);
+        }
 
-        //Build the object
-        $object = $this->toModel($data, $existing);
-
-        //store the object
-        $object->save();
+        //Build associations
+        $this->reattachRelations($object, $data);
 
         //Refetch the object (so it updates associated data)
         $data = $this->find($object->id);
         return $data;
+    }
+
+    private function reattachRelations($object, $data) {
+        foreach($this->relations as $relation) {
+            $relationMethod = $relation['relation_method'];
+            $repository = $relation['repository'];
+            $dataId = $relation['data_id'];
+
+            $object->$relationMethod()->detach();
+            if(isset($data[$dataId]) && count($data[$dataId]) > 0) {
+                foreach($data[$dataId] as $id) {
+                    $relationObject = $repository->find($id);
+                    $object->$relationMethod()->save($relationObject);
+                }
+            }
+        }
     }
 
     /**

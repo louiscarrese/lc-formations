@@ -5,15 +5,4 @@ class FormateurTypeRepository extends AbstractRepository implements FormateurTyp
 {
     protected $modelClassName = 'ModuleFormation\\FormateurType';
 
-
-    protected function toModel($data, $seed = null) 
-    {
-        $formateurType = ($seed == null ? new \ModuleFormation\FormateurType : $seed);
-
-        if(isset($data['id']))
-            $formateurType->id = $data['id'];
-        $formateurType->libelle = $data['libelle'];
-
-        return $formateurType;
-    }
 }

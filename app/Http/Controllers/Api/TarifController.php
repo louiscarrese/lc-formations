@@ -12,14 +12,4 @@ class TarifController extends AbstractController
     {
         $this->repository = $repository;
     }
-
-    protected function extractData($request) 
-    {
-        //TODO: input validation
-        $ret['module_id'] = $request->input('module_id');
-        $ret['tarif_type_id'] = $request->input('tarif_type_id');
-        $ret['montant'] = $request->input('montant');
-        
-        return $ret;
-    }
 }
