@@ -2,9 +2,7 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-
-class TarifType extends Model
+class TarifType extends AbstractModel
 {
 
     public function tarifs() {

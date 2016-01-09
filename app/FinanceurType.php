@@ -2,9 +2,7 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-
-class FinanceurType extends Model
+class FinanceurType extends AbstractModel
 {
     //
     function financeurs() {

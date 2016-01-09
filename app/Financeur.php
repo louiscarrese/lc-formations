@@ -2,9 +2,7 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Financeur extends Model
+class Financeur extends AbstractModel
 {
 
     protected $with = ['financeur_type'];

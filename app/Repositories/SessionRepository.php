@@ -31,8 +31,11 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
     protected function augmentData($data) {
         $minMaxDate = $this->sessionService->getMinMaxDates($data->id);
 
-        $data->libelle = '(' . $minMaxDate['first'] . ' - ' . $minMaxDate['last'] . ')';
-
+        if($minMaxDate != null) {
+            $data->libelle = '(' . $minMaxDate['first'] . ' - ' . $minMaxDate['last'] . ')';
+        } else {
+            $data->libelle = '';
+        }
         return $data;
     }
 }

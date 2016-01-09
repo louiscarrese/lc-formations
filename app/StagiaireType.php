@@ -2,9 +2,7 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-
-class StagiaireType extends Model
+class StagiaireType extends AbstractModel
 {
     public function stagiaires() {
         return $this->hasMany('ModuleFormation\Stagiaire');

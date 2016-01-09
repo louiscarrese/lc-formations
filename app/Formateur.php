@@ -2,12 +2,12 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Formateur extends Model
+class Formateur extends AbstractModel
 {
 
     protected $with = ['formateur_type'];
+
+    protected static $myDates = ['date_naissance'];
 
     public function session_jours() {
         return $this->belongsToMany('ModuleFormation\SessionJour')->withTimestamps();

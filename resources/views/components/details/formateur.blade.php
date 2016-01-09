@@ -30,7 +30,8 @@
             ],
             'date_naissance' => [
                 'label' => 'Date de naissance',
-                'type' => 'text',
+                'type' => 'date',
+                'format' => 'dd/MM/yyyy',
                 'sizeLabel' => 2,
                 'sizeValue' => 2,
             ],

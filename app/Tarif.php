@@ -2,9 +2,7 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Tarif extends Model
+class Tarif extends AbstractModel
 {
     protected $with = ['tarif_type'];
 

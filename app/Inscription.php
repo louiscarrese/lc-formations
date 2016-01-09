@@ -2,9 +2,7 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Inscription extends Model
+class Inscription extends AbstractModel
 {
     protected $with = ['stagiaire', 'session.module'];
 

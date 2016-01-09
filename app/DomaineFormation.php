@@ -2,9 +2,7 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-
-class DomaineFormation extends Model
+class DomaineFormation extends AbstractModel
 {
 
     public function modules() {

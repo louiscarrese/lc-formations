@@ -2,9 +2,7 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Module extends Model
+class Module extends AbstractModel
 {
 
     protected $with = ['domaine_formation', 'formateurs'];
