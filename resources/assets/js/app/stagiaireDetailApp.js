@@ -26,6 +26,7 @@ angular.module('stagiairesDetailDirectives', [])
     .directive('myEditableDate', myEditableDirectiveDate)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
 ;
 
 //Le module principal

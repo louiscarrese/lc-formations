@@ -2,12 +2,13 @@
 
 namespace ModuleFormation;
 
-use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
+use ModuleFormation\AbstractModel;
 
-class Stagiaire extends Model
+class Stagiaire extends AbstractModel
 {
     protected $with = ['stagiaire_type', 'employeur'];
+
+    protected static $myDates = ['demandeur_emploi_depuis', 'date_naissance'];
 
     function employeur() {
         return $this->belongsTo('ModuleFormation\Employeur');
@@ -20,13 +21,4 @@ class Stagiaire extends Model
     function inscriptions() {
         return $this->hasMany('ModuleFormation\Inscription');
     }
-
-    public function setDemandeurEmploiDepuisAttribute($dateIn) {
-        if($dateIn != null) {
-            $this->attributes['demandeur_emploi_depuis'] = Carbon::createFromFormat('d/m/Y', $dateIn);
-        } else {
-            $this->attributes['demandeur_emploi_depuis'] = null;
-        }
-    }
-
 }

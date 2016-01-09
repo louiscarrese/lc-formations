@@ -41645,6 +41645,47 @@ function mySortableHeaderDirective() {
         }
     };
 }
+//From this bugreport : https://github.com/angular-ui/bootstrap/issues/2072
+//Got this Gist : https://gist.github.com/weberste/354a3f0a9ea58e0ea0de
+function datepickerLocaldate() {
+    
+        var directive = {
+            restrict: 'A',
+            require: ['ngModel'],
+            link: link
+        };
+        return directive;
+
+        function link(scope, element, attr, ctrls) {
+            var ngModelController = ctrls[0];
+
+            // called with a JavaScript Date object when picked from the datepicker
+            ngModelController.$parsers.push(function (viewValue) {
+                // undo the timezone adjustment we did during the formatting
+                viewValue.setMinutes(viewValue.getMinutes() - viewValue.getTimezoneOffset());
+                // we just want a local date in ISO format
+                return viewValue;
+            });
+
+            // called with a 'yyyy-mm-dd' string to format
+            ngModelController.$formatters.push(function (modelValue) {
+                if (!modelValue) {
+                    return undefined;
+                }
+                // date constructor will apply timezone deviations from UTC (i.e. if locale is behind UTC 'dt' will be one day behind)
+                var dt = new Date(modelValue);
+                // 'undo' the timezone offset again (so we end up on the original date again)
+                dt.setMinutes(dt.getMinutes() + dt.getTimezoneOffset());
+                return dt;
+            });
+        }
+
+
+}
+
+
+
+
 function myEditableDirectiveCommons() {
     return {
 
@@ -41951,10 +41992,10 @@ function myEditableDirectiveDate($filter) {
             var template = '';
             template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
             template += '<p class="input-group" ng-show="editingFlag" ' + htmlAttrs + '>';
-            template += '<input type="text" class="form-control" ng-model="localModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
+            template += '<input type="text" class="form-control" ng-model="ngModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
             template += 'is-open="status.opened" ';
             template += 'show-button-bar="false" '; 
-            template += '/>';
+            template += 'datepicker-localdate></input>';
             template += ' <span class="input-group-btn">';
             template += '  <button type="button" class="btn btn-default" ng-click="open($event)" >';
             template += '  <i class="glyphicon glyphicon-calendar"></i></button>';
@@ -41972,17 +42013,6 @@ function myEditableDirectiveDate($filter) {
             scope.open = function($event) {
                 scope.status.opened = true;
             };
-
-            var unbind = scope.$watch('ngModel', function(newValue, oldValue) {
-                if(newValue != undefined) {
-                    scope.localModel = new Date(newValue);
-                    unbind();
-                }
-            });
-
-            scope.$watch('localModel', function(newValue, oldValue) {
-                    ctrls[1].$setViewValue($filter('date')(newValue, attrs['dateFormat']));
-            });
         }
     };
 
@@ -42339,6 +42369,7 @@ angular.module('stagiairesDetailDirectives', [])
     .directive('myEditableDate', myEditableDirectiveDate)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
 ;
 
 //Le module principal

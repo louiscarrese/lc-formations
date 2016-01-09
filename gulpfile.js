@@ -263,6 +263,7 @@ elixir(function(mix) {
             'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
             'directives/myForceInteger-directive.js',
             'directives/mySortableHeader-directive.js',
+            'directives/datepickerlocaldate-directive.js',
             'directives/my-editable/myEditable-commons.js',
             'directives/my-editable/myEditableText-directive.js',
             'directives/my-editable/myEditableInteger-directive.js',
