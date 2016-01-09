@@ -9,6 +9,7 @@ class SessionJour extends AbstractModel
     protected $fillable = ['id', 'date', 'heure_debut', 'heure_fin', 'lieu_id', 'session_id'];
 
     protected static $myDates = ['date'];
+    protected static $myTimes = ['heure_debut', 'heure_fin'];
 
     public function session() {
         return $this->belongsTo('ModuleFormation\Session');

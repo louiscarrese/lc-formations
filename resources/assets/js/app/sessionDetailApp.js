@@ -29,8 +29,10 @@ angular.module('sessionsDetailDirectives', [])
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
     .directive('myEditableRadio', myEditableDirectiveRadio)
     .directive('myEditableMultiselect', myEditableDirectiveMultiselect)
+    .directive('myEditableTime', ['$filter', myEditableDirectiveTime])
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
 ;
 
 //Le module principal

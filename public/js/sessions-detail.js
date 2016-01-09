@@ -39886,15 +39886,15 @@ angular.module("uib/template/timepicker/timepicker.html", []).run(["$templateCac
     "    </tr>\n" +
     "    <tr>\n" +
     "      <td class=\"form-group uib-time hours\" ng-class=\"{'has-error': invalidHours}\">\n" +
-    "        <input style=\"width:50px;\" type=\"text\" placeholder=\"HH\" ng-model=\"hours\" ng-change=\"updateHours()\" class=\"form-control text-center\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"disabled\" ng-blur=\"blur()\">\n" +
+    "        <input style=\"width:50px;\" type=\"text\" placeholder=\"HH\" ng-model=\"hours\" ng-change=\"updateHours()\" class=\"form-control text-center input-sm\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"disabled\" ng-blur=\"blur()\">\n" +
     "      </td>\n" +
     "      <td class=\"uib-separator\">:</td>\n" +
     "      <td class=\"form-group uib-time minutes\" ng-class=\"{'has-error': invalidMinutes}\">\n" +
-    "        <input style=\"width:50px;\" type=\"text\" placeholder=\"MM\" ng-model=\"minutes\" ng-change=\"updateMinutes()\" class=\"form-control text-center\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"disabled\" ng-blur=\"blur()\">\n" +
+    "        <input style=\"width:50px;\" type=\"text\" placeholder=\"MM\" ng-model=\"minutes\" ng-change=\"updateMinutes()\" class=\"form-control text-center input-sm\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"disabled\" ng-blur=\"blur()\">\n" +
     "      </td>\n" +
     "      <td ng-show=\"showSeconds\" class=\"uib-separator\">:</td>\n" +
     "      <td class=\"form-group uib-time seconds\" ng-class=\"{'has-error': invalidSeconds}\" ng-show=\"showSeconds\">\n" +
-    "        <input style=\"width:50px;\" type=\"text\" ng-model=\"seconds\" ng-change=\"updateSeconds()\" class=\"form-control text-center\" ng-readonly=\"readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"disabled\" ng-blur=\"blur()\">\n" +
+    "        <input style=\"width:50px;\" type=\"text\" ng-model=\"seconds\" ng-change=\"updateSeconds()\" class=\"form-control text-center input-sm\" ng-readonly=\"readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"disabled\" ng-blur=\"blur()\">\n" +
     "      </td>\n" +
     "      <td ng-show=\"showMeridian\" class=\"uib-time am-pm\"><button type=\"button\" ng-class=\"{disabled: noToggleMeridian()}\" class=\"btn btn-default text-center\" ng-click=\"toggleMeridian()\" ng-disabled=\"noToggleMeridian()\" tabindex=\"{{::tabindex}}\">{{meridian}}</button></td>\n" +
     "    </tr>\n" +
@@ -39927,6 +39927,47 @@ angular.module("uib/template/typeahead/typeahead-popup.html", []).run(["$templat
     "");
 }]);
 angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style>'); })
+//From this bugreport : https://github.com/angular-ui/bootstrap/issues/2072
+//Got this Gist : https://gist.github.com/weberste/354a3f0a9ea58e0ea0de
+function datepickerLocaldate() {
+    
+        var directive = {
+            restrict: 'A',
+            require: ['ngModel'],
+            link: link
+        };
+        return directive;
+
+        function link(scope, element, attr, ctrls) {
+            var ngModelController = ctrls[0];
+
+            // called with a JavaScript Date object when picked from the datepicker
+            ngModelController.$parsers.push(function (viewValue) {
+                // undo the timezone adjustment we did during the formatting
+                viewValue.setMinutes(viewValue.getMinutes() - viewValue.getTimezoneOffset());
+                // we just want a local date in ISO format
+                return viewValue;
+            });
+
+            // called with a 'yyyy-mm-dd' string to format
+            ngModelController.$formatters.push(function (modelValue) {
+                if (!modelValue) {
+                    return undefined;
+                }
+                // date constructor will apply timezone deviations from UTC (i.e. if locale is behind UTC 'dt' will be one day behind)
+                var dt = new Date(modelValue);
+                // 'undo' the timezone offset again (so we end up on the original date again)
+                dt.setMinutes(dt.getMinutes() + dt.getTimezoneOffset());
+                return dt;
+            });
+        }
+
+
+}
+
+
+
+
 function myForceIntegerDirective(){
     return {
         require: 'ngModel',
@@ -41016,8 +41057,10 @@ angular.module('sessionsDetailDirectives', [])
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
     .directive('myEditableRadio', myEditableDirectiveRadio)
     .directive('myEditableMultiselect', myEditableDirectiveMultiselect)
+    .directive('myEditableTime', ['$filter', myEditableDirectiveTime])
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
 ;
 
 //Le module principal

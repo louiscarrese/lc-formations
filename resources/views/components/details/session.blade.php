@@ -78,7 +78,8 @@
                     'sortable' => true,
                     'filterable' => true,
                     'editable' => true,
-                    'type' => 'text', //TODO : time
+                    'type' => 'time',
+                    'format' => 'HH:mm',
                     'addLine' => true,
                     'validation' => 'required',
                     'size' => 1,
@@ -88,7 +89,8 @@
                     'sortable' => true,
                     'filterable' => true,
                     'editable' => true,
-                    'type' => 'text', //TODO : time
+                    'type' => 'time',
+                    'format' => 'HH:mm',
                     'addLine' => true,
                     'validation' => 'required',
                     'size' => 1,
