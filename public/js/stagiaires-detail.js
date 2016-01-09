@@ -41990,7 +41990,7 @@ function myEditableDirectiveDate($filter) {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
+            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['dateFormat'] + '\'}}</p>';
             template += '<p class="input-group" ng-show="editingFlag" ' + htmlAttrs + '>';
             template += '<input type="text" class="form-control" ng-model="ngModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
             template += 'is-open="status.opened" ';
@@ -42020,6 +42020,7 @@ function myEditableDirectiveDate($filter) {
 
     return directive;
 }
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
