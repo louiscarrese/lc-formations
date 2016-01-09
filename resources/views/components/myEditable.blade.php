@@ -5,7 +5,7 @@
 @elseif($field['type'] == 'date')
     <my-editable-date ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" date-format={{$field['format']}} {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable-date>
 @elseif($field['type'] == 'time')
-    <my-editable-time ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable-time>
+    <my-editable-time ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" {{$field['additionalAttributes'] or ''}} time-format={{$field['format']}} {{$field['validation'] or ''}}></my-editable-time>
 @elseif($field['type'] == 'radio')
     <my-editable-radio ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" values="{{$field['values']}}" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable-radio>
 @elseif($field['type'] == 'checkbox')

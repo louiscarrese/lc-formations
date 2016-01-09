@@ -18,12 +18,14 @@
             'heure_debut' => [
                 'label' => 'Heure de début',
                 'type' => 'time',
+                'format' => 'HH:mm',
                 'sizeLabel' => 2,
                 'sizeValue' => 1,
             ],
             'heure_fin' => [
                 'label' => 'Heure de fin',
                 'type' => 'time',
+                'format' => 'HH:mm',
                 'sizeLabel' => 2,
                 'sizeValue' => 1,
             ],

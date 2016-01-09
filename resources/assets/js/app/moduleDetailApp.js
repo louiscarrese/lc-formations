@@ -34,6 +34,7 @@ angular.module('modulesDetailDirectives', [])
     .directive('myEditableMultiselect', myEditableDirectiveMultiselect)
     .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
 ;
 
 //Le module principal

@@ -117,6 +117,7 @@ elixir(function(mix) {
             'vendor/angular-messages/angular-messages.min.js', 
             'vendor/angular-select2/dist/angular-select2.js',
             'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
+            'directives/datepickerlocaldate-directive.js',
             'directives/myForceInteger-directive.js',
             'directives/mySortableHeader-directive.js',
             'directives/my-editable/myEditable-commons.js',
