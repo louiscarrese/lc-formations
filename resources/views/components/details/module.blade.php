@@ -43,6 +43,7 @@
                 'modelObject' => 'domaine_formation', //relative to an item in the controller data 
                 'change' => '',
                 'displayed' => '<libelle>',
+                'validation' => 'required',
                 'sizeLabel' => 2,
                 'sizeValue' => 2,
             ],
