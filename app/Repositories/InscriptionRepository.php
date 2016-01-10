@@ -7,7 +7,7 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
 
     private $sessionRepository;
     
-    public function __construct($app, \ModuleFormation\Services\SessionRepositoryInterface $sessionRepository) 
+    public function __construct($app, \ModuleFormation\Repositories\SessionRepositoryInterface $sessionRepository) 
     {
         parent::__construct($app);
         $this->sessionRepository = $sessionRepository;
