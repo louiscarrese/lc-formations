@@ -15,7 +15,7 @@
 @elseif($field['type'] == 'textarea')
     <my-editable-textarea ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable-textarea>
 @elseif($field['type'] == 'dropdown')
-    <my-editable-dropdown ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" datasource="{{$controllerName}}.{{$field['datasource']}}" source-id="{{$field['dataId']}}" model-object="{{$element}}.{{$field['modelObject']}}" change="{{$field['change'] or '' }}" displayed="{{$field['displayed']}}" placeholder="{{$field['label']}}" {{$field['additionalAttributes'] or ''}}></my-editable-dropdown>
+    <my-editable-dropdown ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" datasource="{{$controllerName}}.{{$field['datasource']}}" source-id="{{$field['dataId']}}" model-object="{{$element}}.{{$field['modelObject']}}" change="{{$field['change'] or '' }}" displayed="{{$field['displayed']}}" placeholder="{{$field['label']}}" {{ (isset($field['href'])) ? 'href=' . $field['href'] : '' }} {{$field['additionalAttributes'] or ''}}></my-editable-dropdown>
 @elseif($field['type'] == 'multiselect')
     <my-editable-multiselect ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" datasource="{{$controllerName}}.{{$field['datasource']}}" source-id="{{$field['dataId']}}" model-objects="{{$element}}.{{$field['modelObjects']}}" displayed="{{$field['displayed']}}" placeholder="{{$field['placeholder']}}" {{$field['additionalAttributes'] or ''}}></my-editable-multiselect>
 @endif

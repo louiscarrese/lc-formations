@@ -17,6 +17,7 @@
                 'modelObject' => 'module', //relative to an item in the controller data 
                 'change' => 'detailCtrl.onModuleChange',
                 'displayed' => '<libelle>',
+                'href' => '/modules/',
                 'sizeLabel' => 2,
                 'sizeValue' => 5,
             ],
