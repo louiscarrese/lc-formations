@@ -1,0 +1,11 @@
+angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
+;

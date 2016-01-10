@@ -11224,6 +11224,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -11463,32 +11467,22 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function financeursServiceFactory($resource) {
     return $resource('/api/financeur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
-angular.module('financeursListServices', ['ngResource'])
+angular.module('financeursList', ['ngResource', 'listTable'])
     .factory('financeursService', ['$resource', financeursServiceFactory])
-;
-
-angular.module('financeursListControllers', [])
     .controller('financeursListController', ['$filter', 'financeursService', editableTableController])
 ;
 
-angular.module('financeursListFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('financeursListDirectives', [])
-    .directive('mySortableHeader', mySortableHeaderDirective)
-
-    ;
-
-//Le module principal
-angular.module('financeursListApp', 
-    ['financeursListControllers', 'financeursListServices', 'financeursListFilters', 'financeursListDirectives', 'ngMessages']);
+angular.module('financeursListApp', ['financeursList']);
 
 //# sourceMappingURL=financeurs-list.js.map

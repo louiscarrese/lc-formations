@@ -11224,6 +11224,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -11463,32 +11467,22 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function stagiairesServiceFactory($resource) {
     return $resource('/api/stagiaire/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
-angular.module('stagiairesListServices', ['ngResource'])
+angular.module('stagiairesList', ['ngResource', 'listTable'])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
-;
-
-angular.module('stagiairesListControllers', [])
     .controller('stagiairesListController', ['$filter', 'stagiairesService', editableTableController])
 ;
 
-angular.module('stagiairesListFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('stagiairesListDirectives', [])
-    .directive('mySortableHeader', mySortableHeaderDirective)
-
-    ;
-
-//Le module principal
-angular.module('stagiairesListApp', 
-    ['stagiairesListControllers', 'stagiairesListServices', 'stagiairesListFilters', 'stagiairesListDirectives', 'ngMessages']);
+angular.module('stagiairesListApp', ['stagiairesList']);
 
 //# sourceMappingURL=stagiaires-list.js.map

@@ -1,0 +1,5 @@
+angular.module('financeurDetail', ['detail', 'ngResource'])
+    .factory('financeursService', ['$resource', financeursServiceFactory])
+    .factory('financeurTypesService', ['$resource', financeurTypesServiceFactory])
+    .factory('financeurDetailService', ['sharedDataService', 'financeurTypesService', financeurDetailServiceFactory])
+    .controller('detailController', ['editModeService', 'financeursService', 'financeurDetailService', detailController])

@@ -11224,6 +11224,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -11463,33 +11467,22 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function formateursServiceFactory($resource) {
     return $resource('/api/formateur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
-angular.module('formateursListServices', ['ngResource'])
+angular.module('formateursList', ['ngResource', 'listTable'])
     .factory('formateursService', ['$resource', formateursServiceFactory])
-;
-
-angular.module('formateursListControllers', [])
     .controller('formateursListController', ['$filter', 'formateursService', editableTableController])
 ;
 
-angular.module('formateursListFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('formateursListDirectives', [])
-    .directive('mySortableHeader', mySortableHeaderDirective)
-
-    ;
-
-//Le module principal
-angular.module('formateursListApp', 
-    ['formateursListControllers', 'formateursListServices', 'formateursListFilters', 'formateursListDirectives', 'ngMessages']);
-
+angular.module('formateursListApp', ['formateursList']);
 
 //# sourceMappingURL=formateurs-list.js.map

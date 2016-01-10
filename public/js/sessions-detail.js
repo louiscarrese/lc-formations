@@ -11712,6 +11712,18 @@ function myEditableDirectiveMultiselect() {
     return directive;
 }
 
+angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
+;
+
 function editModeServiceFactory() {
     return {
         initFromUrl: function(service, callback) {
@@ -11955,6 +11967,11 @@ function detailController(editModeService, dataService, detailService) {
         return ret;
     }
 }
+angular.module('detail', ['myEditable'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .factory('editModeService', editModeServiceFactory) 
+;
+
 function sessionsServiceFactory($resource) {
     return $resource('/api/session/:id', null, {
         'update' : { method: 'PUT' }
@@ -12023,6 +12040,14 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
         }
     }
 }
+angular.module('sessionDetail', ['detail'])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('modulesService', ['$resource', modulesServiceFactory])
+    .factory('formateursService', ['$resource', formateursServiceFactory])
+    .factory('sessionDetailService', ['sharedDataService', 'modulesService', sessionDetailServiceFactory])
+    .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', detailController])
+;
+
 function mySortableHeaderDirective() {
     return {
         restrict: 'E',
@@ -12042,6 +12067,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -12276,6 +12305,11 @@ function editableTableController($filter, dataService, tableService) {
     };
 } 
 
+angular.module('editableTable', ['myEditable', 'sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function sessionJoursServiceFactory($resource) {
     return $resource('/api/session_jour/:id', null, {
         'update' : { method: 'PUT' }
@@ -12335,47 +12369,14 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
 
     };
 }
-angular.module('sessionsDetailServices', ['ngResource'])
-    .factory('sessionsService', ['$resource', sessionsServiceFactory])
+angular.module('sessionJoursList', ['editableTable', 'ngResource'])
     .factory('sessionJoursService', ['$resource', sessionJoursServiceFactory])
-    .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
-    .factory('sessionDetailService', ['sharedDataService', 'modulesService', sessionDetailServiceFactory])
     .factory('lieuService', ['$resource', lieuServiceFactory])
-    .factory('editModeService', [editModeServiceFactory])
-    .factory('sharedDataService', [sharedDataServiceFactory])
     .factory('sessionJoursTableService', ['sharedDataService', 'lieuService', 'formateursService', sessionJoursTableServiceFactory])
+    .controller('sessionJoursController', ['$filter', 'sessionJoursService', 'sessionJoursTableService', editableTableController])
 ;
 
-angular.module('sessionsDetailControllers', [])
-        .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', detailController])
-        .controller('sessionJoursController', ['$filter', 'sessionJoursService', 'sessionJoursTableService', editableTableController])
-;
-
-angular.module('sessionsDetailFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('sessionsDetailDirectives', [])
-    .directive('myEditableText', myEditableDirectiveText)
-    .directive('myEditableInteger', myEditableDirectiveInteger)
-    .directive('myEditableDate', myEditableDirectiveDate)
-    .directive('myEditableTextarea', myEditableDirectiveTextarea)
-    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
-    .directive('myEditableDropdown', myEditableDirectiveDropdown)
-    .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('myEditableMultiselect', myEditableDirectiveMultiselect)
-    .directive('myEditableTime', ['$filter', myEditableDirectiveTime])
-    .directive('mySortableHeader', mySortableHeaderDirective)
-    .directive('myForceInteger', myForceIntegerDirective)
-    .directive('datepickerLocaldate', datepickerLocaldate)
-;
-
-//Le module principal
-angular.module('sessionsDetailApp', 
-    ['sessionsDetailControllers', 'sessionsDetailServices', 'sessionsDetailFilters', 'sessionsDetailDirectives', 'ngMessages', 'ui.bootstrap', 'rt.select2'])
-
-;
+angular.module('sessionsDetailApp', ['sessionDetail', 'sessionJoursList']);
 
 //# sourceMappingURL=sessions-detail.js.map

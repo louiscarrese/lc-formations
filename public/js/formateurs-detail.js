@@ -11712,6 +11712,18 @@ function myEditableDirectiveMultiselect() {
     return directive;
 }
 
+angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
+;
+
 function editModeServiceFactory() {
     return {
         initFromUrl: function(service, callback) {
@@ -11955,6 +11967,11 @@ function detailController(editModeService, dataService, detailService) {
         return ret;
     }
 }
+angular.module('detail', ['myEditable'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .factory('editModeService', editModeServiceFactory) 
+;
+
 function formateursServiceFactory($resource) {
     return $resource('/api/formateur/:id', null, {
         'update' : { method: 'PUT' }
@@ -11994,37 +12011,13 @@ function formateurDetailServiceFactory(sharedDataService, formateurTypesService)
         },
     }
 }
-angular.module('formateursDetailServices', ['ngResource'])
+angular.module('formateurDetail', ['detail', 'ngResource'])
     .factory('formateursService', ['$resource', formateursServiceFactory])
     .factory('formateurTypesService', ['$resource', formateurTypesServiceFactory])
-    .factory('sharedDataService', [sharedDataServiceFactory])
-    .factory('editModeService', [editModeServiceFactory])
     .factory('formateurDetailService', ['sharedDataService', 'formateurTypesService', formateurDetailServiceFactory])
+    .controller('detailController', ['editModeService', 'formateursService', 'formateurDetailService', detailController])
 ;
 
-angular.module('formateursDetailControllers', [])
-        .controller('detailController', ['editModeService', 'formateursService', 'formateurDetailService', detailController])
-;
-
-angular.module('formateursDetailFilters', [])
-;
-
-//Les directives
-angular.module('formateursDetailDirectives', [])
-    .directive('myEditableText', myEditableDirectiveText)
-    .directive('myEditableInteger', myEditableDirectiveInteger)
-    .directive('myEditableTextarea', myEditableDirectiveTextarea)
-    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
-    .directive('myEditableDropdown', myEditableDirectiveDropdown)
-    .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('myEditableDate', myEditableDirectiveDate)
-    .directive('myForceInteger', myForceIntegerDirective)
-    .directive('datepickerLocaldate', datepickerLocaldate)
-;
-
-//Le module principal
-angular.module('formateursDetailApp', 
-    ['formateursDetailControllers', 'formateursDetailServices', 'formateursDetailFilters', 'formateursDetailDirectives', 'ngMessages', 'rt.select2', 'ui.bootstrap'])
-;
+angular.module('formateursDetailApp', ['formateurDetail']);
 
 //# sourceMappingURL=formateurs-detail.js.map

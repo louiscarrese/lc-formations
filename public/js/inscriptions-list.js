@@ -11224,6 +11224,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -11463,6 +11467,11 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function inscriptionsServiceFactory($resource) {
     return $resource('/api/inscription/:id', null, {
         'update' : { method: 'PUT' }
@@ -11480,27 +11489,11 @@ function inscriptionsTableServiceFactory(sharedDataService) {
 
     };
 }
-angular.module('inscriptionsListServices', ['ngResource'])
+angular.module('inscriptionsList', ['ngResource', 'listTable'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
-;
-
-angular.module('inscriptionsListControllers', [])
     .controller('inscriptionsListController', ['$filter', 'inscriptionsService', editableTableController])
 ;
 
-angular.module('inscriptionsListFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('inscriptionsListDirectives', [])
-    .directive('mySortableHeader', mySortableHeaderDirective)
-
-    ;
-
-//Le module principal
-angular.module('inscriptionsListApp', 
-    ['inscriptionsListControllers', 'inscriptionsListServices', 'inscriptionsListFilters', 'inscriptionsListDirectives', 'ngMessages']);
-
+angular.module('inscriptionsListApp', ['inscriptionsList']);
 
 //# sourceMappingURL=inscriptions-list.js.map

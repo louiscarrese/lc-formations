@@ -11712,6 +11712,18 @@ function myEditableDirectiveMultiselect() {
     return directive;
 }
 
+angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
+;
+
 function editModeServiceFactory() {
     return {
         initFromUrl: function(service, callback) {
@@ -11955,6 +11967,11 @@ function detailController(editModeService, dataService, detailService) {
         return ret;
     }
 }
+angular.module('detail', ['myEditable'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .factory('editModeService', editModeServiceFactory) 
+;
+
 function modulesServiceFactory($resource) {
     return $resource('/api/module/:id', null, {
         'update' : { method: 'PUT' }
@@ -12013,6 +12030,18 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService,
         },
     }
 }
+angular.module('moduleDetail', ['detail', 'ngResource'])
+    //Resource services
+    .factory('modulesService', ['$resource', modulesServiceFactory])
+    .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
+    .factory('formateursService', ['$resource', formateursServiceFactory])
+    //Detail service implementation
+    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', moduleDetailServiceFactory])
+
+    //Detail controller
+    .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
+;
+
 function mySortableHeaderDirective() {
     return {
         restrict: 'E',
@@ -12032,6 +12061,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -12266,6 +12299,11 @@ function editableTableController($filter, dataService, tableService) {
     };
 } 
 
+angular.module('editableTable', ['myEditable', 'sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function tarifsServiceFactory($resource) {
     return $resource('/api/tarif/:id', null, {
         'update' : { method: 'PUT' }
@@ -12301,6 +12339,18 @@ function tarifsTableServiceFactory(sharedDataService, tarifTypesService) {
 
     };
 }
+angular.module('tarifsList', ['ngResource', 'editableTable'])
+    .factory('tarifsService', ['$resource', tarifsServiceFactory])
+    .factory('tarifTypesService', ['$resource', tarifTypesServiceFactory])
+    .factory('tarifsTableService', ['sharedDataService', 'tarifTypesService', tarifsTableServiceFactory])
+    .controller('tarifsController', ['$filter', 'tarifsService', 'tarifsTableService', editableTableController])
+;
+
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function sessionsServiceFactory($resource) {
     return $resource('/api/session/:id', null, {
         'update' : { method: 'PUT' }
@@ -12320,48 +12370,12 @@ function sessionsTableServiceFactory(sharedDataService) {
 
     };
 }
-angular.module('modulesDetailServices', ['ngResource'])
-    .factory('modulesService', ['$resource', modulesServiceFactory])
-    .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
-    .factory('formateursService', ['$resource', formateursServiceFactory])
-    .factory('tarifsService', ['$resource', tarifsServiceFactory])
-    .factory('tarifTypesService', ['$resource', tarifTypesServiceFactory])
+angular.module('sessionsList', ['ngResource', 'listTable'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
-    .factory('sharedDataService', [sharedDataServiceFactory])
-    .factory('editModeService', [editModeServiceFactory])
-    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', moduleDetailServiceFactory])
-    .factory('tarifsTableService', ['sharedDataService', 'tarifTypesService', tarifsTableServiceFactory])
     .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
+    .controller('sessionsListController', ['$filter', 'sessionsService', 'sessionsTableService', editableTableController])
 ;
 
-angular.module('modulesDetailControllers', [])
-        .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
-        .controller('tarifsController', ['$filter', 'tarifsService', 'tarifsTableService', editableTableController])
-        .controller('sessionsListController', ['$filter', 'sessionsService', 'sessionsTableService', editableTableController])
-;
-
-angular.module('modulesDetailFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('modulesDetailDirectives', [])
-    .directive('myEditableText', myEditableDirectiveText)
-    .directive('myEditableInteger', myEditableDirectiveInteger)
-    .directive('myEditableTime', myEditableDirectiveTime)
-    .directive('myEditableTextarea', myEditableDirectiveTextarea)
-    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
-    .directive('myEditableDropdown', myEditableDirectiveDropdown)
-    .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('myEditableMultiselect', myEditableDirectiveMultiselect)
-    .directive('mySortableHeader', mySortableHeaderDirective)
-    .directive('myForceInteger', myForceIntegerDirective)
-    .directive('datepickerLocaldate', datepickerLocaldate)
-;
-
-//Le module principal
-angular.module('modulesDetailApp', 
-    ['modulesDetailControllers', 'modulesDetailServices', 'modulesDetailFilters', 'modulesDetailDirectives', 'ngMessages', 'rt.select2', 'ui.bootstrap'])
-;
+angular.module('modulesDetailApp', ['moduleDetail', 'sessionsList', 'tarifsList', 'ngResource']);
 
 //# sourceMappingURL=modules-detail.js.map

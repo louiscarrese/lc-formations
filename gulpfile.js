@@ -33,7 +33,7 @@ var libraries = [
 
 var myEditable = [
 
-    '/directives/myForceInteger-directive.js',
+    'directives/myForceInteger-directive.js',
     'directives/datepickerlocaldate-directive.js',
     'directives/my-editable/myEditable-commons.js',
     'directives/my-editable/myEditableText-directive.js',
@@ -45,22 +45,40 @@ var myEditable = [
     'directives/my-editable/myEditableDropdown-directive.js',
     'directives/my-editable/myEditableRadio-directive.js',
     'directives/my-editable/myEditableMultiselect-directive.js',
+    'modules/my-editable-module.js'
 ];
 
+var sortableHeaderDirective = [
+    'directives/mySortableHeader-directive.js',
+    'modules/sortable-header-module.js'
+]
+var listTable = Array.prototype.concat(
+    sortableHeaderDirective,
+    [
+        'filters/myCustomFilter-filter.js',
+        'controllers/editableTable-controller.js',
+        'services/shareddata-service.js',
+        'modules/list-table-module.js'
+    ]
+);
 
-var listTable = [
-    '/directives/mySortableHeader-directive.js',
-    '/filters/myCustomFilter-filter.js',
-    '/controllers/editableTable-controller.js',
-    'services/shareddata-service.js',
-];
+var editableTable = Array.prototype.concat(
+    myEditable,
+    sortableHeaderDirective,
+    [
+        'filters/myCustomFilter-filter.js',
+        'controllers/editableTable-controller.js',
+        'services/shareddata-service.js',
+        'modules/editable-table-module.js'
+    ]
+);
 
-var editableTable = listTable.concat(myEditable);
 
 var detail = myEditable.concat([
     'services/editmode-service.js',
     'services/shareddata-service.js',
     'controllers/detail-controller.js',
+    'modules/detail-module.js'
 ]);
 
 var parametresServices = [
@@ -76,13 +94,23 @@ var parametresServices = [
 var parametres = Array.prototype.concat(
     libraries,
     editableTable,
-    parametresServices
+    [
+        '/services/data/stagiairetypes-service.js',
+        '/services/data/formateurtypes-service.js',
+        '/services/data/financeurtypes-service.js',
+        '/services/data/tariftypes-service.js',
+        '/services/data/lieu-service.js',
+        '/services/data/domaineformations-service.js',
+    ]
 );
 
 var modulesList = Array.prototype.concat(
     libraries,
     listTable,
-    ['services/data/modules-service.js']
+    [
+        'services/data/modules-service.js',
+        'modules/tables/modules-list-module.js'
+    ]
 );
 
 var sessionsList = Array.prototype.concat(
@@ -90,33 +118,45 @@ var sessionsList = Array.prototype.concat(
     listTable,
     [
         'services/data/sessions-service.js',
-        'services/tables/sessions-service.js'
-
+        'services/tables/sessions-service.js',
+        'modules/tables/sessions-list-module.js'
     ]
 );
 
 var formateursList = Array.prototype.concat(
     libraries,
     listTable,
-    ['services/data/formateurs-service.js']
+    [
+        'services/data/formateurs-service.js',
+        'modules/tables/formateurs-list-module.js'
+    ]
 );
 
 var financeursList = Array.prototype.concat(
     libraries,
     listTable,
-    ['services/data/financeurs-service.js']
+    [
+        'services/data/financeurs-service.js',
+        'modules/tables/financeurs-list-module.js'
+    ]
 );
 
 var employeursList = Array.prototype.concat(
     libraries,
     listTable,
-    ['services/data/employeurs-service.js']
+    [
+        'services/data/employeurs-service.js',
+        'modules/tables/employeurs-list-module.js'
+    ]
 );
 
 var stagiairesList = Array.prototype.concat(
     libraries,
     listTable,
-    ['services/data/stagiaires-service.js']
+    [
+        'services/data/stagiaires-service.js',
+        'modules/tables/stagiaires-list-module.js'
+    ]
 );
 
 var inscriptionsList = Array.prototype.concat(
@@ -124,7 +164,8 @@ var inscriptionsList = Array.prototype.concat(
     listTable,
     [
         'services/data/inscriptions-service.js',
-        'services/tables/inscriptions-service.js'
+        'services/tables/inscriptions-service.js',
+        'modules/tables/inscriptions-list-module.js'
     ]
 );
 
@@ -137,6 +178,7 @@ var moduleDetail = Array.prototype.concat(
         'services/data/domaineformations-service.js',
         'services/data/formateurs-service.js',
         'services/details/moduledetail-service.js',
+        'modules/details/module-detail-module.js'
     ],
     /** Sub-objects */
     editableTable,
@@ -145,6 +187,7 @@ var moduleDetail = Array.prototype.concat(
         'services/data/tarifs-service.js',
         'services/data/tariftypes-service.js',
         'services/tables/tarifs-service.js',
+        'modules/tables/tarifs-list-module.js'
     ],
     /** Related objects */
     sessionsList
@@ -157,6 +200,7 @@ var sessionDetail = Array.prototype.concat(
         'services/data/sessions-service.js',
         'services/data/modules-service.js',
         'services/details/sessiondetail-service.js',
+        'modules/details/session-detail-module.js'
     ],
     /** Sub-objects */
     editableTable,
@@ -166,6 +210,7 @@ var sessionDetail = Array.prototype.concat(
         'services/data/formateurs-service.js',
         'services/data/lieu-service.js',
         'services/tables/sessionjours-service.js',
+        'modules/tables/sessionjours-list-module.js'
     ]
 );
 
@@ -176,6 +221,7 @@ var formateurDetail = Array.prototype.concat(
         'services/data/formateurs-service.js',
         'services/data/formateurtypes-service.js',
         'services/details/formateurdetail-service.js',
+        'modules/details/formateur-detail-module.js'
     ]
 );
 
@@ -186,6 +232,7 @@ var financeurDetail = Array.prototype.concat(
         'services/data/financeurs-service.js',
         'services/data/financeurtypes-service.js',
         'services/details/financeurdetail-service.js',
+        'modules/details/financeur-detail-module.js'
     ]
 );
 
@@ -195,6 +242,7 @@ var employeurDetail = Array.prototype.concat(
     [
         'services/data/employeurs-service.js',
         'services/details/employeurdetail-service.js',
+        'modules/details/employeur-detail-module.js'
     ]    
 );
 
@@ -206,6 +254,8 @@ var stagiaireDetail = Array.prototype.concat(
         'services/data/stagiairetypes-service.js',
         'services/data/employeurs-service.js',
         'services/details/stagiairedetail-service.js',
+        'modules/details/stagiaire-detail-module.js'
+
     ],
     /** Related objects */
     inscriptionsList
@@ -219,6 +269,7 @@ var inscriptionDetail = Array.prototype.concat(
         'services/data/stagiaires-service.js',
         'services/data/sessions-service.js',
         'services/details/inscriptiondetail-service.js',
+        'modules/details/inscription-detail-module.js'
     ]
 );
 elixir(function(mix) {

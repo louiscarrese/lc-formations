@@ -11224,6 +11224,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -11463,6 +11467,11 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function sessionsServiceFactory($resource) {
     return $resource('/api/session/:id', null, {
         'update' : { method: 'PUT' }
@@ -11482,27 +11491,12 @@ function sessionsTableServiceFactory(sharedDataService) {
 
     };
 }
-angular.module('sessionsListServices', ['ngResource'])
+angular.module('sessionsList', ['ngResource', 'listTable'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
+    .controller('sessionsListController', ['$filter', 'sessionsService', 'sessionsTableService', editableTableController])
 ;
 
-angular.module('sessionsListControllers', [])
-    .controller('sessionsListController', ['$filter', 'sessionsService', editableTableController])
-;
-
-angular.module('sessionsListFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('sessionsListDirectives', [])
-    .directive('mySortableHeader', mySortableHeaderDirective)
-
-    ;
-
-//Le module principal
-angular.module('sessionsListApp', 
-    ['sessionsListControllers', 'sessionsListServices', 'sessionsListFilters', 'sessionsListDirectives', 'ngMessages']);
-
+angular.module('sessionsListApp', ['sessionsList']);
 
 //# sourceMappingURL=sessions-list.js.map

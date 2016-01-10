@@ -11224,6 +11224,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -11463,33 +11467,23 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function employeursServiceFactory($resource) {
     return $resource('/api/employeur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
-angular.module('employeursListServices', ['ngResource'])
+angular.module('employeursList', ['ngResource', 'listTable'])
     .factory('employeursService', ['$resource', employeursServiceFactory])
-;
-
-angular.module('employeursListControllers', [])
     .controller('employeursListController', ['$filter', 'employeursService', editableTableController])
 ;
 
-angular.module('employeursListFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('employeursListDirectives', [])
-    .directive('mySortableHeader', mySortableHeaderDirective)
-
-    ;
-
-//Le module principal
-angular.module('employeursListApp', 
-    ['employeursListControllers', 'employeursListServices', 'employeursListFilters', 'employeursListDirectives', 'ngMessages']);
+angular.module('employeursListApp', ['employeursList']);
 
 
 //# sourceMappingURL=employeurs-list.js.map

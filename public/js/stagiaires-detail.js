@@ -11712,6 +11712,18 @@ function myEditableDirectiveMultiselect() {
     return directive;
 }
 
+angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
+;
+
 function editModeServiceFactory() {
     return {
         initFromUrl: function(service, callback) {
@@ -11955,6 +11967,11 @@ function detailController(editModeService, dataService, detailService) {
         return ret;
     }
 }
+angular.module('detail', ['myEditable'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .factory('editModeService', editModeServiceFactory) 
+;
+
 function stagiairesServiceFactory($resource) {
     return $resource('/api/stagiaire/:id', null, {
         'update' : { method: 'PUT' }
@@ -12022,6 +12039,14 @@ function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService,
         },
     }
 }
+angular.module('stagiaireDetail', ['detail', 'ngResource'])
+    .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
+    .factory('employeursService', ['$resource', employeursServiceFactory])
+    .factory('stagiaireTypesService', ['$resource', stagiaireTypesServiceFactory])
+    .factory('stagiaireDetailService', ['sharedDataService', 'stagiaireTypesService', 'employeursService', stagiaireDetailServiceFactory])
+    .controller('detailController', ['editModeService', 'stagiairesService', 'stagiaireDetailService', detailController])
+;
+
 function mySortableHeaderDirective() {
     return {
         restrict: 'E',
@@ -12041,6 +12066,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -12275,6 +12304,11 @@ function editableTableController($filter, dataService, tableService) {
     };
 } 
 
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function inscriptionsServiceFactory($resource) {
     return $resource('/api/inscription/:id', null, {
         'update' : { method: 'PUT' }
@@ -12292,43 +12326,11 @@ function inscriptionsTableServiceFactory(sharedDataService) {
 
     };
 }
-angular.module('stagiairesDetailServices', ['ngResource'])
-    .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
-    .factory('stagiaireTypesService', ['$resource', stagiaireTypesServiceFactory])
-    .factory('employeursService', ['$resource', employeursServiceFactory])
+angular.module('inscriptionsList', ['ngResource', 'listTable'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
-    .factory('sharedDataService', [sharedDataServiceFactory])
-    .factory('inscriptionsTableService', ['sharedDataService', inscriptionsTableServiceFactory])
-    .factory('editModeService', [editModeServiceFactory])
-    .factory('stagiaireDetailService', ['sharedDataService', 'stagiaireTypesService', 'employeursService', stagiaireDetailServiceFactory])
+    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', editableTableController])
 ;
 
-angular.module('stagiairesDetailControllers', [])
-    .controller('detailController', ['editModeService', 'stagiairesService', 'stagiaireDetailService', detailController])
-    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
-;
-
-angular.module('stagiairesDetailFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('stagiairesDetailDirectives', [])
-    .directive('myEditableText', myEditableDirectiveText)
-    .directive('myEditableInteger', myEditableDirectiveInteger)
-    .directive('myEditableTextarea', myEditableDirectiveTextarea)
-    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
-    .directive('myEditableDropdown', myEditableDirectiveDropdown)
-    .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('myEditableDate', myEditableDirectiveDate)
-    .directive('mySortableHeader', mySortableHeaderDirective)
-    .directive('myForceInteger', myForceIntegerDirective)
-    .directive('datepickerLocaldate', datepickerLocaldate)
-;
-
-//Le module principal
-angular.module('stagiairesDetailApp', 
-    ['stagiairesDetailControllers', 'stagiairesDetailServices', 'stagiairesDetailFilters', 'stagiairesDetailDirectives', 'ngMessages', 'rt.select2', 'ui.bootstrap'])
-;
+angular.module('stagiairesDetailApp', ['stagiaireDetail', 'inscriptionsList']);
 
 //# sourceMappingURL=stagiaires-detail.js.map

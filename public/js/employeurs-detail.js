@@ -11712,6 +11712,18 @@ function myEditableDirectiveMultiselect() {
     return directive;
 }
 
+angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
+;
+
 function editModeServiceFactory() {
     return {
         initFromUrl: function(service, callback) {
@@ -11955,6 +11967,11 @@ function detailController(editModeService, dataService, detailService) {
         return ret;
     }
 }
+angular.module('detail', ['myEditable'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .factory('editModeService', editModeServiceFactory) 
+;
+
 function employeursServiceFactory($resource) {
     return $resource('/api/employeur/:id', null, {
         'update' : { method: 'PUT' }
@@ -11982,34 +11999,12 @@ function employeurDetailServiceFactory(sharedDataService) {
         },
     }
 }
-angular.module('employeursDetailServices', ['ngResource'])
+angular.module('employeurDetail', ['detail', 'ngResource'])
     .factory('employeursService', ['$resource', employeursServiceFactory])
-    .factory('sharedDataService', [sharedDataServiceFactory])
-    .factory('editModeService', [editModeServiceFactory])
     .factory('employeurDetailService', ['sharedDataService', employeurDetailServiceFactory])
+    .controller('detailController', ['editModeService', 'employeursService', 'employeurDetailService', detailController])
 ;
 
-angular.module('employeursDetailControllers', [])
-        .controller('detailController', ['editModeService', 'employeursService', 'employeurDetailService', detailController])
-;
-
-angular.module('employeursDetailFilters', [])
-;
-
-//Les directives
-angular.module('employeursDetailDirectives', [])
-    .directive('myEditableText', myEditableDirectiveText)
-    .directive('myEditableInteger', myEditableDirectiveInteger)
-    .directive('myEditableTextarea', myEditableDirectiveTextarea)
-    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
-    .directive('myEditableDropdown', myEditableDirectiveDropdown)
-    .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('myForceInteger', myForceIntegerDirective)
-;
-
-//Le module principal
-angular.module('employeursDetailApp', 
-    ['employeursDetailControllers', 'employeursDetailServices', 'employeursDetailFilters', 'employeursDetailDirectives', 'ngMessages', 'rt.select2'])
-;
+angular.module('employeursDetailApp', ['employeurDetail']);
 
 //# sourceMappingURL=employeurs-detail.js.map

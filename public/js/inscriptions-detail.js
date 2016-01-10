@@ -11712,6 +11712,18 @@ function myEditableDirectiveMultiselect() {
     return directive;
 }
 
+angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
+;
+
 function editModeServiceFactory() {
     return {
         initFromUrl: function(service, callback) {
@@ -11955,6 +11967,11 @@ function detailController(editModeService, dataService, detailService) {
         return ret;
     }
 }
+angular.module('detail', ['myEditable'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .factory('editModeService', editModeServiceFactory) 
+;
+
 function inscriptionsServiceFactory($resource) {
     return $resource('/api/inscription/:id', null, {
         'update' : { method: 'PUT' }
@@ -12011,36 +12028,14 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         },
     }
 }
-angular.module('inscriptionsDetailServices', ['ngResource'])
+angular.module('inscriptionDetail', ['detail', 'ngResource'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
-    .factory('sharedDataService', [sharedDataServiceFactory])
-    .factory('editModeService', [editModeServiceFactory])
     .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', inscriptionDetailServiceFactory])
+    .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', detailController])
 ;
 
-angular.module('inscriptionsDetailControllers', [])
-        .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', detailController])
-;
-
-angular.module('inscriptionsDetailFilters', [])
-;
-
-//Les directives
-angular.module('inscriptionsDetailDirectives', [])
-    .directive('myEditableText', myEditableDirectiveText)
-    .directive('myEditableInteger', myEditableDirectiveInteger)
-    .directive('myEditableTextarea', myEditableDirectiveTextarea)
-    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
-    .directive('myEditableDropdown', myEditableDirectiveDropdown)
-    .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('myForceInteger', myForceIntegerDirective)
-;
-
-//Le module principal
-angular.module('inscriptionsDetailApp', 
-    ['inscriptionsDetailControllers', 'inscriptionsDetailServices', 'inscriptionsDetailFilters', 'inscriptionsDetailDirectives', 'ngMessages', 'rt.select2'])
-;
+angular.module('inscriptionsDetailApp', ['inscriptionDetail']);
 
 //# sourceMappingURL=inscriptions-detail.js.map

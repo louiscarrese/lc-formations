@@ -11712,6 +11712,18 @@ function myEditableDirectiveMultiselect() {
     return directive;
 }
 
+angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
+    .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableInteger', myEditableDirectiveInteger)
+    .directive('myEditableTextarea', myEditableDirectiveTextarea)
+    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
+    .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableRadio', myEditableDirectiveRadio)
+    .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myForceInteger', myForceIntegerDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
+;
+
 function editModeServiceFactory() {
     return {
         initFromUrl: function(service, callback) {
@@ -11955,6 +11967,11 @@ function detailController(editModeService, dataService, detailService) {
         return ret;
     }
 }
+angular.module('detail', ['myEditable'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .factory('editModeService', editModeServiceFactory) 
+;
+
 function financeursServiceFactory($resource) {
     return $resource('/api/financeur/:id', null, {
         'update' : { method: 'PUT' }
@@ -11994,35 +12011,12 @@ function financeurDetailServiceFactory(sharedDataService, financeurTypesService)
         },
     }
 }
-angular.module('financeursDetailServices', ['ngResource'])
+angular.module('financeurDetail', ['detail', 'ngResource'])
     .factory('financeursService', ['$resource', financeursServiceFactory])
     .factory('financeurTypesService', ['$resource', financeurTypesServiceFactory])
-    .factory('sharedDataService', [sharedDataServiceFactory])
-    .factory('editModeService', [editModeServiceFactory])
     .factory('financeurDetailService', ['sharedDataService', 'financeurTypesService', financeurDetailServiceFactory])
-;
+    .controller('detailController', ['editModeService', 'financeursService', 'financeurDetailService', detailController])
 
-angular.module('financeursDetailControllers', [])
-        .controller('detailController', ['editModeService', 'financeursService', 'financeurDetailService', detailController])
-;
-
-angular.module('financeursDetailFilters', [])
-;
-
-//Les directives
-angular.module('financeursDetailDirectives', [])
-    .directive('myEditableText', myEditableDirectiveText)
-    .directive('myEditableInteger', myEditableDirectiveInteger)
-    .directive('myEditableTextarea', myEditableDirectiveTextarea)
-    .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
-    .directive('myEditableDropdown', myEditableDirectiveDropdown)
-    .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('myForceInteger', myForceIntegerDirective)
-;
-
-//Le module principal
-angular.module('financeursDetailApp', 
-    ['financeursDetailControllers', 'financeursDetailServices', 'financeursDetailFilters', 'financeursDetailDirectives', 'ngMessages', 'rt.select2'])
-;
+angular.module('financeursDetailApp', ['financeurDetail']);
 
 //# sourceMappingURL=financeurs-detail.js.map

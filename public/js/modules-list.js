@@ -11224,6 +11224,10 @@ function mySortableHeaderDirective() {
         }
     };
 }
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
 function myCustomFilter() {
     return function(input, filter) {
         var outArray = [];
@@ -11463,6 +11467,11 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
 function modulesServiceFactory($resource) {
     return $resource('/api/module/:id', null, {
         'update' : { method: 'PUT' }
@@ -11470,27 +11479,11 @@ function modulesServiceFactory($resource) {
 }
 
 
-angular.module('modulesListServices', ['ngResource'])
+angular.module('modulesList', ['ngResource', 'listTable'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
-;
-
-angular.module('modulesListControllers', [])
     .controller('modulesListController', ['$filter', 'modulesService', editableTableController])
 ;
 
-angular.module('modulesListFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
-;
-
-//Les directives
-angular.module('modulesListDirectives', [])
-    .directive('mySortableHeader', mySortableHeaderDirective)
-
-    ;
-
-//Le module principal
-angular.module('modulesListApp', 
-    ['modulesListControllers', 'modulesListServices', 'modulesListFilters', 'modulesListDirectives', 'ngMessages']);
-
+angular.module('modulesListApp', ['modulesList']);
 
 //# sourceMappingURL=modules-list.js.map
