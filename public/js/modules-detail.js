@@ -11205,6 +11205,17 @@ angular.module("uib/template/typeahead/typeahead-popup.html", []).run(["$templat
     "");
 }]);
 angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style>'); })
+function myForceIntegerDirective(){
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attr, ctrl){
+            ctrl.$parsers.unshift(function(viewValue){
+                return parseInt(viewValue, 10);
+            });
+        }
+    };
+}
+
 //From this bugreport : https://github.com/angular-ui/bootstrap/issues/2072
 //Got this Gist : https://gist.github.com/weberste/354a3f0a9ea58e0ea0de
 function datepickerLocaldate() {
@@ -11248,36 +11259,6 @@ function datepickerLocaldate() {
 
 
 
-function myForceIntegerDirective(){
-    return {
-        require: 'ngModel',
-        link: function(scope, ele, attr, ctrl){
-            ctrl.$parsers.unshift(function(viewValue){
-                return parseInt(viewValue, 10);
-            });
-        }
-    };
-}
-
-function mySortableHeaderDirective() {
-    return {
-        restrict: 'E',
-        transclude: true,
-        scope: {
-            setSort: '&set',
-            getSort: '&get'
-        },
-        template: function() {
-            var template = '';
-
-            template += '<span ng-click="setSort()" ng-transclude></span>';
-            template += '<span ng-show="getSort() === false" class="sort-arrow glyphicon glyphicon-triangle-top"></span>';
-            template += '<span ng-show="getSort() === true" class="sort-arrow glyphicon glyphicon-triangle-bottom"></span>';
-
-            return template;
-        }
-    };
-}
 function myEditableDirectiveCommons() {
     return {
 
@@ -11731,76 +11712,6 @@ function myEditableDirectiveMultiselect() {
     return directive;
 }
 
-function myCustomFilter() {
-    return function(input, filter) {
-        var outArray = [];
-        var lowerFilter = angular.lowercase(filter) || '';
-
-        //Pour chaque élément du tableau
-        for(elemId = 0; elemId < input.length; elemId++) {
-            //Pour chaque champ à analyser
-            for(fieldId = 2; fieldId < arguments.length; fieldId++) {
-                //On découpe, au cas où ça serait un sous objet (genre objet.propriete)
-                var fieldPath = arguments[fieldId].split('.');
-                //On démarre sur l'élément du tableau
-                var fieldValue = input[elemId];
-                //On descend chaque champ de l'arborescence
-                for(var i = 0; i < fieldPath.length; i++) {
-                    fieldValue = fieldValue[fieldPath[i]];
-                }
-
-                //On converti en string lowercase
-                var stringValue = angular.lowercase('' + fieldValue);
-
-                //On cherche le filtre dans la valeur
-                if(stringValue.indexOf(lowerFilter) !== -1) {
-                    outArray.push(input[elemId]);
-                    //Si on l'a trouvé une fois, on peut passer à l'élément de tableau suivant
-                    break;
-                }
-            }
-        }
-        return outArray;
-    }
-
-}
-function modulesServiceFactory($resource) {
-    return $resource('/api/module/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-
-
-function domaineFormationsServiceFactory($resource) {
-    return $resource('/api/domaine_formation/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-
-function formateursServiceFactory($resource) {
-    return $resource('/api/formateur/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-
-function tarifsServiceFactory($resource) {
-    return $resource('/api/tarif/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-
-function tarifTypesServiceFactory($resource) {
-    return $resource('/api/tarif_type/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-function sessionsServiceFactory($resource) {
-    return $resource('/api/session/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-
-
 function editModeServiceFactory() {
     return {
         initFromUrl: function(service, callback) {
@@ -11880,81 +11791,6 @@ function editModeServiceFactory() {
 function sharedDataServiceFactory() {
     return {
         data: {}
-    };
-}
-function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, formateursService) {
-    return {
-        getLinkedData: function() {
-            var domaineFormations = domaineFormationsService.query();
-            var formateurs = formateursService.query();
-
-            return {
-                'domaineFormations': domaineFormations,
-                'formateurs': formateurs,
-            };
-        },
-
-        getInternalKey: function(data) {
-            return data.id;
-        },
-
-        getSuccess: function(data) {
-
-            sharedDataService.data.module_id = data.id;
-
-            if(data.formateurs != undefined) {
-                data.formateurs_id = [];
-                for(var i = 0; i < data.formateurs.length; i++) {
-                    data.formateurs_id.push(data.formateurs[i].id);
-                }
-            }
-
-            //Build the return structure
-            return {
-                'titleText': data.libelle != undefined ? data.libelle : "Création d'un module"
-            }
-
-        },
-
-        getListUrl: function() {
-            return '/modules';
-        },
-    }
-}
-function sessionsTableServiceFactory(sharedDataService) {
-    return {
-        queryParameters: function() {
-            var ret = {};
-            if(sharedDataService.data.module_id) {
-                ret['module_id'] = sharedDataService.data.module_id;
-            }
-            return ret;
-        }
-
-    };
-}
-function tarifsTableServiceFactory(sharedDataService, tarifTypesService) {
-    return {
-        getLinkedData: function() {
-            var tarifTypes = tarifTypesService.query();
-
-            return {
-                'tarifTypes': tarifTypes,
-            }
-        },
-
-        preSend: function(data, parentController) {
-            data.module_id = sharedDataService.data.module_id;
-        },
-
-        queryParameters: function() {
-            var ret = {};
-            if(sharedDataService.data.module_id) {
-                ret['module_id'] = sharedDataService.data.module_id;
-            }
-            return ret;
-        }
-
     };
 }
 function detailController(editModeService, dataService, detailService) {
@@ -12118,6 +11954,116 @@ function detailController(editModeService, dataService, detailService) {
         }
         return ret;
     }
+}
+function modulesServiceFactory($resource) {
+    return $resource('/api/module/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+
+function domaineFormationsServiceFactory($resource) {
+    return $resource('/api/domaine_formation/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+function formateursServiceFactory($resource) {
+    return $resource('/api/formateur/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, formateursService) {
+    return {
+        getLinkedData: function() {
+            var domaineFormations = domaineFormationsService.query();
+            var formateurs = formateursService.query();
+
+            return {
+                'domaineFormations': domaineFormations,
+                'formateurs': formateurs,
+            };
+        },
+
+        getInternalKey: function(data) {
+            return data.id;
+        },
+
+        getSuccess: function(data) {
+
+            sharedDataService.data.module_id = data.id;
+
+            if(data.formateurs != undefined) {
+                data.formateurs_id = [];
+                for(var i = 0; i < data.formateurs.length; i++) {
+                    data.formateurs_id.push(data.formateurs[i].id);
+                }
+            }
+
+            //Build the return structure
+            return {
+                'titleText': data.libelle != undefined ? data.libelle : "Création d'un module"
+            }
+
+        },
+
+        getListUrl: function() {
+            return '/modules';
+        },
+    }
+}
+function mySortableHeaderDirective() {
+    return {
+        restrict: 'E',
+        transclude: true,
+        scope: {
+            setSort: '&set',
+            getSort: '&get'
+        },
+        template: function() {
+            var template = '';
+
+            template += '<span ng-click="setSort()" ng-transclude></span>';
+            template += '<span ng-show="getSort() === false" class="sort-arrow glyphicon glyphicon-triangle-top"></span>';
+            template += '<span ng-show="getSort() === true" class="sort-arrow glyphicon glyphicon-triangle-bottom"></span>';
+
+            return template;
+        }
+    };
+}
+function myCustomFilter() {
+    return function(input, filter) {
+        var outArray = [];
+        var lowerFilter = angular.lowercase(filter) || '';
+
+        //Pour chaque élément du tableau
+        for(elemId = 0; elemId < input.length; elemId++) {
+            //Pour chaque champ à analyser
+            for(fieldId = 2; fieldId < arguments.length; fieldId++) {
+                //On découpe, au cas où ça serait un sous objet (genre objet.propriete)
+                var fieldPath = arguments[fieldId].split('.');
+                //On démarre sur l'élément du tableau
+                var fieldValue = input[elemId];
+                //On descend chaque champ de l'arborescence
+                for(var i = 0; i < fieldPath.length; i++) {
+                    fieldValue = fieldValue[fieldPath[i]];
+                }
+
+                //On converti en string lowercase
+                var stringValue = angular.lowercase('' + fieldValue);
+
+                //On cherche le filtre dans la valeur
+                if(stringValue.indexOf(lowerFilter) !== -1) {
+                    outArray.push(input[elemId]);
+                    //Si on l'a trouvé une fois, on peut passer à l'élément de tableau suivant
+                    break;
+                }
+            }
+        }
+        return outArray;
+    }
+
 }
 function editableTableController($filter, dataService, tableService) {
     var self = this;
@@ -12320,6 +12266,60 @@ function editableTableController($filter, dataService, tableService) {
     };
 } 
 
+function tarifsServiceFactory($resource) {
+    return $resource('/api/tarif/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+function tarifTypesServiceFactory($resource) {
+    return $resource('/api/tarif_type/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+function tarifsTableServiceFactory(sharedDataService, tarifTypesService) {
+    return {
+        getLinkedData: function() {
+            var tarifTypes = tarifTypesService.query();
+
+            return {
+                'tarifTypes': tarifTypes,
+            }
+        },
+
+        preSend: function(data, parentController) {
+            data.module_id = sharedDataService.data.module_id;
+        },
+
+        queryParameters: function() {
+            var ret = {};
+            if(sharedDataService.data.module_id) {
+                ret['module_id'] = sharedDataService.data.module_id;
+            }
+            return ret;
+        }
+
+    };
+}
+function sessionsServiceFactory($resource) {
+    return $resource('/api/session/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+
+function sessionsTableServiceFactory(sharedDataService) {
+    return {
+        queryParameters: function() {
+            var ret = {};
+            if(sharedDataService.data.module_id) {
+                ret['module_id'] = sharedDataService.data.module_id;
+            }
+            return ret;
+        }
+
+    };
+}
 angular.module('modulesDetailServices', ['ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])

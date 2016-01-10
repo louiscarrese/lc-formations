@@ -11,7 +11,6 @@ angular.module('formateursDetailControllers', [])
 ;
 
 angular.module('formateursDetailFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
 ;
 
 //Les directives
@@ -23,7 +22,6 @@ angular.module('formateursDetailDirectives', [])
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
     .directive('myEditableRadio', myEditableDirectiveRadio)
     .directive('myEditableDate', myEditableDirectiveDate)
-    .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
     .directive('datepickerLocaldate', datepickerLocaldate)
 ;

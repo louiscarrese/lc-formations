@@ -11,7 +11,6 @@ angular.module('financeursDetailControllers', [])
 ;
 
 angular.module('financeursDetailFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
 ;
 
 //Les directives
@@ -22,7 +21,6 @@ angular.module('financeursDetailDirectives', [])
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
     .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
 ;
 

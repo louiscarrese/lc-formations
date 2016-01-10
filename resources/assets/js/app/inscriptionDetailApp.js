@@ -12,7 +12,6 @@ angular.module('inscriptionsDetailControllers', [])
 ;
 
 angular.module('inscriptionsDetailFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
 ;
 
 //Les directives
@@ -23,7 +22,6 @@ angular.module('inscriptionsDetailDirectives', [])
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
     .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
 ;
 

@@ -10,7 +10,6 @@ angular.module('employeursDetailControllers', [])
 ;
 
 angular.module('employeursDetailFilters', [])
-    .filter('myCustomFilter', myCustomFilter)
 ;
 
 //Les directives
@@ -21,7 +20,6 @@ angular.module('employeursDetailDirectives', [])
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
     .directive('myEditableRadio', myEditableDirectiveRadio)
-    .directive('mySortableHeader', mySortableHeaderDirective)
     .directive('myForceInteger', myForceIntegerDirective)
 ;
 

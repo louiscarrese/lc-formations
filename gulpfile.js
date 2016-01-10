@@ -1,6 +1,6 @@
 var elixir = require('laravel-elixir');
 
-require('laravel-elixir-spritesmith');
+//require('laravel-elixir-spritesmith');
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -12,320 +12,280 @@ require('laravel-elixir-spritesmith');
  |
  */
 
+function array_unique(array) {
+    for(var i = 0; i < array.length; ++i) {
+        for(var j = i + 1; j < array.length; ++j) {
+            if(array[i] === array[j])
+                array.splice(j, 1);
+        }
+    }
+    return array;
+}
+var libraries = [
+    'vendor/jquery/dist/jquery.min.js',
+    'vendor/select2/select2.js',
+    'vendor/angular/angular.min.js', 
+    'vendor/angular-resource/angular-resource.min.js', 
+    'vendor/angular-messages/angular-messages.min.js', 
+    'vendor/angular-select2/dist/angular-select2.js',
+    'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
+];
+
+var myEditable = [
+
+    '/directives/myForceInteger-directive.js',
+    'directives/datepickerlocaldate-directive.js',
+    'directives/my-editable/myEditable-commons.js',
+    'directives/my-editable/myEditableText-directive.js',
+    'directives/my-editable/myEditableInteger-directive.js',
+    'directives/my-editable/myEditableDate-directive.js',
+    'directives/my-editable/myEditableTime-directive.js',
+    'directives/my-editable/myEditableTextarea-directive.js',
+    'directives/my-editable/myEditableCheckbox-directive.js',
+    'directives/my-editable/myEditableDropdown-directive.js',
+    'directives/my-editable/myEditableRadio-directive.js',
+    'directives/my-editable/myEditableMultiselect-directive.js',
+];
+
+
+var listTable = [
+    '/directives/mySortableHeader-directive.js',
+    '/filters/myCustomFilter-filter.js',
+    '/controllers/editableTable-controller.js',
+    'services/shareddata-service.js',
+];
+
+var editableTable = listTable.concat(myEditable);
+
+var detail = myEditable.concat([
+    'services/editmode-service.js',
+    'services/shareddata-service.js',
+    'controllers/detail-controller.js',
+]);
+
+var parametresServices = [
+    '/services/data/stagiairetypes-service.js',
+    '/services/data/formateurtypes-service.js',
+    '/services/data/financeurtypes-service.js',
+    '/services/data/tariftypes-service.js',
+    '/services/data/lieu-service.js',
+    '/services/data/domaineformations-service.js',
+];
+
+
+var parametres = Array.prototype.concat(
+    libraries,
+    editableTable,
+    parametresServices
+);
+
+var modulesList = Array.prototype.concat(
+    libraries,
+    listTable,
+    ['services/data/modules-service.js']
+);
+
+var sessionsList = Array.prototype.concat(
+    libraries,
+    listTable,
+    [
+        'services/data/sessions-service.js',
+        'services/tables/sessions-service.js'
+
+    ]
+);
+
+var formateursList = Array.prototype.concat(
+    libraries,
+    listTable,
+    ['services/data/formateurs-service.js']
+);
+
+var financeursList = Array.prototype.concat(
+    libraries,
+    listTable,
+    ['services/data/financeurs-service.js']
+);
+
+var employeursList = Array.prototype.concat(
+    libraries,
+    listTable,
+    ['services/data/employeurs-service.js']
+);
+
+var stagiairesList = Array.prototype.concat(
+    libraries,
+    listTable,
+    ['services/data/stagiaires-service.js']
+);
+
+var inscriptionsList = Array.prototype.concat(
+    libraries,
+    listTable,
+    [
+        'services/data/inscriptions-service.js',
+        'services/tables/inscriptions-service.js'
+    ]
+);
+
+
+var moduleDetail = Array.prototype.concat(
+    libraries,
+    detail,
+    [
+        'services/data/modules-service.js',
+        'services/data/domaineformations-service.js',
+        'services/data/formateurs-service.js',
+        'services/details/moduledetail-service.js',
+    ],
+    /** Sub-objects */
+    editableTable,
+    [
+        //Tarifs
+        'services/data/tarifs-service.js',
+        'services/data/tariftypes-service.js',
+        'services/tables/tarifs-service.js',
+    ],
+    /** Related objects */
+    sessionsList
+);
+
+var sessionDetail = Array.prototype.concat(
+    libraries,
+    detail,
+    [
+        'services/data/sessions-service.js',
+        'services/data/modules-service.js',
+        'services/details/sessiondetail-service.js',
+    ],
+    /** Sub-objects */
+    editableTable,
+    [
+        //SessionJours
+        'services/data/sessionjours-service.js',
+        'services/data/formateurs-service.js',
+        'services/data/lieu-service.js',
+        'services/tables/sessionjours-service.js',
+    ]
+);
+
+var formateurDetail = Array.prototype.concat(
+    libraries,
+    detail,
+    [
+        'services/data/formateurs-service.js',
+        'services/data/formateurtypes-service.js',
+        'services/details/formateurdetail-service.js',
+    ]
+);
+
+var financeurDetail = Array.prototype.concat(
+    libraries,
+    detail,
+    [
+        'services/data/financeurs-service.js',
+        'services/data/financeurtypes-service.js',
+        'services/details/financeurdetail-service.js',
+    ]
+);
+
+var employeurDetail = Array.prototype.concat(
+    libraries,
+    detail,
+    [
+        'services/data/employeurs-service.js',
+        'services/details/employeurdetail-service.js',
+    ]    
+);
+
+var stagiaireDetail = Array.prototype.concat(
+    libraries,
+    detail,
+    [
+        'services/data/stagiaires-service.js',
+        'services/data/stagiairetypes-service.js',
+        'services/data/employeurs-service.js',
+        'services/details/stagiairedetail-service.js',
+    ],
+    /** Related objects */
+    inscriptionsList
+);
+
+var inscriptionDetail = Array.prototype.concat(
+    libraries,
+    detail,
+    [
+        'services/data/inscriptions-service.js',
+        'services/data/stagiaires-service.js',
+        'services/data/sessions-service.js',
+        'services/details/inscriptiondetail-service.js',
+    ]
+);
 elixir(function(mix) {
     mix
         .less('app.less')
 
-        .scripts([
-            '/vendor/angular/angular.min.js', 
-            '/vendor/angular-resource/angular-resource.min.js', 
-            '/vendor/angular-messages/angular-messages.min.js', 
-            '/directives/myForceInteger-directive.js',
-            '/directives/mySortableHeader-directive.js',
-            '/directives/my-editable/myEditable-commons.js',
-            '/directives/my-editable/myEditableText-directive.js',
-            '/directives/my-editable/myEditableInteger-directive.js',
-            '/directives/my-editable/myEditableTextarea-directive.js',
-            '/directives/my-editable/myEditableCheckbox-directive.js',
-            '/directives/my-editable/myEditableDropdown-directive.js',
-            '/directives/my-editable/myEditableRadio-directive.js',
-            '/filters/myCustomFilter-filter.js',
-            '/services/data/stagiairetypes-service.js',
-            '/services/data/formateurtypes-service.js',
-            '/services/data/financeurtypes-service.js',
-            '/services/data/tariftypes-service.js',
-            '/services/data/lieu-service.js',
-            '/services/data/domaineformations-service.js',
-            '/controllers/editableTable-controller.js',
-            '/app/parametresApp.js'
-            ], 'public/js/parametres.js')
-        .scripts([
-            'vendor/angular/angular.min.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'directives/mySortableHeader-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/modules-service.js',
-            'controllers/editableTable-controller.js',
-            'app/modulesApp.js'
-            ], 'public/js/modules-list.js')
-        .scripts([
-            'vendor/angular/angular.min.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'directives/mySortableHeader-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/sessions-service.js',
-            'controllers/editableTable-controller.js',
-            'app/sessionsApp.js'
-            ], 'public/js/sessions-list.js')
-        .scripts([
-            'vendor/angular/angular.min.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'directives/mySortableHeader-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/formateurs-service.js',
-            'controllers/editableTable-controller.js',
-            'app/formateursApp.js'
-            ], 'public/js/formateurs-list.js')
-        .scripts([
-            'vendor/angular/angular.min.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'directives/mySortableHeader-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/financeurs-service.js',
-            'controllers/editableTable-controller.js',
-            'app/financeursApp.js'
-            ], 'public/js/financeurs-list.js')
-        .scripts([
-            'vendor/angular/angular.min.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'directives/mySortableHeader-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/employeurs-service.js',
-            'controllers/editableTable-controller.js',
-            'app/employeursApp.js'
-            ], 'public/js/employeurs-list.js')
-        .scripts([
-            'vendor/angular/angular.min.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'directives/mySortableHeader-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/stagiaires-service.js',
-            'controllers/editableTable-controller.js',
-            'app/stagiairesApp.js'
-            ], 'public/js/stagiaires-list.js')
-        .scripts([
-            'vendor/angular/angular.min.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'directives/mySortableHeader-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/inscriptions-service.js',
-            'services/tables/inscriptions-service.js',
-            'controllers/editableTable-controller.js',
-            'app/inscriptionsApp.js'
-            ], 'public/js/inscriptions-list.js')
-        .scripts([
-            'vendor/jquery/dist/jquery.min.js',
-            'vendor/select2/select2.js',
-            'vendor/angular/angular.min.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-select2/dist/angular-select2.js',
-            'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
-            'directives/datepickerlocaldate-directive.js',
-            'directives/myForceInteger-directive.js',
-            'directives/mySortableHeader-directive.js',
-            'directives/my-editable/myEditable-commons.js',
-            'directives/my-editable/myEditableText-directive.js',
-            'directives/my-editable/myEditableInteger-directive.js',
-            'directives/my-editable/myEditableDate-directive.js',
-            'directives/my-editable/myEditableTime-directive.js',
-            'directives/my-editable/myEditableTextarea-directive.js',
-            'directives/my-editable/myEditableCheckbox-directive.js',
-            'directives/my-editable/myEditableDropdown-directive.js',
-            'directives/my-editable/myEditableRadio-directive.js',
-            'directives/my-editable/myEditableMultiselect-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/modules-service.js',
-            'services/data/domaineformations-service.js',
-            'services/data/formateurs-service.js',
-            'services/data/tarifs-service.js',
-            'services/data/tariftypes-service.js',
-            'services/data/sessions-service.js',
-            'services/editmode-service.js',
-            'services/shareddata-service.js',
-            'services/details/moduledetail-service.js',
-            'services/tables/sessions-service.js',
-            'services/tables/tarifs-service.js',
-            'controllers/detail-controller.js',
-            'controllers/editableTable-controller.js',
-            'app/moduleDetailApp.js'
-            ], 'public/js/modules-detail.js')
-        .scripts([
-            'vendor/jquery/dist/jquery.min.js',
-            'vendor/select2/select2.js',
-            'vendor/angular/angular.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-select2/dist/angular-select2.js',
-            'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
-            'directives/datepickerlocaldate-directive.js',
-            'directives/myForceInteger-directive.js',
-            'directives/mySortableHeader-directive.js',
-            'directives/my-editable/myEditable-commons.js',
-            'directives/my-editable/myEditableText-directive.js',
-            'directives/my-editable/myEditableInteger-directive.js',
-            'directives/my-editable/myEditableDate-directive.js',
-            'directives/my-editable/myEditableTime-directive.js',
-            'directives/my-editable/myEditableTextarea-directive.js',
-            'directives/my-editable/myEditableCheckbox-directive.js',
-            'directives/my-editable/myEditableDropdown-directive.js',
-            'directives/my-editable/myEditableRadio-directive.js',
-            'directives/my-editable/myEditableMultiselect-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/sessions-service.js',
-            'services/data/sessionjours-service.js',
-            'services/data/modules-service.js',
-            'services/data/lieu-service.js',
-            'services/data/formateurs-service.js',
-            'services/editmode-service.js',
-            'services/shareddata-service.js',
-            'services/details/sessiondetail-service.js',
-            'services/tables/sessionjours-service.js',
-            'controllers/detail-controller.js',
-            'controllers/editableTable-controller.js',
-            'app/sessionDetailApp.js'
-            ], 'public/js/sessions-detail.js')
-        .scripts([
-            'vendor/jquery/dist/jquery.min.js',
-            'vendor/select2/select2.js',
-            'vendor/angular/angular.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-select2/dist/angular-select2.js',
-            'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
-            'directives/myForceInteger-directive.js',
-            'directives/mySortableHeader-directive.js',
-            'directives/datepickerlocaldate-directive.js',
-            'directives/my-editable/myEditable-commons.js',
-            'directives/my-editable/myEditableText-directive.js',
-            'directives/my-editable/myEditableInteger-directive.js',
-            'directives/my-editable/myEditableTextarea-directive.js',
-            'directives/my-editable/myEditableCheckbox-directive.js',
-            'directives/my-editable/myEditableDropdown-directive.js',
-            'directives/my-editable/myEditableRadio-directive.js',
-            'directives/my-editable/myEditableDate-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/formateurs-service.js',
-            'services/data/formateurtypes-service.js',
-            'services/editmode-service.js',
-            'services/shareddata-service.js',
-            'services/details/formateurdetail-service.js',
-            'controllers/detail-controller.js',
-            'app/formateurDetailApp.js'
-            ], 'public/js/formateurs-detail.js')
-        .scripts([
-            'vendor/jquery/dist/jquery.min.js',
-            'vendor/select2/select2.js',
-            'vendor/angular/angular.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-select2/dist/angular-select2.js',
-            'directives/myForceInteger-directive.js',
-            'directives/mySortableHeader-directive.js',
-            'directives/my-editable/myEditable-commons.js',
-            'directives/my-editable/myEditableText-directive.js',
-            'directives/my-editable/myEditableInteger-directive.js',
-            'directives/my-editable/myEditableTextarea-directive.js',
-            'directives/my-editable/myEditableCheckbox-directive.js',
-            'directives/my-editable/myEditableDropdown-directive.js',
-            'directives/my-editable/myEditableRadio-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/financeurs-service.js',
-            'services/data/financeurtypes-service.js',
-            'services/editmode-service.js',
-            'services/shareddata-service.js',
-            'services/details/financeurdetail-service.js',
-            'controllers/detail-controller.js',
-            'app/financeurDetailApp.js'
-            ], 'public/js/financeurs-detail.js')
-        .scripts([
-            'vendor/jquery/dist/jquery.min.js',
-            'vendor/select2/select2.js',
-            'vendor/angular/angular.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-select2/dist/angular-select2.js',
-            'directives/myForceInteger-directive.js',
-            'directives/mySortableHeader-directive.js',
-            'directives/my-editable/myEditable-commons.js',
-            'directives/my-editable/myEditableText-directive.js',
-            'directives/my-editable/myEditableInteger-directive.js',
-            'directives/my-editable/myEditableTextarea-directive.js',
-            'directives/my-editable/myEditableCheckbox-directive.js',
-            'directives/my-editable/myEditableDropdown-directive.js',
-            'directives/my-editable/myEditableRadio-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/employeurs-service.js',
-            'services/editmode-service.js',
-            'services/shareddata-service.js',
-            'services/details/employeurdetail-service.js',
-            'controllers/detail-controller.js',
-            'app/employeurDetailApp.js'
-            ], 'public/js/employeurs-detail.js')
-        .scripts([
-            'vendor/jquery/dist/jquery.min.js',
-            'vendor/select2/select2.js',
-            'vendor/angular/angular.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-select2/dist/angular-select2.js',
-            'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
-            'directives/myForceInteger-directive.js',
-            'directives/mySortableHeader-directive.js',
-            'directives/datepickerlocaldate-directive.js',
-            'directives/my-editable/myEditable-commons.js',
-            'directives/my-editable/myEditableText-directive.js',
-            'directives/my-editable/myEditableInteger-directive.js',
-            'directives/my-editable/myEditableTextarea-directive.js',
-            'directives/my-editable/myEditableCheckbox-directive.js',
-            'directives/my-editable/myEditableDropdown-directive.js',
-            'directives/my-editable/myEditableRadio-directive.js',
-            'directives/my-editable/myEditableDate-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/stagiaires-service.js',
-            'services/data/stagiairetypes-service.js',
-            'services/data/employeurs-service.js',
-            'services/data/inscriptions-service.js',
-            'services/editmode-service.js',
-            'services/shareddata-service.js',
-            'services/details/stagiairedetail-service.js',
-            'services/tables/inscriptions-service.js',
-            'controllers/detail-controller.js',
-            'controllers/editableTable-controller.js',
-            'app/stagiaireDetailApp.js'
-            ], 'public/js/stagiaires-detail.js')
-        .scripts([
-            'vendor/jquery/dist/jquery.min.js',
-            'vendor/select2/select2.js',
-            'vendor/angular/angular.js', 
-            'vendor/angular-resource/angular-resource.min.js', 
-            'vendor/angular-messages/angular-messages.min.js', 
-            'vendor/angular-select2/dist/angular-select2.js',
-            'directives/myForceInteger-directive.js',
-            'directives/mySortableHeader-directive.js',
-            'directives/my-editable/myEditable-commons.js',
-            'directives/my-editable/myEditableText-directive.js',
-            'directives/my-editable/myEditableInteger-directive.js',
-            'directives/my-editable/myEditableTextarea-directive.js',
-            'directives/my-editable/myEditableCheckbox-directive.js',
-            'directives/my-editable/myEditableDropdown-directive.js',
-            'directives/my-editable/myEditableRadio-directive.js',
-            'filters/myCustomFilter-filter.js',
-            'services/data/inscriptions-service.js',
-            'services/data/stagiaires-service.js',
-            'services/data/sessions-service.js',
-            'services/editmode-service.js',
-            'services/shareddata-service.js',
-            'services/details/inscriptiondetail-service.js',
-            'controllers/detail-controller.js',
-            'app/inscriptionDetailApp.js'
-            ], 'public/js/inscriptions-detail.js')
-/*
-    .spritesmith('resources/assets/img/sprites', {
-        imgOutput: 'public/images',
-        cssOutput: 'resources/assets/sass/theme',
-        cssName: '_sprite.scss',
-        imgPath: '../images/sprite.png'
-    });
-*/
+        .scripts(array_unique(Array.prototype.concat(
+            parametres,
+            ['app/parametresApp.js']
+        )), 'public/js/parametres.js')
+        .scripts(array_unique(Array.prototype.concat(
+            modulesList,
+            ['app/modulesApp.js']
+        )), 'public/js/modules-list.js')
+        .scripts(array_unique(Array.prototype.concat(
+            sessionsList,
+            ['app/sessionsApp.js']
+        )), 'public/js/sessions-list.js')
+        .scripts(array_unique(Array.prototype.concat(
+            formateursList,
+            ['app/formateursApp.js']
+        )), 'public/js/formateurs-list.js')
+        .scripts(array_unique(Array.prototype.concat(
+            financeursList,
+            ['app/financeursApp.js']
+        )), 'public/js/financeurs-list.js')
+        .scripts(array_unique(Array.prototype.concat(
+            employeursList,
+            ['app/employeursApp.js']
+        )), 'public/js/employeurs-list.js')
+        .scripts(array_unique(Array.prototype.concat(
+            stagiairesList,
+            ['app/stagiairesApp.js']
+        )), 'public/js/stagiaires-list.js')
+        .scripts(array_unique(Array.prototype.concat(
+            inscriptionsList,
+            ['app/inscriptionsApp.js']
+        )), 'public/js/inscriptions-list.js')
+        .scripts(array_unique(Array.prototype.concat(
+            moduleDetail,
+            ['app/moduleDetailApp.js']
+        )), 'public/js/modules-detail.js')
+        .scripts(array_unique(Array.prototype.concat(
+            sessionDetail,
+            ['app/sessionDetailApp.js']
+        )), 'public/js/sessions-detail.js')
+        .scripts(array_unique(Array.prototype.concat(
+            formateurDetail,
+            ['app/formateurDetailApp.js']
+        )), 'public/js/formateurs-detail.js')
+        .scripts(array_unique(Array.prototype.concat(
+            financeurDetail,
+            ['app/financeurDetailApp.js']
+        )), 'public/js/financeurs-detail.js')
+        .scripts(array_unique(Array.prototype.concat(
+            employeurDetail,
+            ['app/employeurDetailApp.js']
+        )), 'public/js/employeurs-detail.js')
+        .scripts(array_unique(Array.prototype.concat(
+            stagiaireDetail,
+            ['app/stagiaireDetailApp.js']
+        )), 'public/js/stagiaires-detail.js')
+        .scripts(array_unique(Array.prototype.concat(
+            inscriptionDetail,
+            ['app/inscriptionDetailApp.js']
+        )), 'public/js/inscriptions-detail.js')
+
 });
 
 elixir.Task.find('less').watch('resources/assets/less/**/');
-//elixir.Task.find('sprite').watch('resources/assets/img/sprites/**/');
