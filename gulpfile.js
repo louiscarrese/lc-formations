@@ -106,6 +106,7 @@ elixir(function(mix) {
             'directives/mySortableHeader-directive.js',
             'filters/myCustomFilter-filter.js',
             'services/data/inscriptions-service.js',
+            'services/tables/inscriptions-service.js',
             'controllers/editableTable-controller.js',
             'app/inscriptionsApp.js'
             ], 'public/js/inscriptions-list.js')
@@ -281,10 +282,13 @@ elixir(function(mix) {
             'services/data/stagiaires-service.js',
             'services/data/stagiairetypes-service.js',
             'services/data/employeurs-service.js',
+            'services/data/inscriptions-service.js',
             'services/editmode-service.js',
             'services/shareddata-service.js',
             'services/details/stagiairedetail-service.js',
+            'services/tables/inscriptions-service.js',
             'controllers/detail-controller.js',
+            'controllers/editableTable-controller.js',
             'app/stagiaireDetailApp.js'
             ], 'public/js/stagiaires-detail.js')
         .scripts([

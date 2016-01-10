@@ -2,13 +2,16 @@ angular.module('stagiairesDetailServices', ['ngResource'])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('stagiaireTypesService', ['$resource', stagiaireTypesServiceFactory])
     .factory('employeursService', ['$resource', employeursServiceFactory])
+    .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('sharedDataService', [sharedDataServiceFactory])
+    .factory('inscriptionsTableService', ['sharedDataService', inscriptionsTableServiceFactory])
     .factory('editModeService', [editModeServiceFactory])
     .factory('stagiaireDetailService', ['sharedDataService', 'stagiaireTypesService', 'employeursService', stagiaireDetailServiceFactory])
 ;
 
 angular.module('stagiairesDetailControllers', [])
-        .controller('detailController', ['editModeService', 'stagiairesService', 'stagiaireDetailService', detailController])
+    .controller('detailController', ['editModeService', 'stagiairesService', 'stagiaireDetailService', detailController])
+    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
 ;
 
 angular.module('stagiairesDetailFilters', [])

@@ -127,4 +127,8 @@
         ]
     ])
 
+    <div ng-if="detailCtrl.inited && detailCtrl.mode != 'create'">
+        @include('components.lists.inscriptions')
+    </div>
+
 </div>
