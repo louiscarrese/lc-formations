@@ -1,4 +1,4 @@
-function myEditableDirectiveDate()) {
+function myEditableDirectiveDate() {
 
     var directive = {
         restrict: 'E',

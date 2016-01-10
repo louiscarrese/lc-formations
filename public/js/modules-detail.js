@@ -11385,7 +11385,7 @@ function myEditableDirectiveInteger() {
 
     return directive;
 }
-function myEditableDirectiveDate()) {
+function myEditableDirectiveDate() {
 
     var directive = {
         restrict: 'E',

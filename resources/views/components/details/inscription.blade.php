@@ -2,13 +2,6 @@
     @include('components.detail', [
         'controller' => 'detailCtrl',
         'fields' => [
-            'id' => [
-                'isId' => true,
-                'label' => 'Id',
-                'type' => 'integer',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
             'stagiaire_id' => [
                 'label' => 'Stagiaire',
                 'type' => 'dropdown',
@@ -19,6 +12,7 @@
                 'searchable' => true,
                 'sizeLabel' => 2,
                 'sizeValue' => 3,
+                'validation' => 'required',
             ],
             'session_id' => [
                 'label' => 'Session',
@@ -30,6 +24,7 @@
                 'searchable' => true,
                 'sizeLabel' => 2,
                 'sizeValue' => 3,
+                'validation' => 'required',
             ],
             'profession_structure' => [
                 'label' => 'Profession',

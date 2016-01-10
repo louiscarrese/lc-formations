@@ -2,18 +2,12 @@
     @include('components.detail', [
         'controller' => 'detailCtrl',
         'fields' => [
-            'id' => [
-                'isId' => true,
-                'label' => 'Id',
-                'type' => 'integer',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
             'nom' => [
                 'label' => 'Nom',
                 'type' => 'text',
                 'sizeLabel' => 2,
                 'sizeValue' => 2,
+                'validation' => 'required',
             ],
             'prenom' => [
                 'label' => 'Prenom',
