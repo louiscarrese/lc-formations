@@ -16,25 +16,25 @@ class CreateStagiairesTable extends Migration
             $table->increments('id');
 
             $table->string('nom');
-            $table->string('prenom');
-            $table->string('sexe');
-            $table->date('date_naissance');
-            $table->string('adresse');
-            $table->string('code_postal');
-            $table->string('ville');
-            $table->string('tel_portable');
-            $table->string('tel_fixe');
-            $table->string('email');
-            $table->string('profession');
-            $table->string('etudes');
-            $table->date('demandeur_emploi_depuis');
-            $table->string('niveau_qualification'); //liste fermée ?
-            $table->string('domaine_pro'); //liste fermée ?
+            $table->string('prenom')->nullable();
+            $table->string('sexe')->nullable();
+            $table->date('date_naissance')->nullable();
+            $table->string('adresse')->nullable();
+            $table->string('code_postal')->nullable();
+            $table->string('ville')->nullable();
+            $table->string('tel_portable')->nullable();
+            $table->string('tel_fixe')->nullable();
+            $table->string('email')->nullable();
+            $table->string('profession')->nullable();
+            $table->string('etudes')->nullable();
+            $table->date('demandeur_emploi_depuis')->nullable();
+            $table->string('niveau_qualification')->nullable(); //liste fermée ?
+            $table->string('domaine_pro')->nullable(); //liste fermée ?
 
             $table->integer('employeur_id')->unsigned()->nullable();
             $table->foreign('employeur_id')->references('id')->on('employeurs');
 
-            $table->integer('stagiaire_type_id')->unsigned();
+            $table->integer('stagiaire_type_id')->unsigned()->nullable();
             $table->foreign('stagiaire_type_id')->references('id')->on('stagiaire_types');
 
             $table->timestamps();

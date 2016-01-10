@@ -21,7 +21,7 @@ class CreateSessionJoursTable extends Migration
             $table->integer('session_id')->unsigned();
             $table->foreign('session_id')->references('id')->on('sessions');
 
-            $table->integer('lieu_id')->unsigned();
+            $table->integer('lieu_id')->unsigned()->nullable();
             $table->foreign('lieu_id')->references('id')->on('lieus');
 
             $table->timestamps();

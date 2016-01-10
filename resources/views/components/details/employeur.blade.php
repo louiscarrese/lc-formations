@@ -40,7 +40,7 @@
             ],
             'email' => [
                 'label' => 'Email',
-                'type' => 'text',
+                'type' => 'email',
                 'sizeLabel' => 2,
                 'sizeValue' => 3,
             ],

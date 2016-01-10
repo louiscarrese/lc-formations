@@ -14,6 +14,7 @@
                 'type' => 'text',
                 'sizeLabel' => 3,
                 'sizeValue' => 2,
+                'validation' => 'required',
             ],
             'prenom' => [
                 'label' => 'Prenom',
@@ -30,7 +31,8 @@
             ],
             'date_naissance' => [
                 'label' => 'Date de naissance',
-                'type' => 'text',
+                'type' => 'date',
+                'format' => 'dd/MM/yyyy',
                 'sizeLabel' => 3,
                 'sizeValue' => 2,
             ],
@@ -66,9 +68,10 @@
             ],
             'email' => [
                 'label' => 'Email',
-                'type' => 'text',
+                'type' => 'email',
                 'sizeLabel' => 3,
                 'sizeValue' => 3,
+                'validation' => 'email',
             ],
             'profession' => [
                 'label' => 'Profession',

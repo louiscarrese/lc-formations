@@ -106,7 +106,6 @@
                     'modelObject' => 'lieu', //where to find the subobject in the controller
                     'displayed' => '<libelle>',
                     'addLine' => true,
-                    'validation' => 'required',
                     'size' => 3,
                 ], //lieu_id
 
