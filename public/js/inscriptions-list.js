@@ -396,11 +396,14 @@ function editableTableController($filter, dataService, tableService) {
     self.delete = del;
     self.get = get;
 
-    self.error = error;
     self.getSuccess = getSuccess;
 
     self.editSubmit = editSubmit;
     self.addSubmit = addSubmit;
+
+    self.closeAlert = closeAlert;
+    self.extractErrors = extractErrors;
+
 
     //Data
 
@@ -496,7 +499,7 @@ function editableTableController($filter, dataService, tableService) {
 
             }, 
             function(httpResponse) {
-                self.error("Erreur à l'enregistrement");
+                self.errors = self.extractErrors(httpResponse);
             });
     };
 
@@ -509,7 +512,7 @@ function editableTableController($filter, dataService, tableService) {
                 self.data.splice(self.data.indexOf(value), 1);
             }, 
             function(httpResponse) {
-                self.error("Erreur à la suppression");
+                self.errors = self.extractErrors(httpResponse);
             });
     };
 
@@ -533,7 +536,7 @@ function editableTableController($filter, dataService, tableService) {
                 self.form_add.$setUntouched();
             }, 
             function(httpResponse) {
-                self.error("Erreur à l'ajout");
+                self.errors = self.extractErrors(httpResponse);
             });
     };
 
@@ -558,11 +561,18 @@ function editableTableController($filter, dataService, tableService) {
         });
     };
 
-    /**
-     * Utilities
-     */
-     function error(message) {
-        self.errorMessage = message;
+    function closeAlert(index) {
+        self.errors.splice(index, 1);
+    };
+
+    function extractErrors(data) {
+        var ret = [];
+        for(field in data) {
+            for(i = 0; i < data[field].length; i++) {
+                ret.push(data[field][i]);
+            }
+        }
+        return ret;
     };
 } 
 

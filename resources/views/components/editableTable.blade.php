@@ -16,6 +16,10 @@
 
 <div ng-controller="{{$controllerName}} as ctrl" <? echo((isset($adaptToContent) && $adaptToContent) ? ' class="adapt-to-content"' : ''); ?>>
 
+    <div class="alerts">
+        <uib-alert type="danger" close="{{$controllerName}}.closeAlert($index)" ng-repeat="error in {{$controllerName}}.errors">@{{error}}</uib-alert>
+    </div>
+
     <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="form-control" />
     <form name="ctrl.mainForm" novalidate>
     <table class="table table-striped table-condensed">

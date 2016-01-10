@@ -13,6 +13,12 @@ abstract class AbstractController extends Controller
     //The list of possible filters
     protected $filters = [];
 
+    protected $validation_rules = [];
+
+    protected $messages = [
+        'required' => 'Le champ :attribute est obligatoire',
+    ];
+
     public function index(Request $request) 
     {
         //Initialize with no criterias
@@ -49,6 +55,8 @@ abstract class AbstractController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, $this->validation_rules);
+
         $data = $this->repository->store($request->all());
 
         return response()->json($data);
@@ -76,6 +84,8 @@ abstract class AbstractController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, $this->validation_rules);
+
         $data = $this->repository->store($request->all(), $id);
 
         return response()->json($data);

@@ -39973,8 +39973,10 @@ function datepickerLocaldate() {
 
             // called with a JavaScript Date object when picked from the datepicker
             ngModelController.$parsers.push(function (viewValue) {
-                // undo the timezone adjustment we did during the formatting
-                viewValue.setMinutes(viewValue.getMinutes() - viewValue.getTimezoneOffset());
+                if(viewValue) {
+                    // undo the timezone adjustment we did during the formatting
+                    viewValue.setMinutes(viewValue.getMinutes() - viewValue.getTimezoneOffset());
+                }
                 // we just want a local date in ISO format
                 return viewValue;
             });
@@ -40520,6 +40522,7 @@ function detailController(editModeService, dataService, detailService) {
 
     self.internalKey = 0;
 
+    self.errors = [];
     //CRUD
     self.create = create;
     self.cancel = cancel;
@@ -40530,6 +40533,9 @@ function detailController(editModeService, dataService, detailService) {
     self.getSuccess = getSuccess;
     self.setModeRead = setModeRead;
     self.setModeEdit = setModeEdit;
+
+    self.closeAlert = closeAlert;
+    self.extractErrors = extractErrors;
 
     //Just so we don't have 'undefined' in places 
     self.data = {};
@@ -40566,8 +40572,8 @@ function detailController(editModeService, dataService, detailService) {
                     self.getSuccess(value);
                     self.setModeRead();
                 }, 
-                function(httpResponseHeaders) {
-                    alert('Error ! ');
+                function(response) {
+                    self.errors = self.extractErrors(response.data);
                 }
             );
         }
@@ -40588,8 +40594,8 @@ function detailController(editModeService, dataService, detailService) {
                     self.getSuccess(value);
                     self.setModeRead();
                 },
-                function(httpResponseHeaders) {
-                    alert('error');
+                function(response) {
+                    self.errors = self.extractErrors(response.data);
                 }
             );
         }
@@ -40601,8 +40607,8 @@ function detailController(editModeService, dataService, detailService) {
                 if(detailService != undefined && typeof detailService.getListUrl == 'function')
                     window.location.href=detailService.getListUrl();
             },
-            function(httpResponseHeaders) {
-                alert('error');
+            function(response) {
+                self.errors = self.extractErrors(response.data);
             })
     }
 
@@ -40653,6 +40659,20 @@ function detailController(editModeService, dataService, detailService) {
         self.mode = 'edit';
 
 
+    }
+
+    function closeAlert(index) {
+        self.errors.splice(index, 1);
+    }
+
+    function extractErrors(data) {
+        var ret = [];
+        for(field in data) {
+            for(i = 0; i < data[field].length; i++) {
+                ret.push(data[field][i]);
+            }
+        }
+        return ret;
     }
 }
 angular.module('stagiairesDetailServices', ['ngResource'])
