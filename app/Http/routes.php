@@ -60,8 +60,7 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
 
 
 Route::get('/', function () {
-//    return view('welcome');
-      return "Yay !";
+    return view('home');
 });
 
 //"Pages"
