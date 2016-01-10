@@ -1,5 +1,7 @@
 @if($field['type'] == 'text')
-    <my-editable-text ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable-text>
+    <my-editable-text type="text" ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable-text>
+@elseif($field['type'] == 'email')
+    <my-editable-text type="email" ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable-text>
 @elseif($field['type'] == 'integer')
     <my-editable-integer ng-model="{{$element}}.{{$fieldId}}" editing-flag="{{$editingFlag}}" {{$field['additionalAttributes'] or ''}} {{$field['validation'] or ''}}></my-editable-integer>
 @elseif($field['type'] == 'date')

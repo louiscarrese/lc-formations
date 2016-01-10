@@ -33197,6 +33197,7 @@ function myEditableDirectiveText() {
         {
             ngModel: '=',
             editingFlag: '=',
+            type: '@'
         },
         controller: function($scope) {},
         require: ['^form'],
@@ -33207,7 +33208,7 @@ function myEditableDirectiveText() {
 
             var template = '';
             template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
-            template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
+            template += '<input type="' + tAttr['type'] + '" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
             template += this.validationTemplate(fieldName);
 
             return template;
