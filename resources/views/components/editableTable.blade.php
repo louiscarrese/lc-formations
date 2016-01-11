@@ -73,7 +73,7 @@
             </tr>
 
             {{-- Add line --}}
-            <tr ng-form="{{$controllerName}}.form_add">
+            <tr ng-form="{{$controllerName}}.form_add" novalidate >
                 @foreach($fields as $fieldId => $field)
                     <td class="validated form-group {{$field['tdClass'] or ''}}" ng-class="{ 'has-error': {{$controllerName}}.form_add.{{$fieldId}}.$invalid && {{$controllerName}}.form_add.{{$fieldId}}.$touched }">
                         @if($field['addLine'])
