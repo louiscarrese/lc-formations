@@ -56,6 +56,8 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
 
     Route::resource('inscription', 'InscriptionController', 
         ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+    Route::resource('financeur_inscription', 'FinanceurInscriptionController', 
+        ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 });
 
 

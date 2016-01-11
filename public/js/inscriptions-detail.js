@@ -12028,12 +12028,318 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         },
     }
 }
-angular.module('inscriptionDetail', ['detail', 'ngResource'])
+angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', inscriptionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', detailController])
+;
+
+function mySortableHeaderDirective() {
+    return {
+        restrict: 'E',
+        transclude: true,
+        scope: {
+            setSort: '&set',
+            getSort: '&get'
+        },
+        template: function() {
+            var template = '';
+
+            template += '<span ng-click="setSort()" ng-transclude></span>';
+            template += '<span ng-show="getSort() === false" class="sort-arrow glyphicon glyphicon-triangle-top"></span>';
+            template += '<span ng-show="getSort() === true" class="sort-arrow glyphicon glyphicon-triangle-bottom"></span>';
+
+            return template;
+        }
+    };
+}
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
+function myCustomFilter() {
+    return function(input, filter) {
+        var outArray = [];
+        var lowerFilter = angular.lowercase(filter) || '';
+
+        //Pour chaque élément du tableau
+        for(elemId = 0; elemId < input.length; elemId++) {
+            //Pour chaque champ à analyser
+            for(fieldId = 2; fieldId < arguments.length; fieldId++) {
+                //On découpe, au cas où ça serait un sous objet (genre objet.propriete)
+                var fieldPath = arguments[fieldId].split('.');
+                //On démarre sur l'élément du tableau
+                var fieldValue = input[elemId];
+                //On descend chaque champ de l'arborescence
+                for(var i = 0; i < fieldPath.length; i++) {
+                    fieldValue = fieldValue[fieldPath[i]];
+                }
+
+                //On converti en string lowercase
+                var stringValue = angular.lowercase('' + fieldValue);
+
+                //On cherche le filtre dans la valeur
+                if(stringValue.indexOf(lowerFilter) !== -1) {
+                    outArray.push(input[elemId]);
+                    //Si on l'a trouvé une fois, on peut passer à l'élément de tableau suivant
+                    break;
+                }
+            }
+        }
+        return outArray;
+    }
+
+}
+function editableTableController($filter, dataService, tableService) {
+    var self = this;
+
+    //Functions
+    self.orderBy = $filter('orderBy');
+
+    self.setSort = setSort;
+    self.getSort = getSort;
+    self.sort = sort;
+
+    self.query = query;
+    self.create = create;
+    self.cancel = cancel;
+    self.update = update;
+    self.delete = del;
+    self.get = get;
+
+    self.getSuccess = getSuccess;
+
+    self.editSubmit = editSubmit;
+    self.addSubmit = addSubmit;
+
+    self.closeAlert = closeAlert;
+    self.extractErrors = extractErrors;
+
+
+    //Data
+
+    self.queryParameters = {};
+
+    self.addObject = {};
+
+    self.errorMessage = "";
+    self.filterInput = "";
+
+    self.sortProp = "id";
+    self.sortReverse = false;
+
+    if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
+        self.linkedData = tableService.getLinkedData();
+    }
+    self.data = query();
+
+    function setSort(key) {
+        if(self.sortProp == key) {
+            self.sortReverse = !self.sortReverse;
+        } else {
+            self.sortProp = key;
+            self.sortReverse = false;
+        }
+        self.sort();
+    };
+
+    function getSort(key) {
+        if(self.sortProp === key) {
+            return self.sortReverse;
+        } else {
+            return null;
+        }
+    };
+
+    function sort() {
+        self.data = self.orderBy(self.data, self.sortProp, self.sortReverse);
+    }
+
+    function getSuccess(value) {
+        value.internalKey = value.id;
+        if(tableService != undefined && typeof tableService.getSuccess == 'function') {
+            tableService.getSuccess(value);
+        }
+    }
+
+    function editSubmit(index, value) {
+        //Validation
+        var form = self['form_' + index];
+        if(form.$valid) {
+            //Send update
+            self.update(value);
+        } 
+    }
+
+    function addSubmit() {
+        //Validation
+        var form = self['form_add'];
+        if(form.$valid) {
+            //Send update
+            self.create(self.addObject);
+        }
+    }
+
+    function query() {
+        if(tableService != undefined && typeof tableService.queryParameters == 'function') {
+            self.queryParameters = tableService.queryParameters();
+        }
+        
+        return dataService.query(self.queryParameters, function() {
+            angular.forEach(self.data, function(value, key) {
+                self.getSuccess(value);
+            });
+            self.sort();
+        });
+    }
+
+    /**
+     * Update
+     */
+     function update(type) {
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
+            tableService.preSend(type);
+        }
+
+        self.errors = [];
+        type.$update({id: type.internalKey}, 
+            function(value, responseHeaders) {
+
+                self.getSuccess(value);
+                value.editing = false;
+                self.sort();
+
+            }, 
+            function(httpResponse) {
+                self.errors = self.extractErrors(httpResponse);
+            });
+    };
+
+    /**
+     * Delete
+     */
+     function del(type) {
+        self.errors = [];
+        type.$delete({id: type.internalKey}, 
+            function(value, responseHeaders) {
+                self.data.splice(self.data.indexOf(value), 1);
+            }, 
+            function(httpResponse) {
+                self.errors = self.extractErrors(httpResponse);
+            });
+    };
+
+    /**
+     * Add
+     */
+     function create() {
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
+            tableService.preSend(self.addObject);
+        }
+        self.errors = [];
+        dataService.save(self.addObject, 
+            function(value, responseHeaders) {
+                //process value
+                self.getSuccess(value);
+
+                //Update data list
+                self.data.push(value);
+                self.sort();
+                self.addObject = {};
+                self.form_add.$setPristine();
+                self.form_add.$setUntouched();
+            }, 
+            function(httpResponse) {
+                self.errors = self.extractErrors(httpResponse);
+            });
+    };
+
+    /**
+     * Cancel
+     */
+     function cancel(type) {
+        self.errors = [];
+        dataService.get({id: type.internalKey}, function(value, responseHeaders) {
+            self.getSuccess(value);
+            value.editing = false;
+            self.data[self.data.indexOf(type)] = value;
+        });
+    };
+
+    /** 
+     * Get
+     */
+     function get(type) {
+        dataService.get({id: type.id}, function(value, responseHeaders) {
+            self.getSuccess(value);
+            self.data[self.data.indexOf(type)] = value;
+        });
+    };
+
+    function closeAlert(index) {
+        self.errors.splice(index, 1);
+    };
+
+    function extractErrors(data) {
+        var ret = [];
+        for(field in data) {
+            for(i = 0; i < data[field].length; i++) {
+                ret.push(data[field][i]);
+            }
+        }
+        return ret;
+    };
+} 
+
+angular.module('editableTable', ['myEditable', 'sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
+function financeurInscriptionsServiceFactory($resource) {
+    return $resource('/api/financeur_inscription/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+function financeursServiceFactory($resource) {
+    return $resource('/api/financeur/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+function financeurInscriptionsTableServiceFactory(sharedDataService, financeursService) {
+    return {
+        getLinkedData: function() {
+            var financeurs = financeursService.query();
+
+            return {
+                'financeurs': financeurs,
+            }
+        },
+
+
+        preSend: function(data, parentController) {
+            data.inscription_id = sharedDataService.data.inscription_id;
+        },
+
+        queryParameters: function() {
+            var ret = {};
+            if(sharedDataService.data.inscription_id) {
+                ret['inscription_id'] = sharedDataService.data.inscription_id;
+            }
+            return ret;
+        }
+
+    };
+}
+angular.module('financeurInscriptionsList', ['editableTable', 'ngResource'])
+    .factory('financeurInscriptionsService', ['$resource', financeurInscriptionsServiceFactory])
+    .factory('financeursService', ['$resource', financeursServiceFactory])
+    .factory('financeurInscriptionsTableService', ['sharedDataService', 'financeursService', financeurInscriptionsTableServiceFactory])
+    .controller('financeurInscriptionsController', ['$filter', 'financeurInscriptionsService', 'financeurInscriptionsTableService', editableTableController])
 ;
 
 angular.module('inscriptionsDetailApp', ['inscriptionDetail']);

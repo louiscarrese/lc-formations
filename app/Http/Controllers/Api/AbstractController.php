@@ -15,10 +15,6 @@ abstract class AbstractController extends Controller
 
     protected $validation_rules = [];
 
-    protected $messages = [
-        'required' => 'Le champ :attribute est obligatoire',
-    ];
-
     public function index(Request $request) 
     {
         //Initialize with no criterias

@@ -12,7 +12,7 @@ class CreateFinanceurInscriptionTable extends Migration
      */
     public function up()
     {
-        Schema::create('financeur_inscription', function (Blueprint $table) {
+        Schema::create('financeur_inscriptions', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('financeur_id')->unsigned();
@@ -34,6 +34,6 @@ class CreateFinanceurInscriptionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('financeur_inscription');
+        Schema::drop('financeur_inscriptions');
     }
 }

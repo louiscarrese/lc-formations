@@ -169,6 +169,17 @@ var inscriptionsList = Array.prototype.concat(
     ]
 );
 
+var financeurInscriptionsList = Array.prototype.concat(
+    libraries,
+    editableTable,
+    [
+        'services/data/financeurinscriptions-service.js',
+        'services/data/financeurs-service.js',
+        'services/tables/financeurinscriptions-service.js',
+        'modules/tables/financeurinscriptions-list-module.js'
+    ]
+);
+
 
 var moduleDetail = Array.prototype.concat(
     libraries,
@@ -270,7 +281,9 @@ var inscriptionDetail = Array.prototype.concat(
         'services/data/sessions-service.js',
         'services/details/inscriptiondetail-service.js',
         'modules/details/inscription-detail-module.js'
-    ]
+    ],
+    /** Sub-objects */
+    financeurInscriptionsList
 );
 elixir(function(mix) {
     mix

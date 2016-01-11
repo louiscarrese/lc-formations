@@ -63,4 +63,36 @@
             ],
         ]
     ])
+
+    <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != 'create'">
+            @include('components.EditableTable',
+                [  
+                    'controllerName' => 'financeurInscriptionsController',
+                    'idField' => 'id',
+                    'title' => 'Financements',
+                    'fields' => [
+                        'financeur_id' => [
+                            'label' => 'Financeur',
+                            'sortable' => true,
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'dropdown',
+                            'datasource' => 'linkedData.financeurs',
+                            'dataId' => 'id',
+                            'modelObject' => 'financeur',
+                            'displayed' => '<libelle>',
+                            'addLine' => true,
+                        ],
+                        'montant' => [
+                            'label' => 'Montant',
+                            'sortable' => true,
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'integer',
+                            'addLine' => true,
+                        ],
+                    ]
+                ]
+            )
+    </div>
 </div>
