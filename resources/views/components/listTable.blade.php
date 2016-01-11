@@ -21,12 +21,14 @@
         <thead>
             <tr>
                 @foreach($fields as $fieldId => $field)
-                    @if($field['sortable'])
-                        <th class="clickable {{$field['tdClass'] or ''}}">
-                            <my-sortable-header set="ctrl.setSort('{{$fieldId}}')" get="ctrl.getSort('{{$fieldId}}')">{{$field['label']}}</my-sortable-header>
-                        </th>
-                    @else
-                        <td><span>{{$field['label']}}</span></td>
+                    @if(!isset($displayedField) || in_array($fieldId, $displayedField))
+                        @if($field['sortable'])
+                            <th class="clickable {{$field['tdClass'] or ''}}">
+                                <my-sortable-header set="ctrl.setSort('{{$fieldId}}')" get="ctrl.getSort('{{$fieldId}}')">{{$field['label']}}</my-sortable-header>
+                            </th>
+                        @else
+                            <td><span>{{$field['label']}}</span></td>
+                        @endif
                     @endif
                 @endforeach
                 <td>
@@ -40,10 +42,11 @@
         <tbody>
             <tr ng-repeat="item in ctrl.data | {{$filter}}">
                 @foreach($fields as $fieldId => $field)
-
-                    <td class="{{$field['tdClass'] or ''}}">
-                        <span><?php echo $viewService->displayedField($fieldId, $field); ?></span>
-                    </td>
+                    @if(!isset($displayedField) || in_array($fieldId, $displayedField))
+                        <td class="{{$field['tdClass'] or ''}}">
+                            <span><?php echo $viewService->displayedField($fieldId, $field); ?></span>
+                        </td>
+                    @endif
                 @endforeach
                 <td class="list-action">
                     <span>
