@@ -52,7 +52,11 @@ abstract class AbstractRepository implements RepositoryInterface {
 
         //Add each criteria
         foreach($criterias as $key => $value) {
-            $data_req = $data_req->where($key, $value);
+            if(is_array($value)) {
+                $data_req = $data_req->whereIn($key, $value);
+            } else {
+                $data_req = $data_req->where($key, $value);
+            }
         }
 
         //Execute request
