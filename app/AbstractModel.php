@@ -82,6 +82,9 @@ class AbstractModel extends Model
         }
     }
 
+    public function hasGetMutator($key) {
+        return in_array($key, static::$myDates) || in_array($key, static::$myTimes) || parent::hasGetMutator($key);
+    }
     public static function cacheMutatedAttributes($class) {
         Model::cacheMutatedAttributes($class);
         static::$mutatorCache[$class] = array_merge(static::$mutatorCache[$class], static::$myDates);

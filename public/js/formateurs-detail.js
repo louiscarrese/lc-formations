@@ -11392,7 +11392,9 @@ function myEditableDirectiveDate() {
             template += '<p class="input-group" ng-show="editingFlag" ' + htmlAttrs + '>';
             template += '<input type="text" class="form-control" ng-model="ngModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
             template += 'is-open="status.opened" ';
-            template += 'show-button-bar="false" '; 
+            template += 'show-button-bar="false" ';
+            template += 'name="' + fieldName +'" ';
+            template += htmlAttrs + ' '; 
             template += 'datepicker-localdate></input>';
             template += ' <span class="input-group-btn">';
             template += '  <button type="button" class="btn btn-default" ng-click="open($event)" >';
@@ -11718,8 +11720,10 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
     .directive('myEditableTextarea', myEditableDirectiveTextarea)
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableMultiselect', myEditableDirectiveMultiselect)
     .directive('myEditableRadio', myEditableDirectiveRadio)
     .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myEditableTime', myEditableDirectiveTime)
     .directive('myForceInteger', myForceIntegerDirective)
     .directive('datepickerLocaldate', datepickerLocaldate)
 ;

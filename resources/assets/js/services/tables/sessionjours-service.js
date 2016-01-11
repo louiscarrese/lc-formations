@@ -35,6 +35,18 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
                 ret['session_id'] = sharedDataService.data.session_id;
             }
             return ret;
+        },
+
+        autoAdd: function(dataService, autoAddObject) {
+            var refresh = this.refreshData;
+            if(dataService && autoAddObject) {
+                dataService.createDefault({}, 
+                    { session_id: sharedDataService.data.session_id, base_date: autoAddObject.date },
+                    function(response) {
+                        refresh();
+                    }
+                );
+            }
         }
 
     };

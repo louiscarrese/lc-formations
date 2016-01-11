@@ -21,7 +21,9 @@ function myEditableDirectiveDate() {
             template += '<p class="input-group" ng-show="editingFlag" ' + htmlAttrs + '>';
             template += '<input type="text" class="form-control" ng-model="ngModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
             template += 'is-open="status.opened" ';
-            template += 'show-button-bar="false" '; 
+            template += 'show-button-bar="false" ';
+            template += 'name="' + fieldName +'" ';
+            template += htmlAttrs + ' '; 
             template += 'datepicker-localdate></input>';
             template += ' <span class="input-group-btn">';
             template += '  <button type="button" class="btn btn-default" ng-click="open($event)" >';

@@ -16,6 +16,7 @@
  */
 
 Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
+    Route::post('session_jour/create_default', 'SessionJourController@createDefault');
 
     //Listes fermées
     Route::resource('stagiaire_type', 'StagiaireTypeController', 

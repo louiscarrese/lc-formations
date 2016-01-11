@@ -126,6 +126,27 @@
                     ]
                  ] //fields
              ])
+
+             <div class="custom-actions row">
+                <ng-form novalidate name="sessionJoursController.form_autoAdd">
+                    <span class="col-sm-2" ng-class="{ 'has-error': sessionJoursController.form_autoAdd.date.$invalid && sessionJoursController.form_autoAdd.date.$touched }">
+                        @include('components.myEditable', [
+                            'element' => 'sessionJoursController.autoAddObject',
+                            'editingFlag' => true,
+                            'fieldId' => 'date',
+                            'field' => [
+                                'type' => 'date', 
+                                'format' => 'dd/MM/yyyy',
+                                'validation' => 'required',
+                            ]
+                        ])
+                    </span>
+                    <span>
+                        <button class="btn btn-default" ng-click="sessionJoursController.callService('autoAdd', [sessionJoursController.dataService, sessionJoursController.autoAddObject])"><span>Créer les jours</span></button>
+                    </span>
+                </ng-form>
+             </div>
+
          </div>
     </div>
 </div>

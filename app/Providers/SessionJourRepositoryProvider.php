@@ -18,7 +18,10 @@ class SessionJourRepositoryProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('ModuleFormation\Repositories\SessionJourRepositoryInterface', function($app) {
-            return new SessionJourRepository($app, $this->app->make('ModuleFormation\Repositories\FormateurRepositoryInterface'));
+            return new SessionJourRepository($app, 
+                $this->app->make('ModuleFormation\Repositories\FormateurRepositoryInterface'),
+                $this->app->make('ModuleFormation\Repositories\SessionRepositoryInterface')
+            );
         });
     }
 

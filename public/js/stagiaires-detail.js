@@ -11392,7 +11392,9 @@ function myEditableDirectiveDate() {
             template += '<p class="input-group" ng-show="editingFlag" ' + htmlAttrs + '>';
             template += '<input type="text" class="form-control" ng-model="ngModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
             template += 'is-open="status.opened" ';
-            template += 'show-button-bar="false" '; 
+            template += 'show-button-bar="false" ';
+            template += 'name="' + fieldName +'" ';
+            template += htmlAttrs + ' '; 
             template += 'datepicker-localdate></input>';
             template += ' <span class="input-group-btn">';
             template += '  <button type="button" class="btn btn-default" ng-click="open($event)" >';
@@ -11718,8 +11720,10 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
     .directive('myEditableTextarea', myEditableDirectiveTextarea)
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)
     .directive('myEditableDropdown', myEditableDirectiveDropdown)
+    .directive('myEditableMultiselect', myEditableDirectiveMultiselect)
     .directive('myEditableRadio', myEditableDirectiveRadio)
     .directive('myEditableDate', myEditableDirectiveDate)
+    .directive('myEditableTime', myEditableDirectiveTime)
     .directive('myForceInteger', myForceIntegerDirective)
     .directive('datepickerLocaldate', datepickerLocaldate)
 ;
@@ -12106,6 +12110,8 @@ function myCustomFilter() {
 function editableTableController($filter, dataService, tableService) {
     var self = this;
 
+    self.dataService = dataService;
+
     //Functions
     self.orderBy = $filter('orderBy');
 
@@ -12113,6 +12119,7 @@ function editableTableController($filter, dataService, tableService) {
     self.getSort = getSort;
     self.sort = sort;
 
+    self.refreshData = refreshData;
     self.query = query;
     self.create = create;
     self.cancel = cancel;
@@ -12128,7 +12135,7 @@ function editableTableController($filter, dataService, tableService) {
     self.closeAlert = closeAlert;
     self.extractErrors = extractErrors;
 
-
+    self.callService = callService;
     //Data
 
     self.queryParameters = {};
@@ -12144,7 +12151,8 @@ function editableTableController($filter, dataService, tableService) {
     if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
         self.linkedData = tableService.getLinkedData();
     }
-    self.data = query();
+
+    self.refreshData();
 
     function setSort(key) {
         if(self.sortProp == key) {
@@ -12191,6 +12199,9 @@ function editableTableController($filter, dataService, tableService) {
             //Send update
             self.create(self.addObject);
         }
+    }
+    function refreshData() {
+        self.data = self.query();
     }
 
     function query() {
@@ -12302,6 +12313,17 @@ function editableTableController($filter, dataService, tableService) {
         }
         return ret;
     };
+
+    function callService(methodName, parameters) {
+        console.log(parameters);
+        var form = self['form_autoAdd'];
+        if(form.$valid) {
+            if(tableService != undefined && typeof tableService[methodName] == 'function') {
+                return tableService[methodName].apply(self, parameters);
+            }
+        }
+        return null;
+    }
 } 
 
 angular.module('listTable', ['sortableHeader'])

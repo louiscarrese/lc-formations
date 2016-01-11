@@ -3,6 +3,7 @@
 namespace ModuleFormation\Http\Controllers\Api;
 
 use ModuleFormation\Repositories\SessionJourRepositoryInterface;
+use Illuminate\Http\Request;
 
 class SessionJourController extends AbstractController
 {
@@ -18,4 +19,12 @@ class SessionJourController extends AbstractController
     {
         $this->repository = $repository;
     }
+
+    public function createDefault(Request $request) 
+    {
+        $session_id = $request->input('session_id');
+        $date = $request->input('base_date');
+        $this->repository->createDefault($session_id, $date);
+    }
+
 }
