@@ -58,72 +58,74 @@
     ])
 
     <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != 'create'">
-        @include('components.EditableTable',
-            ['controllerName' => 'sessionJoursController',
-             'idField' => 'id',
-             'title' => 'Jours',
-             'fields' => [
-                'date' => [
-                    'label' => 'Date',
-                    'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'date', 
-                    'format' => 'dd/MM/yyyy',
-                    'addLine' => true,
-                    'validation' => 'required',
-                    'size' => 2,
-                ], //date
-                'heure_debut' => [
-                    'label' => 'Début',
-                    'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'time',
-                    'format' => 'HH:mm',
-                    'addLine' => true,
-                    'validation' => 'required',
-                    'size' => 1,
-                ], //heure_debut
-                'heure_fin' => [
-                    'label' => 'Fin',
-                    'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'time',
-                    'format' => 'HH:mm',
-                    'addLine' => true,
-                    'validation' => 'required',
-                    'size' => 1,
-                ], //heure_fin
-                'lieu_id' => [
-                    'label' => 'Lieu',
-                    'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'dropdown',
-                    'datasource' => 'linkedData.lieus', //relative to the controller
-                    'dataId' => 'id', //relative to an item in the datasource
-                    'modelObject' => 'lieu', //where to find the subobject in the controller
-                    'displayed' => '<libelle>',
-                    'addLine' => true,
-                    'size' => 3,
-                ], //lieu_id
+        <div ng-controller="sessionJoursController as sessionJoursController">
+            @include('components.EditableTable',
+                ['controllerName' => 'sessionJoursController',
+                 'idField' => 'id',
+                 'title' => 'Jours',
+                 'fields' => [
+                    'date' => [
+                        'label' => 'Date',
+                        'sortable' => true,
+                        'filterable' => true,
+                        'editable' => true,
+                        'type' => 'date', 
+                        'format' => 'dd/MM/yyyy',
+                        'addLine' => true,
+                        'validation' => 'required',
+                        'size' => 2,
+                    ], //date
+                    'heure_debut' => [
+                        'label' => 'Début',
+                        'sortable' => true,
+                        'filterable' => true,
+                        'editable' => true,
+                        'type' => 'time',
+                        'format' => 'HH:mm',
+                        'addLine' => true,
+                        'validation' => 'required',
+                        'size' => 1,
+                    ], //heure_debut
+                    'heure_fin' => [
+                        'label' => 'Fin',
+                        'sortable' => true,
+                        'filterable' => true,
+                        'editable' => true,
+                        'type' => 'time',
+                        'format' => 'HH:mm',
+                        'addLine' => true,
+                        'validation' => 'required',
+                        'size' => 1,
+                    ], //heure_fin
+                    'lieu_id' => [
+                        'label' => 'Lieu',
+                        'sortable' => true,
+                        'filterable' => true,
+                        'editable' => true,
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.lieus', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the datasource
+                        'modelObject' => 'lieu', //where to find the subobject in the controller
+                        'displayed' => '<libelle>',
+                        'addLine' => true,
+                        'size' => 3,
+                    ], //lieu_id
 
-                 'formateurs_id' => [
-                    'label' => 'Formateurs',
-                    'sortable' => false,
-                    'editable' => true,
-                    'type' => 'multiselect',
-                    'datasource' => 'linkedData.formateurs',
-                    'dataId' => 'id',
-                    'modelObjects' => 'formateurs',
-                    'displayed' => '<nom> <prenom>',
-                    'placeholder' => 'Formateurs',
-                    'addLine' => true,
-                    'size' => 5,
-                ]
-             ] //fields
+                     'formateurs_id' => [
+                        'label' => 'Formateurs',
+                        'sortable' => false,
+                        'editable' => true,
+                        'type' => 'multiselect',
+                        'datasource' => 'linkedData.formateurs',
+                        'dataId' => 'id',
+                        'modelObjects' => 'formateurs',
+                        'displayed' => '<nom> <prenom>',
+                        'placeholder' => 'Formateurs',
+                        'addLine' => true,
+                        'size' => 5,
+                    ]
+                 ] //fields
              ])
+         </div>
     </div>
 <div>

@@ -65,6 +65,7 @@
     ])
 
     <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != 'create'">
+        <div ng-controller="financeurInscriptionsController as financeurInscriptionsController">
             @include('components.EditableTable',
                 [  
                     'controllerName' => 'financeurInscriptionsController',
@@ -94,5 +95,6 @@
                     ]
                 ]
             )
+        </div>
     </div>
 </div>
