@@ -1,5 +1,9 @@
 <h2>{{<?php echo($controller); ?>.titleText}}</h2>
 
+<div class="alerts">
+    <uib-alert type="danger" close="{{$controller}}.closeAlert($index)" ng-repeat="error in {{$controller}}.errors">@{{error}}</uib-alert>
+</div>
+
 <form name="{{$controller}}.mainForm" novalidate class="form-horizontal form-condensed row">
     @foreach($fields as $fieldId => $field)
         <div class="form-group" ng-class="{ 'has-error': {{$controller}}.mainForm.{{$fieldId}}.$invalid && {{$controller}}.mainForm.{{$fieldId}}.$touched }">
