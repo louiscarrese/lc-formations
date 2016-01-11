@@ -12,7 +12,7 @@
     <form method="get" action="universal_search.php" id="search-form" class="navbar-form navbar-right">
         <div class="form-group">
             <input id="search-input" name="search-input" type="text" placeholder="Recherche universelle" size="35" class="form-control"/>
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"</button>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" /></button>
         </div>
     </form>
 </nav>
