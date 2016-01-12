@@ -17,10 +17,10 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
         $minMaxDate = $this->sessionService->getMinMaxDates($data->id);
 
         if($minMaxDate != null) {
-            $data->libelle = '(' . $minMaxDate['first'] . ' - ' . $minMaxDate['last'] . ')';
-        } else {
-            $data->libelle = '';
-        }
+            $data->firstDate = $minMaxDate['first'];
+            $data->lastDate = $minMaxDate['last'];
+        } 
+        
         return $data;
     }
 }

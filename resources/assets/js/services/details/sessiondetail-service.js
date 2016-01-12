@@ -1,4 +1,4 @@
-function sessionDetailServiceFactory(sharedDataService, modulesService) {
+function sessionDetailServiceFactory(sharedDataService, modulesService, $filter) {
     return {
         getLinkedData: function() {
             var modules = modulesService.query();
@@ -16,6 +16,8 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
 
             sharedDataService.data.session_id = data.id;
 
+            data.libelle = '(' + $filter('date')(data.firstDate, 'dd/MM/yyyy');
+            data.libelle += ' - ' + $filter('date')(data.lastDate, 'dd/MM/yyyy') + ')';
 
             //Build the return structure
             return {
