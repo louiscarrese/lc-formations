@@ -63,12 +63,20 @@
                 @endforeach
                 {{-- action columns --}}
                 <td class="list-action">
-                    <span ng-hide="elem.editing" ng-click="elem.editing = true" class="glyphicon glyphicon-edit clickable"></span>
-                    <span ng-show="elem.editing" ng-click="{{$controllerName}}.editSubmit($index, elem)" class="glyphicon glyphicon-ok clickable"></span>
+                    <button ng-hide="elem.editing" ng-click="elem.editing = true" class="btn btn-default center-block">
+                        <span>Editer</span>
+                    </button>
+                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.editSubmit($index, elem)" class="btn btn-default center-block">
+                        <span>Valider</span>
+                    </button>
                 </td>
-                <td class="list-action">
-                    <span ng-hide="elem.editing" ng-click="{{$controllerName}}.delete(elem)" class="glyphicon glyphicon-trash clickable"></span>
-                    <span ng-show="elem.editing" ng-click="{{$controllerName}}.cancel(elem)"class="glyphicon glyphicon-remove clickable"></span>
+                <td class="list-action text-center">
+                    <button ng-hide="elem.editing" ng-click="{{$controllerName}}.delete(elem)" class="btn btn-default center-block">
+                        <span>Supprimer</span>
+                    </button>
+                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.cancel(elem)"class="btn btn-default center-block">
+                        <span>Annuler</span>
+                    </button>
                 </td>
             </tr>
 
@@ -87,8 +95,10 @@
                         @endif
                     </td>
                 @endforeach
-                <td class="list-action">
-                    <span ng-click="{{$controllerName}}.addSubmit()" class="glyphicon glyphicon-plus clickable"></span>
+                <td class="list-action text-center">
+                    <button ng-click="{{$controllerName}}.addSubmit()" class="btn btn-default center-block">
+                        <span>Ajouter</span>
+                    </button>
                 </td>
                 <td></td>
             </tr>

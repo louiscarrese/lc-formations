@@ -50,15 +50,15 @@
                 @endforeach
                 <td class="list-action">
                     <span>
-                        <a ng-href="{{$detailUri}}/<? echo '{{item.'.$idField.'}}'; ?>">
-                            <span class="glyphicon glyphicon-info-sign"></span>
+                        <a ng-href="{{$detailUri}}/<? echo '{{item.'.$idField.'}}'; ?>" class="btn btn-default center-block">
+                            <span>Détail</span>
                         </a>
                     </span>
                 </td>
                 <td class="list-action">
                     <span>
-                        <a ng-href="{{$detailUri}}/<? echo '{{item.'.$idField.'}}'; ?>?edit=true">
-                            <span class="glyphicon glyphicon-edit"></span>
+                        <a ng-href="{{$detailUri}}/<? echo '{{item.'.$idField.'}}'; ?>?edit=true" class="btn btn-default center-block">
+                            <span>Editer</span>
                         </a>
                     </span>
                 </td>
@@ -67,8 +67,8 @@
     </table>
 
     <div class="global-actions clearfix">
-        <a ng-href="{{$detailUri}}/create" class="pull-right">
-            <span class="glyphicon glyphicon-plus"></span>
+        <a ng-href="{{$detailUri}}/create" class="btn btn-default">
+            <span>Ajouter</span>
         </a>
     </div>
 </div>
