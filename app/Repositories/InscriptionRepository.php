@@ -17,6 +17,8 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
     {
         $data->session = $this->sessionRepository->augmentData($data->session);
 
+        $data->statut_libelle = $this->getStatutLibelle($data->statut);
+
         return $data;
     }
 
@@ -32,6 +34,19 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
         $inscription = \ModuleFormation\Inscription::findOrFail($id);
         $inscription->statut = 'canceled';
         $inscription->save();
+    }
+
+    private function getStatutLibelle($statut) 
+    {
+        if($statut == 'pending') {
+            return 'En cours';
+        } else if($statut == 'validated') {
+            return 'Validée';
+        } else if($statut == 'canceled') {
+            return 'Annulée';
+        } else {
+            return '';
+        }
     }
 
 }

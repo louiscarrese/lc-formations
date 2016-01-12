@@ -12367,13 +12367,24 @@ function inscriptionsTableServiceFactory(sharedDataService) {
                 ret['stagiaire_id'] = sharedDataService.data.stagiaire_id;
             }
             return ret;
+        },
+
+        getRowClass: function(item) {
+            if(item.statut == 'pending') {
+                return 'warning';
+            } else if(item.statut == 'validated') {
+                return 'success';
+            } else if(item.statut == 'canceled') {
+                return 'danger';
+            }
         }
 
     };
 }
 angular.module('inscriptionsList', ['ngResource', 'listTable'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
-    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', editableTableController])
+    .factory('inscriptionsTableService', ['sharedDataService', inscriptionsTableServiceFactory])
+    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
 ;
 
 angular.module('stagiairesDetailApp', ['stagiaireDetail', 'inscriptionsList']);

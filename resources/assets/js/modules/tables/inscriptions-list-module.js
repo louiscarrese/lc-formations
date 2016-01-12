@@ -1,4 +1,5 @@
 angular.module('inscriptionsList', ['ngResource', 'listTable'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
-    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', editableTableController])
+    .factory('inscriptionsTableService', ['sharedDataService', inscriptionsTableServiceFactory])
+    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
 ;

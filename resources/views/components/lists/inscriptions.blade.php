@@ -21,6 +21,11 @@
                 'filterable' => true,
                 'displayedField' => '<a href="/modules/@{{session.module.id}}">@{{session.module.libelle}}</a> <a href="/sessions/@{{session.id}}">@{{session.libelle}}</a>',
             ],
+            'statut_libelle' => [
+                'label' => 'Statut',
+                'sortable' => true,
+                'filterable' => true,
+            ],
         ]
     ])
 

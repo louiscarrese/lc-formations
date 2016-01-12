@@ -40,7 +40,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in ctrl.data | {{$filter}}">
+            <tr ng-repeat="item in ctrl.data | {{$filter}}" ng-class="ctrl.callService('getRowClass', [item])">
                 @foreach($fields as $fieldId => $field)
                     @if(!isset($displayedField) || in_array($fieldId, $displayedField))
                         <td class="{{$field['tdClass'] or ''}}">
