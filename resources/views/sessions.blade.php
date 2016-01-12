@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+<?php $current_menu='session'; ?>
+
 @section('title', 'Sessions')
 @section('js-file', 'js/sessions-list.js')
 @section('css-file', 'css/app.css')

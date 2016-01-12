@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+<?php $current_menu='stagiaire'; ?>
+
 @section('title', 'Stagiaire')
 @section('js-file', '/js/stagiaires-detail.js')
 @section('css-file', '/css/app.css')

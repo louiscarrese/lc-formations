@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+<?php $current_menu='inscription'; ?>
+
 @section('title', 'Inscriptions')
 @section('js-file', 'js/inscriptions-list.js')
 @section('css-file', 'css/app.css')
