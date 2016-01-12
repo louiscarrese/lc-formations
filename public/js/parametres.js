@@ -11992,7 +11992,6 @@ function editableTableController($filter, dataService, tableService) {
     };
 
     function callService(methodName, parameters) {
-        console.log(parameters);
         var form = self['form_autoAdd'];
         if(form.$valid) {
             if(tableService != undefined && typeof tableService[methodName] == 'function') {
