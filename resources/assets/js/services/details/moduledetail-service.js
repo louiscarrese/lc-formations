@@ -1,12 +1,14 @@
-function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, formateursService) {
+function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, formateursService, lieuService) {
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
             var formateurs = formateursService.query();
+            var lieus = lieuService.query();
 
             return {
                 'domaineFormations': domaineFormations,
                 'formateurs': formateurs,
+                'lieus': lieus,
             };
         },
 

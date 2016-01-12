@@ -22,6 +22,8 @@ class CreateModulesTable extends Migration
             $table->string('objectifs_pedagogiques')->nullable();
             $table->string('materiel')->nullable();
 
+            $table->integer('lieu_id')->unsigned()->nullable();
+            $table->foreign('lieu_id')->references('id')->on('lieus');
 
             $table->integer('domaine_formation_id')->unsigned();
             $table->foreign('domaine_formation_id')->references('id')->on('domaine_formations');

@@ -11995,15 +11995,23 @@ function formateursServiceFactory($resource) {
     });
 }
 
-function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, formateursService) {
+function lieuServiceFactory($resource) {
+    return $resource('/api/lieu/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, formateursService, lieuService) {
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
             var formateurs = formateursService.query();
+            var lieus = lieuService.query();
 
             return {
                 'domaineFormations': domaineFormations,
                 'formateurs': formateurs,
+                'lieus': lieus,
             };
         },
 
@@ -12039,8 +12047,9 @@ angular.module('moduleDetail', ['detail', 'ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
+    .factory('lieuService', ['$resource', lieuServiceFactory])
     //Detail service implementation
-    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', moduleDetailServiceFactory])
+    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', 'lieuService', moduleDetailServiceFactory])
 
     //Detail controller
     .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
@@ -12310,7 +12319,6 @@ function editableTableController($filter, dataService, tableService) {
     };
 
     function callService(methodName, parameters) {
-        console.log(parameters);
         var form = self['form_autoAdd'];
         if(form.$valid) {
             if(tableService != undefined && typeof tableService[methodName] == 'function') {

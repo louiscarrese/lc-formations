@@ -3,8 +3,9 @@ angular.module('moduleDetail', ['detail', 'ngResource'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
+    .factory('lieuService', ['$resource', lieuServiceFactory])
     //Detail service implementation
-    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', moduleDetailServiceFactory])
+    .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', 'lieuService', moduleDetailServiceFactory])
 
     //Detail controller
     .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])

@@ -188,6 +188,7 @@ var moduleDetail = Array.prototype.concat(
         'services/data/modules-service.js',
         'services/data/domaineformations-service.js',
         'services/data/formateurs-service.js',
+        'services/data/lieu-service.js',
         'services/details/moduledetail-service.js',
         'modules/details/module-detail-module.js'
     ],

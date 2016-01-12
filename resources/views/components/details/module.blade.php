@@ -29,6 +29,18 @@
                 'sizeLabel' => 2,
                 'sizeValue' => 1,
             ],
+            'lieu_id' => [
+                'label' => 'Lieu par défaut',
+                'type' => 'dropdown',
+                'datasource' => 'linkedData.lieus', //relative to the controller
+                'dataId' => 'id', //relative to an item in the datasource
+                'modelObject' => 'lieu', //relative to an item in the controller data 
+                'change' => '',
+                'displayed' => '<libelle>',
+                'validation' => 'required',
+                'sizeLabel' => 2,
+                'sizeValue' => 2,
+            ],
             'effectif_max' => [
                 'label' => 'Effectif maximum',
                 'type' => 'integer',
@@ -71,8 +83,6 @@
                 'placeholder' => 'Formateurs',
                 'sizeLabel' => 2,
                 'sizeValue' => 10,
-
-
             ]
         ]
     ])

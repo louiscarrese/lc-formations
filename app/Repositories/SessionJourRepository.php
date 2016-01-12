@@ -41,7 +41,7 @@ class SessionJourRepository extends AbstractRepository implements SessionJourRep
             $sessionJour->date = $carbonDate->format('Y-m-d\TH:i:s.u\Z');
             $sessionJour->heure_debut = $module->heure_debut;
             $sessionJour->heure_fin = $module->heure_fin;
-            $sessionJour->lieu_id = 1; //TODO: Mettre le lieu dans les modules
+            $sessionJour->lieu_id = $module->lieu_id;
             $sessionJour->save();
 
             //Attach Formateurs
