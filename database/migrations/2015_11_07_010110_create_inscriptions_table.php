@@ -28,6 +28,8 @@ class CreateInscriptionsTable extends Migration
             $table->string('suggestions')->nullable();
             $table->string('formations_precedentes')->nullable();
 
+            $table->string('statut')->default('pending');
+
             $table->timestamps();
         });
     }

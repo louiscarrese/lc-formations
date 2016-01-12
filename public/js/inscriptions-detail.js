@@ -11815,6 +11815,11 @@ function detailController(editModeService, dataService, detailService) {
     self.internalKey = 0;
 
     self.errors = [];
+
+    self.dataService = dataService;
+
+    self.refreshData = refreshData;
+
     //CRUD
     self.create = create;
     self.cancel = cancel;
@@ -11829,6 +11834,8 @@ function detailController(editModeService, dataService, detailService) {
     self.closeAlert = closeAlert;
     self.extractErrors = extractErrors;
 
+    self.callService = callService;
+
     //Just so we don't have 'undefined' in places 
     self.data = {};
 
@@ -11840,21 +11847,25 @@ function detailController(editModeService, dataService, detailService) {
     }
 
     //Initialize data
-    editModeService.initFromUrl(dataService, function(mode, data) {
-        //Set mode
-        self.mode = mode;
-        if(self.mode === 'read') {
-            self.editing = false;
-        } else {
-            self.editing = true;
-        }
+    self.refreshData();
 
-        //Do something with the data
-        self.getSuccess(data);
+    function refreshData() {
+        editModeService.initFromUrl(dataService, function(mode, data) {
+            //Set mode
+            self.mode = mode;
+            if(self.mode === 'read') {
+                self.editing = false;
+            } else {
+                self.editing = true;
+            }
 
-        //Ok, we can go on
-        self.inited = true;
-    });
+            //Do something with the data
+            self.getSuccess(data);
+
+            //Ok, we can go on
+            self.inited = true;
+        });
+    }
 
     //CRUD
     function create() {
@@ -11970,6 +11981,14 @@ function detailController(editModeService, dataService, detailService) {
         }
         return ret;
     }
+
+    function callService(methodName, parameters) {
+        if(detailService != undefined && typeof detailService[methodName] == 'function') {
+            return detailService[methodName].apply(self, parameters);
+        }
+        return null;
+    }
+
 }
 angular.module('detail', ['myEditable'])
     .factory('sharedDataService', sharedDataServiceFactory)
@@ -11978,7 +11997,15 @@ angular.module('detail', ['myEditable'])
 
 function inscriptionsServiceFactory($resource) {
     return $resource('/api/inscription/:id', null, {
-        'update' : { method: 'PUT' }
+        'update' : { method: 'PUT' },
+        validate: {
+            url: '/api/inscription/validate/:inscription_id',
+            method: 'GET'
+        },
+        cancel: {
+            url: '/api/inscription/cancel/:inscription_id',
+            method: 'GET'
+        }
     });
 }
 function stagiairesServiceFactory($resource) {
@@ -12030,6 +12057,29 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         getListUrl: function() {
             return '/inscriptions';
         },
+
+        validateInscription: function(dataService) {
+            var refresh = this.refreshData;
+            if(dataService) {
+                dataService.validate({inscription_id: sharedDataService.data.inscription_id},
+                    function(response) {
+                        refresh();
+                    }
+                );
+            }
+        },
+
+        cancelInscription: function(dataService) {
+            var refresh = this.refreshData;
+            if(dataService) {
+                dataService.cancel({inscription_id: sharedDataService.data.inscription_id},
+                    function(response) {
+                        refresh();
+                    }
+                );
+            }
+        }
+
     }
 }
 angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList'])

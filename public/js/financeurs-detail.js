@@ -11815,6 +11815,11 @@ function detailController(editModeService, dataService, detailService) {
     self.internalKey = 0;
 
     self.errors = [];
+
+    self.dataService = dataService;
+
+    self.refreshData = refreshData;
+
     //CRUD
     self.create = create;
     self.cancel = cancel;
@@ -11829,6 +11834,8 @@ function detailController(editModeService, dataService, detailService) {
     self.closeAlert = closeAlert;
     self.extractErrors = extractErrors;
 
+    self.callService = callService;
+
     //Just so we don't have 'undefined' in places 
     self.data = {};
 
@@ -11840,21 +11847,25 @@ function detailController(editModeService, dataService, detailService) {
     }
 
     //Initialize data
-    editModeService.initFromUrl(dataService, function(mode, data) {
-        //Set mode
-        self.mode = mode;
-        if(self.mode === 'read') {
-            self.editing = false;
-        } else {
-            self.editing = true;
-        }
+    self.refreshData();
 
-        //Do something with the data
-        self.getSuccess(data);
+    function refreshData() {
+        editModeService.initFromUrl(dataService, function(mode, data) {
+            //Set mode
+            self.mode = mode;
+            if(self.mode === 'read') {
+                self.editing = false;
+            } else {
+                self.editing = true;
+            }
 
-        //Ok, we can go on
-        self.inited = true;
-    });
+            //Do something with the data
+            self.getSuccess(data);
+
+            //Ok, we can go on
+            self.inited = true;
+        });
+    }
 
     //CRUD
     function create() {
@@ -11970,6 +11981,14 @@ function detailController(editModeService, dataService, detailService) {
         }
         return ret;
     }
+
+    function callService(methodName, parameters) {
+        if(detailService != undefined && typeof detailService[methodName] == 'function') {
+            return detailService[methodName].apply(self, parameters);
+        }
+        return null;
+    }
+
 }
 angular.module('detail', ['myEditable'])
     .factory('sharedDataService', sharedDataServiceFactory)

@@ -19,4 +19,19 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
 
         return $data;
     }
+
+    public function validate($id)
+    {
+        $inscription = \ModuleFormation\Inscription::findOrFail($id);
+        $inscription->statut = 'validated';
+        $inscription->save();
+    }
+
+    public function cancel($id)
+    {
+        $inscription = \ModuleFormation\Inscription::findOrFail($id);
+        $inscription->statut = 'canceled';
+        $inscription->save();
+    }
+
 }

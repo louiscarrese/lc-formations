@@ -97,4 +97,15 @@
             )
         </div>
     </div>
+
+    <div class="custom-actions">
+        <div ng-if="detailCtrl.data.statut == 'pending'">
+            <button class="btn btn-default" ng-click="detailCtrl.callService('validateInscription', [detailCtrl.dataService])">
+                <span>Valider l'inscription</span>
+            </button>
+            <button class="btn btn-default" ng-click="detailCtrl.callService('cancelInscription', [detailCtrl.dataService])">
+                <span>Annuler l'inscription</span>
+            </button>
+        </div>
+    </div>
 </div>

@@ -34,5 +34,28 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         getListUrl: function() {
             return '/inscriptions';
         },
+
+        validateInscription: function(dataService) {
+            var refresh = this.refreshData;
+            if(dataService) {
+                dataService.validate({inscription_id: sharedDataService.data.inscription_id},
+                    function(response) {
+                        refresh();
+                    }
+                );
+            }
+        },
+
+        cancelInscription: function(dataService) {
+            var refresh = this.refreshData;
+            if(dataService) {
+                dataService.cancel({inscription_id: sharedDataService.data.inscription_id},
+                    function(response) {
+                        refresh();
+                    }
+                );
+            }
+        }
+
     }
 }

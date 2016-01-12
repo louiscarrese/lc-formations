@@ -17,4 +17,14 @@ class InscriptionController extends AbstractController
     {
         $this->repository = $repository;
     }
+
+    public function validateInscription($id) 
+    {
+        $this->repository->validate($id);
+    }
+
+    public function cancelInscription($id) 
+    {
+        $this->repository->cancel($id);
+    }
 }
