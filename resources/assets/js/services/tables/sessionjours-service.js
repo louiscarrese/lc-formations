@@ -37,15 +37,17 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
             return ret;
         },
 
-        autoAdd: function(dataService, autoAddObject) {
+        autoAdd: function(dataService, form, autoAddObject) {
             var refresh = this.refreshData;
-            if(dataService && autoAddObject) {
-                dataService.createDefault({}, 
-                    { session_id: sharedDataService.data.session_id, base_date: autoAddObject.date },
-                    function(response) {
-                        refresh();
-                    }
-                );
+            if(dataService && autoAddObject && form) {
+                if(form.$valid) {
+                    dataService.createDefault({}, 
+                        { session_id: sharedDataService.data.session_id, base_date: autoAddObject.date },
+                        function(response) {
+                            refresh();
+                        }
+                    );
+                }
             }
         }
 

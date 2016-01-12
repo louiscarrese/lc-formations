@@ -135,7 +135,7 @@
                         ])
                     </span>
                     <span>
-                        <button class="btn btn-default" ng-click="sessionJoursController.callService('autoAdd', [sessionJoursController.dataService, sessionJoursController.autoAddObject])"><span>Créer les jours</span></button>
+                        <button class="btn btn-default" ng-click="sessionJoursController.callService('autoAdd', [sessionJoursController.dataService, sessionJoursController.form_autoAdd, sessionJoursController.autoAddObject])"><span>Créer les jours</span></button>
                     </span>
                 </ng-form>
              </div>
