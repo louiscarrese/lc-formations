@@ -9,12 +9,16 @@
         <div class="form-group" ng-class="{ 'has-error': {{$controller}}.mainForm.{{$fieldId}}.$invalid && {{$controller}}.mainForm.{{$fieldId}}.$touched }">
             <label class="control-label col-sm-{{$field['sizeLabel']}}">{{$field['label']}}</label>
             <div class="col-sm-{{$field['sizeValue']}} detail-value">
-                @include('components.myEditable', [
-                    'controllerName' => $controller,
-                    'element' => $controller . '.data',
-                    'editingFlag' => $controller . '.editing',
-                    'field' => $field
-                ])
+                @if(isset($field['readonly']) && $field['readonly'])
+                    <p class="editable-read"><? echo '{{' . $controller . '.data.' . $fieldId . '}}' ?></p>
+                @else
+                        @include('components.myEditable', [
+                            'controllerName' => $controller,
+                            'element' => $controller . '.data',
+                            'editingFlag' => $controller . '.editing',
+                            'field' => $field
+                        ])
+                @endif
             </div>
         </div>
     @endforeach

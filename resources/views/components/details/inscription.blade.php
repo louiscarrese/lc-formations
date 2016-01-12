@@ -26,6 +26,12 @@
                 'sizeValue' => 3,
                 'validation' => 'required',
             ],
+            'statut_libelle' => [
+                'label' => 'Statut',
+                'readonly' => true,
+                'sizeLabel' => 2,
+                'sizeValue' => 10,
+            ],
             'profession_structure' => [
                 'label' => 'Profession',
                 'type' => 'textarea',
