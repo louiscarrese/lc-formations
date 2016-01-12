@@ -1,3 +1,4 @@
+<?php $current_menu = '' ?>
 <!doctype html>
 <html>
     <head>
