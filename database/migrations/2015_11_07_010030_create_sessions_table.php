@@ -16,7 +16,6 @@ class CreateSessionsTable extends Migration
             $table->increments('id');
             
             //Copy from Module
-            $table->integer('nb_jours')->nullable(); 
             $table->integer('effectif_max')->nullable();
             $table->string('objectifs_pedagogiques')->nullable();
             $table->string('materiel')->nullable();

@@ -14,16 +14,9 @@
                 'sizeLabel' => 2,
                 'sizeValue' => 5,
             ],
-            'libelle' => [
-                'label' => 'Libellé',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 5,
-                'validation' => 'required'
-            ],
-            'nb_jours' => [
+            'module.nb_jours' => [
                 'label' => 'Nombre de jours',
-                'type' => 'integer',
+                'readonly' => true,
                 'sizeLabel' => 2,
                 'sizeValue' => 1,
             ],
