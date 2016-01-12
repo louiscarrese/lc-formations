@@ -1,14 +1,7 @@
 <div ng-controller="detailController as detailCtrl">
     @include('components.detail', [
         'controller' => 'detailCtrl',
-        'idField' => 'id',
         'fields' => [
-            'id' => [
-                'label' => 'Id',
-                'type' => 'integer',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
             'module_id' => [
                 'label' => 'Module',
                 'type' => 'dropdown',

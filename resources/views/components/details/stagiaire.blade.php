@@ -2,13 +2,6 @@
     @include('components.detail', [
         'controller' => 'detailCtrl',
         'fields' => [
-            'id' => [
-                'isId' => true,
-                'label' => 'Id',
-                'type' => 'integer',
-                'sizeLabel' => 3,
-                'sizeValue' => 1,
-            ],
             'nom' => [
                 'label' => 'Nom',
                 'type' => 'text',
