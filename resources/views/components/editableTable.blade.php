@@ -14,7 +14,7 @@
 
 <h2>{{$title}}</h2>
 
-<div <? echo((isset($adaptToContent) && $adaptToContent) ? ' class="adapt-to-content"' : ''); ?>>
+<div <?php echo((isset($adaptToContent) && $adaptToContent) ? ' class="adapt-to-content"' : ''); ?>>
 
     <div class="alerts">
         <uib-alert type="danger" close="{{$controllerName}}.closeAlert($index)" ng-repeat="error in {{$controllerName}}.errors">@{{error}}</uib-alert>
@@ -28,7 +28,7 @@
                 {{-- Configured Headers --}}
                 @foreach($fields as $fieldId => $field)
                     @if($field['sortable'])
-                        <th class="clickable {{$field['tdClass'] or ''}} <? echo (isset($field['size']) ? 'col-sm-' . $field['size'] : ''); ?>">
+                        <th class="clickable {{$field['tdClass'] or ''}} <?php echo (isset($field['size']) ? 'col-sm-' . $field['size'] : ''); ?>">
                             <my-sortable-header set="{{$controllerName}}.setSort('{{$fieldId}}')"
                                                 get="{{$controllerName}}.getSort('{{$fieldId}}')"
                             >
