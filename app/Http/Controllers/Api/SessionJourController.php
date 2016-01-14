@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class SessionJourController extends AbstractController
 {
+    protected $filters = ['session_id' => 'session_id'];
+
     protected $validation_rules = [
         'date' => 'required|date_format:Y-m-d\TH:i:s.u\Z',
         'heure_debut' => 'required|date_format:Y-m-d\TH:i:s.u\Z',
