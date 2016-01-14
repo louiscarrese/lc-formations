@@ -72,7 +72,7 @@
 
     <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != 'create'">
         <div ng-controller="financeurInscriptionsController as financeurInscriptionsController">
-            @include('components.EditableTable',
+            @include('components.editableTable',
                 [  
                     'controllerName' => 'financeurInscriptionsController',
                     'idField' => 'id',

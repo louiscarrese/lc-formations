@@ -45,7 +45,7 @@
 
     <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != 'create'">
         <div ng-controller="sessionJoursController as sessionJoursController">
-            @include('components.EditableTable',
+            @include('components.editableTable',
                 ['controllerName' => 'sessionJoursController',
                  'idField' => 'id',
                  'title' => 'Jours',

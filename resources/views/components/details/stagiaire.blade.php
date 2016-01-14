@@ -31,7 +31,8 @@
             ],
             'adresse' => [
                 'label' => 'Adresse',
-                'type' => 'text',
+                'type' => 'textarea',
+		'additionalAttributes' => 'rows=3',
                 'sizeLabel' => 3,
                 'sizeValue' => 5,
             ],
