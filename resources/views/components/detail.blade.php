@@ -10,7 +10,7 @@
             <label class="control-label col-sm-{{$field['sizeLabel']}}">{{$field['label']}}</label>
             <div class="col-sm-{{$field['sizeValue']}} detail-value">
                 @if(isset($field['readonly']) && $field['readonly'])
-                    <p class="editable-read"><? echo '{{' . $controller . '.data.' . $fieldId . '}}' ?></p>
+                    <p class="editable-read"><?php echo '{{' . $controller . '.data.' . $fieldId . '}}' ?></p>
                 @else
                         @include('components.myEditable', [
                             'controllerName' => $controller,
