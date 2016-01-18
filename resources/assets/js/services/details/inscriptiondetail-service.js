@@ -1,9 +1,18 @@
-function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService) {
+function inscriptionDetailServiceFactory($filter, sharedDataService, stagiairesService, sessionsService) {
     return {
         getLinkedData: function() {
             var stagiaire = stagiairesService.query();
-            var session = sessionsService.query();
+            var session = sessionsService.query({}, function() {
 
+                for(var i = 0; i < session.length; i++) {
+                    if(session[i].firstDate && session[i].lastDate) {
+                        session[i].libelle = '(' + $filter('date')(session[i].firstDate, 'dd/MM/yyyy');
+                        session[i].libelle += ' - ' + $filter('date')(session[i].lastDate, 'dd/MM/yyyy') + ')';
+                    } else {
+                        session[i].libelle = '';
+                    }
+                }
+            });
             return {
                 'stagiaire': stagiaire,
                 'session': session,

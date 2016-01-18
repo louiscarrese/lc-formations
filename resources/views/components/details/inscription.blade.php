@@ -20,10 +20,10 @@
                 'datasource' => 'linkedData.session', //relative to the controller
                 'dataId' => 'id', //relative to an item in the dropdownDatasource
                 'modelObject' => 'session', //relative to an item in the controller data 
-                'displayed' => '<module.libelle>',
+                'displayed' => '<module.libelle> <libelle>',
                 'searchable' => true,
                 'sizeLabel' => 2,
-                'sizeValue' => 3,
+                'sizeValue' => 6,
                 'validation' => 'required',
             ],
             'statut_libelle' => [

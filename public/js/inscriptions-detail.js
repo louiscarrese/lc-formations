@@ -12021,12 +12021,21 @@ function sessionsServiceFactory($resource) {
 }
 
 
-function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService) {
+function inscriptionDetailServiceFactory($filter, sharedDataService, stagiairesService, sessionsService) {
     return {
         getLinkedData: function() {
             var stagiaire = stagiairesService.query();
-            var session = sessionsService.query();
+            var session = sessionsService.query({}, function() {
 
+                for(var i = 0; i < session.length; i++) {
+                    if(session[i].firstDate && session[i].lastDate) {
+                        session[i].libelle = '(' + $filter('date')(session[i].firstDate, 'dd/MM/yyyy');
+                        session[i].libelle += ' - ' + $filter('date')(session[i].lastDate, 'dd/MM/yyyy') + ')';
+                    } else {
+                        session[i].libelle = '';
+                    }
+                }
+            });
             return {
                 'stagiaire': stagiaire,
                 'session': session,
@@ -12086,7 +12095,7 @@ angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscripti
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
-    .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', inscriptionDetailServiceFactory])
+    .factory('inscriptionDetailService', ['$filter', 'sharedDataService', 'stagiairesService', 'sessionsService', inscriptionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', detailController])
 ;
 
