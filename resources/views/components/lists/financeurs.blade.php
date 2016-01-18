@@ -5,12 +5,6 @@
         'detailUri' => '/financeurs',
         'idField' => 'id',
         'fields' => [
-            'id' => [
-                'label' => 'Id',
-                'sortable' => true,
-                'filterable' => true,
-                'tdClass' => 'centered'
-            ],
             'libelle' => [
                 'label' => 'Libelle',
                 'sortable' => true,

@@ -5,12 +5,6 @@
         'detailUri' => '/employeurs',
         'idField' => 'id',
         'fields' => [
-            'id' => [
-                'label' => 'Id',
-                'sortable' => true,
-                'filterable' => true,
-                'tdClass' => 'centered'
-            ],
             'nom' => [
                 'label' => 'Nom',
                 'sortable' => true,
