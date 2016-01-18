@@ -105,36 +105,6 @@
     <div ng-controller="financeurTypesController as financeurTypesController">
         @include('components.editableTable',
             ['controllerName' => 'financeurTypesController',
-             'title' => 'Types de formateurs',
-             'adaptToContent' => true,
-             'idField' => 'id',
-             'fields' => [
-                'id' => [
-                    'label' => 'Id',
-                    'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'integer',
-                    'addLine' => false,
-                    'tdClass' => 'centered',
-                    'additionalAttributes' => 'size=1',
-                    'validation' => 'required',
-                ], //id
-                'libelle' => [
-                    'label' => 'Libellé',
-                    'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'text',
-                    'addLine' => true,
-                    'validation' => 'required',
-                ], //libelle
-            ], //fields
-        ])
-    </div>
-    <div ng-controller="financeurTypesController as financeurTypesController">
-        @include('components.editableTable',
-            ['controllerName' => 'financeurTypesController',
              'title' => 'Types de financeurs',
              'adaptToContent' => true,
              'idField' => 'id',
