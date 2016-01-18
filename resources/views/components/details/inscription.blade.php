@@ -70,7 +70,7 @@
         ]
     ])
 
-    <div ng-if="detailCtrl.inited" ng-show="detailCtrl.mode != 'create'">
+    <div ng-if="detailCtrl.inited && detailCtrl.mode != 'create'">
         <div ng-controller="financeurInscriptionsController as financeurInscriptionsController">
             @include('components.editableTable',
                 [  
