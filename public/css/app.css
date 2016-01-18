@@ -5175,6 +5175,7 @@ pre {
   -webkit-margin-after: 0;
   margin-block-end: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  white-space: pre-wrap;
 }
 .sort-arrow {
   margin-left: 0.2em;
