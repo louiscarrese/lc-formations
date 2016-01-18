@@ -104,7 +104,7 @@
                 'datasource' => 'linkedData.employeur', //relative to the controller
                 'dataId' => 'id', //relative to an item in the dropdownDatasource
                 'modelObject' => 'employeur', //relative to an item in the controller data 
-                'displayed' => '<raison_sociale> <nom>',
+                'displayed' => '<nom>',
                 'sizeLabel' => 3,
                 'sizeValue' => 3,
             ],
