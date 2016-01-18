@@ -35,7 +35,7 @@
         <button ng-show="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.cancel()" class="btn btn-default">
             <span>Annuler</span>
         </button>
-        <button ng-show="{{$controller}}.mode !== 'create'" ng-click="{{$controller}}.delete()" class="btn btn-default">
+        <button ng-show="{{$controller}}.mode !== 'create'" ng-click="{{$controller}}.delete()" class="btn btn-default pull-right">
             <span>Supprimer</span>
         </button>
     </div>
