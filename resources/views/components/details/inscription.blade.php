@@ -104,6 +104,7 @@
         </div>
     </div>
 
+    <h2>Actions complémentaires</h2>
     <div class="custom-actions">
         <div ng-if="detailCtrl.data.statut == 'pending'">
             <button class="btn btn-default" ng-click="detailCtrl.callService('validateInscription', [detailCtrl.dataService])">

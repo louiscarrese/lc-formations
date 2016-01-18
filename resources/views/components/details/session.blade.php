@@ -113,6 +113,7 @@
                  ] //fields
              ])
 
+            <h2>Actions complémentaires</h2>
              <div class="custom-actions row">
                 <ng-form novalidate name="sessionJoursController.form_autoAdd">
                     <span class="col-sm-2" ng-class="{ 'has-error': sessionJoursController.form_autoAdd.date.$invalid && sessionJoursController.form_autoAdd.date.$touched }">
