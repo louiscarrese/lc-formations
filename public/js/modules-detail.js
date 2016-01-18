@@ -12397,9 +12397,40 @@ angular.module('listTable', ['sortableHeader'])
     .filter('myCustomFilter', myCustomFilter)
 ;
 
-function sessionsServiceFactory($resource) {
+function sessionsServiceFactory($resource, $http, $filter) {
+    function buildLibelle(item) {
+        var ret = '';
+        if(item.firstDate && item.lastDate) {
+            ret = '(' + $filter('date')(item.firstDate, 'dd/MM/yyyy');
+            ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy') + ')';
+        }
+        return ret;
+    };
+
+
     return $resource('/api/session/:id', null, {
-        'update' : { method: 'PUT' }
+        'update' : { method: 'PUT' },
+        'query' : { 
+            method: 'GET',
+            isArray: true, 
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    angular.forEach(data, function(item, idx) {
+                        item.libelle = buildLibelle(item);
+                    });
+                    return data;
+                }
+            ])
+        },
+        'get' : {
+            method: 'GET',
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    data.libelle = buildLibelle(data);
+                    return data;
+                }
+            ])
+        }
     });
 }
 
@@ -12414,19 +12445,11 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
             return ret;
         },
 
-	getSuccess:  function(data) {
-            if(data.firstDate && data.lastDate) {
-                data.libelle = '(' + $filter('date')(data.firstDate, 'dd/MM/yyyy');
-                data.libelle += ' - ' + $filter('date')(data.lastDate, 'dd/MM/yyyy') + ')';
-            } else {
-                data.libelle = '';
-            }
-	}
     };
 }
 
 angular.module('sessionsList', ['ngResource', 'listTable'])
-    .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('sessionsService', ['$resource', '$http', '$filter', sessionsServiceFactory])
     .factory('sessionsTableService', ['$filter', 'sharedDataService', sessionsTableServiceFactory])
     .controller('sessionsListController', ['$filter', 'sessionsService', 'sessionsTableService', editableTableController])
 ;

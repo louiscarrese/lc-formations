@@ -8,13 +8,5 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
             return ret;
         },
 
-	getSuccess:  function(data) {
-            if(data.firstDate && data.lastDate) {
-                data.libelle = '(' + $filter('date')(data.firstDate, 'dd/MM/yyyy');
-                data.libelle += ' - ' + $filter('date')(data.lastDate, 'dd/MM/yyyy') + ')';
-            } else {
-                data.libelle = '';
-            }
-	}
     };
 }

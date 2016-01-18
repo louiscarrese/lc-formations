@@ -12014,28 +12014,50 @@ function stagiairesServiceFactory($resource) {
     });
 }
 
-function sessionsServiceFactory($resource) {
+function sessionsServiceFactory($resource, $http, $filter) {
+    function buildLibelle(item) {
+        var ret = '';
+        if(item.firstDate && item.lastDate) {
+            ret = '(' + $filter('date')(item.firstDate, 'dd/MM/yyyy');
+            ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy') + ')';
+        }
+        return ret;
+    };
+
+
     return $resource('/api/session/:id', null, {
-        'update' : { method: 'PUT' }
+        'update' : { method: 'PUT' },
+        'query' : { 
+            method: 'GET',
+            isArray: true, 
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    angular.forEach(data, function(item, idx) {
+                        item.libelle = buildLibelle(item);
+                    });
+                    return data;
+                }
+            ])
+        },
+        'get' : {
+            method: 'GET',
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    data.libelle = buildLibelle(data);
+                    return data;
+                }
+            ])
+        }
     });
 }
 
 
-function inscriptionDetailServiceFactory($filter, sharedDataService, stagiairesService, sessionsService) {
+function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService) {
     return {
         getLinkedData: function() {
             var stagiaire = stagiairesService.query();
-            var session = sessionsService.query({}, function() {
+            var session = sessionsService.query();
 
-                for(var i = 0; i < session.length; i++) {
-                    if(session[i].firstDate && session[i].lastDate) {
-                        session[i].libelle = '(' + $filter('date')(session[i].firstDate, 'dd/MM/yyyy');
-                        session[i].libelle += ' - ' + $filter('date')(session[i].lastDate, 'dd/MM/yyyy') + ')';
-                    } else {
-                        session[i].libelle = '';
-                    }
-                }
-            });
             return {
                 'stagiaire': stagiaire,
                 'session': session,
@@ -12094,8 +12116,8 @@ function inscriptionDetailServiceFactory($filter, sharedDataService, stagiairesS
 angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
-    .factory('sessionsService', ['$resource', sessionsServiceFactory])
-    .factory('inscriptionDetailService', ['$filter', 'sharedDataService', 'stagiairesService', 'sessionsService', inscriptionDetailServiceFactory])
+    .factory('sessionsService', ['$resource', '$http', '$filter', sessionsServiceFactory])
+    .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', inscriptionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', detailController])
 ;
 

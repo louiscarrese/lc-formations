@@ -11995,9 +11995,40 @@ angular.module('detail', ['myEditable'])
     .factory('editModeService', editModeServiceFactory) 
 ;
 
-function sessionsServiceFactory($resource) {
+function sessionsServiceFactory($resource, $http, $filter) {
+    function buildLibelle(item) {
+        var ret = '';
+        if(item.firstDate && item.lastDate) {
+            ret = '(' + $filter('date')(item.firstDate, 'dd/MM/yyyy');
+            ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy') + ')';
+        }
+        return ret;
+    };
+
+
     return $resource('/api/session/:id', null, {
-        'update' : { method: 'PUT' }
+        'update' : { method: 'PUT' },
+        'query' : { 
+            method: 'GET',
+            isArray: true, 
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    angular.forEach(data, function(item, idx) {
+                        item.libelle = buildLibelle(item);
+                    });
+                    return data;
+                }
+            ])
+        },
+        'get' : {
+            method: 'GET',
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    data.libelle = buildLibelle(data);
+                    return data;
+                }
+            ])
+        }
     });
 }
 
@@ -12009,7 +12040,7 @@ function modulesServiceFactory($resource) {
 }
 
 
-function sessionDetailServiceFactory(sharedDataService, modulesService, $filter) {
+function sessionDetailServiceFactory(sharedDataService, modulesService) {
     return {
         getLinkedData: function() {
             var modules = modulesService.query();
@@ -12026,12 +12057,6 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
         getSuccess: function(data) {
 
             sharedDataService.data.session_id = data.id;
-            if(data.firstDate && data.lastDate) {
-                data.libelle = '(' + $filter('date')(data.firstDate, 'dd/MM/yyyy');
-                data.libelle += ' - ' + $filter('date')(data.lastDate, 'dd/MM/yyyy') + ')';
-            } else {
-                data.libelle = '';
-            }
             
             //Build the return structure
             return {
@@ -12065,10 +12090,10 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
     }
 }
 angular.module('sessionDetail', ['detail'])
-    .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('sessionsService', ['$resource', '$http', '$filter', sessionsServiceFactory])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
-    .factory('sessionDetailService', ['sharedDataService', 'modulesService', '$filter', sessionDetailServiceFactory])
+    .factory('sessionDetailService', ['sharedDataService', 'modulesService', sessionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', detailController])
 ;
 

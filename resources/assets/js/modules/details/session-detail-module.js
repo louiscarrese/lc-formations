@@ -1,7 +1,7 @@
 angular.module('sessionDetail', ['detail'])
-    .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('sessionsService', ['$resource', '$http', '$filter', sessionsServiceFactory])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
-    .factory('sessionDetailService', ['sharedDataService', 'modulesService', '$filter', sessionDetailServiceFactory])
+    .factory('sessionDetailService', ['sharedDataService', 'modulesService', sessionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', detailController])
 ;
