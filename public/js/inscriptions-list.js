@@ -11499,7 +11499,7 @@ function inscriptionsServiceFactory($resource) {
         }
     });
 }
-function inscriptionsTableServiceFactory(sharedDataService) {
+function inscriptionsTableServiceFactory($filter, sharedDataService) {
     return {
         queryParameters: function() {
             var ret = {};
@@ -11517,13 +11517,21 @@ function inscriptionsTableServiceFactory(sharedDataService) {
             } else if(item.statut == 'canceled') {
                 return 'danger';
             }
-        }
+        },
 
+        getSuccess:  function(data) {
+                if(data.session.firstDate && data.session.lastDate) {
+                    data.session.libelle = '(' + $filter('date')(data.session.firstDate, 'dd/MM/yyyy');
+                    data.session.libelle += ' - ' + $filter('date')(data.session.lastDate, 'dd/MM/yyyy') + ')';
+                } else {
+                    data.session.libelle = '';
+                }
+        }
     };
 }
 angular.module('inscriptionsList', ['ngResource', 'listTable'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
-    .factory('inscriptionsTableService', ['sharedDataService', inscriptionsTableServiceFactory])
+    .factory('inscriptionsTableService', ['$filter', 'sharedDataService', inscriptionsTableServiceFactory])
     .controller('inscriptionsListController', ['$filter', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
 ;
 
