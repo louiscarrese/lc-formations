@@ -11546,7 +11546,7 @@ function myEditableDirectiveDropdown() {
             }
             template += '</p>';
             template += '<select2 ng-model="ngModel" class="form-control" ng-show="editingFlag" ';
-            template += 'options="{minimumResultsForSearch: -1, placeholder: placeholder}" ';
+            template += 'options="{minimumResultsForSearch: 5, placeholder: placeholder}" ';
             template += 's2-options="val.' + tAttr['sourceId'] + ' as (displayValue(val, displayed)) for val in datasource" ';
             if(tAttr['change'] != undefined) {
                 template += 'ng-change="change(ngModel)" ';
