@@ -12404,7 +12404,7 @@ function sessionsServiceFactory($resource) {
 }
 
 
-function sessionsTableServiceFactory(sharedDataService) {
+function sessionsTableServiceFactory($filter, sharedDataService) {
     return {
         queryParameters: function() {
             var ret = {};
@@ -12412,13 +12412,22 @@ function sessionsTableServiceFactory(sharedDataService) {
                 ret['module_id'] = sharedDataService.data.module_id;
             }
             return ret;
-        }
+        },
 
+	getSuccess:  function(data) {
+            if(data.firstDate && data.lastDate) {
+                data.libelle = '(' + $filter('date')(data.firstDate, 'dd/MM/yyyy');
+                data.libelle += ' - ' + $filter('date')(data.lastDate, 'dd/MM/yyyy') + ')';
+            } else {
+                data.libelle = '';
+            }
+	}
     };
 }
+
 angular.module('sessionsList', ['ngResource', 'listTable'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
-    .factory('sessionsTableService', ['sharedDataService', sessionsTableServiceFactory])
+    .factory('sessionsTableService', ['$filter', 'sharedDataService', sessionsTableServiceFactory])
     .controller('sessionsListController', ['$filter', 'sessionsService', 'sessionsTableService', editableTableController])
 ;
 

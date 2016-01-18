@@ -1,4 +1,4 @@
-function sessionsTableServiceFactory(sharedDataService) {
+function sessionsTableServiceFactory($filter, sharedDataService) {
     return {
         queryParameters: function() {
             var ret = {};
