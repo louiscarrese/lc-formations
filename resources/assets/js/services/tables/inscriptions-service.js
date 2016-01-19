@@ -16,6 +16,7 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
             } else if(item.statut == 'canceled') {
                 return 'danger';
             }
+            return null;
         },
 
         getSuccess:  function(data) {

@@ -11982,11 +11982,23 @@ function detailController(editModeService, dataService, detailService) {
         return ret;
     }
 
-    function callService(methodName, parameters) {
+    function callService(methodName, parameters, refreshedControllers) {
         if(detailService != undefined && typeof detailService[methodName] == 'function') {
-            return detailService[methodName].apply(self, parameters);
+            var ret = detailService[methodName].apply(self, parameters);
+
+            //If it's a promise and we have controllers to refresh
+            if(ret != null && typeof ret.then == 'function' && refreshedControllers) {
+                ret.then(function() {
+                    angular.forEach(refreshedControllers, function(item, idx) {
+                        if(typeof item['refreshData'] == 'function') {
+                            item.refreshData();
+                        }
+                    });
+                });
+            } else {
+                return ret;
+            }
         }
-        return null;
     }
 
 }
@@ -12090,24 +12102,16 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         },
 
         validateInscription: function(dataService) {
-            var refresh = this.refreshData;
             if(dataService) {
-                dataService.validate({inscription_id: sharedDataService.data.inscription_id},
-                    function(response) {
-                        refresh();
-                    }
-                );
+                var resource = dataService.validate({inscription_id: sharedDataService.data.inscription_id});
+                return resource.$promise;
             }
         },
 
         cancelInscription: function(dataService) {
-            var refresh = this.refreshData;
             if(dataService) {
-                dataService.cancel({inscription_id: sharedDataService.data.inscription_id},
-                    function(response) {
-                        refresh();
-                    }
-                );
+                var resource = dataService.cancel({inscription_id: sharedDataService.data.inscription_id});
+                return resource.$promise;
             }
         }
 
@@ -12384,11 +12388,23 @@ function editableTableController($filter, dataService, tableService) {
         return ret;
     };
 
-    function callService(methodName, parameters) {
+    function callService(methodName, parameters, refreshedControllers) {
         if(tableService != undefined && typeof tableService[methodName] == 'function') {
-            return tableService[methodName].apply(self, parameters);
+            var ret = tableService[methodName].apply(self, parameters);
+
+            //If it's a promise and we have controllers to refresh
+            if(ret != null && typeof ret.then == 'function' && refreshedControllers) {
+                ret.then(function() {
+                    angular.forEach(refreshedControllers, function(item, idx) {
+                        if(typeof item['refreshData'] == 'function') {
+                            item.refreshData();
+                        }
+                    });
+                });
+            } else {
+                return ret;
+            }
         }
-        return null;
     }
 } 
 

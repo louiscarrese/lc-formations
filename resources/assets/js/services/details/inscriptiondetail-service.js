@@ -36,24 +36,16 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         },
 
         validateInscription: function(dataService) {
-            var refresh = this.refreshData;
             if(dataService) {
-                dataService.validate({inscription_id: sharedDataService.data.inscription_id},
-                    function(response) {
-                        refresh();
-                    }
-                );
+                var resource = dataService.validate({inscription_id: sharedDataService.data.inscription_id});
+                return resource.$promise;
             }
         },
 
         cancelInscription: function(dataService) {
-            var refresh = this.refreshData;
             if(dataService) {
-                dataService.cancel({inscription_id: sharedDataService.data.inscription_id},
-                    function(response) {
-                        refresh();
-                    }
-                );
+                var resource = dataService.cancel({inscription_id: sharedDataService.data.inscription_id});
+                return resource.$promise;
             }
         }
 

@@ -38,15 +38,12 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
         },
 
         autoAdd: function(dataService, form, autoAddObject) {
-            var refresh = this.refreshData;
             if(dataService && autoAddObject && form) {
                 if(form.$valid) {
-                    dataService.createDefault({}, 
-                        { session_id: sharedDataService.data.session_id, base_date: autoAddObject.date },
-                        function(response) {
-                            refresh();
-                        }
-                    );
+                    var query = dataService.createDefault({}, 
+                            { session_id: sharedDataService.data.session_id, base_date: autoAddObject.date }
+                        );
+                    return query.$promise;
                 }
             }
         }

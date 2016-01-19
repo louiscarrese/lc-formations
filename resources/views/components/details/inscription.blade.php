@@ -107,10 +107,10 @@
     <h2>Actions complémentaires</h2>
     <div class="custom-actions">
         <div ng-if="detailCtrl.data.statut == 'pending'">
-            <button class="btn btn-default" ng-click="detailCtrl.callService('validateInscription', [detailCtrl.dataService])">
+            <button class="btn btn-default" ng-click="detailCtrl.callService('validateInscription', [detailCtrl.dataService], [ detailCtrl])">
                 <span>Valider l'inscription</span>
             </button>
-            <button class="btn btn-default" ng-click="detailCtrl.callService('cancelInscription', [detailCtrl.dataService])">
+            <button class="btn btn-default" ng-click="detailCtrl.callService('cancelInscription', [detailCtrl.dataService], [ detailCtrl])">
                 <span>Annuler l'inscription</span>
             </button>
         </div>
