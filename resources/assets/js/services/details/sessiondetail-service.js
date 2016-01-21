@@ -44,6 +44,13 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
                 controller.data.objectifs_pedagogiques = module.objectifs_pedagogiques;
                 controller.data.materiel = module.materiel;
             }
-        }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette session ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Inscriptions ';
+            return message;
+        },
     }
 }

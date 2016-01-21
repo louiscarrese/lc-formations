@@ -136,14 +136,16 @@ function editableTableController($filter, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
-        type.$delete({id: type.internalKey}, 
-            function(value, responseHeaders) {
-                self.data.splice(self.data.indexOf(value), 1);
-                self.refreshControllers(ctrlsToRefresh);
-            }, 
-            function(httpResponse) {
-                self.errors = self.extractErrors(httpResponse);
-            });
+        if(window.confirm(tableService.deleteMessage())) {
+            type.$delete({id: type.internalKey}, 
+                function(value, responseHeaders) {
+                    self.data.splice(self.data.indexOf(value), 1);
+                    self.refreshControllers(ctrlsToRefresh);
+                }, 
+                function(httpResponse) {
+                    self.errors = self.extractErrors(httpResponse);
+                });
+        }
     };
 
     /**

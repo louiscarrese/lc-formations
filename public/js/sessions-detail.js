@@ -11909,14 +11909,16 @@ function detailController(editModeService, dataService, detailService) {
 
     function del() {
         self.errors = [];
-        self.data.$delete({id:self.internalKey},
-            function(value, responseHeaders) {
-                if(detailService != undefined && typeof detailService.getListUrl == 'function')
-                    window.location.href=detailService.getListUrl();
-            },
-            function(response) {
-                self.errors = self.extractErrors(response.data);
-            })
+        if(window.confirm(detailService.deleteMessage())) {
+            self.data.$delete({id:self.internalKey},
+                function(value, responseHeaders) {
+                    if(detailService != undefined && typeof detailService.getListUrl == 'function')
+                        window.location.href=detailService.getListUrl();
+                },
+                function(response) {
+                    self.errors = self.extractErrors(response.data);
+                })
+        }
     }
 
     //Utilities
@@ -12098,7 +12100,14 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
                 controller.data.objectifs_pedagogiques = module.objectifs_pedagogiques;
                 controller.data.materiel = module.materiel;
             }
-        }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette session ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Inscriptions ';
+            return message;
+        },
     }
 }
 angular.module('sessionDetail', ['detail'])
@@ -12303,14 +12312,16 @@ function editableTableController($filter, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
-        type.$delete({id: type.internalKey}, 
-            function(value, responseHeaders) {
-                self.data.splice(self.data.indexOf(value), 1);
-                self.refreshControllers(ctrlsToRefresh);
-            }, 
-            function(httpResponse) {
-                self.errors = self.extractErrors(httpResponse);
-            });
+        if(window.confirm(tableService.deleteMessage())) {
+            type.$delete({id: type.internalKey}, 
+                function(value, responseHeaders) {
+                    self.data.splice(self.data.indexOf(value), 1);
+                    self.refreshControllers(ctrlsToRefresh);
+                }, 
+                function(httpResponse) {
+                    self.errors = self.extractErrors(httpResponse);
+                });
+        }
     };
 
     /**
@@ -12483,7 +12494,12 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
                     return query.$promise;
                 }
             }
-        }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer ce jour de session ?';
+            return message;
+        },
 
     };
 }

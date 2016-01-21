@@ -98,14 +98,16 @@ function detailController(editModeService, dataService, detailService) {
 
     function del() {
         self.errors = [];
-        self.data.$delete({id:self.internalKey},
-            function(value, responseHeaders) {
-                if(detailService != undefined && typeof detailService.getListUrl == 'function')
-                    window.location.href=detailService.getListUrl();
-            },
-            function(response) {
-                self.errors = self.extractErrors(response.data);
-            })
+        if(window.confirm(detailService.deleteMessage())) {
+            self.data.$delete({id:self.internalKey},
+                function(value, responseHeaders) {
+                    if(detailService != undefined && typeof detailService.getListUrl == 'function')
+                        window.location.href=detailService.getListUrl();
+                },
+                function(response) {
+                    self.errors = self.extractErrors(response.data);
+                })
+        }
     }
 
     //Utilities

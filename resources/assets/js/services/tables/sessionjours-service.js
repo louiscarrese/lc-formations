@@ -46,7 +46,12 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
                     return query.$promise;
                 }
             }
-        }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer ce jour de session ?';
+            return message;
+        },
 
     };
 }

@@ -47,7 +47,13 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
                 var resource = dataService.cancel({inscription_id: sharedDataService.data.inscription_id});
                 return resource.$promise;
             }
-        }
+        },
 
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette inscription ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Financements ';
+            return message;
+        },
     }
 }

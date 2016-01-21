@@ -11909,14 +11909,16 @@ function detailController(editModeService, dataService, detailService) {
 
     function del() {
         self.errors = [];
-        self.data.$delete({id:self.internalKey},
-            function(value, responseHeaders) {
-                if(detailService != undefined && typeof detailService.getListUrl == 'function')
-                    window.location.href=detailService.getListUrl();
-            },
-            function(response) {
-                self.errors = self.extractErrors(response.data);
-            })
+        if(window.confirm(detailService.deleteMessage())) {
+            self.data.$delete({id:self.internalKey},
+                function(value, responseHeaders) {
+                    if(detailService != undefined && typeof detailService.getListUrl == 'function')
+                        window.location.href=detailService.getListUrl();
+                },
+                function(response) {
+                    self.errors = self.extractErrors(response.data);
+                })
+        }
     }
 
     //Utilities
@@ -12113,8 +12115,14 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
                 var resource = dataService.cancel({inscription_id: sharedDataService.data.inscription_id});
                 return resource.$promise;
             }
-        }
+        },
 
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette inscription ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Financements ';
+            return message;
+        },
     }
 }
 angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList'])
@@ -12319,14 +12327,16 @@ function editableTableController($filter, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
-        type.$delete({id: type.internalKey}, 
-            function(value, responseHeaders) {
-                self.data.splice(self.data.indexOf(value), 1);
-                self.refreshControllers(ctrlsToRefresh);
-            }, 
-            function(httpResponse) {
-                self.errors = self.extractErrors(httpResponse);
-            });
+        if(window.confirm(tableService.deleteMessage())) {
+            type.$delete({id: type.internalKey}, 
+                function(value, responseHeaders) {
+                    self.data.splice(self.data.indexOf(value), 1);
+                    self.refreshControllers(ctrlsToRefresh);
+                }, 
+                function(httpResponse) {
+                    self.errors = self.extractErrors(httpResponse);
+                });
+        }
     };
 
     /**
@@ -12460,7 +12470,12 @@ function financeurInscriptionsTableServiceFactory(sharedDataService, financeursS
                 ret['inscription_id'] = sharedDataService.data.inscription_id;
             }
             return ret;
-        }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer ce financement ?';
+            return message;
+        },
 
     };
 }

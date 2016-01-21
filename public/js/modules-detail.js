@@ -11909,14 +11909,16 @@ function detailController(editModeService, dataService, detailService) {
 
     function del() {
         self.errors = [];
-        self.data.$delete({id:self.internalKey},
-            function(value, responseHeaders) {
-                if(detailService != undefined && typeof detailService.getListUrl == 'function')
-                    window.location.href=detailService.getListUrl();
-            },
-            function(response) {
-                self.errors = self.extractErrors(response.data);
-            })
+        if(window.confirm(detailService.deleteMessage())) {
+            self.data.$delete({id:self.internalKey},
+                function(value, responseHeaders) {
+                    if(detailService != undefined && typeof detailService.getListUrl == 'function')
+                        window.location.href=detailService.getListUrl();
+                },
+                function(response) {
+                    self.errors = self.extractErrors(response.data);
+                })
+        }
     }
 
     //Utilities
@@ -12070,6 +12072,14 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService,
 
         getListUrl: function() {
             return '/modules';
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer ce module ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Sessions ';
+            message += '\n - Inscriptions';
+            return message;
         },
     }
 }
@@ -12280,14 +12290,16 @@ function editableTableController($filter, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
-        type.$delete({id: type.internalKey}, 
-            function(value, responseHeaders) {
-                self.data.splice(self.data.indexOf(value), 1);
-                self.refreshControllers(ctrlsToRefresh);
-            }, 
-            function(httpResponse) {
-                self.errors = self.extractErrors(httpResponse);
-            });
+        if(window.confirm(tableService.deleteMessage())) {
+            type.$delete({id: type.internalKey}, 
+                function(value, responseHeaders) {
+                    self.data.splice(self.data.indexOf(value), 1);
+                    self.refreshControllers(ctrlsToRefresh);
+                }, 
+                function(httpResponse) {
+                    self.errors = self.extractErrors(httpResponse);
+                });
+        }
     };
 
     /**
@@ -12483,6 +12495,12 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
             return ret;
         },
 
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette session ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Inscriptions ';
+            return message;
+        },
     };
 }
 

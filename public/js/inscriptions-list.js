@@ -11399,14 +11399,16 @@ function editableTableController($filter, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
-        type.$delete({id: type.internalKey}, 
-            function(value, responseHeaders) {
-                self.data.splice(self.data.indexOf(value), 1);
-                self.refreshControllers(ctrlsToRefresh);
-            }, 
-            function(httpResponse) {
-                self.errors = self.extractErrors(httpResponse);
-            });
+        if(window.confirm(tableService.deleteMessage())) {
+            type.$delete({id: type.internalKey}, 
+                function(value, responseHeaders) {
+                    self.data.splice(self.data.indexOf(value), 1);
+                    self.refreshControllers(ctrlsToRefresh);
+                }, 
+                function(httpResponse) {
+                    self.errors = self.extractErrors(httpResponse);
+                });
+        }
     };
 
     /**
@@ -11553,7 +11555,14 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
                 } else {
                     data.session.libelle = '';
                 }
-        }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette inscription ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Financements ';
+            return message;
+        },
     };
 }
 angular.module('inscriptionsList', ['ngResource', 'listTable'])

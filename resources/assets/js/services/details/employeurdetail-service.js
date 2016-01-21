@@ -17,5 +17,10 @@ function employeurDetailServiceFactory(sharedDataService) {
         getListUrl: function() {
             return '/employeurs';
         },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cet employeur ?';
+            return message;
+        },
     }
 }

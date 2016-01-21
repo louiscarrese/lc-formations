@@ -11909,14 +11909,16 @@ function detailController(editModeService, dataService, detailService) {
 
     function del() {
         self.errors = [];
-        self.data.$delete({id:self.internalKey},
-            function(value, responseHeaders) {
-                if(detailService != undefined && typeof detailService.getListUrl == 'function')
-                    window.location.href=detailService.getListUrl();
-            },
-            function(response) {
-                self.errors = self.extractErrors(response.data);
-            })
+        if(window.confirm(detailService.deleteMessage())) {
+            self.data.$delete({id:self.internalKey},
+                function(value, responseHeaders) {
+                    if(detailService != undefined && typeof detailService.getListUrl == 'function')
+                        window.location.href=detailService.getListUrl();
+                },
+                function(response) {
+                    self.errors = self.extractErrors(response.data);
+                })
+        }
     }
 
     //Utilities
@@ -12031,6 +12033,11 @@ function employeurDetailServiceFactory(sharedDataService) {
 
         getListUrl: function() {
             return '/employeurs';
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cet employeur ?';
+            return message;
         },
     }
 }

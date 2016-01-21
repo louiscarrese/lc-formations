@@ -37,5 +37,13 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService,
         getListUrl: function() {
             return '/modules';
         },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer ce module ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Sessions ';
+            message += '\n - Inscriptions';
+            return message;
+        },
     }
 }

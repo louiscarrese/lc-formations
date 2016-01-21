@@ -24,5 +24,11 @@ function formateurDetailServiceFactory(sharedDataService, formateurTypesService)
         getListUrl: function() {
             return '/formateurs';
         },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer ce formateur ?';
+
+            return message;
+        },
     }
 }

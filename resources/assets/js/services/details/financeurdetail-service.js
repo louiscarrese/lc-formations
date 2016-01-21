@@ -24,5 +24,13 @@ function financeurDetailServiceFactory(sharedDataService, financeurTypesService)
         getListUrl: function() {
             return '/financeurs';
         },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer ce financeur ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Financements ';
+            return message;
+        },
+
     }
 }

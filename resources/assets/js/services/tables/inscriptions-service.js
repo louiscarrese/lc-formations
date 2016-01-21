@@ -26,6 +26,13 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
                 } else {
                     data.session.libelle = '';
                 }
-        }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette inscription ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Financements ';
+            return message;
+        },
     };
 }

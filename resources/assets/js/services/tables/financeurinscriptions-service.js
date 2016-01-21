@@ -19,7 +19,12 @@ function financeurInscriptionsTableServiceFactory(sharedDataService, financeursS
                 ret['inscription_id'] = sharedDataService.data.inscription_id;
             }
             return ret;
-        }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer ce financement ?';
+            return message;
+        },
 
     };
 }
