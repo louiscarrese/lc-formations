@@ -32,7 +32,7 @@
             'adresse' => [
                 'label' => 'Adresse',
                 'type' => 'textarea',
-		'additionalAttributes' => 'rows=3',
+        		'additionalAttributes' => 'rows=3',
                 'sizeLabel' => 3,
                 'sizeValue' => 5,
             ],
@@ -97,6 +97,16 @@
                 'type' => 'text',
                 'sizeLabel' => 3,
                 'sizeValue' => 2,
+            ],
+            'niveau_formation_id' => [
+                'label' => 'Niveau de formation',
+                'type' => 'dropdown',
+                'datasource' => 'linkedData.niveau_formation', //relative to the controller
+                'dataId' => 'id', //relative to an item in the dropdownDatasource
+                'modelObject' => 'niveau_formation', //relative to an item in the controller data 
+                'displayed' => '<libelle>',
+                'sizeLabel' => 3,
+                'sizeValue' => 4,
             ],
             'employeur_id' => [
                 'label' => 'Employeur',

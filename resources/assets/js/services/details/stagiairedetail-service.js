@@ -1,12 +1,14 @@
-function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService, employeursService) {
+function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService, employeursService, niveauFormationsService) {
     return {
         getLinkedData: function() {
             var stagiaireType = stagiaireTypesService.query();
             var employeur = employeursService.query();
+            var niveau_formation = niveauFormationsService.query();
 
             return {
                 'stagiaire_type': stagiaireType,
-                'employeur': employeur
+                'employeur': employeur,
+                'niveau_formation': niveau_formation
             };
         },
 

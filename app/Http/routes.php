@@ -35,6 +35,8 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
         ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
     Route::resource('financeur_type', 'FinanceurTypeController', 
         ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+    Route::resource('niveau_formation', 'NiveauFormationController', 
+        ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 
 
     Route::resource('module', 'ModuleController', 

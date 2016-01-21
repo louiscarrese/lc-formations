@@ -81,16 +81,6 @@ var detail = myEditable.concat([
     'modules/detail-module.js'
 ]);
 
-var parametresServices = [
-    '/services/data/stagiairetypes-service.js',
-    '/services/data/formateurtypes-service.js',
-    '/services/data/financeurtypes-service.js',
-    '/services/data/tariftypes-service.js',
-    '/services/data/lieu-service.js',
-    '/services/data/domaineformations-service.js',
-];
-
-
 var parametres = Array.prototype.concat(
     libraries,
     editableTable,
@@ -101,6 +91,7 @@ var parametres = Array.prototype.concat(
         '/services/data/tariftypes-service.js',
         '/services/data/lieu-service.js',
         '/services/data/domaineformations-service.js',
+        '/services/data/niveauformations-service.js',
     ]
 );
 
@@ -265,6 +256,7 @@ var stagiaireDetail = Array.prototype.concat(
         'services/data/stagiaires-service.js',
         'services/data/stagiairetypes-service.js',
         'services/data/employeurs-service.js',
+        'services/data/niveauformations-service.js',
         'services/details/stagiairedetail-service.js',
         'modules/details/stagiaire-detail-module.js'
 

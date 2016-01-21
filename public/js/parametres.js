@@ -11825,6 +11825,8 @@ function editableTableController($filter, dataService, tableService) {
     self.sortProp = "id";
     self.sortReverse = false;
 
+    self.refreshControllers = refreshControllers;
+
     if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
         self.linkedData = tableService.getLinkedData();
     }
@@ -11922,7 +11924,14 @@ function editableTableController($filter, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
-        if(window.confirm(tableService.deleteMessage())) {
+        var confirmed = false;
+        if(tableService != undefined && typeof tableService['deleteMessage'] == 'function' 
+            && window.confirm(tableService.deleteMessage())) {
+                confirmed = true;
+        } else {
+            confirmed = true;
+        }
+        if(confirmed) {
             type.$delete({id: type.internalKey}, 
                 function(value, responseHeaders) {
                     self.data.splice(self.data.indexOf(value), 1);
@@ -12089,6 +12098,11 @@ function domaineFormationsServiceFactory($resource) {
     });
 }
 
+function niveauFormationsServiceFactory($resource) {
+    return $resource('/api/niveau_formation/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
 angular.module('parametresApp', ['editableTable', 'ngResource'])
     .factory('stagiaireTypesService', ['$resource', stagiaireTypesServiceFactory])
     .factory('formateurTypesService', ['$resource', formateurTypesServiceFactory])
@@ -12096,6 +12110,7 @@ angular.module('parametresApp', ['editableTable', 'ngResource'])
     .factory('tarifTypesService', ['$resource', tarifTypesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
     .factory('lieuService', ['$resource', lieuServiceFactory])
+    .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
 
     .controller('stagiaireTypesController', ['$filter', 'stagiaireTypesService', editableTableController])
     .controller('formateurTypesController', ['$filter', 'formateurTypesService', editableTableController])
@@ -12103,6 +12118,7 @@ angular.module('parametresApp', ['editableTable', 'ngResource'])
     .controller('tarifTypesController', ['$filter', 'tarifTypesService', editableTableController])
     .controller('domaineFormationsController', ['$filter', 'domaineFormationsService', editableTableController])
     .controller('lieuController', ['$filter', 'lieuService', editableTableController])
+    .controller('niveauFormationsController', ['$filter', 'niveauFormationsService', editableTableController])
 ;
 
 //# sourceMappingURL=parametres.js.map

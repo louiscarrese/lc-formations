@@ -12215,6 +12215,8 @@ function editableTableController($filter, dataService, tableService) {
     self.sortProp = "id";
     self.sortReverse = false;
 
+    self.refreshControllers = refreshControllers;
+
     if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
         self.linkedData = tableService.getLinkedData();
     }
@@ -12312,7 +12314,14 @@ function editableTableController($filter, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
-        if(window.confirm(tableService.deleteMessage())) {
+        var confirmed = false;
+        if(tableService != undefined && typeof tableService['deleteMessage'] == 'function' 
+            && window.confirm(tableService.deleteMessage())) {
+                confirmed = true;
+        } else {
+            confirmed = true;
+        }
+        if(confirmed) {
             type.$delete({id: type.internalKey}, 
                 function(value, responseHeaders) {
                     self.data.splice(self.data.indexOf(value), 1);

@@ -222,4 +222,34 @@
             ], //fields
         ])
     </div>
+    <div ng-controller="niveauFormationsController as niveauFormationsController">
+        @include('components.editableTable',
+            ['controllerName' => 'niveauFormationsController',
+             'title' => 'Niveaux de formation',
+             'idField' => 'id',
+             'adaptToContent' => true,
+             'fields' => [
+                'id' => [
+                    'label' => 'Id',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'integer',
+                    'addLine' => false,
+                    'tdClass' => 'centered',
+                    'additionalAttributes' => 'size=1',
+                    'validation' => 'required',
+                ], //id
+                'libelle' => [
+                    'label' => 'Libellé',
+                    'sortable' => true,
+                    'filterable' => true,
+                    'editable' => true,
+                    'type' => 'text',
+                    'addLine' => true,
+                    'validation' => 'required',
+                ], //libelle
+            ], //fields
+        ])
+    </div>
 @endsection

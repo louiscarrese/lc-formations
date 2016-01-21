@@ -12046,15 +12046,22 @@ function employeursServiceFactory($resource) {
     });
 }
 
-function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService, employeursService) {
+function niveauFormationsServiceFactory($resource) {
+    return $resource('/api/niveau_formation/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService, employeursService, niveauFormationsService) {
     return {
         getLinkedData: function() {
             var stagiaireType = stagiaireTypesService.query();
             var employeur = employeursService.query();
+            var niveau_formation = niveauFormationsService.query();
 
             return {
                 'stagiaire_type': stagiaireType,
-                'employeur': employeur
+                'employeur': employeur,
+                'niveau_formation': niveau_formation
             };
         },
 
@@ -12087,7 +12094,8 @@ angular.module('stagiaireDetail', ['detail', 'ngResource'])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('employeursService', ['$resource', employeursServiceFactory])
     .factory('stagiaireTypesService', ['$resource', stagiaireTypesServiceFactory])
-    .factory('stagiaireDetailService', ['sharedDataService', 'stagiaireTypesService', 'employeursService', stagiaireDetailServiceFactory])
+    .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
+    .factory('stagiaireDetailService', ['sharedDataService', 'stagiaireTypesService', 'employeursService', 'niveauFormationsService', stagiaireDetailServiceFactory])
     .controller('detailController', ['editModeService', 'stagiairesService', 'stagiaireDetailService', detailController])
 ;
 
@@ -12188,6 +12196,8 @@ function editableTableController($filter, dataService, tableService) {
     self.sortProp = "id";
     self.sortReverse = false;
 
+    self.refreshControllers = refreshControllers;
+
     if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
         self.linkedData = tableService.getLinkedData();
     }
@@ -12285,7 +12295,14 @@ function editableTableController($filter, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
-        if(window.confirm(tableService.deleteMessage())) {
+        var confirmed = false;
+        if(tableService != undefined && typeof tableService['deleteMessage'] == 'function' 
+            && window.confirm(tableService.deleteMessage())) {
+                confirmed = true;
+        } else {
+            confirmed = true;
+        }
+        if(confirmed) {
             type.$delete({id: type.internalKey}, 
                 function(value, responseHeaders) {
                     self.data.splice(self.data.indexOf(value), 1);
