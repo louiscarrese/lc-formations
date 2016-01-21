@@ -12070,7 +12070,16 @@ function sessionsServiceFactory($resource, $http, $filter) {
 }
 
 
-function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService) {
+function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter) {
+    function buildSessionLibelle(item) {
+        var ret = '';
+        if(item.firstDate && item.lastDate) {
+            ret = '(' + $filter('date')(item.firstDate, 'dd/MM/yyyy');
+            ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy') + ')';
+        }
+        return ret;
+    };
+
     return {
         getLinkedData: function() {
             var stagiaire = stagiairesService.query();
@@ -12089,6 +12098,11 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         getSuccess: function(data) {
 
             sharedDataService.data.inscription_id = data.id;
+
+            //We have to rebuild the session name here because it does not come from the session data service
+            if(data.session) {
+                data.session.libelle = buildSessionLibelle(data.session);
+            }
 
             var titleText = "Création d'une inscription";
             if(data.id != undefined) {
@@ -12140,7 +12154,7 @@ angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscripti
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('sessionsService', ['$resource', '$http', '$filter', sessionsServiceFactory])
-    .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', inscriptionDetailServiceFactory])
+    .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', '$filter', inscriptionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', detailController])
 ;
 
