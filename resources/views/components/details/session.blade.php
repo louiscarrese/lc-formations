@@ -49,6 +49,7 @@
                 ['controllerName' => 'sessionJoursController',
                  'idField' => 'id',
                  'title' => 'Jours',
+                 'refreshControllers' => '[detailCtrl]',
                  'fields' => [
                     'date' => [
                         'label' => 'Date',

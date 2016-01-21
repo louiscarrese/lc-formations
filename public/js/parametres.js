@@ -11860,21 +11860,21 @@ function editableTableController($filter, dataService, tableService) {
         }
     }
 
-    function editSubmit(index, value) {
+    function editSubmit(index, value, ctrlsToRefresh) {
         //Validation
         var form = self['form_' + index];
         if(form.$valid) {
             //Send update
-            self.update(value);
+            self.update(value, ctrlsToRefresh);
         } 
     }
 
-    function addSubmit() {
+    function addSubmit(ctrlsToRefresh) {
         //Validation
         var form = self['form_add'];
         if(form.$valid) {
             //Send update
-            self.create(self.addObject);
+            self.create(self.addObject, ctrlsToRefresh);
         }
     }
     function refreshData() {
@@ -11897,7 +11897,7 @@ function editableTableController($filter, dataService, tableService) {
     /**
      * Update
      */
-     function update(type) {
+     function update(type, ctrlsToRefresh) {
         if(tableService != undefined && typeof tableService.preSend == 'function') {
             tableService.preSend(type);
         }
@@ -11907,6 +11907,7 @@ function editableTableController($filter, dataService, tableService) {
             function(value, responseHeaders) {
 
                 self.getSuccess(value);
+                self.refreshControllers(ctrlsToRefresh);
                 value.editing = false;
                 self.sort();
 
@@ -11919,11 +11920,12 @@ function editableTableController($filter, dataService, tableService) {
     /**
      * Delete
      */
-     function del(type) {
+     function del(type, ctrlsToRefresh) {
         self.errors = [];
         type.$delete({id: type.internalKey}, 
             function(value, responseHeaders) {
                 self.data.splice(self.data.indexOf(value), 1);
+                self.refreshControllers(ctrlsToRefresh);
             }, 
             function(httpResponse) {
                 self.errors = self.extractErrors(httpResponse);
@@ -11933,15 +11935,18 @@ function editableTableController($filter, dataService, tableService) {
     /**
      * Add
      */
-     function create() {
+     function create(obj, ctrlsToRefresh) {
         if(tableService != undefined && typeof tableService.preSend == 'function') {
             tableService.preSend(self.addObject);
         }
         self.errors = [];
-        dataService.save(self.addObject, 
+        dataService.save(obj, 
             function(value, responseHeaders) {
                 //process value
                 self.getSuccess(value);
+
+                //Update any other controller
+                self.refreshControllers(ctrlsToRefresh);
 
                 //Update data list
                 self.data.push(value);
@@ -11949,6 +11954,7 @@ function editableTableController($filter, dataService, tableService) {
                 self.addObject = {};
                 self.form_add.$setPristine();
                 self.form_add.$setUntouched();
+
             }, 
             function(httpResponse) {
                 self.errors = self.extractErrors(httpResponse);
@@ -11990,6 +11996,14 @@ function editableTableController($filter, dataService, tableService) {
         }
         return ret;
     };
+
+    function refreshControllers(ctrls) {
+        if(ctrls) {
+            angular.forEach(ctrls, function (ctrl, idx) {
+                ctrl.refreshData();
+            });
+        }
+    }
 
     function callService(methodName, parameters, refreshedControllers) {
         if(tableService != undefined && typeof tableService[methodName] == 'function') {
