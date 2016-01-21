@@ -27,4 +27,9 @@ class InscriptionController extends AbstractController
     {
         $this->repository->cancel($id);
     }
+
+    public function withdrawInscription($id) 
+    {
+        $this->repository->withdraw($id);
+    }
 }

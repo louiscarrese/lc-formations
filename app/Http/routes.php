@@ -20,6 +20,7 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
 
     Route::get('inscription/validate/{id}', 'InscriptionController@validateInscription');
     Route::get('inscription/cancel/{id}', 'InscriptionController@cancelInscription');
+    Route::get('inscription/withdraw/{id}', 'InscriptionController@withdrawInscription');
 
     //Listes fermées
     Route::resource('stagiaire_type', 'StagiaireTypeController', 

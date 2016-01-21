@@ -12019,6 +12019,10 @@ function inscriptionsServiceFactory($resource) {
         cancel: {
             url: '/api/inscription/cancel/:inscription_id',
             method: 'GET'
+        },
+        withdraw: {
+            url: '/api/inscription/withdraw/:inscription_id',
+            method: 'GET'
         }
     });
 }
@@ -12113,6 +12117,13 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         cancelInscription: function(dataService) {
             if(dataService) {
                 var resource = dataService.cancel({inscription_id: sharedDataService.data.inscription_id});
+                return resource.$promise;
+            }
+        },
+
+        withdrawInscription: function(dataService) {
+            if(dataService) {
+                var resource = dataService.withdraw({inscription_id: sharedDataService.data.inscription_id});
                 return resource.$promise;
             }
         },

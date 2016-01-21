@@ -25,25 +25,34 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
     public function validate($id)
     {
         $inscription = \ModuleFormation\Inscription::findOrFail($id);
-        $inscription->statut = 'validated';
+        $inscription->statut = \ModuleFormation\Inscription::STATUS_VALIDATED;
         $inscription->save();
     }
 
     public function cancel($id)
     {
         $inscription = \ModuleFormation\Inscription::findOrFail($id);
-        $inscription->statut = 'canceled';
+        $inscription->statut = \ModuleFormation\Inscription::STATUS_CANCELED;
+        $inscription->save();
+    }
+
+    public function withdraw($id)
+    {
+        $inscription = \ModuleFormation\Inscription::findOrFail($id);
+        $inscription->statut = \ModuleFormation\Inscription::STATUS_WITHDRAWN;
         $inscription->save();
     }
 
     private function getStatutLibelle($statut) 
     {
-        if($statut == 'pending') {
+        if($statut == \ModuleFormation\Inscription::STATUS_PENDING) {
             return 'En cours';
-        } else if($statut == 'validated') {
+        } else if($statut == \ModuleFormation\Inscription::STATUS_VALIDATED) {
             return 'Validée';
-        } else if($statut == 'canceled') {
+        } else if($statut == \ModuleFormation\Inscription::STATUS_CANCELED) {
             return 'Annulée';
+        } else if($statut == \ModuleFormation\Inscription::STATUS_WITHDRAWN) {
+            return 'Désistée';
         } else {
             return '';
         }

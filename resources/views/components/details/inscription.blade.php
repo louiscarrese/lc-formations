@@ -114,5 +114,10 @@
                 <span>Annuler l'inscription</span>
             </button>
         </div>
+        <div ng-if="detailCtrl.data.statut == 'validated'">
+            <button class="btn btn-default" ng-click="detailCtrl.callService('withdrawInscription', [detailCtrl.dataService], [ detailCtrl])">
+                <span>Désistement</span>
+            </button>
+        </div>
     </div>
 </div>

@@ -4,6 +4,13 @@ namespace ModuleFormation;
 
 class Inscription extends AbstractModel
 {
+    //Define status as constants
+    const STATUS_PENDING = "pending";
+    const STATUS_VALIDATED = "validated";
+    const STATUS_CANCELED = "canceled";
+    const STATUS_WITHDRAWN = "withdrawn";
+
+
     protected $with = ['stagiaire', 'session.module'];
 
     protected $fillable = ['id', 'profession_structure', 'experiences', 'attentes', 

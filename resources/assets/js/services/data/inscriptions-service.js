@@ -8,6 +8,10 @@ function inscriptionsServiceFactory($resource) {
         cancel: {
             url: '/api/inscription/cancel/:inscription_id',
             method: 'GET'
+        },
+        withdraw: {
+            url: '/api/inscription/withdraw/:inscription_id',
+            method: 'GET'
         }
     });
 }

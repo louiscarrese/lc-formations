@@ -15,6 +15,8 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
                 return 'success';
             } else if(item.statut == 'canceled') {
                 return 'danger';
+            } else if(item.statut == 'withdrawn') {
+                return 'danger';
             }
             return null;
         },

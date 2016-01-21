@@ -11524,6 +11524,10 @@ function inscriptionsServiceFactory($resource) {
         cancel: {
             url: '/api/inscription/cancel/:inscription_id',
             method: 'GET'
+        },
+        withdraw: {
+            url: '/api/inscription/withdraw/:inscription_id',
+            method: 'GET'
         }
     });
 }
@@ -11543,6 +11547,8 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
             } else if(item.statut == 'validated') {
                 return 'success';
             } else if(item.statut == 'canceled') {
+                return 'danger';
+            } else if(item.statut == 'withdrawn') {
                 return 'danger';
             }
             return null;
