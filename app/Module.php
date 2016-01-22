@@ -8,7 +8,7 @@ class Module extends AbstractModel
     protected $with = ['domaine_formation', 'formateurs', 'lieu'];
 
     protected $fillable = ['id', 'libelle', 'nb_jours', 'heure_debut', 'heure_fin', 
-        'effectif_max', 'objectifs_pedagogiques', 'materiel', 'lieu_id', 'domaine_formation_id'];
+        'effectif_max', 'objectifs_pedagogiques', 'materiel', 'code_formation', 'lieu_id', 'domaine_formation_id'];
 
     protected static $myTimes = ['heure_debut', 'heure_fin'];
 

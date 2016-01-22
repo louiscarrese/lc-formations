@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CodeFormation' => $baseDir . '/database/migrations/2016_01_22_082503_code_formation.php',
     'CreateDomaineFormationsTable' => $baseDir . '/database/migrations/2015_11_07_000020_create_domaine_formations_table.php',
     'CreateEmployeursTable' => $baseDir . '/database/migrations/2015_11_07_010080_create_employeurs_table.php',
     'CreateFinanceurInscriptionTable' => $baseDir . '/database/migrations/2015_11_07_010120_create_financeur_inscription_table.php',

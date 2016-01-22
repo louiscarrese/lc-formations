@@ -29,6 +29,12 @@
                 'sizeLabel' => 2,
                 'sizeValue' => 1,
             ],
+            'code_formation' => [
+                'label' => 'Code formation',
+                'type' => 'text',
+                'sizeLabel' => 2,
+                'sizeValue' => 1,
+            ],
             'lieu_id' => [
                 'label' => 'Lieu par défaut',
                 'type' => 'dropdown',
