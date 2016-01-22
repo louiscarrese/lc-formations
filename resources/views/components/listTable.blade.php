@@ -67,7 +67,7 @@
     </table>
 
     <div class="global-actions clearfix">
-        <a ng-href="{{$detailUri}}/create" class="btn btn-default">
+        <a ng-href="<?php echo '{{ ctrl.createUrl(\'' . $detailUri . '\')}}'; ?>" class="btn btn-default">
             <span>Ajouter</span>
         </a>
     </div>

@@ -12206,6 +12206,8 @@ function editableTableController($filter, dataService, tableService) {
     //Data
 
     self.queryParameters = {};
+    self.queryString = queryString;
+    self.createUrl = createUrl;
 
     self.addObject = {};
 
@@ -12406,6 +12408,27 @@ function editableTableController($filter, dataService, tableService) {
         }
     }
 
+    function queryString() {
+        var ret = '';
+
+        var parameters = {};
+        if(tableService != undefined && typeof tableService.queryParameters == 'function') {
+            parameters = tableService.queryParameters();
+        }
+
+        var first = true;
+        angular.forEach(parameters, function(value, key) {
+            ret += first ? '?' : '&'; 
+            ret += key + '=' + value;
+            first = false;
+        });
+ 
+        return ret;
+    }
+
+    function createUrl(baseUrl) {
+        return baseUrl + '/create' + queryString();
+    }
     function callService(methodName, parameters, refreshedControllers) {
         if(tableService != undefined && typeof tableService[methodName] == 'function') {
             var ret = tableService[methodName].apply(self, parameters);
