@@ -8,5 +8,5 @@ angular.module('moduleDetail', ['detail', 'ngResource'])
     .factory('moduleDetailService', ['sharedDataService', 'domaineFormationsService', 'formateursService', 'lieuService', moduleDetailServiceFactory])
 
     //Detail controller
-    .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', detailController])
+    .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', '$q', detailController])
 ;

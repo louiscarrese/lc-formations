@@ -4,7 +4,7 @@ function financeurDetailServiceFactory(sharedDataService, financeurTypesService)
             var financeurType = financeurTypesService.query();
 
             return {
-                'financeur_type': financeurType
+                'financeur_type': financeurType.$promise
             };
         },
 

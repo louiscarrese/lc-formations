@@ -6,9 +6,9 @@ function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService,
             var niveau_formation = niveauFormationsService.query();
 
             return {
-                'stagiaire_type': stagiaireType,
-                'employeur': employeur,
-                'niveau_formation': niveau_formation
+                'stagiaire_type': stagiaireType.$promise,
+                'employeur': employeur.$promise,
+                'niveau_formation': niveau_formation.$promise
             };
         },
 

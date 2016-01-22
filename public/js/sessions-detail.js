@@ -11728,88 +11728,96 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
     .directive('datepickerLocaldate', datepickerLocaldate)
 ;
 
-function editModeServiceFactory() {
+function editModeServiceFactory($q) {
+
     return {
-        initFromUrl: function(service, callback) {
-            var data = {};
+        initFromUrl: initFromUrl,
+    };
 
-            var mode = this.getModeFromUrl();
+    //Gets what it can from the URL.
+    //Returns a promises which will be completed when data has arrived
+    function initFromUrl(service) {
+        return $q(function(resolve, reject) {
+            var ret = {};
 
-            if(mode === 'create') {
-                data = this.getDataFromUrl();
-                callback(mode, data);
+            ret.mode = getModeFromUrl();
+
+            if(ret.mode === 'create') {
+                ret.data = getDataFromUrl();
+                resolve(ret);
             } else {
-                var id = this.getId();
-                if(this.isNumber(id)) {
-                    service.get({id:id}, function(value, responseHeaders) {
-                        callback(mode, value);
+                var id = getId();
+                if(isNumber(id)) {
+                    service.get({id:id}).$promise.then(function(value) {
+                        ret.data = value;
+                        resolve(ret);
                     });
                 } else {
-                    data = {};
-                    callback(mode, data);
+                    ret.data = {};
+                    resolve(ret);
                 }
             }
-
-        },
-
-        getModeFromUrl: function() {
-            var urlParser = this.parseUrl(window.location);
-            if(urlParser.pathname.substr(-'create'.length) === 'create') {
-                return 'create';
+        })
+    }
+    
+    function getModeFromUrl() {
+        var urlParser = parseUrl(window.location);
+        if(urlParser.pathname.substr(-'create'.length) === 'create') {
+            return 'create';
+        } else {
+            var params = parseParameters(urlParser.search);
+            if(params.hasOwnProperty('edit') && params.edit === 'true') {
+                return 'edit';
             } else {
-                var params = this.parseParameters(urlParser.search);
-                if(params.hasOwnProperty('edit') && params.edit === 'true') {
-                    return 'edit';
-                } else {
-                    return 'read';
-                }
+                return 'read';
             }
-        },
-
-        getDataFromUrl: function () {
-            var urlParser = this.parseUrl(window.location);
-            var params = this.parseParameters(urlParser.search);
-            return params;
-        },
-
-        getId: function() {
-            var urlParse = this.parseUrl(window.location);
-            var path = urlParse.pathname;
-            var pathComponents = path.split('/');
-
-            var id = pathComponents[pathComponents.length - 1];
-
-            return id;
-        },
-
-        isNumber: function(n) {
-            return !isNaN(parseFloat(n)) && isFinite(n);
-        },
-
-        parseUrl: function(url) {
-            var parser = document.createElement('a');
-            parser.href = url;
-
-            return parser;
-        },
-
-        parseParameters: function(paramString) {
-            var result = {};
-
-            paramString.substring(1).split("&").forEach(function(part) {
-                var item = part.split("=");
-                result[item[0]] = decodeURIComponent(item[1]);
-            });
-            return result;
         }
-};
+    }
+
+    function getDataFromUrl() {
+        var urlParser = parseUrl(window.location);
+        var params = parseParameters(urlParser.search);
+        return params;
+    }
+
+    function getId() {
+        var urlParse = parseUrl(window.location);
+        var path = urlParse.pathname;
+        var pathComponents = path.split('/');
+
+        var id = pathComponents[pathComponents.length - 1];
+
+        return id;
+    }
+
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    function parseUrl(url) {
+        var parser = document.createElement('a');
+        parser.href = url;
+
+        return parser;
+    }
+
+    function parseParameters(paramString) {
+        var result = {};
+
+        paramString.substring(1).split("&").forEach(function(part) {
+            var item = part.split("=");
+            result[item[0]] = decodeURIComponent(item[1]);
+        });
+        return result;
+    }
+
 }
 function sharedDataServiceFactory() {
     return {
         data: {}
     };
 }
-function detailController(editModeService, dataService, detailService) {
+function detailController(editModeService, dataService, detailService, $q) {
     var self = this;
 
     self.internalKey = 0;
@@ -11838,32 +11846,77 @@ function detailController(editModeService, dataService, detailService) {
 
     //Just so we don't have 'undefined' in places 
     self.data = {};
+    self.linkedData = {};
 
-    if(detailService != undefined) {
-        if(typeof detailService.getLinkedData == 'function')
-            self.linkedData = detailService.getLinkedData();
-        if(typeof detailService.addListeners == 'function')
-            detailService.addListeners(this);
+    initDetail();
+
+
+    //Calls the service after checking the function exists
+    function addListeners() {
+        if(detailService != undefined && typeof detailService.addListeners == 'function')
+            detailService.addListeners(self);
     }
 
-    //Initialize data
-    self.refreshData();
+    //Calls the service after checking the function exists
+    function getLinkedData() {
+        if(detailService != undefined && typeof detailService.getLinkedData == 'function') {
+            return detailService.getLinkedData();
+        } else {
+            return {};
+        }
+    }
 
-    function refreshData() {
-        editModeService.initFromUrl(dataService, function(mode, data) {
-            //Set mode
-            self.mode = mode;
-            if(self.mode === 'read') {
-                self.editing = false;
-            } else {
-                self.editing = true;
+    //Main initialization function
+    function initDetail() {
+        //Add custom listeners if any 
+        addListeners();
+
+        //Launch all requests and retrieve their promises
+        var promises = angular.extend({}, 
+            getLinkedData(),
+            { 'initData' : editModeService.initFromUrl(dataService) }
+        );
+
+        //When all promises succedeed
+        $q.all(promises).then(function(responses) {
+            //Handle each promise separately
+            angular.forEach(responses, function(value, key) {
+                if(key == 'initData') {
+                    initFromUrl(value);
+                } else { //Those we don't know come from getLinkedData()
+                    self.linkedData[key] = value;
+                }
+
+            });
+
+            //Manually fill the "eager loading" objects
+            if(typeof detailService.populateLinkedObjects == 'function') {
+                self.data = angular.merge(self.data, detailService.populateLinkedObjects(self.data, self.linkedData));
             }
 
-            //Do something with the data
-            self.getSuccess(data);
+            //It's almost like we just did a GET...
+            self.getSuccess(self.data);
 
-            //Ok, we can go on
+            //We are inited, tell the world !
             self.inited = true;
+        });
+    }
+
+    //Handles the return from the editModeService
+    function initFromUrl(dataFromUrl) {
+        //Set mode
+        self.mode = dataFromUrl.mode;
+        self.editing = !(self.mode === 'read');
+
+        //Copy data we got to our own data
+        //We have to copy the whole thing because we want the $resource functions
+        self.data = dataFromUrl.data;
+    }
+
+
+    function refreshData() {
+        dataService.get({id: self.data.id}, function(response) {
+            self.data = response;
         });
     }
 
@@ -12006,7 +12059,7 @@ function detailController(editModeService, dataService, detailService) {
 }
 angular.module('detail', ['myEditable'])
     .factory('sharedDataService', sharedDataServiceFactory)
-    .factory('editModeService', editModeServiceFactory) 
+    .factory('editModeService', ['$q', editModeServiceFactory]) 
 ;
 
 function sessionsServiceFactory($resource, $http, $filter) {
@@ -12021,7 +12074,24 @@ function sessionsServiceFactory($resource, $http, $filter) {
 
 
     return $resource('/api/session/:id', null, {
-        'update' : { method: 'PUT' },
+        'update' : { 
+            method: 'PUT',
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    data.libelle = buildLibelle(data);
+                    return data;
+                }
+            ])
+        },
+        'save' : { 
+            method: 'POST',
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    data.libelle = buildLibelle(data);
+                    return data;
+                }
+            ])
+        },
         'query' : { 
             method: 'GET',
             isArray: true, 
@@ -12055,12 +12125,35 @@ function modulesServiceFactory($resource) {
 
 
 function sessionDetailServiceFactory(sharedDataService, modulesService) {
+    function extractModuleInfo(module) {
+        var ret = {};
+
+        //Copy data
+        ret.nb_jours = module.nb_jours;
+        ret.effectif_max = module.effectif_max;
+        ret.objectifs_pedagogiques = module.objectifs_pedagogiques;
+        ret.materiel = module.materiel;
+
+        return ret;
+    }
+
+    //Should use $filter...
+    function findInArray(array, key) {
+        for(var i = 0; i < array.length; i++) {
+            if(array[i].id == key) {
+                return array[i];
+            }
+        }
+        return null;
+    }
+
+
     return {
         getLinkedData: function() {
             var modules = modulesService.query();
 
             return {
-                'modules': modules
+                'modules': modules.$promise,
             };
         },
 
@@ -12085,21 +12178,20 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
 
         addListeners: function(controller) {
             controller.onModuleChange = function(moduleId) {
-
-                //Get the module
-                var modules = controller.linkedData.modules;
-                var module = {};
-                for(var i = 0; i < modules.length; i++) {
-                    if(modules[i].id === moduleId) {
-                        module = modules[i];
-                    }
-                }
-
-                //Copy data
-                controller.data.effectif_max = module.effectif_max;
-                controller.data.objectifs_pedagogiques = module.objectifs_pedagogiques;
-                controller.data.materiel = module.materiel;
+                var module = findInArray(controller.linkedData.modules, moduleId);
+                controller.data = angular.extend(controller.data, extractModuleInfo(module));
+                controller.data.module = module;
             }
+        },
+
+        populateLinkedObjects: function(dataFromUrl, linkedData) {
+            var ret = {};
+            if(dataFromUrl.hasOwnProperty('module_id') && dataFromUrl.module_id != undefined) {
+                ret.module = findInArray(linkedData.modules, dataFromUrl.module_id);
+                angular.extend(ret, extractModuleInfo(ret.module));
+            }
+
+            return ret;
         },
 
         deleteMessage: function() {
@@ -12115,7 +12207,7 @@ angular.module('sessionDetail', ['detail'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
     .factory('sessionDetailService', ['sharedDataService', 'modulesService', sessionDetailServiceFactory])
-    .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', detailController])
+    .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', '$q', detailController])
 ;
 
 function mySortableHeaderDirective() {

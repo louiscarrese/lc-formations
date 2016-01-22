@@ -6,9 +6,9 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService,
             var lieus = lieuService.query();
 
             return {
-                'domaineFormations': domaineFormations,
-                'formateurs': formateurs,
-                'lieus': lieus,
+                'domaineFormations': domaineFormations.$promise,
+                'formateurs': formateurs.$promise,
+                'lieus': lieus.$promise,
             };
         },
 

@@ -1,4 +1,4 @@
 angular.module('detail', ['myEditable'])
     .factory('sharedDataService', sharedDataServiceFactory)
-    .factory('editModeService', editModeServiceFactory) 
+    .factory('editModeService', ['$q', editModeServiceFactory]) 
 ;

@@ -4,7 +4,7 @@ function formateurDetailServiceFactory(sharedDataService, formateurTypesService)
             var formateurType = formateurTypesService.query();
 
             return {
-                'formateur_type': formateurType
+                'formateur_type': formateurType.$promise
             };
         },
 

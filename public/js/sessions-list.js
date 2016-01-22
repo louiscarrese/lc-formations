@@ -11558,7 +11558,24 @@ function sessionsServiceFactory($resource, $http, $filter) {
 
 
     return $resource('/api/session/:id', null, {
-        'update' : { method: 'PUT' },
+        'update' : { 
+            method: 'PUT',
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    data.libelle = buildLibelle(data);
+                    return data;
+                }
+            ])
+        },
+        'save' : { 
+            method: 'POST',
+            transformResponse: $http.defaults.transformResponse.concat([
+                function (data, headersGetter) {
+                    data.libelle = buildLibelle(data);
+                    return data;
+                }
+            ])
+        },
         'query' : { 
             method: 'GET',
             isArray: true, 

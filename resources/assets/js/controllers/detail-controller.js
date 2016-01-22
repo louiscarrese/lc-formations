@@ -1,4 +1,4 @@
-function detailController(editModeService, dataService, detailService) {
+function detailController(editModeService, dataService, detailService, $q) {
     var self = this;
 
     self.internalKey = 0;
@@ -27,32 +27,77 @@ function detailController(editModeService, dataService, detailService) {
 
     //Just so we don't have 'undefined' in places 
     self.data = {};
+    self.linkedData = {};
 
-    if(detailService != undefined) {
-        if(typeof detailService.getLinkedData == 'function')
-            self.linkedData = detailService.getLinkedData();
-        if(typeof detailService.addListeners == 'function')
-            detailService.addListeners(this);
+    initDetail();
+
+
+    //Calls the service after checking the function exists
+    function addListeners() {
+        if(detailService != undefined && typeof detailService.addListeners == 'function')
+            detailService.addListeners(self);
     }
 
-    //Initialize data
-    self.refreshData();
+    //Calls the service after checking the function exists
+    function getLinkedData() {
+        if(detailService != undefined && typeof detailService.getLinkedData == 'function') {
+            return detailService.getLinkedData();
+        } else {
+            return {};
+        }
+    }
 
-    function refreshData() {
-        editModeService.initFromUrl(dataService, function(mode, data) {
-            //Set mode
-            self.mode = mode;
-            if(self.mode === 'read') {
-                self.editing = false;
-            } else {
-                self.editing = true;
+    //Main initialization function
+    function initDetail() {
+        //Add custom listeners if any 
+        addListeners();
+
+        //Launch all requests and retrieve their promises
+        var promises = angular.extend({}, 
+            getLinkedData(),
+            { 'initData' : editModeService.initFromUrl(dataService) }
+        );
+
+        //When all promises succedeed
+        $q.all(promises).then(function(responses) {
+            //Handle each promise separately
+            angular.forEach(responses, function(value, key) {
+                if(key == 'initData') {
+                    initFromUrl(value);
+                } else { //Those we don't know come from getLinkedData()
+                    self.linkedData[key] = value;
+                }
+
+            });
+
+            //Manually fill the "eager loading" objects
+            if(typeof detailService.populateLinkedObjects == 'function') {
+                self.data = angular.merge(self.data, detailService.populateLinkedObjects(self.data, self.linkedData));
             }
 
-            //Do something with the data
-            self.getSuccess(data);
+            //It's almost like we just did a GET...
+            self.getSuccess(self.data);
 
-            //Ok, we can go on
+            //We are inited, tell the world !
             self.inited = true;
+        });
+    }
+
+    //Handles the return from the editModeService
+    function initFromUrl(dataFromUrl) {
+        //Set mode
+        self.mode = dataFromUrl.mode;
+        self.editing = !(self.mode === 'read');
+
+        //Copy data we got to our own data
+        //We have to copy the whole thing because we want the $resource functions
+        self.data = dataFromUrl.data;
+    }
+
+
+    function refreshData() {
+        dataService.get({id: self.data.id}, function(response) {
+            self.data = response;
         });
     }
 

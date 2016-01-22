@@ -14,8 +14,8 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
             var session = sessionsService.query();
 
             return {
-                'stagiaire': stagiaire,
-                'session': session,
+                'stagiaire': stagiaire.$promise,
+                'session': session.$promise,
             };
         },
 
