@@ -1,6 +1,4 @@
-@extends('layouts.master')
-
-<?php $current_menu='module'; ?>
+@extends('layouts.master', ['current_menu' => 'module'])
 
 @section('title', 'Module')
 @section('js-file', '/js/modules-detail.js')

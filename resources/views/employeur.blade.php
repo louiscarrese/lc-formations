@@ -1,6 +1,4 @@
-@extends('layouts.master')
-
-<?php $current_menu='employeur'; ?>
+@extends('layouts.master', ['current_menu' => 'employeur'])
 
 @section('title', 'Employeur')
 @section('js-file', '/js/employeurs-detail.js')

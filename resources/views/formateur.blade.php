@@ -1,6 +1,4 @@
-@extends('layouts.master')
-
-<?php $current_menu='formateur'; ?>
+@extends('layouts.master', ['current_menu' => 'formateur'])
 
 @section('title', 'Formateur')
 @section('js-file', '/js/formateurs-detail.js')

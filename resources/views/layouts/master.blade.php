@@ -1,4 +1,3 @@
-<?php $current_menu = '' ?>
 <!doctype html>
 <html>
     <head>
@@ -15,7 +14,7 @@
     <body ng-app="@yield('angularApp')">
         <div id="main" class="container">
             @include('components.header')
-            @include('components.menu')
+            @include('components.menu', ['current_menu' => $current_menu])
             <div id="content" class="main-block">
                 @yield('content')
             </div>
