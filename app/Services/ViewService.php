@@ -4,7 +4,7 @@ namespace ModuleFormation\Services;
 
 class ViewService {
     public function displayedField($fieldId, $field) {
-        $displayed = "yaya";
+        $displayed = "";
         if(isset($field["displayedField"])) {
             $find[] = '{{';
             $replace[] = '{{item.';
