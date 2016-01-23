@@ -24,6 +24,7 @@
                 'label' => 'Email',
                 'sortable' => true,
                 'filterable' => true,
+                'displayedField' => '<a href="mailto:@{{email}}">@{{email}}</a>',
             ],
             'contact' => [
                 'label' => 'Contact',

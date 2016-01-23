@@ -31,7 +31,8 @@
                 'label' => 'Email',
                 'sortable' => true,
                 'filterable' => true,
-                'tdClass' => 'centered'
+                'tdClass' => 'centered',
+                'displayedField' => '<a href="mailto:@{{email}}">@{{email}}</a>',
             ],
             'formateur_type.id' => [
                 'label' => 'Type',

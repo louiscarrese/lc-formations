@@ -8,13 +8,12 @@
     </my-editable-text>
 
 @elseif($field['type'] == 'email')
-    <my-editable-text 
-        type="email" 
+    <my-editable-email 
         ng-model="{{$element}}.{{$fieldId}}" 
         editing-flag="{{$editingFlag}}" 
         {{$field['additionalAttributes'] or ''}} 
         {{$field['validation'] or ''}}>
-    </my-editable-text>
+    </my-editable-email>
 
 @elseif($field['type'] == 'integer')
     <my-editable-integer 

@@ -1,5 +1,6 @@
 angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
     .directive('myEditableText', myEditableDirectiveText)
+    .directive('myEditableEmail', myEditableDirectiveEmail)
     .directive('myEditableInteger', myEditableDirectiveInteger)
     .directive('myEditableTextarea', myEditableDirectiveTextarea)
     .directive('myEditableCheckbox', myEditableDirectiveCheckbox)

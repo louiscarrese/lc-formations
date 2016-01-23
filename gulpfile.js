@@ -37,6 +37,7 @@ var myEditable = [
     'directives/datepickerlocaldate-directive.js',
     'directives/my-editable/myEditable-commons.js',
     'directives/my-editable/myEditableText-directive.js',
+    'directives/my-editable/myEditableEmail-directive.js',
     'directives/my-editable/myEditableInteger-directive.js',
     'directives/my-editable/myEditableDate-directive.js',
     'directives/my-editable/myEditableTime-directive.js',
