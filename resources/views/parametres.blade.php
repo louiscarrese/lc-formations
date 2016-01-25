@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master', ['current_menu' => ''])
 
 @section('title', 'Paramètres')
 @section('js-file', 'js/parametres.js')
