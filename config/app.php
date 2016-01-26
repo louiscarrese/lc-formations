@@ -138,6 +138,11 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * PDF Generation
+         */
+        Barryvdh\DomPDF\ServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         ModuleFormation\Providers\AppServiceProvider::class,
@@ -222,6 +227,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        /*
+         * PDF Generation
+         */
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

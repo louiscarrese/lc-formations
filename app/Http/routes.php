@@ -67,6 +67,12 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
         ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 });
 
+/**
+ * Printable editions
+ */
+Route::group(['prefix' => 'print'], function() {
+    Route::get('emargement/{session_id}', 'PrintController@emargement');
+});
 
 Route::get('/', function () {
     return view('home');

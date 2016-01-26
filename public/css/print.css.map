@@ -1,0 +1,1 @@
+{"version":3,"sources":["print.less","print.css"],"names":[],"mappings":"AAAA;EACI,YAAA;CCCH","file":"print.css","sourcesContent":["table {\n    width: 100%;\n}","table {\n  width: 100%;\n}\n"],"sourceRoot":"/source/"}

@@ -1,0 +1,65 @@
+body {
+  width: 100%;
+  margin: 0;
+}
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+h1 {
+  text-align: center;
+}
+.header {
+  width: 90%;
+  border: 1px solid #000;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  line-height: 1.5em;
+}
+.header .value {
+  font-weight: bold;
+}
+.session-jour {
+  page-break-after: always;
+}
+.session-jour:last-child {
+  page-break-after: avoid;
+}
+.emargement-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.emargement-table th,
+.emargement-table td {
+  border: 1px solid #000;
+}
+.emargement-table td {
+  height: 2em;
+}
+.emargement-table th.signature {
+  width: 50%;
+}
+.emargement-table th.stagiaire {
+  width: 35%;
+}
+.emargement-table th.nb-h {
+  width: 15%;
+}
+.emargement-table td.mention-certif {
+  border: none;
+}
+.emargement-table td.total {
+  text-align: center;
+  font-weight: bold;
+}
+.footer {
+  color: #aaa;
+  position: fixed;
+  bottom: 0;
+  font-family: sans-serif;
+  font-size: 12px;
+}
+
+/*# sourceMappingURL=emargement.css.map */
