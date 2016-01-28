@@ -145,7 +145,7 @@ function editableTableController($filter, dataService, tableService) {
             && window.confirm(tableService.deleteMessage())) {
                 confirmed = true;
         } else {
-            confirmed = true;
+            confirmed = false;
         }
         if(confirmed) {
             type.$delete({id: type.internalKey}, 
