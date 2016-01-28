@@ -5157,6 +5157,10 @@ body {
 table .glyphicon {
   color: #2e1700;
 }
+.global-actions {
+  padding-left: 15px;
+  padding-right: 15px;
+}
 .global-actions .glyphicon {
   color: #2e1700;
   font-size: 2em;
