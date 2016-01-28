@@ -1,5 +1,6 @@
 function detailController(editModeService, dataService, detailService, $q) {
     var self = this;
+    self.inited = false;
 
     self.internalKey = 0;
 
@@ -8,6 +9,7 @@ function detailController(editModeService, dataService, detailService, $q) {
     self.dataService = dataService;
 
     self.refreshData = refreshData;
+    self.titleText = titleText;
 
     //CRUD
     self.create = create;
@@ -101,6 +103,14 @@ function detailController(editModeService, dataService, detailService, $q) {
         });
     }
 
+    function titleText() {
+        if(self.inited && detailService != undefined && typeof detailService.titleText == 'function') {
+            return detailService.titleText(self.data);
+        } else {
+            return "";
+        }
+    }
+
     //CRUD
     function create() {
         self.errors = [];
@@ -162,8 +172,7 @@ function detailController(editModeService, dataService, detailService, $q) {
             self.internalKey = detailService.getInternalKey(self.data);
 
         if(detailService != undefined && typeof detailService.getSuccess == 'function') {
-            var successData = detailService.getSuccess(self.data);
-            self.titleText = successData.titleText;
+            detailService.getSuccess(self.data);
         }
 
     }

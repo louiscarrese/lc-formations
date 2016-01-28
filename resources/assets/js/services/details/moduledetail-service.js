@@ -26,12 +26,10 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService,
                     data.formateurs_id.push(data.formateurs[i].id);
                 }
             }
-
-            //Build the return structure
-            return {
-                'titleText': data.libelle != undefined ? data.libelle : "Création d'un module"
-            }
-
+        },
+        
+        titleText: function(data) {
+            return data.libelle != undefined ? data.libelle : "Création d'un module";
         },
 
         getListUrl: function() {

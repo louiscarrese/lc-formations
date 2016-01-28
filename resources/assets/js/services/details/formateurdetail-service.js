@@ -12,13 +12,8 @@ function formateurDetailServiceFactory(sharedDataService, formateurTypesService)
             return data.id;
         },
 
-        getSuccess: function(data) {
-
-            //Build the return structure
-            return {
-                'titleText': data.id != undefined ? data.prenom + ' ' + data.nom : "Création d'un formateur"
-            }
-
+        titleText: function(data) {
+            return data.id != undefined ? data.prenom + ' ' + data.nom : "Création d'un formateur";
         },
 
         getListUrl: function() {

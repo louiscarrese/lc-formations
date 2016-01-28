@@ -1,4 +1,6 @@
 function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter) {
+
+    //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
         var ret = '';
         if(item.firstDate && item.lastDate) {
@@ -24,25 +26,21 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         },
 
         getSuccess: function(data) {
-
             sharedDataService.data.inscription_id = data.id;
 
-            //We have to rebuild the session name here because it does not come from the session data service
             if(data.session) {
                 data.session.libelle = buildSessionLibelle(data.session);
             }
+        },
 
+        titleText: function(data) {
             var titleText = "Création d'une inscription";
             if(data.id != undefined) {
                 titleText = 'Inscription de ' + data.stagiaire.prenom + ' ' + data.stagiaire.nom;
                 titleText += ' à la formation ' + data.session.module.libelle;
             }
 
-            //Build the return structure
-            return {
-                'titleText': titleText
-            }
-
+            return titleText;
         },
 
         getListUrl: function() {

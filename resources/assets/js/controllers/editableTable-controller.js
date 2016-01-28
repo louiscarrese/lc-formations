@@ -47,6 +47,9 @@ function editableTableController($filter, dataService, tableService) {
         self.linkedData = tableService.getLinkedData();
     }
 
+    if(tableService != undefined && typeof tableService.addListeners == 'function')
+        tableService.addListeners(self);
+
     self.refreshData();
 
     function setSort(key) {

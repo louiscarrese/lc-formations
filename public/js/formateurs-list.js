@@ -11310,6 +11310,9 @@ function editableTableController($filter, dataService, tableService) {
         self.linkedData = tableService.getLinkedData();
     }
 
+    if(tableService != undefined && typeof tableService.addListeners == 'function')
+        tableService.addListeners(self);
+
     self.refreshData();
 
     function setSort(key) {
@@ -11408,7 +11411,7 @@ function editableTableController($filter, dataService, tableService) {
             && window.confirm(tableService.deleteMessage())) {
                 confirmed = true;
         } else {
-            confirmed = true;
+            confirmed = false;
         }
         if(confirmed) {
             type.$delete({id: type.internalKey}, 

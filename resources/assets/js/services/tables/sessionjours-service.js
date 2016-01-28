@@ -37,21 +37,24 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
             return ret;
         },
 
-        autoAdd: function(dataService, form, autoAddObject) {
-            if(dataService && autoAddObject && form) {
-                if(form.$valid) {
-                    var query = dataService.createDefault({}, 
-                            { session_id: sharedDataService.data.session_id, base_date: autoAddObject.date }
-                        );
-                    return query.$promise;
-                }
-            }
-        },
-
         deleteMessage: function() {
             var message = 'Etes vous sur de vouloir supprimer ce jour de session ?';
             return message;
         },
+
+        addListeners: function(ctrl) {
+            ctrl.autoAdd = function(ctrls) {
+                if(ctrl.form_autoAdd.$valid) {
+                    var query = ctrl.dataService.createDefault({}, 
+                            { session_id: sharedDataService.data.session_id, base_date: ctrl.autoAddObject.date }
+                        ,function() {
+                            angular.forEach(ctrls, function(controller) {
+                                controller.refreshData();
+                            })
+                        });
+                }
+            }
+        }
 
     };
 }

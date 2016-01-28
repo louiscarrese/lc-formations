@@ -1,4 +1,14 @@
 function sessionsTableServiceFactory($filter, sharedDataService) {
+    //It would deserve to factorize with sessionDetailService.titleText
+    function buildSessionLibelle(item) {
+        var ret = '';
+        if(item.firstDate && item.lastDate) {
+            ret = '(' + $filter('date')(item.firstDate, 'dd/MM/yyyy');
+            ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy') + ')';
+        }
+        return ret;
+    };
+
     return {
         queryParameters: function() {
             var ret = {};
@@ -14,5 +24,9 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
             message += '\n - Inscriptions ';
             return message;
         },
+
+        getSuccess: function(data) {
+            data.libelle = buildSessionLibelle(data);
+        }
     };
 }

@@ -11853,6 +11853,7 @@ function sharedDataServiceFactory() {
 }
 function detailController(editModeService, dataService, detailService, $q) {
     var self = this;
+    self.inited = false;
 
     self.internalKey = 0;
 
@@ -11861,6 +11862,7 @@ function detailController(editModeService, dataService, detailService, $q) {
     self.dataService = dataService;
 
     self.refreshData = refreshData;
+    self.titleText = titleText;
 
     //CRUD
     self.create = create;
@@ -11954,6 +11956,14 @@ function detailController(editModeService, dataService, detailService, $q) {
         });
     }
 
+    function titleText() {
+        if(self.inited && detailService != undefined && typeof detailService.titleText == 'function') {
+            return detailService.titleText(self.data);
+        } else {
+            return "";
+        }
+    }
+
     //CRUD
     function create() {
         self.errors = [];
@@ -12015,8 +12025,7 @@ function detailController(editModeService, dataService, detailService, $q) {
             self.internalKey = detailService.getInternalKey(self.data);
 
         if(detailService != undefined && typeof detailService.getSuccess == 'function') {
-            var successData = detailService.getSuccess(self.data);
-            self.titleText = successData.titleText;
+            detailService.getSuccess(self.data);
         }
 
     }
@@ -12119,62 +12128,19 @@ function stagiairesServiceFactory($resource) {
     });
 }
 
-function sessionsServiceFactory($resource, $http, $filter) {
-    function buildLibelle(item) {
-        var ret = '';
-        if(item.firstDate && item.lastDate) {
-            ret = '(' + $filter('date')(item.firstDate, 'dd/MM/yyyy');
-            ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy') + ')';
-        }
-        return ret;
-    };
-
+function sessionsServiceFactory($resource) {
 
     return $resource('/api/session/:id', null, {
         'update' : { 
-            method: 'PUT',
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    data.libelle = buildLibelle(data);
-                    return data;
-                }
-            ])
+            method: 'PUT'
         },
-        'save' : { 
-            method: 'POST',
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    data.libelle = buildLibelle(data);
-                    return data;
-                }
-            ])
-        },
-        'query' : { 
-            method: 'GET',
-            isArray: true, 
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    angular.forEach(data, function(item, idx) {
-                        item.libelle = buildLibelle(item);
-                    });
-                    return data;
-                }
-            ])
-        },
-        'get' : {
-            method: 'GET',
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    data.libelle = buildLibelle(data);
-                    return data;
-                }
-            ])
-        }
     });
 }
 
 
 function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter) {
+
+    //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
         var ret = '';
         if(item.firstDate && item.lastDate) {
@@ -12200,25 +12166,21 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         },
 
         getSuccess: function(data) {
-
             sharedDataService.data.inscription_id = data.id;
 
-            //We have to rebuild the session name here because it does not come from the session data service
             if(data.session) {
                 data.session.libelle = buildSessionLibelle(data.session);
             }
+        },
 
+        titleText: function(data) {
             var titleText = "Création d'une inscription";
             if(data.id != undefined) {
                 titleText = 'Inscription de ' + data.stagiaire.prenom + ' ' + data.stagiaire.nom;
                 titleText += ' à la formation ' + data.session.module.libelle;
             }
 
-            //Build the return structure
-            return {
-                'titleText': titleText
-            }
-
+            return titleText;
         },
 
         getListUrl: function() {
@@ -12257,7 +12219,7 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
 angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
-    .factory('sessionsService', ['$resource', '$http', '$filter', sessionsServiceFactory])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', '$filter', inscriptionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', '$q', detailController])
 ;
@@ -12367,6 +12329,9 @@ function editableTableController($filter, dataService, tableService) {
         self.linkedData = tableService.getLinkedData();
     }
 
+    if(tableService != undefined && typeof tableService.addListeners == 'function')
+        tableService.addListeners(self);
+
     self.refreshData();
 
     function setSort(key) {
@@ -12465,7 +12430,7 @@ function editableTableController($filter, dataService, tableService) {
             && window.confirm(tableService.deleteMessage())) {
                 confirmed = true;
         } else {
-            confirmed = true;
+            confirmed = false;
         }
         if(confirmed) {
             type.$delete({id: type.internalKey}, 

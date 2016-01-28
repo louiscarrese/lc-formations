@@ -1,4 +1,4 @@
-function sessionDetailServiceFactory(sharedDataService, modulesService) {
+function sessionDetailServiceFactory(sharedDataService, modulesService, $filter) {
     function extractModuleInfo(module) {
         var ret = {};
 
@@ -36,13 +36,25 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
         },
 
         getSuccess: function(data) {
-
             sharedDataService.data.session_id = data.id;
             
-            //Build the return structure
-            return {
-                'titleText': data.id != undefined ? data.module.libelle + ' ' + data.libelle : "Création d'une session"
+        },
+
+        titleText: function(data) {
+            var ret = "";
+            if(data.id == null) {
+                ret = "Création d'une session";
+            } else {
+                if(data.module) {
+                    ret += data.module.libelle;
+                }
+                if(data.firstDate && data.lastDate) {
+                    ret += ' (' + $filter('date')(data.firstDate, 'dd/MM/yyyy');
+                    ret += ' - ' + $filter('date')(data.lastDate, 'dd/MM/yyyy') + ')';
+                }
             }
+
+            return ret;
 
         },
 

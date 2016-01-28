@@ -11310,6 +11310,9 @@ function editableTableController($filter, dataService, tableService) {
         self.linkedData = tableService.getLinkedData();
     }
 
+    if(tableService != undefined && typeof tableService.addListeners == 'function')
+        tableService.addListeners(self);
+
     self.refreshData();
 
     function setSort(key) {
@@ -11408,7 +11411,7 @@ function editableTableController($filter, dataService, tableService) {
             && window.confirm(tableService.deleteMessage())) {
                 confirmed = true;
         } else {
-            confirmed = true;
+            confirmed = false;
         }
         if(confirmed) {
             type.$delete({id: type.internalKey}, 
@@ -11546,8 +11549,19 @@ angular.module('listTable', ['sortableHeader'])
     .filter('myCustomFilter', myCustomFilter)
 ;
 
-function sessionsServiceFactory($resource, $http, $filter) {
-    function buildLibelle(item) {
+function sessionsServiceFactory($resource) {
+
+    return $resource('/api/session/:id', null, {
+        'update' : { 
+            method: 'PUT'
+        },
+    });
+}
+
+
+function sessionsTableServiceFactory($filter, sharedDataService) {
+    //It would deserve to factorize with sessionDetailService.titleText
+    function buildSessionLibelle(item) {
         var ret = '';
         if(item.firstDate && item.lastDate) {
             ret = '(' + $filter('date')(item.firstDate, 'dd/MM/yyyy');
@@ -11556,52 +11570,6 @@ function sessionsServiceFactory($resource, $http, $filter) {
         return ret;
     };
 
-
-    return $resource('/api/session/:id', null, {
-        'update' : { 
-            method: 'PUT',
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    data.libelle = buildLibelle(data);
-                    return data;
-                }
-            ])
-        },
-        'save' : { 
-            method: 'POST',
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    data.libelle = buildLibelle(data);
-                    return data;
-                }
-            ])
-        },
-        'query' : { 
-            method: 'GET',
-            isArray: true, 
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    angular.forEach(data, function(item, idx) {
-                        item.libelle = buildLibelle(item);
-                    });
-                    return data;
-                }
-            ])
-        },
-        'get' : {
-            method: 'GET',
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    data.libelle = buildLibelle(data);
-                    return data;
-                }
-            ])
-        }
-    });
-}
-
-
-function sessionsTableServiceFactory($filter, sharedDataService) {
     return {
         queryParameters: function() {
             var ret = {};
@@ -11617,11 +11585,15 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
             message += '\n - Inscriptions ';
             return message;
         },
+
+        getSuccess: function(data) {
+            data.libelle = buildSessionLibelle(data);
+        }
     };
 }
 
 angular.module('sessionsList', ['ngResource', 'listTable'])
-    .factory('sessionsService', ['$resource', '$http', '$filter', sessionsServiceFactory])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sessionsTableService', ['$filter', 'sharedDataService', sessionsTableServiceFactory])
     .controller('sessionsListController', ['$filter', 'sessionsService', 'sessionsTableService', editableTableController])
 ;

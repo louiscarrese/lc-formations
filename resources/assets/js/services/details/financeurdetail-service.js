@@ -12,13 +12,8 @@ function financeurDetailServiceFactory(sharedDataService, financeurTypesService)
             return data.id;
         },
 
-        getSuccess: function(data) {
-
-            //Build the return structure
-            return {
-                'titleText': data.id != undefined ? data.libelle : "Création d'un financeur"
-            }
-
+        titleText: function(data) {
+            return data.id != undefined ? data.libelle : "Création d'un financeur"
         },
 
         getListUrl: function() {

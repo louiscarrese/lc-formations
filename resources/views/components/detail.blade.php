@@ -1,4 +1,4 @@
-<h2>{{<?php echo($controller); ?>.titleText}}</h2>
+<h2>{{<?php echo($controller); ?>.titleText()}}</h2>
 
 <div class="alerts">
     <uib-alert type="danger" close="{{$controller}}.closeAlert($index)" ng-repeat="error in {{$controller}}.errors">@{{error}}</uib-alert>

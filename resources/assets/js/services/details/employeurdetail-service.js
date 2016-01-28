@@ -5,13 +5,8 @@ function employeurDetailServiceFactory(sharedDataService) {
             return data.id;
         },
 
-        getSuccess: function(data) {
-
-            //Build the return structure
-            return {
-                'titleText': data.id != undefined ? data.raison_sociale : "Création d'un employeur"
-            }
-
+        titleText: function(data) {
+            return data.id != undefined ? data.raison_sociale : "Création d'un employeur";
         },
 
         getListUrl: function() {

@@ -18,11 +18,10 @@ function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService,
 
         getSuccess: function(data) {
             sharedDataService.data.stagiaire_id = data.id;
-            //Build the return structure
-            return {
-                'titleText': data.id != undefined ? data.prenom + ' ' + data.nom : "Création d'un stagiaire"
-            }
+        },
 
+        titleText: function(data) {
+            return data.id != undefined ? data.prenom + ' ' + data.nom : "Création d'un stagiaire";
         },
 
         getListUrl: function() {

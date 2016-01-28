@@ -11853,6 +11853,7 @@ function sharedDataServiceFactory() {
 }
 function detailController(editModeService, dataService, detailService, $q) {
     var self = this;
+    self.inited = false;
 
     self.internalKey = 0;
 
@@ -11861,6 +11862,7 @@ function detailController(editModeService, dataService, detailService, $q) {
     self.dataService = dataService;
 
     self.refreshData = refreshData;
+    self.titleText = titleText;
 
     //CRUD
     self.create = create;
@@ -11954,6 +11956,14 @@ function detailController(editModeService, dataService, detailService, $q) {
         });
     }
 
+    function titleText() {
+        if(self.inited && detailService != undefined && typeof detailService.titleText == 'function') {
+            return detailService.titleText(self.data);
+        } else {
+            return "";
+        }
+    }
+
     //CRUD
     function create() {
         self.errors = [];
@@ -12015,8 +12025,7 @@ function detailController(editModeService, dataService, detailService, $q) {
             self.internalKey = detailService.getInternalKey(self.data);
 
         if(detailService != undefined && typeof detailService.getSuccess == 'function') {
-            var successData = detailService.getSuccess(self.data);
-            self.titleText = successData.titleText;
+            detailService.getSuccess(self.data);
         }
 
     }
@@ -12096,57 +12105,12 @@ angular.module('detail', ['myEditable'])
     .factory('editModeService', ['$q', editModeServiceFactory]) 
 ;
 
-function sessionsServiceFactory($resource, $http, $filter) {
-    function buildLibelle(item) {
-        var ret = '';
-        if(item.firstDate && item.lastDate) {
-            ret = '(' + $filter('date')(item.firstDate, 'dd/MM/yyyy');
-            ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy') + ')';
-        }
-        return ret;
-    };
-
+function sessionsServiceFactory($resource) {
 
     return $resource('/api/session/:id', null, {
         'update' : { 
-            method: 'PUT',
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    data.libelle = buildLibelle(data);
-                    return data;
-                }
-            ])
+            method: 'PUT'
         },
-        'save' : { 
-            method: 'POST',
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    data.libelle = buildLibelle(data);
-                    return data;
-                }
-            ])
-        },
-        'query' : { 
-            method: 'GET',
-            isArray: true, 
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    angular.forEach(data, function(item, idx) {
-                        item.libelle = buildLibelle(item);
-                    });
-                    return data;
-                }
-            ])
-        },
-        'get' : {
-            method: 'GET',
-            transformResponse: $http.defaults.transformResponse.concat([
-                function (data, headersGetter) {
-                    data.libelle = buildLibelle(data);
-                    return data;
-                }
-            ])
-        }
     });
 }
 
@@ -12158,7 +12122,7 @@ function modulesServiceFactory($resource) {
 }
 
 
-function sessionDetailServiceFactory(sharedDataService, modulesService) {
+function sessionDetailServiceFactory(sharedDataService, modulesService, $filter) {
     function extractModuleInfo(module) {
         var ret = {};
 
@@ -12196,13 +12160,25 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
         },
 
         getSuccess: function(data) {
-
             sharedDataService.data.session_id = data.id;
             
-            //Build the return structure
-            return {
-                'titleText': data.id != undefined ? data.module.libelle + ' ' + data.libelle : "Création d'une session"
+        },
+
+        titleText: function(data) {
+            var ret = "";
+            if(data.id == null) {
+                ret = "Création d'une session";
+            } else {
+                if(data.module) {
+                    ret += data.module.libelle;
+                }
+                if(data.firstDate && data.lastDate) {
+                    ret += ' (' + $filter('date')(data.firstDate, 'dd/MM/yyyy');
+                    ret += ' - ' + $filter('date')(data.lastDate, 'dd/MM/yyyy') + ')';
+                }
             }
+
+            return ret;
 
         },
 
@@ -12237,10 +12213,10 @@ function sessionDetailServiceFactory(sharedDataService, modulesService) {
     }
 }
 angular.module('sessionDetail', ['detail'])
-    .factory('sessionsService', ['$resource', '$http', '$filter', sessionsServiceFactory])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
-    .factory('sessionDetailService', ['sharedDataService', 'modulesService', sessionDetailServiceFactory])
+    .factory('sessionDetailService', ['sharedDataService', 'modulesService', '$filter', sessionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', '$q', detailController])
 ;
 
@@ -12349,6 +12325,9 @@ function editableTableController($filter, dataService, tableService) {
         self.linkedData = tableService.getLinkedData();
     }
 
+    if(tableService != undefined && typeof tableService.addListeners == 'function')
+        tableService.addListeners(self);
+
     self.refreshData();
 
     function setSort(key) {
@@ -12447,7 +12426,7 @@ function editableTableController($filter, dataService, tableService) {
             && window.confirm(tableService.deleteMessage())) {
                 confirmed = true;
         } else {
-            confirmed = true;
+            confirmed = false;
         }
         if(confirmed) {
             type.$delete({id: type.internalKey}, 
@@ -12643,21 +12622,24 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
             return ret;
         },
 
-        autoAdd: function(dataService, form, autoAddObject) {
-            if(dataService && autoAddObject && form) {
-                if(form.$valid) {
-                    var query = dataService.createDefault({}, 
-                            { session_id: sharedDataService.data.session_id, base_date: autoAddObject.date }
-                        );
-                    return query.$promise;
-                }
-            }
-        },
-
         deleteMessage: function() {
             var message = 'Etes vous sur de vouloir supprimer ce jour de session ?';
             return message;
         },
+
+        addListeners: function(ctrl) {
+            ctrl.autoAdd = function(ctrls) {
+                if(ctrl.form_autoAdd.$valid) {
+                    var query = ctrl.dataService.createDefault({}, 
+                            { session_id: sharedDataService.data.session_id, base_date: ctrl.autoAddObject.date }
+                        ,function() {
+                            angular.forEach(ctrls, function(controller) {
+                                controller.refreshData();
+                            })
+                        });
+                }
+            }
+        }
 
     };
 }
