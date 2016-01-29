@@ -11952,7 +11952,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
     function refreshData() {
         dataService.get({id: self.data.id}, function(response) {
-            self.data = response;
+            getSuccess(response);            
         });
     }
 
@@ -12153,11 +12153,17 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
     return {
         getLinkedData: function() {
             var stagiaire = stagiairesService.query();
-            var session = sessionsService.query();
+            var sessions = sessionsService.query();
+
+            sessions.$promise.then(function(data) {
+                angular.forEach(data, function(session) {
+                    session.libelle = buildSessionLibelle(session);
+                });
+            });
 
             return {
                 'stagiaire': stagiaire.$promise,
-                'session': session.$promise,
+                'session': sessions.$promise,
             };
         },
 

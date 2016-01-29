@@ -99,7 +99,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
     function refreshData() {
         dataService.get({id: self.data.id}, function(response) {
-            self.data = response;
+            getSuccess(response);            
         });
     }
 
