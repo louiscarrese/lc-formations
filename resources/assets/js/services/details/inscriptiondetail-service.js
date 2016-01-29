@@ -47,25 +47,28 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
             return '/inscriptions';
         },
 
-        validateInscription: function(dataService) {
-            if(dataService) {
-                var resource = dataService.validate({inscription_id: sharedDataService.data.inscription_id});
-                return resource.$promise;
-            }
-        },
+        addListeners: function(ctrl) {
+            ctrl.validateInscription = function() {
+                var resource = ctrl.dataService.validate({inscription_id: sharedDataService.data.inscription_id});
+                resource.$promise.then(function() {
+                    ctrl.refreshData();
+                })
+            };
 
-        cancelInscription: function(dataService) {
-            if(dataService) {
-                var resource = dataService.cancel({inscription_id: sharedDataService.data.inscription_id});
-                return resource.$promise;
-            }
-        },
+            ctrl.cancelInscription = function() {
+                var resource = ctrl.dataService.cancel({inscription_id: sharedDataService.data.inscription_id});
+                resource.$promise.then(function() {
+                    ctrl.refreshData();
+                })
+            };
 
-        withdrawInscription: function(dataService) {
-            if(dataService) {
-                var resource = dataService.withdraw({inscription_id: sharedDataService.data.inscription_id});
-                return resource.$promise;
-            }
+            ctrl.withdrawInscription = function(dataService) {
+                var resource = ctrl.dataService.withdraw({inscription_id: sharedDataService.data.inscription_id});
+                resource.$promise.then(function() {
+                    ctrl.refreshData();
+                })
+            };
+
         },
 
         deleteMessage: function() {
