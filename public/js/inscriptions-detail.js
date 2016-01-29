@@ -11878,8 +11878,6 @@ function detailController(editModeService, dataService, detailService, $q) {
     self.closeAlert = closeAlert;
     self.extractErrors = extractErrors;
 
-    self.callService = callService;
-
     //Just so we don't have 'undefined' in places 
     self.data = {};
     self.linkedData = {};
@@ -12078,25 +12076,6 @@ function detailController(editModeService, dataService, detailService, $q) {
             }
         }
         return ret;
-    }
-
-    function callService(methodName, parameters, refreshedControllers) {
-        if(detailService != undefined && typeof detailService[methodName] == 'function') {
-            var ret = detailService[methodName].apply(self, parameters);
-
-            //If it's a promise and we have controllers to refresh
-            if(ret != null && typeof ret.then == 'function' && refreshedControllers) {
-                ret.then(function() {
-                    angular.forEach(refreshedControllers, function(item, idx) {
-                        if(typeof item['refreshData'] == 'function') {
-                            item.refreshData();
-                        }
-                    });
-                });
-            } else {
-                return ret;
-            }
-        }
     }
 
 }
@@ -12317,7 +12296,6 @@ function editableTableController($filter, dataService, tableService) {
     self.closeAlert = closeAlert;
     self.extractErrors = extractErrors;
 
-    self.callService = callService;
     //Data
 
     self.queryParameters = {};
@@ -12546,24 +12524,6 @@ function editableTableController($filter, dataService, tableService) {
 
     function createUrl(baseUrl) {
         return baseUrl + '/create' + queryString();
-    }
-    function callService(methodName, parameters, refreshedControllers) {
-        if(tableService != undefined && typeof tableService[methodName] == 'function') {
-            var ret = tableService[methodName].apply(self, parameters);
-
-            //If it's a promise and we have controllers to refresh
-            if(ret != null && typeof ret.then == 'function' && refreshedControllers) {
-                ret.then(function() {
-                    angular.forEach(refreshedControllers, function(item, idx) {
-                        if(typeof item['refreshData'] == 'function') {
-                            item.refreshData();
-                        }
-                    });
-                });
-            } else {
-                return ret;
-            }
-        }
     }
 } 
 
