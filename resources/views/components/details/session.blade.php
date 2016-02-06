@@ -10,6 +10,7 @@
                 'modelObject' => 'module', //relative to an item in the controller data 
                 'change' => 'detailCtrl.onModuleChange',
                 'displayed' => '<libelle>',
+                'placeholder' => 'Module',
                 'href' => '/modules/',
                 'sizeLabel' => 2,
                 'sizeValue' => 5,
@@ -50,86 +51,97 @@
                  'idField' => 'id',
                  'title' => 'Jours',
                  'refreshControllers' => '[detailCtrl]',
-                 'fields' => [
-                    'date' => [
+                 'columns' => [
+                    [
                         'label' => 'Date',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'date', 
-                        'format' => 'dd/MM/yyyy',
-                        'addLine' => true,
-                        'validation' => 'required',
+                        'sortable' => 'date',
                         'size' => 2,
-                    ], //date
-                    'heure_debut_matin' => [
-                        'label' => 'Début matinée',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'time',
-                        'format' => 'HH:mm',
-                        'addLine' => true,
-                        'size' => 1,
-                    ], //heure_debut_matin
-                    'heure_fin_matin' => [
-                        'label' => 'Fin matinée',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'time',
-                        'format' => 'HH:mm',
-                        'addLine' => true,
-                        'size' => 1,
-                    ], //heure_fin_matin
-                    'heure_debut_apresmidi' => [
-                        'label' => 'Début après-midi',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'time',
-                        'format' => 'HH:mm',
-                        'addLine' => true,
-                        'size' => 1,
-                    ], //heure_debut_apresmidi
-                    'heure_fin_apresmidi' => [
-                        'label' => 'Fin après-midi',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'time',
-                        'format' => 'HH:mm',
-                        'addLine' => true,
-                        'size' => 1,
-                    ], //heure_fin_apresmidi
-                    'lieu_id' => [
+                        'fields' => [
+                            'date' => [
+                                'filterable' => true,
+                                'editable' => true,
+                                'type' => 'date', 
+                                'format' => 'dd/MM/yyyy',
+                                'addLine' => true,
+                                'validation' => 'required',
+                            ], //date
+                        ], //fields
+                    ],
+                    [
+                        'label' => 'Matinée',
+                        'sortable' => false,
+                        'fields' => [
+                            'heure_debut_matin' => [
+                                'filterable' => true,
+                                'editable' => true,
+                                'type' => 'time',
+                                'format' => 'HH:mm',
+                                'addLine' => true,
+                            ], //heure_debut_matin
+                            'heure_fin_matin' => [
+                                'filterable' => true,
+                                'editable' => true,
+                                'type' => 'time',
+                                'format' => 'HH:mm',
+                                'addLine' => true,
+                            ], //heure_fin_matin
+                        ]
+                    ],
+                    [
+                        'label' => 'Après midi',
+                        'sortable' => false,
+                        'fields' => [
+                            'heure_debut_apresmidi' => [
+                                'filterable' => true,
+                                'editable' => true,
+                                'type' => 'time',
+                                'format' => 'HH:mm',
+                                'addLine' => true,
+                            ], //heure_debut_apresmidi
+                            'heure_fin_apresmidi' => [
+                                'filterable' => true,
+                                'editable' => true,
+                                'type' => 'time',
+                                'format' => 'HH:mm',
+                                'addLine' => true,
+                            ], //heure_fin_apresmidi
+                        ]
+                    ],
+                    [
                         'label' => 'Lieu',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'dropdown',
-                        'datasource' => 'linkedData.lieus', //relative to the controller
-                        'dataId' => 'id', //relative to an item in the datasource
-                        'modelObject' => 'lieu', //where to find the subobject in the controller
-                        'displayed' => '<libelle>',
-                        'addLine' => true,
-                        'size' => 3,
-                    ], //lieu_id
-
-                     'formateurs_id' => [
+                        'sortable' => 'lieu',
+                        'fields' => [
+                            'lieu_id' => [
+                                'filterable' => true,
+                                'editable' => true,
+                                'type' => 'dropdown',
+                                'datasource' => 'linkedData.lieus', //relative to the controller
+                                'dataId' => 'id', //relative to an item in the datasource
+                                'modelObject' => 'lieu', //where to find the subobject in the controller
+                                'displayed' => '<libelle>',
+                                'placeholder' => 'Lieu',
+                                'addLine' => true,
+                            ], //lieu_id
+                        ]
+                    ],
+                    [
                         'label' => 'Formateurs',
                         'sortable' => false,
-                        'editable' => true,
-                        'type' => 'multiselect',
-                        'datasource' => 'linkedData.formateurs',
-                        'dataId' => 'id',
-                        'modelObjects' => 'formateurs',
-                        'displayed' => '<nom> <prenom>',
-                        'placeholder' => 'Formateurs',
-                        'addLine' => true,
-                        'size' => 5,
+                        'size' => 4,
+                        'fields' => [
+                             'formateurs_id' => [
+                                'editable' => true,
+                                'type' => 'multiselect',
+                                'datasource' => 'linkedData.formateurs',
+                                'dataId' => 'id',
+                                'modelObjects' => 'formateurs',
+                                'displayed' => '<nom> <prenom>',
+                                'placeholder' => 'Formateurs',
+                                'addLine' => true,
+                            ]
+                        ]
                     ]
-                 ] //fields
+                ] //columns
              ])
 
             <h3>Création des jours en masse</h3>

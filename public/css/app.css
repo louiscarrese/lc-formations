@@ -5168,9 +5168,9 @@ table .glyphicon {
 .form-condensed .form-group {
   margin-bottom: 0.2em;
 }
-.detail-value p.editable-read {
-  margin-top: 7px;
-  margin-bottom: 0px;
+.form-horizontal .control-label {
+  padding-top: 0px;
+  padding-bottom: 7px;
 }
 pre {
   margin-top: 7px !important;

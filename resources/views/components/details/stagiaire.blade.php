@@ -105,6 +105,7 @@
                 'dataId' => 'id', //relative to an item in the dropdownDatasource
                 'modelObject' => 'niveau_formation', //relative to an item in the controller data 
                 'displayed' => '<libelle>',
+                'placeholder' => 'Niveau de formation',
                 'sizeLabel' => 3,
                 'sizeValue' => 4,
             ],
@@ -115,6 +116,7 @@
                 'dataId' => 'id', //relative to an item in the dropdownDatasource
                 'modelObject' => 'employeur', //relative to an item in the controller data 
                 'displayed' => '<nom>',
+                'placeholder' => 'Employeur',
                 'sizeLabel' => 3,
                 'sizeValue' => 3,
             ],
@@ -125,6 +127,7 @@
                 'dataId' => 'id', //relative to an item in the dropdownDatasource
                 'modelObject' => 'stagiaire_type', //relative to an item in the controller data 
                 'displayed' => '<libelle>',
+                'placeholder' => 'Type',
                 'sizeLabel' => 3,
                 'sizeValue' => 3,
             ],

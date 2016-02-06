@@ -57,6 +57,7 @@
                 'modelObject' => 'lieu', //relative to an item in the controller data 
                 'change' => '',
                 'displayed' => '<libelle>',
+                'placeholder' => 'Lieu par défaut',
                 'validation' => 'required',
                 'sizeLabel' => 2,
                 'sizeValue' => 2,
@@ -75,6 +76,7 @@
                 'modelObject' => 'domaine_formation', //relative to an item in the controller data 
                 'change' => '',
                 'displayed' => '<libelle>',
+                'placeholder' => 'Type',
                 'validation' => 'required',
                 'sizeLabel' => 2,
                 'sizeValue' => 2,
@@ -113,30 +115,39 @@
                 'controllerName' => 'tarifsController',
                 'idField' => 'id',
                 'title' => 'Tarifs',
-                'fields' => [
-                    'tarif_type_id' => [
+                'columns' => [
+                    [
                         'label' => 'Tarif',
-                        'sortable' => true,
-                        'filterable' => true,
-                        'editable' => true,
-                        'type' => 'dropdown',
-                        'datasource' => 'linkedData.tarifTypes',
-                        'dataId' => 'id',
-                        'modelObject' => 'tarif_type',
-                        'displayed' => '<libelle>',
-                        'addLine' => true,
-                        'validation' => 'required',
-                        'size' => 3,
+                        'sortable' => 'tarif_type_id',
+                        'fields' => [
+                            'tarif_type_id' => [
+                                'filterable' => true,
+                                'editable' => true,
+                                'type' => 'dropdown',
+                                'datasource' => 'linkedData.tarifTypes',
+                                'dataId' => 'id',
+                                'modelObject' => 'tarif_type',
+                                'displayed' => '<libelle>',
+                                'placeholder' => 'Tarif',
+                                'addLine' => true,
+                                'validation' => 'required',
+                                'size' => 3,
+                            ],
+                        ]
                     ],
-                    'montant' => [
+                    [
                         'label' => 'Montant',
                         'sortable' => false,
-                        'filterable' => false,
-                        'editable' => true,
-                        'type' => 'integer',
-                        'addLine' => true,
-                        'validation' => 'required',
-                        'size' => 3,
+                        'fields' => [
+                            'montant' => [
+                                'filterable' => false,
+                                'editable' => true,
+                                'type' => 'integer',
+                                'addLine' => true,
+                                'validation' => 'required',
+                                'size' => 3,
+                            ]
+                        ]
                     ]
                 ]
             ])

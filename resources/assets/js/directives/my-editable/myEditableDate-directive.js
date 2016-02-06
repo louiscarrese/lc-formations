@@ -17,7 +17,7 @@ function myEditableDirectiveDate() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['dateFormat'] + '\'}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['dateFormat'] + '\'}}</span>';
             template += '<p class="input-group" ng-show="editingFlag" ' + htmlAttrs + '>';
             template += '<input type="text" class="form-control" ng-model="ngModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
             template += 'is-open="status.opened" ';

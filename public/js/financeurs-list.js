@@ -11289,7 +11289,7 @@ angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angu
                     if (!angular.isDate(value) && scope.ngModel != undefined) {
                         value = $dateParser(scope.ngModel, scope.timepicker.timeFormat);
                         if (isNaN(value)) {
-                            $log.warn("Failed to parse model");
+                            $log.warn("Failed to parse model.");
                         }
                     }
                     current = value;

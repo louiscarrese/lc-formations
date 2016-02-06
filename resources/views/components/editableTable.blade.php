@@ -4,12 +4,30 @@
     $filter = 'myCustomFilter:' . $controllerName . '.filterInput';
 
     //Keep the identifying property
-    foreach($fields as $fieldId => $field) {
-        if(isset($field['filterable']) && $field['filterable']) 
-            $filter .= ":'" . $fieldId . "'";
+    foreach($columns as $column) {
+        foreach($column['fields'] as $fieldId => $field) {
+            if(isset($field['filterable']) && $field['filterable']) 
+                $filter .= ":'" . $fieldId . "'";
+        }
     }
     $filter .= ' track by elem.' . $idField;
 
+    function generateErrorClass($controllerName, $column) {
+        $ret = '';
+        $first = true;
+        foreach($column['fields'] as $fieldId => $field) {
+            $angularId = $controllerName . '.form_{{$index}}.' . $fieldId;
+            if($first) {
+                $first = false;
+            } else {
+                $ret .= ' && ';
+            }
+
+            $ret .=  $angularId . '.$invalid';
+            $ret .= ' && ' . $angularId . '.$touched ';
+        }
+        return $ret;
+    }
 ?>
 
 <h2>{{$title}}</h2>
@@ -26,55 +44,54 @@
         <thead>
             <tr>
                 {{-- Configured Headers --}}
-                @foreach($fields as $fieldId => $field)
-                    @if($field['sortable'])
-                        <th class="clickable {{$field['tdClass'] or ''}} <?php echo (isset($field['size']) ? 'col-sm-' . $field['size'] : ''); ?>">
-                            <my-sortable-header set="{{$controllerName}}.setSort('{{$fieldId}}')"
-                                                get="{{$controllerName}}.getSort('{{$fieldId}}')"
+                @foreach($columns as $column)
+                    @if($column['sortable'] != false)
+                        <th class="clickable {{$column['tdClass'] or ''}} <?php echo (isset($column['size']) ? 'col-sm-' . $column['size'] : ''); ?>">
+                            <my-sortable-header set="{{$controllerName}}.setSort('{{$column['sortable']}}')"
+                                                get="{{$controllerName}}.getSort('{{$column['sortable']}}')"
                             >
-                            {{$field['label']}}
+                            {{$column['label']}}
                         </th>
                     @else
-                        <th {{$field['tdClass'] or ''}}><span>{{$field['label']}}</span></th>
+                        <th class="{{$column['tdClass'] or ''}} <?php echo (isset($column['size']) ? 'col-sm-' . $column['size'] : ''); ?>"><span>{{$column['label']}}</span></th>
                     @endif
                 @endforeach
                 {{-- action headers --}}
-                <td><!--Edit--></td>
-                <td><!--Delete--></td>
+                <th><!--Edit--><!--Delete--></th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="elem in {{$controllerName}}.data | {{$filter}}" ng-form="{{$controllerName}}.form_@{{$index}}">
                 {{-- Each field --}}
-                @foreach($fields as $fieldId => $field)
-                    <td class="validated form-group {{$field['tdClass'] or ''}}" ng-class="{ 'has-error': {{$controllerName}}.form_@{{$index}}.{{$fieldId}}.$invalid && {{$controllerName}}.form_@{{$index}}.{{$fieldId}}.$touched }">
-                        @if($field['editable'])
-                            @include('components.myEditable', [
-                                'controllerName' => $controllerName,
-                                'element' => 'elem',
-                                'editingFlag' => 'elem.editing',
-                                'fieldId' => $fieldId,
-                                'field' => $field
-                            ])
-                        @else
-                            <span {{$field['additionalAttributes'] or ''}}>@{{elem.{{$fieldId}}}}</span>
-                        @endif
+                @foreach($columns as $column)
+                    <td class="validated form-group {{$column['tdClass'] or ''}}" ng-class="{{generateErrorClass($controllerName, $column)}}">
+                        @foreach($column['fields'] as $fieldId => $field)
+                            @if($field['editable'])
+                                @include('components.myEditable', [
+                                    'controllerName' => $controllerName,
+                                    'element' => 'elem',
+                                    'editingFlag' => 'elem.editing',
+                                    'fieldId' => $fieldId,
+                                    'field' => $field
+                                ])
+                            @else
+                                <span {{$field['additionalAttributes'] or ''}}>@{{elem.{{$fieldId}}}}</span>
+                            @endif
+                        @endforeach
                     </td>
                 @endforeach
                 {{-- action columns --}}
                 <td class="list-action">
-                    <button ng-hide="elem.editing" ng-click="elem.editing = true" class="btn btn-default center-block">
+                    <button ng-hide="elem.editing" ng-click="elem.editing = true" class="btn btn-default ">
                         <span>Editer</span>
                     </button>
-                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.editSubmit($index, elem, {{$refreshControllers or 'null'}})" class="btn btn-default center-block">
+                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.editSubmit($index, elem, {{$refreshControllers or 'null'}})" class="btn btn-default ">
                         <span>Valider</span>
                     </button>
-                </td>
-                <td class="list-action text-center">
-                    <button ng-hide="elem.editing" ng-click="{{$controllerName}}.delete(elem, {{$refreshControllers or 'null'}})" class="btn btn-default center-block">
+                    <button ng-hide="elem.editing" ng-click="{{$controllerName}}.delete(elem, {{$refreshControllers or 'null'}})" class="btn btn-default ">
                         <span>Supprimer</span>
                     </button>
-                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.cancel(elem)"class="btn btn-default center-block">
+                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.cancel(elem)"class="btn btn-default ">
                         <span>Annuler</span>
                     </button>
                 </td>
@@ -82,17 +99,19 @@
 
             {{-- Add line --}}
             <tr ng-form="{{$controllerName}}.form_add" novalidate >
-                @foreach($fields as $fieldId => $field)
-                    <td class="validated form-group {{$field['tdClass'] or ''}}" ng-class="{ 'has-error': {{$controllerName}}.form_add.{{$fieldId}}.$invalid && {{$controllerName}}.form_add.{{$fieldId}}.$touched }">
-                        @if($field['addLine'])
-                            @include('components.myEditable', [
-                                'controllerName' => $controllerName,
-                                'element' => $controllerName . '.addObject',
-                                'editingFlag' => 'true',
-                                'fieldId' => $fieldId,
-                                'field' => $field
-                            ])
-                        @endif
+                @foreach($columns as $column)
+                    <td class="validated form-group {{$column['tdClass'] or ''}} {{generateErrorClass($controllerName, $column)}}">
+                        @foreach($column['fields'] as $fieldId => $field)
+                            @if($field['addLine'])
+                                @include('components.myEditable', [
+                                    'controllerName' => $controllerName,
+                                    'element' => $controllerName . '.addObject',
+                                    'editingFlag' => 'true',
+                                    'fieldId' => $fieldId,
+                                    'field' => $field
+                                ])
+                            @endif
+                        @endforeach
                     </td>
                 @endforeach
                 <td class="list-action text-center">
@@ -100,7 +119,6 @@
                         <span>Ajouter</span>
                     </button>
                 </td>
-                <td></td>
             </tr>
         </tbody>
     </table>

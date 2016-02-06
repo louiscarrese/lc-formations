@@ -20,7 +20,7 @@ function myEditableDirectiveMultiselect() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{(displayValues(modelObjects, displayed))}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{(displayValues(modelObjects, displayed))}}</span>';
             template += '<select2 ng-model="ngModel" class="form-control" multiple="multiple" ng-show="editingFlag" ';
             template += 'options="{placeholder: placeholder}" ';
             template += 's2-options="val.' + tAttr['sourceId'] + ' as (displayValue(val, displayed)) for val in datasource" ';

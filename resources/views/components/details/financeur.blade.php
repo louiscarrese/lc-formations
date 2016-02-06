@@ -29,7 +29,7 @@
             'adresse' => [
                 'label' => 'Adresse',
                 'type' => 'textarea',
-		'additionalAttributes' => 'rows=3',
+        		'additionalAttributes' => 'rows=3',
                 'sizeLabel' => 2,
                 'sizeValue' => 5,
             ],
@@ -64,6 +64,7 @@
                 'dataId' => 'id', //relative to an item in the dropdownDatasource
                 'modelObject' => 'financeur_type', //relative to an item in the controller data 
                 'displayed' => '<libelle>',
+                'placeholder' => 'Type',
                 'sizeLabel' => 2,
                 'sizeValue' => 3,
             ],

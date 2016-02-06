@@ -17,7 +17,7 @@ function myEditableDirectiveText() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
             template += '<input type="' + tAttr['type'] + '" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
             template += this.validationTemplate(fieldName);
 

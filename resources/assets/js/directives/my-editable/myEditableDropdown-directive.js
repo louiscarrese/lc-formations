@@ -19,7 +19,7 @@ function myEditableDirectiveDropdown() {
             var fieldName = this.getFieldName(tAttr.ngModel);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>';
             if(tAttr['href']) {
                 template += '<a href="' + tAttr['href'] +'{{ngModel}}">';
             }
@@ -27,7 +27,7 @@ function myEditableDirectiveDropdown() {
             if(tAttr['href']) {
                 template += '</a>';
             }
-            template += '</p>';
+            template += '</span>';
             template += '<select2 ng-model="ngModel" class="form-control" ng-show="editingFlag" ';
             template += 'options="{minimumResultsForSearch: 5, placeholder: placeholder}" ';
             template += 's2-options="val.' + tAttr['sourceId'] + ' as (displayValue(val, displayed)) for val in datasource" ';

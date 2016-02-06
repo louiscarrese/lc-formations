@@ -13,7 +13,7 @@ function myEditableDirectiveInteger() {
 
             var template = '';
 
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
             template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" my-force-integer/>';
 
             template += this.validationTemplate(fieldName);

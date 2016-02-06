@@ -11289,7 +11289,7 @@ angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angu
                     if (!angular.isDate(value) && scope.ngModel != undefined) {
                         value = $dateParser(scope.ngModel, scope.timepicker.timeFormat);
                         if (isNaN(value)) {
-                            $log.warn("Failed to parse model");
+                            $log.warn("Failed to parse model.");
                         }
                     }
                     current = value;
@@ -11529,7 +11529,7 @@ function myEditableDirectiveText() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
             template += '<input type="' + tAttr['type'] + '" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
             template += this.validationTemplate(fieldName);
 
@@ -11562,7 +11562,7 @@ function myEditableDirectiveEmail() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '><a href="mailto:{{ngModel}}">{{ngModel}}</a></p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '><a href="mailto:{{ngModel}}">{{ngModel}}</a></span>';
             template += '<input type="email" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
             template += this.validationTemplate(fieldName);
 
@@ -11592,7 +11592,7 @@ function myEditableDirectiveInteger() {
 
             var template = '';
 
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
             template += '<input type="text" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" my-force-integer/>';
 
             template += this.validationTemplate(fieldName);
@@ -11626,7 +11626,7 @@ function myEditableDirectiveDate() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['dateFormat'] + '\'}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['dateFormat'] + '\'}}</span>';
             template += '<p class="input-group" ng-show="editingFlag" ' + htmlAttrs + '>';
             template += '<input type="text" class="form-control" ng-model="ngModel" uib-datepicker-popup="' + tAttr['dateFormat'] + '" ';
             template += 'is-open="status.opened" ';
@@ -11677,10 +11677,11 @@ function myEditableDirectiveTime() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['timeFormat'] + '\'}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['timeFormat'] + '\'}}</span>';
 
             template += '<input type="text" dn-timepicker="HH:mm" ng-model="ngModel" ng-show="editingFlag" ';
             template += 'min-time="08:00" max-time="23:00" ' ;
+            template += 'size="3" '
             template += '/>';
 
             template += this.validationTemplate(fieldName);
@@ -11777,7 +11778,7 @@ function myEditableDirectiveDropdown() {
             var fieldName = this.getFieldName(tAttr.ngModel);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>';
             if(tAttr['href']) {
                 template += '<a href="' + tAttr['href'] +'{{ngModel}}">';
             }
@@ -11785,7 +11786,7 @@ function myEditableDirectiveDropdown() {
             if(tAttr['href']) {
                 template += '</a>';
             }
-            template += '</p>';
+            template += '</span>';
             template += '<select2 ng-model="ngModel" class="form-control" ng-show="editingFlag" ';
             template += 'options="{minimumResultsForSearch: 5, placeholder: placeholder}" ';
             template += 's2-options="val.' + tAttr['sourceId'] + ' as (displayValue(val, displayed)) for val in datasource" ';
@@ -11864,7 +11865,7 @@ function myEditableDirectiveRadio() {
 
             var template = '';
 
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
             template += '<label ng-repeat="item in values" ng-show="editingFlag" class="radio-inline">';
             template += '<input type="radio" name="' + fieldName + '" ng-model="$parent.ngModel" value="{{item}}"> {{item}} </input>';
             template += '</label>';
@@ -11904,7 +11905,7 @@ function myEditableDirectiveMultiselect() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{(displayValues(modelObjects, displayed))}}</p>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{(displayValues(modelObjects, displayed))}}</span>';
             template += '<select2 ng-model="ngModel" class="form-control" multiple="multiple" ng-show="editingFlag" ';
             template += 'options="{placeholder: placeholder}" ';
             template += 's2-options="val.' + tAttr['sourceId'] + ' as (displayValue(val, displayed)) for val in datasource" ';

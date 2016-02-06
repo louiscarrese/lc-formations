@@ -17,7 +17,7 @@
             'adresse' => [
                 'label' => 'Adresse',
                 'type' => 'textarea',
-		'additionalAttributes' => 'rows=3',
+        		'additionalAttributes' => 'rows=3',
                 'sizeLabel' => 2,
                 'sizeValue' => 5,
             ],

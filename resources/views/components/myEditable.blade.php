@@ -75,7 +75,7 @@
         model-object="{{$element}}.{{$field['modelObject']}}" 
         change="{{$field['change'] or '' }}" 
         displayed="{{$field['displayed']}}" 
-        placeholder="{{$field['label']}}" 
+        placeholder="{{$field['placeholder']}}" 
         {{ (isset($field['href'])) ? 'href=' . $field['href'] : '' }} 
         {{$field['additionalAttributes'] or ''}}>
     </my-editable-dropdown>

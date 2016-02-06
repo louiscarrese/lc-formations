@@ -9,6 +9,7 @@
                 'dataId' => 'id', //relative to an item in the dropdownDatasource
                 'modelObject' => 'stagiaire', //relative to an item in the controller data 
                 'displayed' => '<nom> <prenom>',
+                'placeholder' => 'Stagiaire',
                 'searchable' => true,
                 'sizeLabel' => 2,
                 'sizeValue' => 3,
@@ -21,6 +22,7 @@
                 'dataId' => 'id', //relative to an item in the dropdownDatasource
                 'modelObject' => 'session', //relative to an item in the controller data 
                 'displayed' => '<module.libelle> <libelle>',
+                'placeholder' => 'Session',
                 'searchable' => true,
                 'sizeLabel' => 2,
                 'sizeValue' => 6,
@@ -77,27 +79,36 @@
                     'controllerName' => 'financeurInscriptionsController',
                     'idField' => 'id',
                     'title' => 'Financements',
-                    'fields' => [
-                        'financeur_id' => [
+                    'columns' => [
+                        [
                             'label' => 'Financeur',
-                            'sortable' => true,
-                            'filterable' => true,
-                            'editable' => true,
-                            'type' => 'dropdown',
-                            'datasource' => 'linkedData.financeurs',
-                            'dataId' => 'id',
-                            'modelObject' => 'financeur',
-                            'displayed' => '<libelle>',
-                            'addLine' => true,
+                            'sortable' => 'financeur_id',
+                            'fields' => [
+                                'financeur_id' => [
+                                    'filterable' => true,
+                                    'editable' => true,
+                                    'type' => 'dropdown',
+                                    'datasource' => 'linkedData.financeurs',
+                                    'dataId' => 'id',
+                                    'modelObject' => 'financeur',
+                                    'displayed' => '<libelle>',
+                                    'placeholder' => 'Financeur',
+                                    'addLine' => true,
+                                ]
+                            ]
                         ],
-                        'montant' => [
+                        [
                             'label' => 'Montant',
-                            'sortable' => true,
-                            'filterable' => true,
-                            'editable' => true,
-                            'type' => 'integer',
-                            'addLine' => true,
-                        ],
+                            'sortable' => 'montant',
+                            'fields' => [
+                                'montant' => [
+                                    'filterable' => true,
+                                    'editable' => true,
+                                    'type' => 'integer',
+                                    'addLine' => true,
+                                ],
+                            ]
+                        ]
                     ]
                 ]
             )
