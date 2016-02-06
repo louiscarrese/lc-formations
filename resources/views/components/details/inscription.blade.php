@@ -1,74 +1,92 @@
 <div ng-controller="detailController as detailCtrl">
     @include('components.detail', [
         'controller' => 'detailCtrl',
-        'fields' => [
-            'stagiaire_id' => [
+        'sizeLabel' => 2,
+        'rows' => [
+            [
                 'label' => 'Stagiaire',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.stagiaire', //relative to the controller
-                'dataId' => 'id', //relative to an item in the dropdownDatasource
-                'modelObject' => 'stagiaire', //relative to an item in the controller data 
-                'displayed' => '<nom> <prenom>',
-                'placeholder' => 'Stagiaire',
-                'searchable' => true,
-                'sizeLabel' => 2,
-                'sizeValue' => 3,
-                'validation' => 'required',
-            ],
-            'session_id' => [
+                'fields' => [
+                    'stagiaire_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.stagiaire', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the dropdownDatasource
+                        'modelObject' => 'stagiaire', //relative to an item in the controller data 
+                        'displayed' => '<nom> <prenom>',
+                        'placeholder' => 'Stagiaire',
+                        'searchable' => true,
+                        'sizeValue' => 3,
+                        'validation' => 'required',
+                    ],
+                ]
+            ],[
                 'label' => 'Session',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.session', //relative to the controller
-                'dataId' => 'id', //relative to an item in the dropdownDatasource
-                'modelObject' => 'session', //relative to an item in the controller data 
-                'displayed' => '<module.libelle> <libelle>',
-                'placeholder' => 'Session',
-                'searchable' => true,
-                'sizeLabel' => 2,
-                'sizeValue' => 6,
-                'validation' => 'required',
-            ],
-            'statut_libelle' => [
+                'fields' => [
+                    'session_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.session', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the dropdownDatasource
+                        'modelObject' => 'session', //relative to an item in the controller data 
+                        'displayed' => '<module.libelle> <libelle>',
+                        'placeholder' => 'Session',
+                        'searchable' => true,
+                        'sizeValue' => 6,
+                        'validation' => 'required',
+                    ],
+                ]
+            ],[
                 'label' => 'Statut',
-                'readonly' => true,
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
-            ],
-            'profession_structure' => [
+                'fields' => [
+                    'statut_libelle' => [
+                        'readonly' => true,
+                        'sizeValue' => 10,
+                    ],
+                ]
+            ],[
                 'label' => 'Profession',
-                'type' => 'textarea',
-                'additionalAttributes' => 'rows=5',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
-            ],
-            'experiences' => [
+                'fields' => [
+                    'profession_structure' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
+            ],[
                 'label' => 'Expériences',
-                'type' => 'textarea',
-                'additionalAttributes' => 'rows=5',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
-            ],
-            'attentes' => [
+                'fields' => [
+                    'experiences' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
+            ],[
                 'label' => 'Attentes',
-                'type' => 'textarea',
-                'additionalAttributes' => 'rows=5',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
-            ],
-            'suggestions' => [
+                'fields' => [
+                    'attentes' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
+            ],[
                 'label' => 'Suggestions',
-                'type' => 'textarea',
-                'additionalAttributes' => 'rows=5',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
-            ],
-            'formations_precedentes' => [
+                'fields' => [
+                    'suggestions' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
+            ],[
                 'label' => 'Formations précédentes',
-                'type' => 'textarea',
-                'additionalAttributes' => 'rows=5',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
-            ],
+                'fields' => [
+                    'formations_precedentes' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
+            ]
         ]
     ])
 

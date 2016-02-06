@@ -1,73 +1,95 @@
 <div ng-controller="detailController as detailCtrl">
     @include('components.detail', [
         'controller' => 'detailCtrl',
-        'fields' => [
-            'libelle' => [
+        'sizeLabel' => 2,
+        'rows' => [
+            [
                 'label' => 'Libellé',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'structure' => [
+                'fields' => [
+                    'libelle' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Structure',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'nom' => [
+                'fields' => [
+                    'structure' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Nom',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'prenom' => [
+                'fields' => [
+                    'nom' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Prenom',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'adresse' => [
+                'fields' => [
+                    'prenom' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Adresse',
-                'type' => 'textarea',
-        		'additionalAttributes' => 'rows=3',
-                'sizeLabel' => 2,
-                'sizeValue' => 5,
-            ],
-            'code_postal' => [
+                'fields' => [
+                    'adresse' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=3',
+                        'sizeValue' => 5,
+                    ],
+                ]
+            ],[
                 'label' => 'Code postal',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
-            'ville' => [
+                'fields' => [
+                    'code_postal' => [
+                        'type' => 'text',
+                        'sizeValue' => 1,
+                    ],
+                ]
+            ],[
                 'label' => 'Ville',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'tel' => [
+                'fields' => [
+                    'ville' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Téléphone',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'email' => [
+                'fields' => [
+                    'tel' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Email',
-                'type' => 'email',
-                'sizeLabel' => 2,
-                'sizeValue' => 3,
-            ],
-            'financeur_type_id' => [
+                'fields' => [
+                    'email' => [
+                        'type' => 'email',
+                        'sizeValue' => 3,
+                    ],
+                ]
+            ],[
                 'label' => 'Type',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.financeur_type', //relative to the controller
-                'dataId' => 'id', //relative to an item in the dropdownDatasource
-                'modelObject' => 'financeur_type', //relative to an item in the controller data 
-                'displayed' => '<libelle>',
-                'placeholder' => 'Type',
-                'sizeLabel' => 2,
-                'sizeValue' => 3,
-            ],
+                'fields' => [
+                    'financeur_type_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.financeur_type', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the dropdownDatasource
+                        'modelObject' => 'financeur_type', //relative to an item in the controller data 
+                        'displayed' => '<libelle>',
+                        'placeholder' => 'Type',
+                        'sizeValue' => 3,
+                    ],
+                ]
+            ]
         ]
     ])
 

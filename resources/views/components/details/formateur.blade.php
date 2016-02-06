@@ -1,88 +1,115 @@
 <div ng-controller="detailController as detailCtrl">
     @include('components.detail', [
         'controller' => 'detailCtrl',
-        'fields' => [
-            'nom' => [
+        'sizeLabel' => 2,
+        'rows' => [
+            [
                 'label' => 'Nom',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-                'validation' => 'required',
-            ],
-            'prenom' => [
+                'fields' => [
+                    'nom' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                        'validation' => 'required',
+                    ],
+                ]
+            ],[
                 'label' => 'Prenom',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'sexe' => [
+                'fields' => [
+                    'prenom' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Sexe',
-                'type' => 'radio',
-                'values' => '["M", "F"]',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'date_naissance' => [
+                'fields' => [
+                    'sexe' => [
+                        'type' => 'radio',
+                        'values' => '["M", "F"]',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Date de naissance',
-                'type' => 'date',
-                'format' => 'dd/MM/yyyy',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'adresse' => [
+                'fields' => [
+                    'date_naissance' => [
+                        'type' => 'date',
+                        'format' => 'dd/MM/yyyy',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Adresse',
-                'type' => 'textarea',
-        		'additionalAttributes' => 'rows=3',
-                'sizeLabel' => 2,
-                'sizeValue' => 5,
-            ],
-            'code_postal' => [
+                'fields' => [
+                    'adresse' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=3',
+                        'sizeValue' => 5,
+                    ],
+                ]
+            ],[
                 'label' => 'Code postal',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
-            'ville' => [
+                'fields' => [
+                    'code_postal' => [
+                        'type' => 'text',
+                        'sizeValue' => 1,
+                    ],
+                ]
+            ],[
                 'label' => 'Ville',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'tel_fixe' => [
+                'fields' => [
+                    'ville' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Téléphone fixe',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'tel_portable' => [
+                'fields' => [
+                    'tel_fixe' => [
+                        'type' => 'text',
+                        'sizeLabel' => 2,
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Téléphone portable',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'email' => [
+                'fields' => [
+                    'tel_portable' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Email',
-                'type' => 'email',
-                'sizeLabel' => 2,
-                'sizeValue' => 3,
-            ],
-            'tel_fixe' => [
+                'fields' => [
+                    'email' => [
+                        'type' => 'email',
+                        'sizeValue' => 3,
+                    ],
+                ]
+            ],[
                 'label' => 'Téléphone fixe',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'formateur_type_id' => [
+                'fields' => [
+                    'tel_fixe' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ], [
                 'label' => 'Type',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.formateur_type', //relative to the controller
-                'dataId' => 'id', //relative to an item in the dropdownDatasource
-                'modelObject' => 'formateur_type', //relative to an item in the controller data 
-                'displayed' => '<libelle>',
-                'placeholder' => 'Type',
-                'sizeLabel' => 2,
-                'sizeValue' => 3,
-            ],
+                'fields' => [
+                    'formateur_type_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.formateur_type', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the dropdownDatasource
+                        'modelObject' => 'formateur_type', //relative to an item in the controller data 
+                        'displayed' => '<libelle>',
+                        'placeholder' => 'Type',
+                        'sizeValue' => 3,
+                    ],
+                ]
+            ]
         ]
     ])
 

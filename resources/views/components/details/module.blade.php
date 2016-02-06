@@ -1,111 +1,141 @@
 <div ng-controller="detailController as moduleCtrl">
     @include('components.detail', [
         'controller' => 'moduleCtrl',
-        'fields' => [
-            'libelle' => [
+        'sizeLabel' => 2,
+        'rows' => [
+            [
                 'label' => 'Libellé',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 5,
-                'validation' => 'required'
+                'fields' => [
+                    'libelle' => [
+                        'type' => 'text',
+                        'sizeValue' => 5,
+                        'validation' => 'required'
+                    ],
+                ]
             ],
-            'nb_jours' => [
+            [
                 'label' => 'Nombre de jours',
-                'type' => 'integer',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
+                'fields' => [
+                    'nb_jours' => [
+                        'type' => 'integer',
+                        'sizeValue' => 1,
+                    ],
+                ]
             ],
-            'heure_debut_matin' => [
-                'label' => 'Heure de début de matinée',
-                'type' => 'time',
-                'format' => 'HH:mm',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
+            [
+                'label' => 'Horaires matinée',
+                'fields' => [
+                    'heure_debut_matin' => [
+                        'type' => 'time',
+                        'format' => 'HH:mm',
+                        'sizeValue' => 1,
+                    ],
+                    'heure_fin_matin' => [
+                        'type' => 'time',
+                        'format' => 'HH:mm',
+                        'sizeValue' => 1,
+                    ],
+                ]
             ],
-            'heure_fin_matin' => [
-                'label' => 'Heure de fin de matinée',
-                'type' => 'time',
-                'format' => 'HH:mm',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
+            [
+                'label' => 'Horaires après midi',
+                'fields' => [
+                    'heure_debut_apresmidi' => [
+                        'type' => 'time',
+                        'format' => 'HH:mm',
+                        'sizeValue' => 1,
+                    ],
+                    'heure_fin_apresmidi' => [
+                        'type' => 'time',
+                        'format' => 'HH:mm',
+                        'sizeValue' => 1,
+                    ],
+                ]
             ],
-            'heure_debut_apresmidi' => [
-                'label' => 'Heure de début d\'après midi',
-                'type' => 'time',
-                'format' => 'HH:mm',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
-            'heure_fin_apresmidi' => [
-                'label' => 'Heure de fin d\'après midi',
-                'type' => 'time',
-                'format' => 'HH:mm',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
-            'code_formation' => [
+            [
                 'label' => 'Code formation',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
+                'fields' => [
+                    'code_formation' => [
+                        'type' => 'text',
+                        'sizeValue' => 1,
+                    ],
+                ]
             ],
-            'lieu_id' => [
+            [
                 'label' => 'Lieu par défaut',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.lieus', //relative to the controller
-                'dataId' => 'id', //relative to an item in the datasource
-                'modelObject' => 'lieu', //relative to an item in the controller data 
-                'change' => '',
-                'displayed' => '<libelle>',
-                'placeholder' => 'Lieu par défaut',
-                'validation' => 'required',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
+                'fields' => [
+                    'lieu_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.lieus', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the datasource
+                        'modelObject' => 'lieu', //relative to an item in the controller data 
+                        'change' => '',
+                        'displayed' => '<libelle>',
+                        'placeholder' => 'Lieu par défaut',
+                        'validation' => 'required',
+                        'sizeValue' => 2,
+                    ],
+                ]
             ],
-            'effectif_max' => [
+            [
                 'label' => 'Effectif maximum',
-                'type' => 'integer',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
-            'domaine_formation_id' => [
+                'fields' => [
+                    'effectif_max' => [
+                        'type' => 'integer',
+                        'sizeValue' => 1,
+                    ],
+                ]
+            ], 
+            [
                 'label' => 'Type',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.domaineFormations', //relative to the controller
-                'dataId' => 'id', //relative to an item in the datasource
-                'modelObject' => 'domaine_formation', //relative to an item in the controller data 
-                'change' => '',
-                'displayed' => '<libelle>',
-                'placeholder' => 'Type',
-                'validation' => 'required',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
+                'fields' => [
+                    'domaine_formation_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.domaineFormations', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the datasource
+                        'modelObject' => 'domaine_formation', //relative to an item in the controller data 
+                        'change' => '',
+                        'displayed' => '<libelle>',
+                        'placeholder' => 'Type',
+                        'validation' => 'required',
+                        'sizeValue' => 2,
+                    ],
+                ]
             ],
-            'objectifs_pedagogiques' => [
+            [
                 'label' => 'Objectifs pédagogiques',
-                'type' => 'textarea',
-                'additionalAttributes' => 'rows=5',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
+                'fields' => [
+                    'objectifs_pedagogiques' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
             ],
-            'materiel' => [
+            [
                 'label' => 'Matériel',
-                'type' => 'textarea',
-                'additionalAttributes' => 'rows=5',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
+                'fields' => [
+                    'materiel' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
             ],
-            'formateurs_id' => [
+            [
                 'label' => 'Formateurs habituels',
-                'type' => 'multiselect',
-                'datasource' => 'linkedData.formateurs',
-                'dataId' => 'id',
-                'modelObjects' => 'formateurs',
-                'displayed' => '<nom> <prenom>',
-                'placeholder' => 'Formateurs',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
-            ]
+                'fields' => [
+                    'formateurs_id' => [
+                        'type' => 'multiselect',
+                        'datasource' => 'linkedData.formateurs',
+                        'dataId' => 'id',
+                        'modelObjects' => 'formateurs',
+                        'displayed' => '<nom> <prenom>',
+                        'placeholder' => 'Formateurs',
+                        'sizeValue' => 10,
+                    ]
+                ]
+            ],
         ]
     ])
 

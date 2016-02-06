@@ -1,56 +1,74 @@
 <div ng-controller="detailController as detailCtrl">
     @include('components.detail', [
         'controller' => 'detailCtrl',
-        'fields' => [
-            'nom' => [
+        'sizeLabel' => 2,
+        'rows' => [
+            [
                 'label' => 'Nom',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'raison_sociale' => [
+                'fields' => [
+                    'nom' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Raison sociale',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'adresse' => [
+                'fields' => [
+                    'raison_sociale' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Adresse',
-                'type' => 'textarea',
-        		'additionalAttributes' => 'rows=3',
-                'sizeLabel' => 2,
-                'sizeValue' => 5,
-            ],
-            'code_postal' => [
+                'fields' => [
+                    'adresse' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=3',
+                        'sizeValue' => 5,
+                    ],
+                ]
+            ],[
                 'label' => 'Code postal',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
-            'ville' => [
+                'fields' => [
+                    'code_postal' => [
+                        'type' => 'text',
+                        'sizeValue' => 1,
+                    ],
+                ]
+            ],[
                 'label' => 'Ville',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'telephone' => [
+                'fields' => [
+                    'ville' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Téléphone',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 2,
-            ],
-            'email' => [
+                'fields' => [
+                    'telephone' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Email',
-                'type' => 'email',
-                'sizeLabel' => 2,
-                'sizeValue' => 3,
-            ],
-            'contact' => [
+                'fields' => [
+                    'email' => [
+                        'type' => 'email',
+                        'sizeValue' => 3,
+                    ],
+                ]
+            ],[
                 'label' => 'Contact',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 3,
-            ],
+                'fields' => [
+                    'contact' => [
+                        'type' => 'text',
+                        'sizeValue' => 3,
+                    ],
+                ]
+            ]
         ]
     ])
 

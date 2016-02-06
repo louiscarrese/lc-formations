@@ -1,47 +1,59 @@
 <div ng-controller="detailController as detailCtrl">
     @include('components.detail', [
         'controller' => 'detailCtrl',
-        'fields' => [
-            'module_id' => [
+        'sizeLabel' => 2,
+        'rows' => [
+            [
                 'label' => 'Module',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.modules', //relative to the controller
-                'dataId' => 'id', //relative to an item in the datasource
-                'modelObject' => 'module', //relative to an item in the controller data 
-                'change' => 'detailCtrl.onModuleChange',
-                'displayed' => '<libelle>',
-                'placeholder' => 'Module',
-                'href' => '/modules/',
-                'sizeLabel' => 2,
-                'sizeValue' => 5,
-            ],
-            'module.nb_jours' => [
+                'fields' => [
+                    'module_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.modules', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the datasource
+                        'modelObject' => 'module', //relative to an item in the controller data 
+                        'change' => 'detailCtrl.onModuleChange',
+                        'displayed' => '<libelle>',
+                        'placeholder' => 'Module',
+                        'href' => '/modules/',
+                        'sizeValue' => 5,
+                    ],
+                ]
+            ],[
                 'label' => 'Nombre de jours',
-                'readonly' => true,
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
-            'effectif_max' => [
+                'fields' => [
+                    'module.nb_jours' => [
+                        'readonly' => true,
+                        'sizeValue' => 1,
+                    ],
+                ]
+            ],[
                 'label' => 'Effectif maximum',
-                'type' => 'text',
-                'sizeLabel' => 2,
-                'sizeValue' => 1,
-            ],
-            'objectifs_pedagogiques' => [
+                'fields' => [
+                    'effectif_max' => [
+                        'type' => 'text',
+                        'sizeValue' => 1,
+                    ],
+                ]
+            ],[
                 'label' => 'Objectifs pédagogiques',
-                'type' => 'textarea',
-                'additionalAttributes' => 'rows=5',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
-            ],
-            'materiel' => [
+                'fields' => [
+                    'objectifs_pedagogiques' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
+            ],[
                 'label' => 'Matériel',
-                'type' => 'textarea',
-                'additionalAttributes' => 'rows=5',
-                'sizeLabel' => 2,
-                'sizeValue' => 10,
-            ],
-        ] //fields
+                'fields' => [
+                    'materiel' => [
+                            'type' => 'textarea',
+                            'additionalAttributes' => 'rows=5',
+                            'sizeValue' => 10,
+                        ],
+                ]
+            ]
+        ]
     ])
 
     <div ng-if="detailCtrl.inited && detailCtrl.mode != 'create'">

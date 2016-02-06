@@ -1,3 +1,23 @@
+{{-- Some things have to be computed beforehand ot it becomes a real mess later --}}
+<?php 
+    function generateErrorClassRow($controllerName, $row) {
+        $ret = '';
+        $first = true;
+        foreach($row['fields'] as $fieldId => $field) {
+            $angularId = $controllerName . '.form_{{$index}}.' . $fieldId;
+            if($first) {
+                $first = false;
+            } else {
+                $ret .= ' && ';
+            }
+
+            $ret .=  $angularId . '.$invalid';
+            $ret .= ' && ' . $angularId . '.$touched ';
+        }
+        return $ret;
+    }
+?>
+
 <h2>{{<?php echo($controller); ?>.titleText()}}</h2>
 
 <div class="alerts">
@@ -5,21 +25,23 @@
 </div>
 
 <form name="{{$controller}}.mainForm" novalidate class="form-horizontal form-condensed row">
-    @foreach($fields as $fieldId => $field)
-        <div class="form-group" ng-class="{ 'has-error': {{$controller}}.mainForm.{{$fieldId}}.$invalid && {{$controller}}.mainForm.{{$fieldId}}.$touched }">
-            <label class="control-label col-sm-{{$field['sizeLabel']}}">{{$field['label']}}</label>
-            <div class="col-sm-{{$field['sizeValue']}} detail-value">
-                @if(isset($field['readonly']) && $field['readonly'])
-                    <p class="editable-read"><?php echo '{{' . $controller . '.data.' . $fieldId . '}}' ?></p>
-                @else
+    @foreach($rows as $row)
+        <div class="form-group" ng-class="{ 'has-error': {{generateErrorClassRow($controller, $row)}} }">
+            <label class="control-label col-sm-{{$sizeLabel}}">{{$row['label']}}</label>
+            @foreach($row['fields'] as $fieldId => $field)
+                <span class="col-sm-{{$field['sizeValue']}} detail-value">
+                    @if(isset($field['readonly']) && $field['readonly'])
+                        <?php echo '{{' . $controller . '.data.' . $fieldId . '}}' ?>
+                    @else
                         @include('components.myEditable', [
                             'controllerName' => $controller,
                             'element' => $controller . '.data',
                             'editingFlag' => $controller . '.editing',
                             'field' => $field
                         ])
-                @endif
-            </div>
+                    @endif
+                </span>
+            @endforeach
         </div>
     @endforeach
     <div class="global-actions">

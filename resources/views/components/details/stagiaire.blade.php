@@ -1,136 +1,175 @@
 <div ng-controller="detailController as detailCtrl">
     @include('components.detail', [
         'controller' => 'detailCtrl',
-        'fields' => [
-            'nom' => [
+        'sizeLabel' => 3,
+        'rows' => [
+            [
                 'label' => 'Nom',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-                'validation' => 'required',
-            ],
-            'prenom' => [
+                'fields' => [
+                    'nom' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                        'validation' => 'required',
+                    ],
+                ]
+            ],[
                 'label' => 'Prenom',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'sexe' => [
+                'fields' => [
+                    'prenom' => [
+                        'type' => 'text',
+                        'sizeLabel' => 3,
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Sexe',
-                'type' => 'radio',
-                'values' => '["M", "F"]',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'date_naissance' => [
+                'fields' => [
+                    'sexe' => [
+                        'type' => 'radio',
+                        'values' => '["M", "F"]',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Date de naissance',
-                'type' => 'date',
-                'format' => 'dd/MM/yyyy',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'adresse' => [
+                'fields' => [
+                    'date_naissance' => [
+                        'type' => 'date',
+                        'format' => 'dd/MM/yyyy',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Adresse',
-                'type' => 'textarea',
-        		'additionalAttributes' => 'rows=3',
-                'sizeLabel' => 3,
-                'sizeValue' => 5,
-            ],
-            'code_postal' => [
+                'fields' => [
+                    'adresse' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=3',
+                        'sizeValue' => 5,
+                    ],
+                ]
+            ],[
                 'label' => 'Code postal',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 1,
-            ],
-            'ville' => [
+                'fields' => [
+                    'code_postal' => [
+                        'type' => 'text',
+                        'sizeValue' => 1,
+                    ],
+                ]
+            ],[
                 'label' => 'Ville',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'tel_fixe' => [
+                'fields' => [
+                    'ville' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Téléphone fixe',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'tel_portable' => [
+                'fields' => [
+                    'tel_fixe' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Téléphone portable',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'email' => [
+                'fields' => [
+                    'tel_portable' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Email',
-                'type' => 'email',
-                'sizeLabel' => 3,
-                'sizeValue' => 3,
-                'validation' => 'email',
-            ],
-            'profession' => [
+                'fields' => [
+                    'email' => [
+                        'type' => 'email',
+                        'sizeValue' => 3,
+                        'validation' => 'email',
+                    ],
+                ]
+            ],[
                 'label' => 'Profession',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'etudes' => [
+                'fields' => [
+                    'profession' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Etudes',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'demandeur_emploi_depuis' => [
+                'fields' => [
+                    'etudes' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Demandeur d\'emploi depuis',
-                'type' => 'date',
-                'format' => 'dd/MM/yyyy',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'niveau_qualification' => [
+                'fields' => [
+                    'demandeur_emploi_depuis' => [
+                        'type' => 'date',
+                        'format' => 'dd/MM/yyyy',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Niveau de qualification',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'domaine_pro' => [
+                'fields' => [
+                    'niveau_qualification' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Domaine professionel',
-                'type' => 'text',
-                'sizeLabel' => 3,
-                'sizeValue' => 2,
-            ],
-            'niveau_formation_id' => [
+                'fields' => [
+                    'domaine_pro' => [
+                        'type' => 'text',
+                        'sizeValue' => 2,
+                    ],
+                ]
+            ],[
                 'label' => 'Niveau de formation',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.niveau_formation', //relative to the controller
-                'dataId' => 'id', //relative to an item in the dropdownDatasource
-                'modelObject' => 'niveau_formation', //relative to an item in the controller data 
-                'displayed' => '<libelle>',
-                'placeholder' => 'Niveau de formation',
-                'sizeLabel' => 3,
-                'sizeValue' => 4,
-            ],
-            'employeur_id' => [
+                'fields' => [
+                    'niveau_formation_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.niveau_formation', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the dropdownDatasource
+                        'modelObject' => 'niveau_formation', //relative to an item in the controller data 
+                        'displayed' => '<libelle>',
+                        'placeholder' => 'Niveau de formation',
+                        'sizeValue' => 4,
+                    ],
+                ]
+            ], [
                 'label' => 'Employeur',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.employeur', //relative to the controller
-                'dataId' => 'id', //relative to an item in the dropdownDatasource
-                'modelObject' => 'employeur', //relative to an item in the controller data 
-                'displayed' => '<nom>',
-                'placeholder' => 'Employeur',
-                'sizeLabel' => 3,
-                'sizeValue' => 3,
-            ],
-            'stagiaire_type_id' => [
+                'fields' => [
+                    'employeur_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.employeur', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the dropdownDatasource
+                        'modelObject' => 'employeur', //relative to an item in the controller data 
+                        'displayed' => '<nom>',
+                        'placeholder' => 'Employeur',
+                        'sizeValue' => 3,
+                    ],
+                ]
+            ], [
                 'label' => 'Type',
-                'type' => 'dropdown',
-                'datasource' => 'linkedData.stagiaire_type', //relative to the controller
-                'dataId' => 'id', //relative to an item in the dropdownDatasource
-                'modelObject' => 'stagiaire_type', //relative to an item in the controller data 
-                'displayed' => '<libelle>',
-                'placeholder' => 'Type',
-                'sizeLabel' => 3,
-                'sizeValue' => 3,
-            ],
+                'fields' => [
+                    'stagiaire_type_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.stagiaire_type', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the dropdownDatasource
+                        'modelObject' => 'stagiaire_type', //relative to an item in the controller data 
+                        'displayed' => '<libelle>',
+                        'placeholder' => 'Type',
+                        'sizeValue' => 3,
+                    ],
+                ]
+            ]
         ]
     ])
 
