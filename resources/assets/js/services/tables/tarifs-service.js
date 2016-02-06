@@ -8,8 +8,9 @@ function tarifsTableServiceFactory(sharedDataService, tarifTypesService) {
             }
         },
 
-        preSend: function(data, parentController) {
+        preSend: function(data) {
             data.module_id = sharedDataService.data.module_id;
+            return data;
         },
 
         queryParameters: function() {

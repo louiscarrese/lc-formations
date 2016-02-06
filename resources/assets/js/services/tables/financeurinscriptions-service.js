@@ -9,8 +9,9 @@ function financeurInscriptionsTableServiceFactory(sharedDataService, financeursS
         },
 
 
-        preSend: function(data, parentController) {
+        preSend: function(data) {
             data.inscription_id = sharedDataService.data.inscription_id;
+            return data;
         },
 
         queryParameters: function() {

@@ -16,10 +16,12 @@ function myEditableDirectiveTime() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['timeFormat'] + '\':\'UTC\'}}</p>';
-            template += '<uib-timepicker ng-model="ngModel" ng-show="editingFlag" ';
-            template += 'minute-step="15" show-meridian="false" show-spinners="false" datepicker-localdate>'
-            template += '</uib-timepicker>'
+            template += '<p class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['timeFormat'] + '\'}}</p>';
+
+            template += '<input type="text" dn-timepicker="HH:mm" ng-model="ngModel" ng-show="editingFlag" ';
+            template += 'min-time="08:00" max-time="23:00" ' ;
+            template += '/>';
+
             template += this.validationTemplate(fieldName);
 
             return template;

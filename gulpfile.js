@@ -29,6 +29,8 @@ var libraries = [
     'vendor/angular-messages/angular-messages.min.js', 
     'vendor/angular-select2/dist/angular-select2.js',
     'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
+    'vendor/angular-dateParser/dist/angular-dateparser.min.js',
+    'vendor/angular-timepicker/dist/angular-timepicker.js',
 ];
 
 var myEditable = [

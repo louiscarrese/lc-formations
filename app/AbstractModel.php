@@ -4,6 +4,7 @@ namespace ModuleFormation;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Log;
 
 class AbstractModel extends Model
 {
@@ -11,7 +12,7 @@ class AbstractModel extends Model
     protected $frontDateFormat = 'Y-m-d\TH:i:s.u\Z';
 
     protected $dbTimeFormat = 'H:i:s';
-    protected $frontTimeFormat = 'Y-m-d\TH:i:s.u\Z';
+    protected $frontTimeFormat = 'H:i';
 
     protected static $myDates = [];
     protected static $myTimes = [];

@@ -5188,5 +5188,9 @@ td.list-action {
   width: 1px;
   white-space: nowrap;
 }
+.dn-timepicker-popup {
+  max-height: 300px;
+  overflow-y: scroll;
+}
 
 /*# sourceMappingURL=app.css.map */

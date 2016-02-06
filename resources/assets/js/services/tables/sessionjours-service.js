@@ -1,4 +1,12 @@
-function sessionJoursTableServiceFactory(sharedDataService, lieuService, formateursService) {
+function sessionJoursTableServiceFactory($filter, sharedDataService, lieuService, formateursService) {
+    function timeFormat(input) {
+        var ret = input;  
+        if(angular.isDate(input)) {
+            ret = $filter('date')(input, 'HH:mm');
+        }
+        return ret;
+    }
+
     return {
         getLinkedData: function() {
             var lieus = lieuService.query();
@@ -25,8 +33,15 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
 
         },
 
-        preSend: function(data, parentController) {
-            data.session_id = sharedDataService.data.session_id;
+        preSend: function(data) {
+            var ret = angular.copy(data);
+
+            ret.session_id = sharedDataService.data.session_id;
+
+            ret.heure_debut = timeFormat(ret.heure_debut);
+            ret.heure_fin = timeFormat(ret.heure_fin);
+
+            return ret;
         },
 
         queryParameters: function() {
@@ -54,7 +69,6 @@ function sessionJoursTableServiceFactory(sharedDataService, lieuService, formate
                         });
                 }
             }
-        }
-
+        },
     };
 }

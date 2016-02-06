@@ -118,17 +118,18 @@ function editableTableController($filter, dataService, tableService) {
      * Update
      */
      function update(type, ctrlsToRefresh) {
+        var toSend = type;
         if(tableService != undefined && typeof tableService.preSend == 'function') {
-            tableService.preSend(type);
+            toSend = tableService.preSend(type);
         }
 
         self.errors = [];
-        type.$update({id: type.internalKey}, 
+        toSend.$update({id: type.internalKey}, 
             function(value, responseHeaders) {
 
                 self.getSuccess(value);
                 self.refreshControllers(ctrlsToRefresh);
-                value.editing = false;
+                type.editing = false;
                 self.sort();
 
             }, 
@@ -165,11 +166,12 @@ function editableTableController($filter, dataService, tableService) {
      * Add
      */
      function create(obj, ctrlsToRefresh) {
+        var toSend = self.addObject;
         if(tableService != undefined && typeof tableService.preSend == 'function') {
-            tableService.preSend(self.addObject);
+            toSend = tableService.preSend(self.addObject);
         }
         self.errors = [];
-        dataService.save(obj, 
+        dataService.save(toSend, 
             function(value, responseHeaders) {
                 //process value
                 self.getSuccess(value);

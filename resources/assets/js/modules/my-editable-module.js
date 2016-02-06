@@ -1,4 +1,4 @@
-angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap'])
+angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap', 'dnTimepicker'])
     .directive('myEditableText', myEditableDirectiveText)
     .directive('myEditableEmail', myEditableDirectiveEmail)
     .directive('myEditableInteger', myEditableDirectiveInteger)

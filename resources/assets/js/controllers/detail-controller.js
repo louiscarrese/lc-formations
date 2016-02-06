@@ -111,9 +111,14 @@ function detailController(editModeService, dataService, detailService, $q) {
 
     //CRUD
     function create() {
+        var toSend = self.data;
+        if(detailService != undefined && typeof detailService.preSend == 'function') {
+            toSend = detailService.preSend(self.data);
+        }
+
         self.errors = [];
         if(self['mainForm'].$valid) {
-            dataService.save(self.data, 
+            dataService.save(toSend, 
                 function(value, responseHeaders) {
                     self.getSuccess(value);
                     self.setModeRead();
@@ -135,9 +140,15 @@ function detailController(editModeService, dataService, detailService, $q) {
     }
 
     function update() {
+        var toSend = self.data;
+        if(detailService != undefined && typeof detailService.preSend == 'function') {
+            toSend = detailService.preSend(self.data);
+            console.log(toSend);
+        }
+
         self.errors = [];
         if(self['mainForm'].$valid) {
-            self.data.$update({id:self.internalKey}, 
+            toSend.$update({id:self.internalKey}, 
                 function(value, responseHeaders) {
                     self.getSuccess(value);
                     self.setModeRead();

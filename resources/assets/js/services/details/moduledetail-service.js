@@ -1,4 +1,12 @@
-function moduleDetailServiceFactory(sharedDataService, domaineFormationsService, formateursService, lieuService) {
+function moduleDetailServiceFactory($filter, sharedDataService, domaineFormationsService, formateursService, lieuService) {
+    function timeFormat(input) {
+        var ret = input;  
+        if(angular.isDate(input)) {
+            ret = $filter('date')(input, 'HH:mm');
+        }
+        return ret;
+    }
+
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
@@ -42,6 +50,15 @@ function moduleDetailServiceFactory(sharedDataService, domaineFormationsService,
             message += '\n - Sessions ';
             message += '\n - Inscriptions';
             return message;
+        },
+
+        preSend: function(originalData) {
+            var ret = angular.copy(originalData);
+
+            ret.heure_debut = timeFormat(ret.heure_debut);
+            ret.heure_fin = timeFormat(ret.heure_fin);
+
+            return ret;
         },
     }
 }
