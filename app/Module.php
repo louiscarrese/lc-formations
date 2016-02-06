@@ -7,10 +7,10 @@ class Module extends AbstractModel
 
     protected $with = ['domaine_formation', 'formateurs', 'lieu'];
 
-    protected $fillable = ['id', 'libelle', 'nb_jours', 'heure_debut', 'heure_fin', 
+    protected $fillable = ['id', 'libelle', 'nb_jours', 'heure_debut_matin', 'heure_fin_matin', 'heure_debut_apresmidi', 'heure_fin_apresmidi', 
         'effectif_max', 'objectifs_pedagogiques', 'materiel', 'code_formation', 'lieu_id', 'domaine_formation_id'];
 
-    protected static $myTimes = ['heure_debut', 'heure_fin'];
+    protected static $myTimes = ['heure_debut_matin', 'heure_fin_matin', 'heure_debut_apresmidi', 'heure_fin_apresmidi'];
 
     function sessions() {
         return $this->hasMany('ModuleFormation\Session');

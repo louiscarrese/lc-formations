@@ -62,28 +62,46 @@
                         'validation' => 'required',
                         'size' => 2,
                     ], //date
-                    'heure_debut' => [
-                        'label' => 'Début',
+                    'heure_debut_matin' => [
+                        'label' => 'Début matinée',
                         'sortable' => true,
                         'filterable' => true,
                         'editable' => true,
                         'type' => 'time',
                         'format' => 'HH:mm',
                         'addLine' => true,
-                        'validation' => 'required',
                         'size' => 1,
-                    ], //heure_debut
-                    'heure_fin' => [
-                        'label' => 'Fin',
+                    ], //heure_debut_matin
+                    'heure_fin_matin' => [
+                        'label' => 'Fin matinée',
                         'sortable' => true,
                         'filterable' => true,
                         'editable' => true,
                         'type' => 'time',
                         'format' => 'HH:mm',
                         'addLine' => true,
-                        'validation' => 'required',
                         'size' => 1,
-                    ], //heure_fin
+                    ], //heure_fin_matin
+                    'heure_debut_apresmidi' => [
+                        'label' => 'Début après-midi',
+                        'sortable' => true,
+                        'filterable' => true,
+                        'editable' => true,
+                        'type' => 'time',
+                        'format' => 'HH:mm',
+                        'addLine' => true,
+                        'size' => 1,
+                    ], //heure_debut_apresmidi
+                    'heure_fin_apresmidi' => [
+                        'label' => 'Fin après-midi',
+                        'sortable' => true,
+                        'filterable' => true,
+                        'editable' => true,
+                        'type' => 'time',
+                        'format' => 'HH:mm',
+                        'addLine' => true,
+                        'size' => 1,
+                    ], //heure_fin_apresmidi
                     'lieu_id' => [
                         'label' => 'Lieu',
                         'sortable' => true,

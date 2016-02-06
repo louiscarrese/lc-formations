@@ -55,8 +55,10 @@ function moduleDetailServiceFactory($filter, sharedDataService, domaineFormation
         preSend: function(originalData) {
             var ret = angular.copy(originalData);
 
-            ret.heure_debut = timeFormat(ret.heure_debut);
-            ret.heure_fin = timeFormat(ret.heure_fin);
+            ret.heure_debut_matin = timeFormat(ret.heure_debut_matin);
+            ret.heure_fin_matin = timeFormat(ret.heure_fin_matin);
+            ret.heure_debut_apresmidi = timeFormat(ret.heure_debut_apresmidi);
+            ret.heure_fin_apresmidi = timeFormat(ret.heure_fin_apresmidi);
 
             return ret;
         },

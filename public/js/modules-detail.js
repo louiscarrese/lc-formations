@@ -11286,10 +11286,10 @@ angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angu
                     return current;
                 }
                 function setCurrentValue(value) {
-                    if (!angular.isDate(value)) {
+                    if (!angular.isDate(value) && scope.ngModel != undefined) {
                         value = $dateParser(scope.ngModel, scope.timepicker.timeFormat);
                         if (isNaN(value)) {
-                            $log.warn("Failed to parse model.");
+                            $log.warn("Failed to parse model");
                         }
                     }
                     current = value;
@@ -11324,13 +11324,18 @@ angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angu
                     element.val(angular.isDate(current) ? dateFilter(current, scope.timepicker.timeFormat) : ctrl.$viewValue ? ctrl.$viewValue : "");
                 };
                 ctrl.$parsers.unshift(function(viewValue) {
-                    var date = angular.isDate(viewValue) ? viewValue : $dateParser(viewValue, scope.timepicker.timeFormat);
-                    if (isNaN(date)) {
-                        ctrl.$setValidity("time", false);
-                        return undefined;
+                    if(viewValue != undefined && viewValue != '') {
+                        var date = angular.isDate(viewValue) ? viewValue : $dateParser(viewValue, scope.timepicker.timeFormat);
+                        if (isNaN(date)) {
+                            ctrl.$setValidity("time", false);
+                            return undefined;
+                        }
+                        ctrl.$setValidity("time", true);
+                        return getUpdatedDate(date);
+                    } else {
+                        ctrl.$setValidity("time", true);
+                        return '';
                     }
-                    ctrl.$setValidity("time", true);
-                    return getUpdatedDate(date);
                 });
                 scope.select = function(time) {
                     if (!angular.isDate(time)) {
@@ -12380,8 +12385,10 @@ function moduleDetailServiceFactory($filter, sharedDataService, domaineFormation
         preSend: function(originalData) {
             var ret = angular.copy(originalData);
 
-            ret.heure_debut = timeFormat(ret.heure_debut);
-            ret.heure_fin = timeFormat(ret.heure_fin);
+            ret.heure_debut_matin = timeFormat(ret.heure_debut_matin);
+            ret.heure_fin_matin = timeFormat(ret.heure_fin_matin);
+            ret.heure_debut_apresmidi = timeFormat(ret.heure_debut_apresmidi);
+            ret.heure_fin_apresmidi = timeFormat(ret.heure_fin_apresmidi);
 
             return ret;
         },

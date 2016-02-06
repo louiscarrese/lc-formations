@@ -15,15 +15,29 @@
                 'sizeLabel' => 2,
                 'sizeValue' => 1,
             ],
-            'heure_debut' => [
-                'label' => 'Heure de début',
+            'heure_debut_matin' => [
+                'label' => 'Heure de début de matinée',
                 'type' => 'time',
                 'format' => 'HH:mm',
                 'sizeLabel' => 2,
                 'sizeValue' => 1,
             ],
-            'heure_fin' => [
-                'label' => 'Heure de fin',
+            'heure_fin_matin' => [
+                'label' => 'Heure de fin de matinée',
+                'type' => 'time',
+                'format' => 'HH:mm',
+                'sizeLabel' => 2,
+                'sizeValue' => 1,
+            ],
+            'heure_debut_apresmidi' => [
+                'label' => 'Heure de début d\'après midi',
+                'type' => 'time',
+                'format' => 'HH:mm',
+                'sizeLabel' => 2,
+                'sizeValue' => 1,
+            ],
+            'heure_fin_apresmidi' => [
+                'label' => 'Heure de fin d\'après midi',
                 'type' => 'time',
                 'format' => 'HH:mm',
                 'sizeLabel' => 2,

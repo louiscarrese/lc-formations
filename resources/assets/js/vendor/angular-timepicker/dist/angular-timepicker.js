@@ -76,7 +76,7 @@
                     return current;
                 }
                 function setCurrentValue(value) {
-                    if (!angular.isDate(value)) {
+                    if (!angular.isDate(value) && scope.ngModel != undefined) {
                         value = $dateParser(scope.ngModel, scope.timepicker.timeFormat);
                         if (isNaN(value)) {
                             $log.warn("Failed to parse model.");
@@ -114,13 +114,18 @@
                     element.val(angular.isDate(current) ? dateFilter(current, scope.timepicker.timeFormat) : ctrl.$viewValue ? ctrl.$viewValue : "");
                 };
                 ctrl.$parsers.unshift(function(viewValue) {
-                    var date = angular.isDate(viewValue) ? viewValue : $dateParser(viewValue, scope.timepicker.timeFormat);
-                    if (isNaN(date)) {
-                        ctrl.$setValidity("time", false);
-                        return undefined;
+                    if(viewValue != undefined && viewValue != '') {
+                        var date = angular.isDate(viewValue) ? viewValue : $dateParser(viewValue, scope.timepicker.timeFormat);
+                        if (isNaN(date)) {
+                            ctrl.$setValidity("time", false);
+                            return undefined;
+                        }
+                        ctrl.$setValidity("time", true);
+                        return getUpdatedDate(date);
+                    } else {
+                        ctrl.$setValidity("time", true);
+                        return '';
                     }
-                    ctrl.$setValidity("time", true);
-                    return getUpdatedDate(date);
                 });
                 scope.select = function(time) {
                     if (!angular.isDate(time)) {

@@ -11,8 +11,10 @@ class SessionJourController extends AbstractController
 
     protected $validation_rules = [
         'date' => 'required|date_format:Y-m-d\TH:i:s.u\Z',
-        'heure_debut' => 'required|date_format:H:i',
-        'heure_fin' => 'required|date_format:H:i',
+        'heure_debut_matin' => 'date_format:H:i',
+        'heure_fin_matin' => 'date_format:H:i',
+        'heure_debut_apresmidi' => 'date_format:H:i',
+        'heure_fin_apresmidi' => 'date_format:H:i',
         'session_id' => 'required',
         'lieu_id' => 'required',
     ];
