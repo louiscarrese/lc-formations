@@ -66,7 +66,7 @@ class DeleteCascade extends Migration
         //DELETE all related FORMATEUR_MODULE
         Schema::table('formateur_module', function($table) {
             $table->dropForeign('formateur_module_formateur_id_foreign');
-            $table->foreign('formateur_id')->references('id')->on('modules')->onDelete('cascade');
+            $table->foreign('formateur_id')->references('id')->on('formateurs')->onDelete('cascade');
         });
 
         /** When we delete an EMPLOYEUR, we want to... */
