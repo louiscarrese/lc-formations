@@ -628,6 +628,7 @@ return array(
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
     'StagiaireTypesTableSeeder' => $baseDir . '/database/seeds/StagiaireTypesTableSeeder.php',
     'StringLength' => $baseDir . '/database/migrations/2016_01_18_174228_string_length.php',
+    'StringLengthInscriptions' => $baseDir . '/database/migrations/2016_02_07_140254_string_length_inscriptions.php',
     'Style' => $vendorDir . '/dompdf/dompdf/include/style.cls.php',
     'Stylesheet' => $vendorDir . '/dompdf/dompdf/include/stylesheet.cls.php',
     'TCPDF_Adapter' => $vendorDir . '/dompdf/dompdf/include/tcpdf_adapter.cls.php',
