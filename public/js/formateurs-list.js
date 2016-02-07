@@ -11597,7 +11597,8 @@ function editableTableController($filter, dataService, tableService) {
 
                 self.getSuccess(value);
                 self.refreshControllers(ctrlsToRefresh);
-                type.editing = false;
+                value.editing = false;
+                self.data[self.data.indexOf(type)] = value;
                 self.sort();
 
             }, 

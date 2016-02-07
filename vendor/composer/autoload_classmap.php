@@ -645,6 +645,7 @@ return array(
     'Table_Row_Group_Renderer' => $vendorDir . '/dompdf/dompdf/include/table_row_group_renderer.cls.php',
     'Table_Row_Positioner' => $vendorDir . '/dompdf/dompdf/include/table_row_positioner.cls.php',
     'TarifTypesTableSeeder' => $baseDir . '/database/seeds/TarifTypesTableSeeder.php',
+    'Temp' => $baseDir . '/database/migrations/2016_02_07_143856_temp.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Frame_Decorator' => $vendorDir . '/dompdf/dompdf/include/text_frame_decorator.cls.php',
     'Text_Frame_Reflower' => $vendorDir . '/dompdf/dompdf/include/text_frame_reflower.cls.php',

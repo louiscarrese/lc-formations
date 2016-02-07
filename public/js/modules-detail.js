@@ -12205,7 +12205,6 @@ function detailController(editModeService, dataService, detailService, $q) {
         var toSend = self.data;
         if(detailService != undefined && typeof detailService.preSend == 'function') {
             toSend = detailService.preSend(self.data);
-            console.log(toSend);
         }
 
         self.errors = [];
@@ -12595,7 +12594,8 @@ function editableTableController($filter, dataService, tableService) {
 
                 self.getSuccess(value);
                 self.refreshControllers(ctrlsToRefresh);
-                type.editing = false;
+                value.editing = false;
+                self.data[self.data.indexOf(type)] = value;
                 self.sort();
 
             }, 
