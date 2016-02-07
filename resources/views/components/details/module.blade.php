@@ -57,6 +57,7 @@
                 'fields' => [
                     'code_formation' => [
                         'type' => 'text',
+                        'validation' => 'required',
                         'sizeValue' => 1,
                     ],
                 ]

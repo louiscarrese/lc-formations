@@ -13,6 +13,7 @@ class ModuleController extends AbstractController
         'heure_debut_apresmidi' => 'date_format:H:i',
         'heure_fin_apresmidi' => 'date_format:H:i',
         'domaine_formation_id' => 'required',
+        'code_formation' => 'required',
     ];
 
     public function __construct(ModuleRepositoryInterface $repository)
