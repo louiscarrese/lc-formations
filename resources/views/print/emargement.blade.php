@@ -11,11 +11,11 @@
             <div class="header">
                 <div>
                     <span class="title">INTITULE DU STAGE : </span>
-                    <span class="value">{{$session->module->libelle}}</span>
+                    <span class="value">{{$session->module->libelle or ''}}</span>
                 </div>
                 <div>
                     <span class="title">LIEU DU STAGE : </span>
-                    <span class="value">{{$session_jour->lieu->libelle}}</span>
+                    <span class="value">{{$session_jour->lieu->libelle or ''}}</span>
                 </div>
                 <div>
                     <span class="title">DATE DE L'EMARGEMENT : </span>
@@ -30,7 +30,7 @@
                                 echo $first ? '' : ', ';
                                 $first = false;
                             ?>
-                            {{$formateur->nom}} {{$formateur->prenom}}
+                            {{$formateur->nom or ''}} {{$formateur->prenom or ''}}
                         @endforeach
                     </span>
                 </div>
@@ -44,14 +44,22 @@
                         <th rowspan="2" class="nb-h">NOMBRES D'H STAGIAIRES</th>
                     </tr>
                     <tr>
-                        <th>MATIN<br />De 9h30 à 12h30</th>
-                        <th>APRES MIDI<br />De 13h30 à 17h30</th>
+                        @if(isset($session_jour->heure_debut_matin) && isset($session_jour->heure_fin_matin))
+                            <th>MATIN<br />De {{$session_jour->heure_debut_matin}} à {{$session_jour->heure_fin_matin}}</th>
+                        @else 
+                            <th></th>
+                        @endif
+                        @if(isset($session_jour->heure_debut_apresmidi) && isset($session_jour->heure_fin_apresmidi))
+                            <th>APRES MIDI<br />De {{$session_jour->heure_debut_apresmidi}} à {{$session_jour->heure_fin_apresmidi}}</th>
+                        @else 
+                            <th></th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($inscriptions as $inscription)
                         <tr>
-                            <td>{{$inscription->stagiaire->nom}} {{$inscription->stagiaire->prenom}}</td>
+                            <td>{{$inscription->stagiaire->nom or ''}} {{$inscription->stagiaire->prenom or ''}}</td>
                             <td></td>
                             <td></td>
                             <td></td>
