@@ -85,7 +85,7 @@
                     <button ng-hide="elem.editing" ng-click="elem.editing = true" class="btn btn-default ">
                         <span>Editer</span>
                     </button>
-                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.editSubmit($index, elem, {{$refreshControllers or 'null'}})" class="btn btn-default ">
+                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.editSubmit($index, elem, {{$refreshControllers or 'null'}})" ng-class="{{$controllerName}}.getButtonClass($index)">
                         <span>Valider</span>
                     </button>
                     <button ng-hide="elem.editing" ng-click="{{$controllerName}}.delete(elem, {{$refreshControllers or 'null'}})" class="btn btn-default ">
@@ -115,7 +115,7 @@
                     </td>
                 @endforeach
                 <td class="list-action text-center">
-                    <button ng-click="{{$controllerName}}.addSubmit({{$refreshControllers or 'null'}})" class="btn btn-default center-block">
+                    <button ng-click="{{$controllerName}}.addSubmit({{$refreshControllers or 'null'}})" ng-class="{{$controllerName}}.getButtonClass('add')">
                         <span>Ajouter</span>
                     </button>
                 </td>

@@ -12087,6 +12087,8 @@ function detailController(editModeService, dataService, detailService, $q) {
     self.closeAlert = closeAlert;
     self.extractErrors = extractErrors;
 
+    self.getButtonClass = getButtonClass;
+
     //Just so we don't have 'undefined' in places 
     self.data = {};
     self.linkedData = {};
@@ -12281,6 +12283,14 @@ function detailController(editModeService, dataService, detailService, $q) {
         self.mode = 'edit';
 
 
+    }
+
+    function getButtonClass() {
+        var ret = 'btn';
+        if(self['mainForm'].$valid) {
+            ret += ' btn-default';
+        }
+        return ret;
     }
 
     function closeAlert(index) {
@@ -12511,6 +12521,8 @@ function editableTableController($filter, dataService, tableService) {
 
     self.editSubmit = editSubmit;
     self.addSubmit = addSubmit;
+
+    self.getButtonClass = getButtonClass;
 
     self.closeAlert = closeAlert;
     self.extractErrors = extractErrors;
@@ -12746,6 +12758,15 @@ function editableTableController($filter, dataService, tableService) {
 
     function createUrl(baseUrl) {
         return baseUrl + '/create' + queryString();
+    }
+
+    function getButtonClass(index) {
+        var form = self['form_' + index];
+        var ret = 'btn';
+        if(form.$valid) {
+            ret += ' btn-default';
+        }
+        return ret;
     }
 } 
 

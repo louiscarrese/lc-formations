@@ -45,13 +45,14 @@
         </div>
     @endforeach
     <div class="global-actions">
-        <button ng-show="{{$controller}}.mode === 'read'" ng-click="{{$controller}}.setModeEdit()" class="btn btn-default">
+        <button ng-show="{{$controller}}.mode === 'read'" ng-click="{{$controller}}.setModeEdit()" 
+            class="btn btn-default">
             <span>Editer</span>
         </button>
-        <button ng-show="{{$controller}}.mode === 'create'" ng-click="{{$controller}}.create()" class="btn btn-default">
+        <button ng-show="{{$controller}}.mode === 'create'" ng-click="{{$controller}}.create()" ng-class="{{$controller}}.getButtonClass()">
             <span>Valider</span>
         </button>
-        <button ng-show="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.update()" class="btn btn-default">
+        <button ng-show="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.update()" ng-class="{{$controller}}.getButtonClass()">
             <span>Valider</span>
         </button>
         <button ng-show="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.cancel()" class="btn btn-default">

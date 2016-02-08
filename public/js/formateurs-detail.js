@@ -12087,6 +12087,8 @@ function detailController(editModeService, dataService, detailService, $q) {
     self.closeAlert = closeAlert;
     self.extractErrors = extractErrors;
 
+    self.getButtonClass = getButtonClass;
+
     //Just so we don't have 'undefined' in places 
     self.data = {};
     self.linkedData = {};
@@ -12281,6 +12283,14 @@ function detailController(editModeService, dataService, detailService, $q) {
         self.mode = 'edit';
 
 
+    }
+
+    function getButtonClass() {
+        var ret = 'btn';
+        if(self['mainForm'].$valid) {
+            ret += ' btn-default';
+        }
+        return ret;
     }
 
     function closeAlert(index) {

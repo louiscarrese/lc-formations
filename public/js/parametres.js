@@ -12052,6 +12052,8 @@ function editableTableController($filter, dataService, tableService) {
     self.editSubmit = editSubmit;
     self.addSubmit = addSubmit;
 
+    self.getButtonClass = getButtonClass;
+
     self.closeAlert = closeAlert;
     self.extractErrors = extractErrors;
 
@@ -12286,6 +12288,15 @@ function editableTableController($filter, dataService, tableService) {
 
     function createUrl(baseUrl) {
         return baseUrl + '/create' + queryString();
+    }
+
+    function getButtonClass(index) {
+        var form = self['form_' + index];
+        var ret = 'btn';
+        if(form.$valid) {
+            ret += ' btn-default';
+        }
+        return ret;
     }
 } 
 
