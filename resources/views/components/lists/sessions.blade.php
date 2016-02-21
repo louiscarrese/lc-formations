@@ -8,7 +8,7 @@
             'libelle' => [
                 'label' => 'Libelle',
                 'sortable' => true,
-                'filterable' => true,
+                'filterable' => 'libelle\':\'module.libelle',
                 'displayedField' => '<a href="/modules/@{{module.id}}">@{{module.libelle}}</a> <a href="/sessions/@{{id}}">@{{libelle}}</a>',
             ],
         ]

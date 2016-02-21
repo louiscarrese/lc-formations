@@ -5,8 +5,11 @@
 
     //Keep the identifying property
     foreach($fields as $fieldId => $field) {
-        if(isset($field['filterable']) && $field['filterable']) 
-            $filter .= ":'" . $fieldId . "'";
+        if(isset($field['filterable']) && $field['filterable'] != false) {
+            $filterField = $field['filterable'] === true ? $fieldId : $field['filterable'];
+
+            $filter .= ":'" . $filterField . "'";
+        }
     }
     $filter .= ' track by item.' . $idField;
 ?>

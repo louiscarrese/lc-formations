@@ -103,7 +103,7 @@
                             'sortable' => 'financeur_id',
                             'fields' => [
                                 'financeur_id' => [
-                                    'filterable' => true,
+                                    'filterable' => 'financeur.libelle',
                                     'editable' => true,
                                     'type' => 'dropdown',
                                     'datasource' => 'linkedData.financeurs',

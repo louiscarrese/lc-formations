@@ -38,7 +38,7 @@
                 'label' => 'Type',
                 'sortable' => true,
                 'tdClass' => 'centered',
-                'filterable' => true,
+                'filterable' => 'stagiaire_type.libelle',
                 'displayedField' => '@{{stagiaire_type.libelle}}'
             ],
         ]

@@ -152,7 +152,7 @@
                         'sortable' => 'tarif_type_id',
                         'fields' => [
                             'tarif_type_id' => [
-                                'filterable' => true,
+                                'filterable' => 'tarif_type.libelle',
                                 'editable' => true,
                                 'type' => 'dropdown',
                                 'datasource' => 'linkedData.tarifTypes',

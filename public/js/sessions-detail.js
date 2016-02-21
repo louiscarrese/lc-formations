@@ -12452,7 +12452,47 @@ angular.module('sortableHeader', [])
 ;
 
 function myCustomFilter() {
+    /**
+     * path: the remaining path to explore
+     * value: the current value
+     * filter: the filter to check against
+     */
+    function check(path, value, filter) {
+        //If there is no value to check, we get out
+        if(value != undefined) {
+            //If we've reached the end of the path 
+            if(path != undefined && path.length == 0) {
+                //We check the value
+                return (angular.lowercase('' + value).indexOf(filter) !== -1);
+            } else {
+                //We pop one from the path
+                var nextValue = value[path[0]];
+                path.splice(0,1);
+                //If we are dealing with an array, we have to iterate
+                if(Array.isArray(nextValue)) {
+                    for(var i = 0; i < nextValue.length; i++) {
+                        //When we have found something, we return immediately
+                        if(check(path, nextValue[i], filter))
+                            return true;
+                    }
+                    //We found nothing
+                    return false;
+                } else {
+                    //It's a simple value, recurse
+                    return check(path, nextValue, filter);
+                }
+            }
+        } else {
+            return false;
+        }
+
+    }
+
     return function(input, filter) {
+        //Let's not deal with an empty filter
+        if(filter == undefined || filter == null || filter  === '' )
+            return input;
+
         var outArray = [];
         var lowerFilter = angular.lowercase(filter) || '';
 
@@ -12460,30 +12500,21 @@ function myCustomFilter() {
         for(elemId = 0; elemId < input.length; elemId++) {
             //Pour chaque champ à analyser
             for(fieldId = 2; fieldId < arguments.length; fieldId++) {
+
                 //On découpe, au cas où ça serait un sous objet (genre objet.propriete)
                 var fieldPath = arguments[fieldId].split('.');
-                //On démarre sur l'élément du tableau
-                var fieldValue = input[elemId];
-                //On descend chaque champ de l'arborescence
-                for(var i = 0; i < fieldPath.length; i++) {
-                    fieldValue = fieldValue[fieldPath[i]];
-                }
+                var found = check(fieldPath, input[elemId], lowerFilter);
 
-                //On converti en string lowercase
-                var stringValue = angular.lowercase('' + fieldValue);
-
-                //On cherche le filtre dans la valeur
-                if(stringValue.indexOf(lowerFilter) !== -1) {
+                if(found) {
                     outArray.push(input[elemId]);
-                    //Si on l'a trouvé une fois, on peut passer à l'élément de tableau suivant
-                    break;
                 }
+
             }
         }
         return outArray;
     }
-
 }
+
 function editableTableController($filter, dataService, tableService) {
     var self = this;
 

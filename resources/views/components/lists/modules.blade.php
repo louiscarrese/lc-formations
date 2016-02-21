@@ -13,7 +13,7 @@
             'domaine_formation.id' => [
                 'label' => 'Domaine',
                 'sortable' => true,
-                'filterable' => true,
+                'filterable' => 'domaine_formation.libelle',
                 'displayedField' => '@{{domaine_formation.libelle}}',
             ],
         ]

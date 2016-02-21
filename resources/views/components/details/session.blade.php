@@ -124,7 +124,7 @@
                         'sortable' => 'lieu',
                         'fields' => [
                             'lieu_id' => [
-                                'filterable' => true,
+                                'filterable' => 'lieu.libelle',
                                 'editable' => true,
                                 'type' => 'dropdown',
                                 'datasource' => 'linkedData.lieus', //relative to the controller
@@ -142,6 +142,7 @@
                         'size' => 4,
                         'fields' => [
                              'formateurs_id' => [
+                                'filterable' => 'formateurs.nom\':\'formateurs.prenom',
                                 'editable' => true,
                                 'type' => 'multiselect',
                                 'datasource' => 'linkedData.formateurs',
