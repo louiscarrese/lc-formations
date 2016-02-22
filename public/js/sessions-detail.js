@@ -12507,6 +12507,7 @@ function myCustomFilter() {
 
                 if(found) {
                     outArray.push(input[elemId]);
+                    break;
                 }
 
             }
