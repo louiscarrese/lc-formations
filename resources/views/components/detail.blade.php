@@ -45,20 +45,20 @@
         </div>
     @endforeach
     <div class="global-actions">
-        <button ng-show="{{$controller}}.mode === 'read'" ng-click="{{$controller}}.setModeEdit()" 
+        <button ng-if="{{$controller}}.mode === 'read'" ng-click="{{$controller}}.setModeEdit()" 
             class="btn btn-default">
             <span>Editer</span>
         </button>
-        <button ng-show="{{$controller}}.mode === 'create'" ng-click="{{$controller}}.create()" ng-class="{{$controller}}.getButtonClass()">
+        <button ng-if="{{$controller}}.mode === 'create'" ng-click="{{$controller}}.create()" ng-class="{{$controller}}.getButtonClass()">
             <span>Valider</span>
         </button>
-        <button ng-show="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.update()" ng-class="{{$controller}}.getButtonClass()">
+        <button ng-if="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.update()" ng-class="{{$controller}}.getButtonClass()">
             <span>Valider</span>
         </button>
-        <button ng-show="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.cancel()" class="btn btn-default">
+        <button ng-if="{{$controller}}.mode === 'edit'" ng-click="{{$controller}}.cancel()" class="btn btn-default">
             <span>Annuler</span>
         </button>
-        <button ng-show="{{$controller}}.mode !== 'create'" ng-click="{{$controller}}.delete()" class="btn btn-default pull-right">
+        <button ng-if="{{$controller}}.mode !== 'create'" ng-click="{{$controller}}.delete()" class="btn btn-default pull-right">
             <span>Supprimer</span>
         </button>
     </div>
