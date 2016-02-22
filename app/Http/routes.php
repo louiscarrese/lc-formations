@@ -75,9 +75,7 @@ Route::group(['prefix' => 'print'], function() {
     Route::get('suivi_session/{session_id}', 'PrintController@suiviSession');
 });
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'IndexController@index');
 
 //"Pages"
 Route::get('/parametres', 'ParametresController@index');
