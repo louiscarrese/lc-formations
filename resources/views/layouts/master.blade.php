@@ -4,11 +4,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Formations - @yield('title')</title>
-        <script type="text/javascript" src="@yield('js-file')"></script>
+        <link rel="stylesheet" href="@yield('css-file')" type="text/css" />
 <!--
         <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
 -->
-        <link rel="stylesheet" href="@yield('css-file')" type="text/css" />
 
     </head>
     <body ng-app="@yield('angularApp')">
@@ -21,5 +20,6 @@
 
             @include ('components.footer')
         </div>
+        <script type="text/javascript" src="@yield('js-file')"></script>
     </body>
 </html>
