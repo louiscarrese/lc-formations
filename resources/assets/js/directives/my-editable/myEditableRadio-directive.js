@@ -14,8 +14,8 @@ function myEditableDirectiveRadio() {
 
             var template = '';
 
-            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
-            template += '<label ng-repeat="item in values" ng-show="editingFlag" class="radio-inline">';
+            template += '<span class="editable-read" ng-if="!editingFlag" ' + htmlAttrs + '>{{ngModel}}</span>';
+            template += '<label ng-repeat="item in values" ng-if="editingFlag" class="radio-inline">';
             template += '<input type="radio" name="' + fieldName + '" ng-model="$parent.ngModel" value="{{item}}"> {{item}} </input>';
             template += '</label>';
 
