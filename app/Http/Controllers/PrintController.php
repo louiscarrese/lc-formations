@@ -34,4 +34,23 @@ class PrintController extends Controller
         $title .= ' (' . $firstDate . ' - ' . $lastDate . ')';
         return $pdf->stream($title);
     }
+
+    public function suiviSession(SessionRepositoryInterface $sessionRepository, $session_id) {
+        $session = $sessionRepository->find($session_id);
+
+        $pdf = PDF::loadView('print.suivi_session', [
+            'session' => $session, 
+            'nb_minutes' => $sessionRepository->getDuree($session),
+            'formateurs' => $sessionRepository->getFormateurs($session),
+            ]);
+
+        $firstDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->firstDate)->format('d/m/Y');
+        $lastDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->lastDate)->format('d/m/Y');
+
+        $title = 'Couverture ';
+        $title .= $session->module->libelle;
+        $title .= ' (' . $firstDate . ' - ' . $lastDate . ')';
+
+        return $pdf->stream($title);
+    }
 }

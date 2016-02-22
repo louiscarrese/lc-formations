@@ -1,0 +1,91 @@
+body {
+    width: 100%;
+    margin: 0;
+
+    font-family: sans-serif;
+    font-size: 0.8em;
+}
+
+.header-table, .stagiaire-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    td, th {
+        border: 1px solid #000;
+    }
+}
+
+.header-table {
+    margin-bottom: 3em;
+    font-weight: bold;
+    ul {
+        list-style: none;
+
+    }
+
+    ul, li {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+    p {
+        margin: 0 0 1em 0;
+    }
+
+    td {
+        vertical-align: top;
+    }
+
+    .small-col {
+        width: 15%;
+    }
+    .centered {
+        text-align: center;
+    }
+    .vertical-centered {
+        vertical-align: middle;
+    }
+
+    .header-title {
+        text-align: left;
+        text-decoration: underline;
+    }
+
+}
+
+.fillable {
+    vertical-align: top;
+}
+
+.stagiaire-table {
+    page-break-inside: avoid;
+    text-align: center;
+
+    th.stagiaire-col {
+        width: 30%;
+    }
+    th.adherent-col {
+        width: 5%;
+    }
+    th.financeur-col {
+        width: 25%;
+    }
+    th.inscription-col {
+        width: 15%;
+    }
+    td {
+        height: 2.5em;
+    }
+
+    td.small {
+        font-size: 0.8em;
+    }
+
+    td.header {
+        font-weight: bold;
+    }
+
+    th {
+        background-color: #ddd;
+    }
+}

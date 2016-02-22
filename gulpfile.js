@@ -285,6 +285,7 @@ elixir(function(mix) {
     mix
         .less('app.less')
         .less('print/emargement.less')
+        .less('print/suivi-session.less')
 
         .scripts(array_unique(Array.prototype.concat(
             parametres,

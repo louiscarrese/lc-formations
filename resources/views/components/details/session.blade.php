@@ -182,6 +182,9 @@
                 <span class="col-sm-2">
                     <a ng-href="/print/emargement/@{{detailCtrl.data.id}}" class="btn btn-default">Feuilles d'émargement</a>
                 </span>
+                <span class="col-sm-2">
+                    <a ng-href="/print/suivi_session/@{{detailCtrl.data.id}}" class="btn btn-default">Feuille de suivi de session</a>
+                </span>
             </div>
          </div>
     </div>

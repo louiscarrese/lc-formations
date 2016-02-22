@@ -1,0 +1,82 @@
+body {
+  width: 100%;
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 0.8em;
+}
+.header-table,
+.stagiaire-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.header-table td,
+.stagiaire-table td,
+.header-table th,
+.stagiaire-table th {
+  border: 1px solid #000;
+}
+.header-table {
+  margin-bottom: 3em;
+  font-weight: bold;
+}
+.header-table ul {
+  list-style: none;
+}
+.header-table ul,
+.header-table li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.header-table p {
+  margin: 0 0 1em 0;
+}
+.header-table td {
+  vertical-align: top;
+}
+.header-table .small-col {
+  width: 15%;
+}
+.header-table .centered {
+  text-align: center;
+}
+.header-table .vertical-centered {
+  vertical-align: middle;
+}
+.header-table .header-title {
+  text-align: left;
+  text-decoration: underline;
+}
+.fillable {
+  vertical-align: top;
+}
+.stagiaire-table {
+  page-break-inside: avoid;
+  text-align: center;
+}
+.stagiaire-table th.stagiaire-col {
+  width: 30%;
+}
+.stagiaire-table th.adherent-col {
+  width: 5%;
+}
+.stagiaire-table th.financeur-col {
+  width: 25%;
+}
+.stagiaire-table th.inscription-col {
+  width: 15%;
+}
+.stagiaire-table td {
+  height: 2.5em;
+}
+.stagiaire-table td.small {
+  font-size: 0.8em;
+}
+.stagiaire-table td.header {
+  font-weight: bold;
+}
+.stagiaire-table th {
+  background-color: #ddd;
+}
+
+/*# sourceMappingURL=suivi-session.css.map */
