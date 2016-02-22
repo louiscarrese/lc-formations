@@ -85,16 +85,16 @@
                 @endforeach
                 {{-- action columns --}}
                 <td class="list-action">
-                    <button ng-hide="elem.editing" ng-click="elem.editing = true" class="btn btn-default ">
+                    <button ng-if="!elem.editing" ng-click="elem.editing = true" class="btn btn-default ">
                         <span>Editer</span>
                     </button>
-                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.editSubmit($index, elem, {{$refreshControllers or 'null'}})" ng-class="{{$controllerName}}.getButtonClass($index)">
+                    <button ng-if="elem.editing" ng-click="{{$controllerName}}.editSubmit($index, elem, {{$refreshControllers or 'null'}})" ng-class="{{$controllerName}}.getButtonClass($index)">
                         <span>Valider</span>
                     </button>
-                    <button ng-hide="elem.editing" ng-click="{{$controllerName}}.delete(elem, {{$refreshControllers or 'null'}})" class="btn btn-default ">
+                    <button ng-if="!elem.editing" ng-click="{{$controllerName}}.delete(elem, {{$refreshControllers or 'null'}})" class="btn btn-default ">
                         <span>Supprimer</span>
                     </button>
-                    <button ng-show="elem.editing" ng-click="{{$controllerName}}.cancel(elem)"class="btn btn-default ">
+                    <button ng-if="elem.editing" ng-click="{{$controllerName}}.cancel(elem)"class="btn btn-default ">
                         <span>Annuler</span>
                     </button>
                 </td>
