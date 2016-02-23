@@ -5141,6 +5141,7 @@ button.close {
 }
 body {
   margin-top: 1em;
+  margin-bottom: 1em;
 }
 .adapt-to-content {
   display: inline-block;
