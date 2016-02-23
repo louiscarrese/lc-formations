@@ -11808,19 +11808,6 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
             return ret;
         },
 
-        getRowClass: function(item) {
-            if(item.statut == 'pending') {
-                return 'warning';
-            } else if(item.statut == 'validated') {
-                return 'success';
-            } else if(item.statut == 'canceled') {
-                return 'danger';
-            } else if(item.statut == 'withdrawn') {
-                return 'danger';
-            }
-            return null;
-        },
-
         getSuccess:  function(data) {
                 if(data.session.firstDate && data.session.lastDate) {
                     data.session.libelle = '(' + $filter('date')(data.session.firstDate, 'dd/MM/yyyy');
@@ -11836,6 +11823,21 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
             message += '\n - Financements ';
             return message;
         },
+
+        addListeners: function(ctrl) {
+            ctrl.getRowClass = function(item) {
+                if(item.statut == 'pending') {
+                    return 'warning';
+                } else if(item.statut == 'validated') {
+                    return 'success';
+                } else if(item.statut == 'canceled') {
+                    return 'danger';
+                } else if(item.statut == 'withdrawn') {
+                    return 'danger';
+                }
+                return null;
+            }
+        }
     };
 }
 angular.module('inscriptionsList', ['ngResource', 'listTable'])
