@@ -281,6 +281,11 @@ var inscriptionDetail = Array.prototype.concat(
     /** Sub-objects */
     financeurInscriptionsList
 );
+
+var home = Array.prototype.concat(
+    libraries
+);
+
 elixir(function(mix) {
     mix
         .less('app.less')
@@ -347,6 +352,8 @@ elixir(function(mix) {
             inscriptionDetail,
             ['app/inscriptionDetailApp.js']
         )), 'public/js/inscriptions-detail.js')
+        .scripts(home
+        , 'public/js/home.js')
 
 });
 
