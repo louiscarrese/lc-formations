@@ -18,7 +18,10 @@ class PrintController extends Controller
         InscriptionRepositoryInterface $inscriptionRepository, 
         $session_id) {
         $session = $sessionRepository->find($session_id);
-        $inscriptions = $inscriptionRepository->findBy(['session_id' => $session_id]);
+        $inscriptions = $inscriptionRepository->findBy([
+            'session_id' => $session_id, 
+            'statut' => \ModuleFormation\Inscription::STATUS_VALIDATED
+            ]);
 
 
         $pdf = PDF::loadView('print.emargement', [
