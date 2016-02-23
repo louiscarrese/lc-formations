@@ -13,6 +13,9 @@ class SessionService implements SessionServiceInterface
             $min = $sessionJours[0]->date;
             $max = $sessionJours[count($sessionJours) - 1]->date;
             return ['first' => $min, 'last' => $max];
+        } else if(count($sessionJours) == 1) {
+            $min = $sessionJours[0]->date;
+            return ['first' => $min, 'last' => null];
         } else {
             return null;
         }

@@ -11809,12 +11809,16 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
         },
 
         getSuccess:  function(data) {
-                if(data.session.firstDate && data.session.lastDate) {
-                    data.session.libelle = '(' + $filter('date')(data.session.firstDate, 'dd/MM/yyyy');
-                    data.session.libelle += ' - ' + $filter('date')(data.session.lastDate, 'dd/MM/yyyy') + ')';
-                } else {
-                    data.session.libelle = '';
+            if(data.session.firstDate || data.session.lastDate) {
+                data.session.libelle = ' (';
+                if(data.session.firstDate) {
+                    data.session.libelle += $filter('date')(data.session.firstDate, 'dd/MM/yyyy');
                 }
+                if(data.session.lastDate) {
+                    data.session.libelle += ' - ' + $filter('date')(data.session.lastDate, 'dd/MM/yyyy');
+                }
+                data.session.libelle += ')';
+            }
         },
 
         deleteMessage: function() {

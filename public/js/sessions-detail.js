@@ -12384,9 +12384,15 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
                 if(data.module) {
                     ret += data.module.libelle;
                 }
-                if(data.firstDate && data.lastDate) {
-                    ret += ' (' + $filter('date')(data.firstDate, 'dd/MM/yyyy');
-                    ret += ' - ' + $filter('date')(data.lastDate, 'dd/MM/yyyy') + ')';
+                if(data.firstDate || data.lastDate) {
+                    ret += ' (';
+                    if(data.firstDate) {
+                        ret += $filter('date')(data.firstDate, 'dd/MM/yyyy');
+                    }
+                    if(data.lastDate) {
+                        ret += ' - ' + $filter('date')(data.lastDate, 'dd/MM/yyyy');
+                    }
+                    ret += ')';
                 }
             }
 
