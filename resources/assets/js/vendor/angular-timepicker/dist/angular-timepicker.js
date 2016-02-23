@@ -51,7 +51,7 @@
                 var current = null, list = [], updateList = true;
                 scope.timepicker = {
                     element: null,
-                    timeFormat: "h:mm a",
+                    timeFormat: attrs['dnTimepicker'] != undefined ? attrs['dnTimepicker'] : "h:mm a",
                     minTime: $dateParser("0:00", "H:mm"),
                     maxTime: $dateParser("23:59", "H:mm"),
                     step: 15,
