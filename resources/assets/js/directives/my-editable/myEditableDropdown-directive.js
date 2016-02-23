@@ -19,7 +19,7 @@ function myEditableDirectiveDropdown() {
             var fieldName = this.getFieldName(tAttr.ngModel);
 
             var template = '';
-            template += '<span class="editable-read" ng-if="!editingFlag" ' + htmlAttrs + '>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>';
             if(tAttr['href']) {
                 template += '<a href="' + tAttr['href'] +'{{ngModel}}">';
             }
@@ -28,15 +28,13 @@ function myEditableDirectiveDropdown() {
                 template += '</a>';
             }
             template += '</span>';
-            template += '<span ng-if="editingFlag">';
-            template += '<select2 ng-model="ngModel" class="form-control" ';
+            template += '<select2 ng-model="ngModel" class="form-control" ng-show="editingFlag" ';
             template += 'options="{minimumResultsForSearch: 5, placeholder: placeholder}" ';
             template += 's2-options="val.' + tAttr['sourceId'] + ' as (displayValue(val, displayed)) for val in datasource" ';
             if(tAttr['change'] != undefined) {
                 template += 'ng-change="change(ngModel)" ';
             }
             template += htmlAttrs + '></select2>';
-            template += '</span>';
             template += this.validationTemplate(fieldName);
             return template;
         },

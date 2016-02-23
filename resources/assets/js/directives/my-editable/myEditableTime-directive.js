@@ -16,9 +16,9 @@ function myEditableDirectiveTime() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<span class="editable-read" ng-if="!editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['timeFormat'] + '\'}}</span>';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel | date:\'' + tAttr['timeFormat'] + '\'}}</span>';
 
-            template += '<input type="text" dn-timepicker="HH:mm" ng-model="ngModel" ng-if="editingFlag" ';
+            template += '<input type="text" dn-timepicker="HH:mm" ng-model="ngModel" ng-show="editingFlag" ';
             template += 'min-time="08:00" max-time="23:00" ' ;
             template += 'size="3" '
             template += '/>';

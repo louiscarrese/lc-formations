@@ -16,8 +16,8 @@ function myEditableDirectiveEmail() {
             var fieldName = this.getFieldName(tAttr['ngModel']);
 
             var template = '';
-            template += '<span class="editable-read" ng-if="!editingFlag" ' + htmlAttrs + '><a href="mailto:{{ngModel}}">{{ngModel}}</a></span>';
-            template += '<input type="email" ng-if="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
+            template += '<span class="editable-read" ng-hide="editingFlag" ' + htmlAttrs + '><a href="mailto:{{ngModel}}">{{ngModel}}</a></span>';
+            template += '<input type="email" ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm" />';
             template += this.validationTemplate(fieldName);
 
             return template;

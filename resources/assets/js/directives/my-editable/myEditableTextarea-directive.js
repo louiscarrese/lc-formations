@@ -13,8 +13,8 @@ function myEditableDirectiveTextarea() {
 
             var template = '';
 
-            template += '<pre ng-if="!editingFlag" ' + htmlAttrs + '>{{ngModel}}</pre>';
-            template += '<textarea ng-if="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm"></textarea>';
+            template += '<pre ng-hide="editingFlag" ' + htmlAttrs + '>{{ngModel}}</pre>';
+            template += '<textarea ng-show="editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + ' class="form-control input-sm"></textarea>';
 
             template += this.validationTemplate(fieldName);
             return template;
