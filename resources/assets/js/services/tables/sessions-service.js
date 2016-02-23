@@ -2,8 +2,6 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
     //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
         var ret = '';
-        console.log(item.firstDate);
-        console.log(item.lastDate);
         if(item.firstDate || item.lastDate) {
             ret += ' (';
             if(item.firstDate) {
