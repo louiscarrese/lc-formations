@@ -10,6 +10,9 @@ class Formateur extends AbstractModel
     protected $fillable = ['id', 'nom', 'prenom', 'sexe', 'date_naissance', 'adresse', 
         'code_postal', 'ville', 'tel_portable', 'tel_fixe', 'email', 'formateur_type_id'];
 
+    public $searchable = ['nom', 'prenom', 'adresse', 
+        'code_postal', 'ville', 'tel_portable', 'tel_fixe', 'email'];
+
     protected static $myDates = ['date_naissance'];
 
     public function session_jours() {

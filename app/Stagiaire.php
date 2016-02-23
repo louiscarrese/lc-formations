@@ -13,6 +13,10 @@ class Stagiaire extends AbstractModel
         'demandeur_emploi_depuis', 'niveau_qualification', 'domaine_pro', 'employeur_id', 
         'stagiaire_type_id', 'niveau_formation_id'];
 
+    public $searchable = ['nom', 'prenom', 'sexe', 'adresse', 
+        'code_postal', 'ville', 'tel_portable', 'tel_fixe', 'email', 'profession', 'etudes', 
+        'niveau_qualification', 'domaine_pro'];
+
     protected static $myDates = ['demandeur_emploi_depuis', 'date_naissance'];
 
     function employeur() {

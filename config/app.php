@@ -175,6 +175,7 @@ return [
         /*
          * Service Providers
          */
+        ModuleFormation\Providers\SearchServiceProvider::class,
         ModuleFormation\Providers\SessionServiceProvider::class,
         ModuleFormation\Providers\ViewServiceProvider::class,
 

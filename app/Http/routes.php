@@ -93,3 +93,5 @@ Route::resource('/stagiaires', 'StagiairesController',
     ['only' => ['index', 'create', 'show']]);
 Route::resource('/inscriptions', 'InscriptionsController', 
     ['only' => ['index', 'create', 'show']]);
+
+Route::get('/search', 'SearchController@index');

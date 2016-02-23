@@ -71,6 +71,35 @@ abstract class AbstractRepository implements RepositoryInterface {
     }
 
     /**
+     * String search in resource properties
+     */
+    public function search($criterias) 
+    {
+        //Start with the base model
+        $data_req = $this->model;
+
+        //Get the searchable fields
+        $fields = $this->model->searchable;
+
+        foreach($criterias as $criteria) {
+            foreach($fields as $field) {
+                $data_req = $data_req->orWhere($field, 'ilike', '%' . $criteria . '%');
+            }
+        }
+
+        //Execute request
+        $datas = $data_req->get();
+
+        //Augment data
+        foreach($datas as $data) {
+            $data = $this->augmentData($data);
+        }
+
+
+        return $datas;
+    }
+
+    /**
      * Create or update (if an id is provided) an object from an array of data.
      */
     public function store($data, $id = null) {

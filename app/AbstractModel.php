@@ -4,10 +4,11 @@ namespace ModuleFormation;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use Log;
 
 class AbstractModel extends Model
 {
+    protected $searchable = [];
+
     protected $dbDateFormat = 'Y-m-d';
     protected $frontDateFormat = 'Y-m-d\TH:i:s.u\Z';
 
