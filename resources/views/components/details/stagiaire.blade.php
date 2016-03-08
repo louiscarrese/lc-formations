@@ -166,7 +166,7 @@
     ])
 
     <div ng-if="detailCtrl.inited && detailCtrl.mode != 'create'">
-        @include('components.lists.inscriptions', ['displayedField' => ['session.libelle']])
+        @include('components.lists.inscriptions', ['displayedField' => ['session.module.libelle', 'session.libelle']])
     </div>
 
 </div>
