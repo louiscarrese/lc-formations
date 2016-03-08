@@ -5,11 +5,16 @@
         'detailUri' => '/sessions',
         'idField' => 'id',
         'fields' => [
-            'libelle' => [
+            'module.libelle' => [
                 'label' => 'Libelle',
                 'sortable' => true,
-                'filterable' => 'libelle\':\'module.libelle',
-                'displayedField' => '<a href="/modules/@{{module.id}}">@{{module.libelle}}</a> <a href="/sessions/@{{id}}">@{{libelle}}</a>',
+                'filterable' => true,
+                'displayedField' => '<a href="/modules/@{{module.id}}">@{{module.libelle}}</a>', 
+            ],
+            'libelle' => [
+                'label' => 'Dates',
+                'sortable' => true,
+                'filterable' => true,
             ],
         ]
     ])

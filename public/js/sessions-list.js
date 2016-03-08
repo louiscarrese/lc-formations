@@ -11796,14 +11796,12 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
     function buildSessionLibelle(item) {
         var ret = '';
         if(item.firstDate || item.lastDate) {
-            ret += ' (';
             if(item.firstDate) {
                 ret += $filter('date')(item.firstDate, 'dd/MM/yyyy');
             }
             if(item.lastDate) {
                 ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy');
             }
-            ret += ')';
         }
         return ret;
     };

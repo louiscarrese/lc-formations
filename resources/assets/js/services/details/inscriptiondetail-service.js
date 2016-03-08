@@ -3,13 +3,18 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
     //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
         var ret = '';
-        if(item.firstDate && item.lastDate) {
-            ret = '(' + $filter('date')(item.firstDate, 'dd/MM/yyyy');
-            ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy') + ')';
+        if(item.firstDate || item.lastDate) {
+            ret += '(';
+            if(item.firstDate) {
+                ret += $filter('date')(item.firstDate, 'dd/MM/yyyy');
+            }
+            if(item.lastDate) {
+                ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy');
+            }
+            ret += ')';
         }
         return ret;
     };
-
     return {
         getLinkedData: function() {
             var stagiaire = stagiairesService.query();
