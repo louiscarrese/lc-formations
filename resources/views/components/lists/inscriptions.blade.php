@@ -15,6 +15,22 @@
                 'sortable' => true,
                 'filterable' => true,
             ],
+            'stagiaire.email' => [
+                'label' => 'Email',
+                'sortable' => true,
+                'filterable' => true,
+                'displayedField' => '<a href="mailto:@{{stagiaire.email}}">@{{stagiaire.email}}</a>',
+            ],
+            'stagiaire.tel_portable' => [
+                'label' => 'Téléphone portable',
+                'sortable' => true,
+                'filterable' => true,
+            ],
+            'stagiaire.tel_fixe' => [
+                'label' => 'Téléphone fixe',
+                'sortable' => true,
+                'filterable' => true,
+            ],
             'session.libelle' => [
                 'label' => 'Session',
                 'sortable' => true,
