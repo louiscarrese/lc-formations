@@ -12,64 +12,88 @@
              'title' => 'Types de stagiaires',
              'adaptToContent' => true,
              'idField' => 'id',
-             'fields' => [
-                'id' => [
+             'columns' => [
+                [
                     'label' => 'Id',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'integer',
-                    'addLine' => false,
-                    'tdClass' => 'centered',
-                    'additionalAttributes' => 'size=1',
-                    'validation' => 'required'
-                ], //id
-                'libelle' => [
+                    'fields' => [
+                        'id' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'integer',
+                            'addLine' => false,
+                            'tdClass' => 'centered',
+                            'additionalAttributes' => 'size=1',
+                            'validation' => 'required'
+                       ], //id
+                    ], //fields
+                ],
+                [
                     'label' => 'Libellé',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'text',
-                    'addLine' => true,
-                    'validation' => 'required',
-                ], //libelle
-                'is_salarie' => [
+                    'fields' => [
+                        'libelle' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'text',
+                            'addLine' => true,
+                            'validation' => 'required',
+                        ], //libelle
+                    ]
+                ],
+                [
                     'label' => 'Salarié',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'checkbox',
-                    'addLine' => true,
-                    'tdClass' => 'centered',
-                ], //is_salarie
-                'is_fonctionnaire' => [
+                    'fields' => [
+                        'is_salarie' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'checkbox',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                        ], //is_salarie
+                    ]
+                ],
+                [
                     'label' => 'Fonctionnaire',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'checkbox',
-                    'addLine' => true,
-                    'tdClass' => 'centered',
-                ], //is_fonctionnaire
-                'is_contrat_pro' => [
+                    'fields' => [
+                        'is_fonctionnaire' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'checkbox',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                        ], //is_fonctionnaire
+                    ]
+                ],
+                [
                     'label' => 'Contrat Pro',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'checkbox',
-                    'addLine' => true,
-                    'tdClass' => 'centered',
-                ], //is_contrat_pro
-                'is_demandeur_emploi' => [
+                    'fields' => [
+                        'is_contrat_pro' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'checkbox',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                        ], //is_contrat_pro
+                    ]
+                ],
+                [
                     'label' => 'Demandeur d\'emploi',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'checkbox',
-                    'addLine' => true,
-                    'tdClass' => 'centered',
-                ], //is_demandeur_emploi
-            ], //fields
+                     'fields' => [
+                        'is_demandeur_emploi' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'checkbox',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                        ], //is_demandeur_emploi
+                    ], //fields
+                ]
+             ]
         ])
     </div>
     <div ng-controller="formateurTypesController as formateurTypesController">
@@ -78,28 +102,36 @@
              'title' => 'Types de formateurs',
              'adaptToContent' => true,
              'idField' => 'id',
-             'fields' => [
-                'id' => [
+             'columns' => [
+                [
                     'label' => 'Id',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'integer',
-                    'addLine' => true,
-                    'tdClass' => 'centered',
-                    'additionalAttributes' => 'size=1',
-                    'validation' => 'required',
-                ], //id
-                'libelle' => [
+                    'fields' => [
+                        'id' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'integer',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                            'additionalAttributes' => 'size=1',
+                            'validation' => 'required',
+                        ], //id
+                    ]
+                ],
+                [
                     'label' => 'Libellé',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'text',
-                    'addLine' => true,
-                    'validation' => 'required',
-                ], //libelle
-            ], //fields
+                     'fields' => [
+                        'libelle' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'text',
+                            'addLine' => true,
+                            'validation' => 'required',
+                        ], //libelle
+                    ], //fields
+                ]
+             ]
         ])
     </div>
     <div ng-controller="financeurTypesController as financeurTypesController">
@@ -108,28 +140,36 @@
              'title' => 'Types de financeurs',
              'adaptToContent' => true,
              'idField' => 'id',
-             'fields' => [
-                'id' => [
+             'columns' => [
+                [
                     'label' => 'Id',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'integer',
-                    'addLine' => false,
-                    'tdClass' => 'centered',
-                    'additionalAttributes' => 'size=1',
-                    'validation' => 'required',
-                ], //id
-                'libelle' => [
+                    'fields' => [
+                        'id' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'integer',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                            'additionalAttributes' => 'size=1',
+                            'validation' => 'required',
+                        ], //id
+                    ]
+                ],
+                [
                     'label' => 'Libellé',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'text',
-                    'addLine' => true,
-                    'validation' => 'required',
-                ], //libelle
-            ], //fields
+                     'fields' => [
+                        'libelle' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'text',
+                            'addLine' => true,
+                            'validation' => 'required',
+                        ], //libelle
+                    ], //fields
+                ]
+             ]
         ])
     </div>
     <div ng-controller="tarifTypesController as tarifTypesController">
@@ -138,28 +178,36 @@
              'title' => 'Types de tarifs',
              'adaptToContent' => true,
              'idField' => 'id',
-             'fields' => [
-                'id' => [
+             'columns' => [
+                [
                     'label' => 'Id',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'integer',
-                    'addLine' => false,
-                    'tdClass' => 'centered',
-                    'additionalAttributes' => 'size=1',
-                    'validation' => 'required',
-                ], //id
-                'libelle' => [
+                    'fields' => [
+                        'id' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'integer',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                            'additionalAttributes' => 'size=1',
+                            'validation' => 'required',
+                        ], //id
+                    ]
+                ],
+                [
                     'label' => 'Libellé',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'text',
-                    'addLine' => true,
-                    'validation' => 'required',
-                ], //libelle
-            ], //fields
+                     'fields' => [
+                        'libelle' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'text',
+                            'addLine' => true,
+                            'validation' => 'required',
+                        ], //libelle
+                    ], //fields
+                ]
+             ]
         ])
     </div>
     <div ng-controller="domaineFormationsController as domaineFormationsController">
@@ -168,28 +216,36 @@
              'title' => 'Domaines de formation',
              'idField' => 'id',
              'adaptToContent' => true,
-             'fields' => [
-                'id' => [
+             'columns' => [
+                [
                     'label' => 'Id',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'integer',
-                    'addLine' => false,
-                    'tdClass' => 'centered',
-                    'additionalAttributes' => 'size=1',
-                    'validation' => 'required',
-                ], //id
-                'libelle' => [
+                    'fields' => [
+                        'id' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'integer',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                            'additionalAttributes' => 'size=1',
+                            'validation' => 'required',
+                        ], //id
+                    ]
+                ],
+                [
                     'label' => 'Libellé',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'text',
-                    'addLine' => true,
-                    'validation' => 'required',
-                ], //libelle
-            ], //fields
+                     'fields' => [
+                        'libelle' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'text',
+                            'addLine' => true,
+                            'validation' => 'required',
+                        ], //libelle
+                    ], //fields
+                ]
+             ]
         ])
     </div>
     <div ng-controller="lieuController as lieuController">
@@ -198,28 +254,36 @@
              'title' => 'Lieux de formation',
              'idField' => 'id',
              'adaptToContent' => true,
-             'fields' => [
-                'id' => [
+             'columns' => [
+                [
                     'label' => 'Id',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'integer',
-                    'addLine' => false,
-                    'tdClass' => 'centered',
-                    'additionalAttributes' => 'size=1',
-                    'validation' => 'required',
-                ], //id
-                'libelle' => [
+                    'fields' => [
+                        'id' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'integer',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                            'additionalAttributes' => 'size=1',
+                            'validation' => 'required',
+                        ], //id
+                    ]
+                ],
+                [
                     'label' => 'Libellé',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'text',
-                    'addLine' => true,
-                    'validation' => 'required',
-                ], //libelle
-            ], //fields
+                     'fields' => [
+                        'libelle' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'text',
+                            'addLine' => true,
+                            'validation' => 'required',
+                        ], //libelle
+                    ], //fields
+                ]
+             ]
         ])
     </div>
     <div ng-controller="niveauFormationsController as niveauFormationsController">
@@ -228,28 +292,36 @@
              'title' => 'Niveaux de formation',
              'idField' => 'id',
              'adaptToContent' => true,
-             'fields' => [
-                'id' => [
+             'columns' => [
+                [
                     'label' => 'Id',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'integer',
-                    'addLine' => false,
-                    'tdClass' => 'centered',
-                    'additionalAttributes' => 'size=1',
-                    'validation' => 'required',
-                ], //id
-                'libelle' => [
+                    'fields' => [
+                        'id' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'integer',
+                            'addLine' => true,
+                            'tdClass' => 'centered',
+                            'additionalAttributes' => 'size=1',
+                            'validation' => 'required',
+                        ], //id
+                    ]
+                ],
+                [
                     'label' => 'Libellé',
                     'sortable' => true,
-                    'filterable' => true,
-                    'editable' => true,
-                    'type' => 'text',
-                    'addLine' => true,
-                    'validation' => 'required',
-                ], //libelle
-            ], //fields
+                     'fields' => [
+                        'libelle' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'text',
+                            'addLine' => true,
+                            'validation' => 'required',
+                        ], //libelle
+                    ], //fields
+                ]
+             ]
         ])
     </div>
 @endsection

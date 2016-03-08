@@ -15,21 +15,23 @@
     }
     $filter .= ' track by elem.' . $idField;
 
-    function generateErrorClass($controllerName, $column) {
-        $ret = '';
-        $first = true;
-        foreach($column['fields'] as $fieldId => $field) {
-            $angularId = $controllerName . '.form_{{$index}}.' . $fieldId;
-            if($first) {
-                $first = false;
-            } else {
-                $ret .= ' && ';
-            }
+    if(!function_exists('generateErrorClass')) {
+        function generateErrorClass($controllerName, $column) {
+            $ret = '';
+            $first = true;
+            foreach($column['fields'] as $fieldId => $field) {
+                $angularId = $controllerName . '.form_{{$index}}.' . $fieldId;
+                if($first) {
+                    $first = false;
+                } else {
+                    $ret .= ' && ';
+                }
 
-            $ret .=  $angularId . '.$invalid';
-            $ret .= ' && ' . $angularId . '.$touched ';
+                $ret .=  $angularId . '.$invalid';
+                $ret .= ' && ' . $angularId . '.$touched ';
+            }
+            return $ret;
         }
-        return $ret;
     }
 ?>
 
