@@ -115,14 +115,6 @@
                     ],
                 ]
             ],[
-                'label' => 'Niveau de qualification',
-                'fields' => [
-                    'niveau_qualification' => [
-                        'type' => 'text',
-                        'sizeValue' => 2,
-                    ],
-                ]
-            ],[
                 'label' => 'Domaine professionel',
                 'fields' => [
                     'domaine_pro' => [
@@ -131,7 +123,7 @@
                     ],
                 ]
             ],[
-                'label' => 'Niveau de formation',
+                'label' => 'Niveau de qualification',
                 'fields' => [
                     'niveau_formation_id' => [
                         'type' => 'dropdown',
