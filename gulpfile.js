@@ -217,7 +217,9 @@ var sessionDetail = Array.prototype.concat(
         'services/data/lieu-service.js',
         'services/tables/sessionjours-service.js',
         'modules/tables/sessionjours-list-module.js'
-    ]
+    ],
+    /** Related objects */
+    inscriptionsList
 );
 
 var formateurDetail = Array.prototype.concat(

@@ -12908,6 +12908,82 @@ angular.module('sessionJoursList', ['editableTable', 'ngResource'])
     .controller('sessionJoursController', ['$filter', 'sessionJoursService', 'sessionJoursTableService', editableTableController])
 ;
 
-angular.module('sessionsDetailApp', ['sessionDetail', 'sessionJoursList']);
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
+function inscriptionsServiceFactory($resource) {
+    return $resource('/api/inscription/:id', null, {
+        'update' : { method: 'PUT' },
+        validate: {
+            url: '/api/inscription/validate/:inscription_id',
+            method: 'GET'
+        },
+        cancel: {
+            url: '/api/inscription/cancel/:inscription_id',
+            method: 'GET'
+        },
+        withdraw: {
+            url: '/api/inscription/withdraw/:inscription_id',
+            method: 'GET'
+        }
+    });
+}
+function inscriptionsTableServiceFactory($filter, sharedDataService) {
+    return {
+        queryParameters: function() {
+            var ret = {};
+            if(sharedDataService.data.stagiaire_id) {
+                ret['stagiaire_id'] = sharedDataService.data.stagiaire_id;
+            } else if(sharedDataService.data.session_id) {
+                ret['session_id'] = sharedDataService.data.session_id;
+            }
+            return ret;
+        },
+
+        getSuccess:  function(data) {
+            if(data.session.firstDate || data.session.lastDate) {
+                data.session.libelle = ' (';
+                if(data.session.firstDate) {
+                    data.session.libelle += $filter('date')(data.session.firstDate, 'dd/MM/yyyy');
+                }
+                if(data.session.lastDate) {
+                    data.session.libelle += ' - ' + $filter('date')(data.session.lastDate, 'dd/MM/yyyy');
+                }
+                data.session.libelle += ')';
+            }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette inscription ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Financements ';
+            return message;
+        },
+
+        addListeners: function(ctrl) {
+            ctrl.getRowClass = function(item) {
+                if(item.statut == 'pending') {
+                    return 'warning';
+                } else if(item.statut == 'validated') {
+                    return 'success';
+                } else if(item.statut == 'canceled') {
+                    return 'danger';
+                } else if(item.statut == 'withdrawn') {
+                    return 'danger';
+                }
+                return null;
+            }
+        }
+    };
+}
+angular.module('inscriptionsList', ['ngResource', 'listTable'])
+    .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
+    .factory('inscriptionsTableService', ['$filter', 'sharedDataService', inscriptionsTableServiceFactory])
+    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
+;
+
+angular.module('sessionsDetailApp', ['sessionDetail', 'sessionJoursList', 'inscriptionsList']);
 
 //# sourceMappingURL=sessions-detail.js.map

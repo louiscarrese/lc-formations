@@ -1,1 +1,1 @@
-angular.module('sessionsDetailApp', ['sessionDetail', 'sessionJoursList']);
+angular.module('sessionsDetailApp', ['sessionDetail', 'sessionJoursList', 'inscriptionsList']);

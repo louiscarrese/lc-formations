@@ -11804,6 +11804,8 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
             var ret = {};
             if(sharedDataService.data.stagiaire_id) {
                 ret['stagiaire_id'] = sharedDataService.data.stagiaire_id;
+            } else if(sharedDataService.data.session_id) {
+                ret['session_id'] = sharedDataService.data.session_id;
             }
             return ret;
         },

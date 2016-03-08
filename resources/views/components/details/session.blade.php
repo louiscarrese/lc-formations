@@ -57,6 +57,8 @@
     ])
 
     <div ng-if="detailCtrl.inited && detailCtrl.mode != 'create'">
+        @include('components.lists.inscriptions', ['displayedField' => ['stagiaire.nom', 'stagiaire.prenom', 'statut_libelle']])
+
         <div ng-controller="sessionJoursController as sessionJoursController">
             @include('components.editableTable',
                 ['controllerName' => 'sessionJoursController',

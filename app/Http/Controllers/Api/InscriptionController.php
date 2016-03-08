@@ -6,7 +6,7 @@ use ModuleFormation\Repositories\InscriptionRepositoryInterface;
 
 class InscriptionController extends AbstractController
 {
-    protected $filters = ['stagiaire_id' => 'stagiaire_id'];
+    protected $filters = ['stagiaire_id' => 'stagiaire_id', 'session_id' => 'session_id'];
 
     protected $validation_rules = [
         'stagiaire_id' => 'required',
