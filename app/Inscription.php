@@ -9,6 +9,7 @@ class Inscription extends AbstractModel
     const STATUS_VALIDATED = "validated";
     const STATUS_CANCELED = "canceled";
     const STATUS_WITHDRAWN = "withdrawn";
+    const STATUS_WAITING_LIST = "waiting_list";
 
 
     protected $with = ['stagiaire', 'session.module'];

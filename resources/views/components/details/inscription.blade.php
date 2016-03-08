@@ -36,9 +36,17 @@
             ],[
                 'label' => 'Statut',
                 'fields' => [
-                    'statut_libelle' => [
-                        'readonly' => true,
-                        'sizeValue' => 10,
+
+                    'statut.id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'linkedData.statut',
+                        'dataId' => 'id',
+                        'modelObject' => 'statut',
+                        'displayed' => '<statut.libelle>',
+                        'placeholder' => 'Statut',
+                        'searchable' => false,
+                        'sizeValue' => 2,
+                        'validation' => 'required',
                     ],
                 ]
             ],[
@@ -130,23 +138,6 @@
                     ]
                 ]
             )
-        </div>
-    </div>
-
-    <h2>Actions complémentaires</h2>
-    <div class="custom-actions">
-        <div ng-if="detailCtrl.data.statut == 'pending'">
-            <button class="btn btn-default" ng-click="detailCtrl.validateInscription()">
-                <span>Valider l'inscription</span>
-            </button>
-             <button class="btn btn-default" ng-click="detailCtrl.cancelInscription()">
-                <span>Annuler l'inscription</span>
-            </button>
-        </div>
-        <div ng-if="detailCtrl.data.statut == 'validated'">
-            <button class="btn btn-default" ng-click="detailCtrl.withdrawInscription()">
-                <span>Désistement</span>
-            </button>
         </div>
     </div>
 </div>

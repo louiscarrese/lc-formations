@@ -37,7 +37,7 @@
                 'filterable' => 'session.libelle\':\'session.module.libelle',
                 'displayedField' => '<a href="/modules/@{{session.module.id}}">@{{session.module.libelle}}</a> <a href="/sessions/@{{session.id}}">@{{session.libelle}}</a>',
             ],
-            'statut_libelle' => [
+            'statut.libelle' => [
                 'label' => 'Statut',
                 'sortable' => true,
                 'filterable' => true,

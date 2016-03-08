@@ -32,13 +32,13 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
 
         addListeners: function(ctrl) {
             ctrl.getRowClass = function(item) {
-                if(item.statut == 'pending') {
+                if(item.statut.id == 'pending') {
                     return 'warning';
-                } else if(item.statut == 'validated') {
+                } else if(item.statut.id == 'validated') {
                     return 'success';
-                } else if(item.statut == 'canceled') {
+                } else if(item.statut.id == 'canceled') {
                     return 'danger';
-                } else if(item.statut == 'withdrawn') {
+                } else if(item.statut.id == 'withdrawn') {
                     return 'danger';
                 }
                 return null;

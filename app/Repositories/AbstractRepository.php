@@ -15,6 +15,12 @@ abstract class AbstractRepository implements RepositoryInterface {
      */
     protected function augmentData($data) {return $data;}
 
+    /**
+     * This method will be called on each incoming object and should be 
+     * overloaded to process data coming from the front end.
+     */
+    protected function processIncomingData($data) {return $data;}
+
     public function __construct($app)
     {
         $this->model = $app->make($this->modelClassName);
@@ -103,6 +109,8 @@ abstract class AbstractRepository implements RepositoryInterface {
      * Create or update (if an id is provided) an object from an array of data.
      */
     public function store($data, $id = null) {
+
+        $data = $this->processIncomingData($data);
 
         //If it's an update, refill the existing object
         $object = null;

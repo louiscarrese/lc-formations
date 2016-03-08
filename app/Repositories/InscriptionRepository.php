@@ -17,7 +17,17 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
     {
         $data->session = $this->sessionRepository->augmentData($data->session);
 
-        $data->statut_libelle = $this->getStatutLibelle($data->statut);
+        $statut_id = $data->statut;
+        $statut_libelle = $this->getStatutLibelle($data->statut);
+        $data->statut = array('id' => $statut_id, 'libelle' => $statut_libelle);
+
+        return $data;
+    }
+
+    protected function processIncomingData($data) {
+        $statut_id = $data['statut']['id'];
+
+        $data['statut'] = $statut_id;
 
         return $data;
     }
@@ -53,6 +63,8 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
             return 'Annulée';
         } else if($statut == \ModuleFormation\Inscription::STATUS_WITHDRAWN) {
             return 'Désistée';
+        } else if($statut == \ModuleFormation\Inscription::STATUS_WAITING_LIST) {
+            return 'Liste d\'attente';
         } else {
             return '';
         }

@@ -1,4 +1,4 @@
-function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter) {
+function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter, $q) {
 
     //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
@@ -15,10 +15,23 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         }
         return ret;
     };
+
+    function getInscriptionStatus() {
+        return $q.when([
+                {id: 'pending', libelle: 'En cours'},
+                {id: 'canceled', libelle: 'Annulée'},
+                {id: 'validated', libelle: 'Validée'},
+                {id: 'withdrawn', libelle: 'Désistée'},
+                {id: 'waiting_list', libelle: 'Liste d\'attente'},
+                ]
+            );
+    }
+
     return {
         getLinkedData: function() {
             var stagiaire = stagiairesService.query();
             var sessions = sessionsService.query();
+            var status = getInscriptionStatus();
 
             sessions.$promise.then(function(data) {
                 angular.forEach(data, function(session) {
@@ -29,6 +42,7 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
             return {
                 'stagiaire': stagiaire.$promise,
                 'session': sessions.$promise,
+                'statut': status,
             };
         },
 
@@ -56,30 +70,6 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
 
         getListUrl: function() {
             return '/inscriptions';
-        },
-
-        addListeners: function(ctrl) {
-            ctrl.validateInscription = function() {
-                var resource = ctrl.dataService.validate({inscription_id: sharedDataService.data.inscription_id});
-                resource.$promise.then(function() {
-                    ctrl.refreshData();
-                })
-            };
-
-            ctrl.cancelInscription = function() {
-                var resource = ctrl.dataService.cancel({inscription_id: sharedDataService.data.inscription_id});
-                resource.$promise.then(function() {
-                    ctrl.refreshData();
-                })
-            };
-
-            ctrl.withdrawInscription = function(dataService) {
-                var resource = ctrl.dataService.withdraw({inscription_id: sharedDataService.data.inscription_id});
-                resource.$promise.then(function() {
-                    ctrl.refreshData();
-                })
-            };
-
         },
 
         deleteMessage: function() {

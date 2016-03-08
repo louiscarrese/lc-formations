@@ -12315,19 +12315,7 @@ angular.module('detail', ['myEditable'])
 
 function inscriptionsServiceFactory($resource) {
     return $resource('/api/inscription/:id', null, {
-        'update' : { method: 'PUT' },
-        validate: {
-            url: '/api/inscription/validate/:inscription_id',
-            method: 'GET'
-        },
-        cancel: {
-            url: '/api/inscription/cancel/:inscription_id',
-            method: 'GET'
-        },
-        withdraw: {
-            url: '/api/inscription/withdraw/:inscription_id',
-            method: 'GET'
-        }
+        'update' : { method: 'PUT' }
     });
 }
 function stagiairesServiceFactory($resource) {
@@ -12346,7 +12334,7 @@ function sessionsServiceFactory($resource) {
 }
 
 
-function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter) {
+function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter, $q) {
 
     //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
@@ -12363,10 +12351,23 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         }
         return ret;
     };
+
+    function getInscriptionStatus() {
+        return $q.when([
+                {id: 'pending', libelle: 'En cours'},
+                {id: 'canceled', libelle: 'Annulée'},
+                {id: 'validated', libelle: 'Validée'},
+                {id: 'withdrawn', libelle: 'Désistée'},
+                {id: 'waiting_list', libelle: 'Liste d\'attente'},
+                ]
+            );
+    }
+
     return {
         getLinkedData: function() {
             var stagiaire = stagiairesService.query();
             var sessions = sessionsService.query();
+            var status = getInscriptionStatus();
 
             sessions.$promise.then(function(data) {
                 angular.forEach(data, function(session) {
@@ -12377,6 +12378,7 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
             return {
                 'stagiaire': stagiaire.$promise,
                 'session': sessions.$promise,
+                'statut': status,
             };
         },
 
@@ -12406,30 +12408,6 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
             return '/inscriptions';
         },
 
-        addListeners: function(ctrl) {
-            ctrl.validateInscription = function() {
-                var resource = ctrl.dataService.validate({inscription_id: sharedDataService.data.inscription_id});
-                resource.$promise.then(function() {
-                    ctrl.refreshData();
-                })
-            };
-
-            ctrl.cancelInscription = function() {
-                var resource = ctrl.dataService.cancel({inscription_id: sharedDataService.data.inscription_id});
-                resource.$promise.then(function() {
-                    ctrl.refreshData();
-                })
-            };
-
-            ctrl.withdrawInscription = function(dataService) {
-                var resource = ctrl.dataService.withdraw({inscription_id: sharedDataService.data.inscription_id});
-                resource.$promise.then(function() {
-                    ctrl.refreshData();
-                })
-            };
-
-        },
-
         deleteMessage: function() {
             var message = 'Etes vous sur de vouloir supprimer cette inscription ?';
             message += '\nLes éléments associés suivants seront également supprimés : ';
@@ -12442,7 +12420,7 @@ angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscripti
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
-    .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', '$filter', inscriptionDetailServiceFactory])
+    .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', '$filter', '$q', inscriptionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', '$q', detailController])
 ;
 
