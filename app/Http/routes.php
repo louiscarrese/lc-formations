@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth.basic.name'], function() {
             ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 
         Route::resource('session', 'SessionController',
-            ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+            ['only' => ['store', 'show', 'update', 'destroy']]);
         Route::resource('session_jour', 'SessionJourController',
             ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 
@@ -92,3 +92,10 @@ Route::group(['middleware' => 'auth.basic.name'], function() {
 
     Route::get('/search', 'SearchController@index');
 });
+
+Route::resource('/preinscription', 'PreinscriptionsController', 
+    ['only' => ['index', 'store']]);
+Route::get('/preinscription/conditions', 'PreinscriptionsController@conditions');
+
+Route::resource('api/session', 'Api\SessionController',
+    ['only' => ['index']]);

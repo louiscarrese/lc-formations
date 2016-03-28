@@ -284,6 +284,24 @@ var inscriptionDetail = Array.prototype.concat(
     financeurInscriptionsList
 );
 
+var preinscription = Array.prototype.concat(
+    libraries,
+    [
+        'vendor/angular-ui-select/dist/select.min.js',
+        'vendor/angular-sanitize/angular-sanitize.min.js',
+        'vendor/angular-animate/angular-animate.min.js',
+        'vendor/angular-auto-validate/dist/jcs-auto-validate.min.js',
+        'autovalidate/errorMessageResolver.js',
+        'autovalidate/elementModifier.js',
+        'directives/recommended-directive.js',
+        'services/data/preinscriptions-service.js',
+        'services/data/niveauformations-service.js',
+        'services/data/sessions-service.js',
+        'controllers/preinscriptions-controller.js',
+        'app/preinscriptionsApp.js'
+    ]
+);
+
 var home = Array.prototype.concat(
     libraries
 );
@@ -354,8 +372,8 @@ elixir(function(mix) {
             inscriptionDetail,
             ['app/inscriptionDetailApp.js']
         )), 'public/js/inscriptions-detail.js')
-        .scripts(home
-        , 'public/js/home.js')
+        .scripts(preinscription, 'public/js/preinscriptions.js')
+        .scripts(home, 'public/js/home.js')
 
 });
 
