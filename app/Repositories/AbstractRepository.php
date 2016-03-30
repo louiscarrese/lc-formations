@@ -7,7 +7,23 @@ abstract class AbstractRepository implements RepositoryInterface {
 
     protected $model;
 
+    /**
+     * A list of the n-n relations described like this : 
+     *  'data_id' => the field in the front end data containing an array of id for the relation
+     *  'relation_method' => the method in the current object describing the relation
+     *  'repository' => a reference to the repository that handles the related object
+     */
     protected $relations = [];
+
+    /**
+     * A list of subobjects and their repositories to be handled.
+     * This is useful when the subobjects come through the same API endpoint.
+     * subobjects are described like this : 
+     *  'data_id' => the field containing the list of sub objects
+     *  'repository' => a reference to the repository that handles the sub object
+     *  'parent_key' => the field of the database subobject containing the parent key to set
+     */
+    protected $subObjects = [];
 
     /**
      * This method will be called on each object returned and should be 
@@ -115,11 +131,25 @@ abstract class AbstractRepository implements RepositoryInterface {
         //If it's an update, refill the existing object
         $object = null;
         if($id != null) {
-            $object = $this->model->findOrFail($id);
+            //TODO: handle the subobjects (no test case at this time)
+            $object = $this->model->findOrFail($id);            
             $object->fill($data)->save();
         } else {
             //If it's a create, mass assign
             $object = $this->model->create($data);
+
+            //For each of the declared sub objects
+            foreach($this->subObjects as $subObjectDefinition) {
+                //For each instance of the sub object found in the data
+                if(isset($data[$subObjectDefinition['data_id']])) {
+                    foreach($data[$subObjectDefinition['data_id']] as $subObjectData) {
+                        //Put in the parent key
+                        $subObjectData[$subObjectDefinition['parent_key']] = $object->id;
+                        //Call the repository to store it
+                        $subObjectDefinition['repository']->store($subObjectData);
+                    }
+                }
+            }
         }
 
         //Build associations

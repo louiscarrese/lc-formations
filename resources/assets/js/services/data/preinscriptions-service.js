@@ -1,3 +1,3 @@
 function preinscriptionsServiceFactory($resource) {
-    return $resource('/preinscription');
+    return $resource('/api/preinscription');
 }

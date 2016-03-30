@@ -34,6 +34,7 @@ return array(
     'CreateLieusTable' => $baseDir . '/database/migrations/2015_11_07_000040_create_lieus_table.php',
     'CreateModulesTable' => $baseDir . '/database/migrations/2015_11_07_010010_create_modules_table.php',
     'CreateNiveauFormation' => $baseDir . '/database/migrations/2016_01_21_150954_create_niveau_formation.php',
+    'CreatePreinscriptionsTables' => $baseDir . '/database/migrations/2016_03_28_125705_create_preinscriptions_tables.php',
     'CreateSessionJoursTable' => $baseDir . '/database/migrations/2015_11_07_010050_create_session_jours_table.php',
     'CreateSessionsTable' => $baseDir . '/database/migrations/2015_11_07_010030_create_sessions_table.php',
     'CreateStagiaireTypesTable' => $baseDir . '/database/migrations/2015_11_07_000010_create_stagiaire_types_table.php',

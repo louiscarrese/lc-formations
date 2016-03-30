@@ -1,4 +1,4 @@
-function preinscriptionsController($filter, $uibModal, sessionsService) {
+function preinscriptionsController($filter, $uibModal, sessionsService, preinscriptionsService) {
     var self = this;
 
     /**
@@ -7,8 +7,7 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
 
     /* The main data */
     self.data = {
-        stagiaire: {},
-        inscriptions: [],
+        preinscription_sessions: [],
     }
 
     /* External data */
@@ -75,10 +74,10 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
     //Dynamic
     self.externalData['sessions'] = sessionsService.query({}, enhanceSessions);
 
-    self.collapsedDivs = [];
     /* Used by components so we reserve the names */
     //Will store the open status of the date pickers
     self.datepickerstatus = {};
+    self.collapsedDivs = [];
 
 
     /* Configuration for the datepickers */
@@ -98,6 +97,8 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
 
     self.openConditions = openConditions;
 
+    self.toApiModel = toApiModel;
+
     /**
      * Function implementations
      */
@@ -106,12 +107,20 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
 
         //TODO: Check if at least one session
 
-        //TODO: Send data to server
-        return false;
+        //TODO: Send data to server 
+        preinscriptionsService.save(self.data,
+            function(value, responseHeaders) {
+                window.location.href="thanks";
+            },
+            function(response) {
+                alert('error');
+                console.log(response);
+            });
+        return true;
     }
 
     function addInscription(item, model) {
-        self.data.inscriptions.push({session: self.selectedInscription, collapsed: false});
+        self.data.preinscription_sessions.push({session: self.selectedInscription, collapsed: false});
         self.selectedInscription = null;
     }
 
@@ -129,6 +138,9 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
     function getValidationMessage(form, input) {
         if(self[form] != undefined && self[form][input] != undefined)
             return self[form][input]['errorMessage'];
+    }
+
+    function toApiModel(data) {
     }
 
     /**

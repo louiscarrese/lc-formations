@@ -11529,8 +11529,6 @@ function elementModifier() {
         var errors = controller != undefined ? controller.$error : undefined;
 
         var formGroup = getParentFormGroup(angEl);
-        console.log(angEl);
-        //TODO: Afficher un message d'erreur dans une tooltip ?
 
         if(errors) {
             if(errors.recommended) {
@@ -11586,7 +11584,7 @@ function recommendedDirective() {
     };
 }
 function preinscriptionsServiceFactory($resource) {
-    return $resource('/preinscription');
+    return $resource('/api/preinscription');
 }
 
 function niveauFormationsServiceFactory($resource) {
@@ -11604,7 +11602,7 @@ function sessionsServiceFactory($resource) {
 }
 
 
-function preinscriptionsController($filter, $uibModal, sessionsService) {
+function preinscriptionsController($filter, $uibModal, sessionsService, preinscriptionsService) {
     var self = this;
 
     /**
@@ -11613,8 +11611,7 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
 
     /* The main data */
     self.data = {
-        stagiaire: {},
-        inscriptions: [],
+        preinscription_sessions: [],
     }
 
     /* External data */
@@ -11681,10 +11678,10 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
     //Dynamic
     self.externalData['sessions'] = sessionsService.query({}, enhanceSessions);
 
-    self.collapsedDivs = [];
     /* Used by components so we reserve the names */
     //Will store the open status of the date pickers
     self.datepickerstatus = {};
+    self.collapsedDivs = [];
 
 
     /* Configuration for the datepickers */
@@ -11696,7 +11693,6 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
 
 
     /* Declare controller functions */
-    self.validate = validate;
     self.submit = submit;
     self.addInscription = addInscription;
     self.removeInscription = removeInscription;
@@ -11705,23 +11701,31 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
 
     self.openConditions = openConditions;
 
+    self.toApiModel = toApiModel;
+
     /**
      * Function implementations
      */
-    function validate() {
-        console.log(self);
-        return false;
-    }
-
     function submit() {
         console.log('submit');
-        return false;
+
+        //TODO: Check if at least one session
+
+        //TODO: Send data to server 
+        preinscriptionsService.save(self.data,
+            function(value, responseHeaders) {
+                window.location.href="thanks";
+            },
+            function(response) {
+                alert('error');
+                console.log(response);
+            });
+        return true;
     }
 
     function addInscription(item, model) {
-        self.data.inscriptions.push({session: self.selectedInscription, collapsed: false});
+        self.data.preinscription_sessions.push({session: self.selectedInscription, collapsed: false});
         self.selectedInscription = null;
-        console.log(self.data);
     }
 
     function removeInscription(index) {
@@ -11736,13 +11740,11 @@ function preinscriptionsController($filter, $uibModal, sessionsService) {
     }
 
     function getValidationMessage(form, input) {
-        if(self[form] != undefined)
-            if(self[form][input] != undefined)
-                return self[form][input]['errorMessage'];
-            else
-                console.log('no input [' + input + ']');
-        else
-            console.log('no form [' + form + ']');
+        if(self[form] != undefined && self[form][input] != undefined)
+            return self[form][input]['errorMessage'];
+    }
+
+    function toApiModel(data) {
     }
 
     /**
@@ -11789,7 +11791,7 @@ angular.module('preinscriptionsApp', ['ngResource', 'ngAnimate', 'ui.bootstrap',
     .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
 
 
-    .controller('preinscriptionsController', ['$filter', '$uibModal', 'sessionsService', preinscriptionsController])
+    .controller('preinscriptionsController', ['$filter', '$uibModal', 'sessionsService', 'preinscriptionsService', preinscriptionsController])
     
     .directive('recommended', recommendedDirective)
 

@@ -4,7 +4,7 @@ angular.module('preinscriptionsApp', ['ngResource', 'ngAnimate', 'ui.bootstrap',
     .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
 
 
-    .controller('preinscriptionsController', ['$filter', '$uibModal', 'sessionsService', preinscriptionsController])
+    .controller('preinscriptionsController', ['$filter', '$uibModal', 'sessionsService', 'preinscriptionsService', preinscriptionsController])
     
     .directive('recommended', recommendedDirective)
 

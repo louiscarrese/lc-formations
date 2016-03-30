@@ -93,9 +93,15 @@ Route::group(['middleware' => 'auth.basic.name'], function() {
     Route::get('/search', 'SearchController@index');
 });
 
+/*
+ * Preinscriptions
+ */
+//Views
 Route::resource('/preinscription', 'PreinscriptionsController', 
-    ['only' => ['index', 'store']]);
+    ['only' => ['index']]);
 Route::get('/preinscription/conditions', 'PreinscriptionsController@conditions');
-
+//API
+Route::resource('/api/preinscription', 'Api\PreinscriptionController', 
+    ['only' => ['store']]);
 Route::resource('api/session', 'Api\SessionController',
     ['only' => ['index']]);
