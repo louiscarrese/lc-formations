@@ -7,7 +7,6 @@
         <input type="text" id="{{$field['id']}}" name="{{$field['id']}}" 
             class="form-control" placeholder="{{$field['label']}}"
             ng-model="{{$field['model']}}" 
-            ng-model-options="{updateOn: '{{$field['updateOn'] or 'blur'}}' }"
             uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" 
             is-open="ctrl.datepickerstatus.{{$field['id']}}.open" 
             datepicker-mode="ctrl.datepicker_options.{{$field['id']}}.datepickerMode" 
