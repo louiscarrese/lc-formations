@@ -294,6 +294,7 @@ var preinscription = Array.prototype.concat(
         'autovalidate/errorMessageResolver.js',
         'autovalidate/elementModifier.js',
         'directives/recommended-directive.js',
+        'directives/datepickerlocaldate-directive.js',
         'services/data/preinscriptions-service.js',
         'services/data/niveauformations-service.js',
         'services/data/sessions-service.js',

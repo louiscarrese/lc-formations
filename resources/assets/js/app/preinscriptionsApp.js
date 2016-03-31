@@ -7,6 +7,7 @@ angular.module('preinscriptionsApp', ['ngResource', 'ngAnimate', 'ui.bootstrap',
     .controller('preinscriptionsController', ['$filter', '$uibModal', 'sessionsService', 'preinscriptionsService', preinscriptionsController])
     
     .directive('recommended', recommendedDirective)
+    .directive('datepickerLocaldate', datepickerLocaldate)
 
     .config(function(uiSelectConfig) {
         uiSelectConfig.theme = 'bootstrap';
