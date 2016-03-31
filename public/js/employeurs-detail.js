@@ -12314,7 +12314,7 @@ angular.module('detail', ['myEditable'])
 ;
 
 function employeursServiceFactory($resource) {
-    return $resource('/api/employeur/:id', null, {
+    return $resource('/intra/api/employeur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

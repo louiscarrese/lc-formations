@@ -10,20 +10,30 @@ use ModuleFormation\Http\Controllers\Controller;
 class PreinscriptionsController extends Controller
 {
 
-    public function index() {
-        return view('preinscriptions');
+    /** 
+     * Public part
+     */
+    public function publicForm() {
+        return view('preinscription');
     }
 
-    public function store(Request $request) {
-        //Do the storing things
-
-
-        //Display a thank you
-        return view('');
-
+    public function thanks() {
+        return view('preinscription_thanks');
     }
 
     public function conditions() {
         return view('preinscription_conditions');
+    }
+
+    /**
+     *
+     */
+    public function index() {
+        return view('preinscriptions');
+    }
+
+    public function show($id) {
+        return view('preinscriptions', ['mode' => 'edit', 'id' => $id]);
+
     }
 }

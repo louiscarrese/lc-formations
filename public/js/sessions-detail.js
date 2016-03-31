@@ -12314,8 +12314,7 @@ angular.module('detail', ['myEditable'])
 ;
 
 function sessionsServiceFactory($resource) {
-
-    return $resource('/api/session/:id', null, {
+    return $resource('/intra/api/session/:id', null, {
         'update' : { 
             method: 'PUT'
         },
@@ -12324,7 +12323,7 @@ function sessionsServiceFactory($resource) {
 
 
 function modulesServiceFactory($resource) {
-    return $resource('/api/module/:id', null, {
+    return $resource('/intra/api/module/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
@@ -12801,10 +12800,10 @@ angular.module('editableTable', ['myEditable', 'sortableHeader'])
 ;
 
 function sessionJoursServiceFactory($resource) {
-    return $resource('/api/session_jour/:id', null, {
+    return $resource('/intra/api/session_jour/:id', null, {
         update : { method: 'PUT' },
         createDefault : { 
-            url: '/api/session_jour/create_default',
+            url: '/intra/api/session_jour/create_default',
             method: 'POST', 
             params: {session_id: '@session_id', base_date: '@base_date'} 
         }
@@ -12813,13 +12812,13 @@ function sessionJoursServiceFactory($resource) {
 
 
 function formateursServiceFactory($resource) {
-    return $resource('/api/formateur/:id', null, {
+    return $resource('/intra/api/formateur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function lieuServiceFactory($resource) {
-    return $resource('/api/lieu/:id', null, {
+    return $resource('/intra/api/lieu/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
@@ -12914,7 +12913,7 @@ angular.module('listTable', ['sortableHeader'])
 ;
 
 function inscriptionsServiceFactory($resource) {
-    return $resource('/api/inscription/:id', null, {
+    return $resource('/intra/api/inscription/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

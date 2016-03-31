@@ -2,7 +2,7 @@
     [
         'title' => 'Employeurs',
         'controllerName' => 'employeursListController',
-        'detailUri' => '/employeurs',
+        'detailUri' => 'employeurs',
         'idField' => 'id',
         'fields' => [
             'nom' => [

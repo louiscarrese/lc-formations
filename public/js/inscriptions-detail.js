@@ -12314,19 +12314,18 @@ angular.module('detail', ['myEditable'])
 ;
 
 function inscriptionsServiceFactory($resource) {
-    return $resource('/api/inscription/:id', null, {
+    return $resource('/intra/api/inscription/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 function stagiairesServiceFactory($resource) {
-    return $resource('/api/stagiaire/:id', null, {
+    return $resource('/intra/api/stagiaire/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function sessionsServiceFactory($resource) {
-
-    return $resource('/api/session/:id', null, {
+    return $resource('/intra/api/session/:id', null, {
         'update' : { 
             method: 'PUT'
         },
@@ -12791,13 +12790,13 @@ angular.module('editableTable', ['myEditable', 'sortableHeader'])
 ;
 
 function financeurInscriptionsServiceFactory($resource) {
-    return $resource('/api/financeur_inscription/:id', null, {
+    return $resource('/intra/api/financeur_inscription/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function financeursServiceFactory($resource) {
-    return $resource('/api/financeur/:id', null, {
+    return $resource('/intra/api/financeur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

@@ -11782,7 +11782,7 @@ angular.module('listTable', ['sortableHeader'])
 ;
 
 function financeursServiceFactory($resource) {
-    return $resource('/api/financeur/:id', null, {
+    return $resource('/intra/api/financeur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

@@ -2,7 +2,7 @@
     [
         'title' => 'Financeurs',
         'controllerName' => 'financeursListController',
-        'detailUri' => '/financeurs',
+        'detailUri' => 'financeurs',
         'idField' => 'id',
         'fields' => [
             'libelle' => [

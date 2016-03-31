@@ -11627,17 +11627,16 @@ function datepickerLocaldate() {
 
 
 function preinscriptionsServiceFactory($resource) {
-    return $resource('/api/preinscription');
+    return $resource('/intra/api/preinscription');
 }
 
 function niveauFormationsServiceFactory($resource) {
-    return $resource('/api/niveau_formation/:id', null, {
+    return $resource('/intra/api/niveau_formation/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 function sessionsServiceFactory($resource) {
-
-    return $resource('/api/session/:id', null, {
+    return $resource('/intra/api/session/:id', null, {
         'update' : { 
             method: 'PUT'
         },

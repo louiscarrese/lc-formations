@@ -1,8 +1,8 @@
 @extends('layouts.master', ['current_menu' => ''])
 
 @section('title', 'Paramètres')
-@section('js-file', 'js/parametres.js')
-@section('css-file', 'css/app.css')
+@section('js-file', '/js/parametres.js')
+@section('css-file', '/css/app.css')
 @section('angularApp', 'parametresApp')
 
 @section('content')

@@ -12314,26 +12314,26 @@ angular.module('detail', ['myEditable'])
 ;
 
 function modulesServiceFactory($resource) {
-    return $resource('/api/module/:id', null, {
+    return $resource('/intra/api/module/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 
 function domaineFormationsServiceFactory($resource) {
-    return $resource('/api/domaine_formation/:id', null, {
+    return $resource('/intra/api/domaine_formation/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function formateursServiceFactory($resource) {
-    return $resource('/api/formateur/:id', null, {
+    return $resource('/intra/api/formateur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function lieuServiceFactory($resource) {
-    return $resource('/api/lieu/:id', null, {
+    return $resource('/intra/api/lieu/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
@@ -12784,13 +12784,13 @@ angular.module('editableTable', ['myEditable', 'sortableHeader'])
 ;
 
 function tarifsServiceFactory($resource) {
-    return $resource('/api/tarif/:id', null, {
+    return $resource('/intra/api/tarif/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function tarifTypesServiceFactory($resource) {
-    return $resource('/api/tarif_type/:id', null, {
+    return $resource('/intra/api/tarif_type/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
@@ -12832,8 +12832,7 @@ angular.module('listTable', ['sortableHeader'])
 ;
 
 function sessionsServiceFactory($resource) {
-
-    return $resource('/api/session/:id', null, {
+    return $resource('/intra/api/session/:id', null, {
         'update' : { 
             method: 'PUT'
         },

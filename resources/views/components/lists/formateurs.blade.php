@@ -2,7 +2,7 @@
     [
         'title' => 'Formateurs',
         'controllerName' => 'formateursListController',
-        'detailUri' => '/formateurs',
+        'detailUri' => 'formateurs',
         'idField' => 'id',
         'fields' => [
             'nom' => [

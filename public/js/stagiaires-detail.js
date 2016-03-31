@@ -12314,7 +12314,7 @@ angular.module('detail', ['myEditable'])
 ;
 
 function stagiairesServiceFactory($resource) {
-    return $resource('/api/stagiaire/:id', null, {
+    return $resource('/intra/api/stagiaire/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
@@ -12336,7 +12336,7 @@ function stagiairesServiceFactory($resource) {
 
 
     function stagiaireTypesServiceFactory($resource) {
-        return $resource('/api/stagiaire_type/:id', null, {
+        return $resource('/intra/api/stagiaire_type/:id', null, {
             'update' : { method: 'PUT' }
         });
     }
@@ -12345,13 +12345,13 @@ function stagiairesServiceFactory($resource) {
 })();
 */
 function employeursServiceFactory($resource) {
-    return $resource('/api/employeur/:id', null, {
+    return $resource('/intra/api/employeur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function niveauFormationsServiceFactory($resource) {
-    return $resource('/api/niveau_formation/:id', null, {
+    return $resource('/intra/api/niveau_formation/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
@@ -12769,7 +12769,7 @@ angular.module('listTable', ['sortableHeader'])
 ;
 
 function inscriptionsServiceFactory($resource) {
-    return $resource('/api/inscription/:id', null, {
+    return $resource('/intra/api/inscription/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

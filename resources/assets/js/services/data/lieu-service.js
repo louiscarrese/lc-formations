@@ -1,5 +1,5 @@
 function lieuServiceFactory($resource) {
-    return $resource('/api/lieu/:id', null, {
+    return $resource('/intra/api/lieu/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

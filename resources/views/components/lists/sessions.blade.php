@@ -2,7 +2,7 @@
     [
         'title' => 'Sessions',
         'controllerName' => 'sessionsListController',
-        'detailUri' => '/sessions',
+        'detailUri' => 'sessions',
         'idField' => 'id',
         'fields' => [
             'module.libelle' => [

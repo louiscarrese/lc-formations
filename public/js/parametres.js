@@ -12359,7 +12359,7 @@ angular.module('editableTable', ['myEditable', 'sortableHeader'])
 
 
     function stagiaireTypesServiceFactory($resource) {
-        return $resource('/api/stagiaire_type/:id', null, {
+        return $resource('/intra/api/stagiaire_type/:id', null, {
             'update' : { method: 'PUT' }
         });
     }
@@ -12368,34 +12368,34 @@ angular.module('editableTable', ['myEditable', 'sortableHeader'])
 })();
 */
 function formateurTypesServiceFactory($resource) {
-    return $resource('/api/formateur_type/:id', null, {
+    return $resource('/intra/api/formateur_type/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 function financeurTypesServiceFactory($resource) {
-    return $resource('/api/financeur_type/:id', null, {
+    return $resource('/intra/api/financeur_type/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 function tarifTypesServiceFactory($resource) {
-    return $resource('/api/tarif_type/:id', null, {
+    return $resource('/intra/api/tarif_type/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 function lieuServiceFactory($resource) {
-    return $resource('/api/lieu/:id', null, {
+    return $resource('/intra/api/lieu/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function domaineFormationsServiceFactory($resource) {
-    return $resource('/api/domaine_formation/:id', null, {
+    return $resource('/intra/api/domaine_formation/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function niveauFormationsServiceFactory($resource) {
-    return $resource('/api/niveau_formation/:id', null, {
+    return $resource('/intra/api/niveau_formation/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

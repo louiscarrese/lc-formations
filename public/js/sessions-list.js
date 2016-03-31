@@ -11782,8 +11782,7 @@ angular.module('listTable', ['sortableHeader'])
 ;
 
 function sessionsServiceFactory($resource) {
-
-    return $resource('/api/session/:id', null, {
+    return $resource('/intra/api/session/:id', null, {
         'update' : { 
             method: 'PUT'
         },

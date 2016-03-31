@@ -6537,7 +6537,7 @@ label {
 .form-inline input.line-4 {
   width: 24%;
 }
-.main-block {
+.rounded-border {
   border: solid 1px #ffc48a;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;

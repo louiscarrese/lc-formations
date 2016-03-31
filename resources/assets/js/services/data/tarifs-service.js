@@ -1,5 +1,5 @@
 function tarifsServiceFactory($resource) {
-    return $resource('/api/tarif/:id', null, {
+    return $resource('/intra/api/tarif/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

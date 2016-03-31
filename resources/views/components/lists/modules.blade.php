@@ -2,7 +2,7 @@
     [
         'title' => 'Modules',
         'controllerName' => 'modulesListController',
-        'detailUri' => '/modules',
+        'detailUri' => 'modules',
         'idField' => 'id',
         'fields' => [
             'libelle' => [

@@ -1,5 +1,5 @@
 function formateursServiceFactory($resource) {
-    return $resource('/api/formateur/:id', null, {
+    return $resource('/intra/api/formateur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

@@ -2,7 +2,7 @@
     [
         'title' => 'Inscriptions',
         'controllerName' => 'inscriptionsListController',
-        'detailUri' => '/inscriptions',
+        'detailUri' => 'inscriptions',
         'idField' => 'id',
         'fields' => [
             'stagiaire.nom' => [

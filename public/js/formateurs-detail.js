@@ -12314,13 +12314,13 @@ angular.module('detail', ['myEditable'])
 ;
 
 function formateursServiceFactory($resource) {
-    return $resource('/api/formateur/:id', null, {
+    return $resource('/intra/api/formateur/:id', null, {
         'update' : { method: 'PUT' }
     });
 }
 
 function formateurTypesServiceFactory($resource) {
-    return $resource('/api/formateur_type/:id', null, {
+    return $resource('/intra/api/formateur_type/:id', null, {
         'update' : { method: 'PUT' }
     });
 }

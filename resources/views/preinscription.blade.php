@@ -11,7 +11,7 @@
     <body >
         <div id="main" class="container" ng-controller="preinscriptionsController as ctrl">
             <form novalidate="novalidate" name="ctrl.form" ng-submit='ctrl.submit()'>
-                <div class="main-block" id="infos-stagiaire">
+                <div class="rounded-border" id="infos-stagiaire">
                     <h2>Participant</h2>
                     {{-- Nom Prénom--}}
                     <div class="form-group form-inline">
@@ -238,7 +238,7 @@
                     </div>
                 </div>
 
-                <div class="main-block">
+                <div class="rounded-border">
                     <h2>Formations</h2>
                     {{-- Main repeater --}}
                     <div ng-repeat="preinscription_session in ctrl.data.preinscription_sessions track by $index" class="inscription">
@@ -473,7 +473,7 @@
                 </div>
 
 
-                <div class="main-block">
+                <div class="rounded-border">
                     @include('components.preinscription.inputs.checkbox', [
                         'field' => [
                             'id' => 'conditions_generales',
