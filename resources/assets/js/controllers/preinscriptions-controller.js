@@ -1,4 +1,4 @@
-function preinscriptionsController($filter, $uibModal, sessionsService, preinscriptionsService) {
+function preinscriptionsPublicController($filter, $uibModal, sessionsService, preinscriptionsService) {
     var self = this;
 
     /**

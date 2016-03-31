@@ -299,7 +299,7 @@ var preinscription = Array.prototype.concat(
         'services/data/niveauformations-service.js',
         'services/data/sessions-service.js',
         'controllers/preinscriptions-controller.js',
-        'app/preinscriptionsApp.js'
+        'app/preinscriptionsPublicApp.js'
     ]
 );
 

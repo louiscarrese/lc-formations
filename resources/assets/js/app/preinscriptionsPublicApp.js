@@ -1,10 +1,10 @@
-angular.module('preinscriptionsApp', ['ngResource', 'ngAnimate', 'ui.bootstrap', 'ui.select', 'ngSanitize', 'jcs-autoValidate'])
+angular.module('preinscriptionsPublicApp', ['ngResource', 'ngAnimate', 'ui.bootstrap', 'ui.select', 'ngSanitize', 'jcs-autoValidate'])
     .factory('preinscriptionsService', ['$resource', preinscriptionsServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
 
 
-    .controller('preinscriptionsController', ['$filter', '$uibModal', 'sessionsService', 'preinscriptionsService', preinscriptionsController])
+    .controller('preinscriptionsPublicController', ['$filter', '$uibModal', 'sessionsService', 'preinscriptionsService', preinscriptionsPublicController])
     
     .directive('recommended', recommendedDirective)
     .directive('datepickerLocaldate', datepickerLocaldate)

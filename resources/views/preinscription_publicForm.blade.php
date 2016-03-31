@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="preinscriptionsApp">
+<html ng-app="preinscriptionsPublicApp">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,7 @@
         <script type="text/javascript" src="js/preinscriptions.js"></script>
     </head>
     <body >
-        <div id="main" class="container" ng-controller="preinscriptionsController as ctrl">
+        <div id="main" class="container" ng-controller="preinscriptionsPublicController as ctrl">
             <form novalidate="novalidate" name="ctrl.form" ng-submit='ctrl.submit()'>
                 <div class="rounded-border" id="infos-stagiaire">
                     <h2>Participant</h2>
