@@ -14,7 +14,7 @@ class PreinscriptionsController extends Controller
      * Public part
      */
     public function publicForm() {
-        return view('preinscription');
+        return view('preinscription_publicForm');
     }
 
     public function thanks() {
