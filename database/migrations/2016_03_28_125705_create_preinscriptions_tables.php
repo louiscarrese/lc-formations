@@ -65,6 +65,9 @@ class CreatePreinscriptionsTables extends Migration
             $table->integer('tarif_id')->unsigned();
             $table->foreign('tarif_id')->references('id')->on('tarifs');
 
+            $table->integer('session_id')->unsigned();
+            $table->foreign('session_id')->references('id')->on('sessions');
+
             $table->timestamps();
         });
 

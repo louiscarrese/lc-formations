@@ -18,7 +18,7 @@ class PreinscriptionSessionRepositoryProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('ModuleFormation\Repositories\PreinscriptionSessionRepositoryInterface', function($app) {
-            return new PreinscriptionSessionRepository($app);
+            return new PreinscriptionSessionRepository($app, $this->app->make('ModuleFormation\Repositories\SessionRepositoryInterface'));
         });
     }
 

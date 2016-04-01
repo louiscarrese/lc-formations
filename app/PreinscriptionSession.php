@@ -11,9 +11,9 @@ class PreinscriptionSession extends AbstractModel
         'financement_employeur_tel','financement_employeur_email',
         'financement_employeur_siret','financement_employeur_naf','financement_employeur_effectif',
         'financement_afdas_intermittent','financement_autre',
-        'attentes','preinscription_id','tarif_id'];
+        'attentes','preinscription_id','tarif_id', 'session_id'];
 
-
+    protected $with = ['session'];
 
     public function preinscription() {
         return $this->belongsTo('ModuleFormation\Preinscription');

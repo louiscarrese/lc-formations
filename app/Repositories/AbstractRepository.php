@@ -29,7 +29,20 @@ abstract class AbstractRepository implements RepositoryInterface {
      * This method will be called on each object returned and should be 
      * overloaded to add computed data to objects.
      */
-    protected function augmentData($data) {return $data;}
+    protected function augmentData($data) {
+        //For each of the declared sub objects
+        foreach($this->subObjects as $subObjectDefinition) {
+            //For each instance of the sub object found in the data
+            if(isset($data[$subObjectDefinition['data_id']])) {
+                foreach($data[$subObjectDefinition['data_id']] as $subObjectData) {
+                    //Call the repository to augment it
+                    $subObjectDefinition['repository']->augmentData($subObjectData);
+                }
+            }
+        }
+
+        return $data;
+    }
 
     /**
      * This method will be called on each incoming object and should be 

@@ -33,7 +33,7 @@ class PreinscriptionsController extends Controller
     }
 
     public function show($id) {
-        return view('preinscriptions', ['mode' => 'edit', 'id' => $id]);
+        return view('preinscription', ['mode' => 'edit', 'id' => $id]);
 
     }
 }

@@ -14,7 +14,11 @@
         <ui-select-match placeholder="{{$field['label']}}">
             <span ng-bind="$select.selected.label"></span>
         </ui-select-match>
-        <ui-select-choices repeat="item in ({{$field['datasource']}} | filter: $select.search) track by item.id">
+        @if(isset($field['singleProperty']) && $field['singleProperty'] !== false)
+            <ui-select-choices repeat="item.{{$field['singleProperty']}} as item in ({{$field['datasource']}} | filter: $select.search) track by item.id">
+        @else
+            <ui-select-choices repeat="item in ({{$field['datasource']}} | filter: $select.search) track by item.id">
+        @endif        
             <span ng-bind="item.label"></span>
         </ui-select-choices>
     </ui-select>

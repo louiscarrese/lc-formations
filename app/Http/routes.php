@@ -63,8 +63,8 @@ Route::group(['prefix' => 'intra'], function() {
             Route::resource('financeur_inscription', 'FinanceurInscriptionController', 
                 ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 
-            Route::resource('preinscription', 'InscriptionController', 
-                ['only' => ['store', 'show', 'update', 'destroy']]);
+            Route::resource('preinscription', 'PreinscriptionController', 
+                ['only' => ['index', 'show', 'update', 'destroy']]);
 
         });
 
@@ -106,7 +106,7 @@ Route::group(['prefix' => 'intra'], function() {
 //Views
 Route::get('/preinscription', 'PreinscriptionsController@publicForm');
 Route::get('/preinscription/conditions', 'PreinscriptionsController@conditions');
-Route::get('/preinscription/thanks', 'PreinscriptionController@thanks');
+Route::get('/preinscription/thanks', 'PreinscriptionsController@thanks');
 //API
 Route::resource('/intra/api/preinscription', 'Api\PreinscriptionController', 
     ['only' => ['store']]);

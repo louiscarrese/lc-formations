@@ -140,6 +140,7 @@
                                 'id' => 'statut',
                                 'label' => '',
                                 'model' => 'ctrl.data.statut',
+                                'singleProperty' => 'id',
                                 'datasource' => 'ctrl.externalData.stagiaire_statut',
                                 'validation' => 'required',
                                 'updateOn' => 'default',
@@ -147,50 +148,50 @@
                             ]
                         ])
                     </div>
-                    <div class="form-group" ng-show="ctrl.data.statut.id == 'salarie'">
+                    <div class="form-group" ng-show="ctrl.data.statut == 'salarie'">
                         @include('components.preinscription.inputs.radio', [
                             'field' => [
                                 'id' => 'salarie_type',
                                 'inline' => 'false',
                                 'model' => 'ctrl.data.salarie_type',
                                 'datasource' => 'ctrl.externalData.salarie_types',
-                                'validation' => 'ng-required=ctrl.data.statut.id==\'salarie\'',
+                                'validation' => 'ng-required=ctrl.data.statut==\'salarie\'',
                                 'validationController' => 'ctrl.form.salarie_type',
                             ]
                         ])
                     </div>
-                    <div class="form-group" ng-show="ctrl.data.statut.id == 'demandeur_emploi'">
+                    <div class="form-group" ng-show="ctrl.data.statut == 'demandeur_emploi'">
                         @include('components.preinscription.inputs.radio', [
                             'field' => [
                                 'id' => 'demandeur_emploi_type',
                                 'inline' => 'false',
                                 'model' => 'ctrl.data.demandeur_emploi_type',
                                 'datasource' => 'ctrl.externalData.demandeur_emploi_types',
-                                'validation' => 'ng-required=ctrl.data.statut.id==\'demandeur_emploi\'',
+                                'validation' => 'ng-required=ctrl.data.statut==\'demandeur_emploi\'',
                                 'validationController' => 'ctrl.form.demandeur_emploi_type',
                             ]
                         ])
                     </div>
-                    <div class="form-group" ng-show="ctrl.data.statut.id == 'etudiant'">
+                    <div class="form-group" ng-show="ctrl.data.statut == 'etudiant'">
                         @include('components.preinscription.inputs.text', [
                             'field' => [
                                 'id' => 'etudiant_etudes',
                                 'inline' => false,
                                 'model' => 'ctrl.data.etudiant_etudes',
                                 'label' => 'Etudes',
-                                'validation' => 'ng-required=ctrl.data.statut.id==\'etudiant\'',
+                                'validation' => 'ng-required=ctrl.data.statut==\'etudiant\'',
                                 'validationController' => 'ctrl.form.etudiant_etudes',
                             ]
                         ])
                     </div>
-                    <div class="form-group" ng-show="ctrl.data.statut.id == 'autre'">
+                    <div class="form-group" ng-show="ctrl.data.statut == 'autre'">
                         @include('components.preinscription.inputs.text', [
                             'field' => [
                                 'id' => 'type_autre',
                                 'inline' => false,
                                 'model' => 'ctrl.data.type_autre',
                                 'label' => 'Précisez',
-                                'validation' => 'ng-required=ctrl.data.statut.id==\'autre\'',
+                                'validation' => 'ng-required=ctrl.data.statut==\'autre\'',
                                 'validationController' => 'ctrl.form.type_autre',
                             ]
                         ])
@@ -261,6 +262,7 @@
                                             'model' => 'preinscription_session.tarif_id',
                                             'datasource' => 'preinscription_session.session.module.tarifs',
                                             'validationController' => 'ctrl.inscriptionForm[$index].tarif_id',
+                                            'validation' => 'required',
                                         ]
                                     ])
                                 </div>

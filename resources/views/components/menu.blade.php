@@ -1,6 +1,6 @@
 <nav id="menu" class="navbar navbar-default">
     <ul class="nav navbar-nav">
-        <li class="{{ $current_menu=='pre_inscription' ? 'active' : '' }}"><a href="#">Pré-inscriptions</a></li>
+        <li class="{{ $current_menu=='pre_inscription' ? 'active' : '' }}"><a href="/intra/preinscriptions">Pré-inscriptions</a></li>
         <li class="{{ $current_menu=='stagiaire' ? 'active' : '' }}"><a href="/intra/stagiaires">Stagiaires</a></li>
         <li class="{{ $current_menu=='employeur' ? 'active' : '' }}"><a href="/intra/employeurs">Employeurs</a></li>
         <li class="{{ $current_menu=='formateur' ? 'active' : '' }}"><a href="/intra/formateurs">Formateurs</a></li>

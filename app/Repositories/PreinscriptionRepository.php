@@ -17,18 +17,5 @@ class PreinscriptionRepository extends AbstractRepository implements Preinscript
             ]
         ];
     }
-
-    protected function augmentData($data) {
-        $statut_id = $data->statut;
-        $data->statut = array('id' => $statut_id);
-
-        return $data;
-    }
-
-    protected function processIncomingData($data) {
-        $statut_id = $data['statut']['id'];
-        $data['statut'] = $statut_id;
-
-        return $data;
-    }
+    
 }

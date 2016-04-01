@@ -11410,449 +11410,432 @@ angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angu
         };
     });
 })(angular);
-/*!
- * ui-select
- * http://github.com/angular-ui/ui-select
- * Version: 0.13.2 - 2015-10-09T15:34:24.040Z
- * License: MIT
- */
-!function(){"use strict";var e={TAB:9,ENTER:13,ESC:27,SPACE:32,LEFT:37,UP:38,RIGHT:39,DOWN:40,SHIFT:16,CTRL:17,ALT:18,PAGE_UP:33,PAGE_DOWN:34,HOME:36,END:35,BACKSPACE:8,DELETE:46,COMMAND:91,MAP:{91:"COMMAND",8:"BACKSPACE",9:"TAB",13:"ENTER",16:"SHIFT",17:"CTRL",18:"ALT",19:"PAUSEBREAK",20:"CAPSLOCK",27:"ESC",32:"SPACE",33:"PAGE_UP",34:"PAGE_DOWN",35:"END",36:"HOME",37:"LEFT",38:"UP",39:"RIGHT",40:"DOWN",43:"+",44:"PRINTSCREEN",45:"INSERT",46:"DELETE",48:"0",49:"1",50:"2",51:"3",52:"4",53:"5",54:"6",55:"7",56:"8",57:"9",59:";",61:"=",65:"A",66:"B",67:"C",68:"D",69:"E",70:"F",71:"G",72:"H",73:"I",74:"J",75:"K",76:"L",77:"M",78:"N",79:"O",80:"P",81:"Q",82:"R",83:"S",84:"T",85:"U",86:"V",87:"W",88:"X",89:"Y",90:"Z",96:"0",97:"1",98:"2",99:"3",100:"4",101:"5",102:"6",103:"7",104:"8",105:"9",106:"*",107:"+",109:"-",110:".",111:"/",112:"F1",113:"F2",114:"F3",115:"F4",116:"F5",117:"F6",118:"F7",119:"F8",120:"F9",121:"F10",122:"F11",123:"F12",144:"NUMLOCK",145:"SCROLLLOCK",186:";",187:"=",188:",",189:"-",190:".",191:"/",192:"`",219:"[",220:"\\",221:"]",222:"'"},isControl:function(t){var i=t.which;switch(i){case e.COMMAND:case e.SHIFT:case e.CTRL:case e.ALT:return!0}return t.metaKey?!0:!1},isFunctionKey:function(e){return e=e.which?e.which:e,e>=112&&123>=e},isVerticalMovement:function(t){return~[e.UP,e.DOWN].indexOf(t)},isHorizontalMovement:function(t){return~[e.LEFT,e.RIGHT,e.BACKSPACE,e.DELETE].indexOf(t)}};void 0===angular.element.prototype.querySelectorAll&&(angular.element.prototype.querySelectorAll=function(e){return angular.element(this[0].querySelectorAll(e))}),void 0===angular.element.prototype.closest&&(angular.element.prototype.closest=function(e){for(var t=this[0],i=t.matches||t.webkitMatchesSelector||t.mozMatchesSelector||t.msMatchesSelector;t;){if(i.bind(t)(e))return t;t=t.parentElement}return!1});var t=0,i=angular.module("ui.select",[]).constant("uiSelectConfig",{theme:"bootstrap",searchEnabled:!0,sortable:!1,placeholder:"",refreshDelay:1e3,closeOnSelect:!0,dropdownPosition:"auto",generateId:function(){return t++},appendToBody:!1}).service("uiSelectMinErr",function(){var e=angular.$$minErr("ui.select");return function(){var t=e.apply(this,arguments),i=t.message.replace(new RegExp("\nhttp://errors.angularjs.org/.*"),"");return new Error(i)}}).directive("uisTranscludeAppend",function(){return{link:function(e,t,i,s,c){c(e,function(e){t.append(e)})}}}).filter("highlight",function(){function e(e){return e.replace(/([.?*+^$[\]\\(){}|-])/g,"\\$1")}return function(t,i){return i&&t?t.replace(new RegExp(e(i),"gi"),'<span class="ui-select-highlight">$&</span>'):t}}).factory("uisOffset",["$document","$window",function(e,t){return function(i){var s=i[0].getBoundingClientRect();return{width:s.width||i.prop("offsetWidth"),height:s.height||i.prop("offsetHeight"),top:s.top+(t.pageYOffset||e[0].documentElement.scrollTop),left:s.left+(t.pageXOffset||e[0].documentElement.scrollLeft)}}}]);i.directive("uiSelectChoices",["uiSelectConfig","uisRepeatParser","uiSelectMinErr","$compile",function(e,t,i,s){return{restrict:"EA",require:"^uiSelect",replace:!0,transclude:!0,templateUrl:function(t){var i=t.parent().attr("theme")||e.theme;return i+"/choices.tpl.html"},compile:function(c,l){if(!l.repeat)throw i("repeat","Expected 'repeat' expression.");return function(c,l,n,a,r){var o=n.groupBy,u=n.groupFilter;if(a.parseRepeatAttr(n.repeat,o,u),a.disableChoiceExpression=n.uiDisableChoice,a.onHighlightCallback=n.onHighlight,a.dropdownPosition=n.position?n.position.toLowerCase():e.dropdownPosition,o){var d=l.querySelectorAll(".ui-select-choices-group");if(1!==d.length)throw i("rows","Expected 1 .ui-select-choices-group but got '{0}'.",d.length);d.attr("ng-repeat",t.getGroupNgRepeatExpression())}var p=l.querySelectorAll(".ui-select-choices-row");if(1!==p.length)throw i("rows","Expected 1 .ui-select-choices-row but got '{0}'.",p.length);p.attr("ng-repeat",a.parserResult.repeatExpression(o)).attr("ng-if","$select.open").attr("ng-click","$select.select("+a.parserResult.itemName+",false,$event)");var h=l.querySelectorAll(".ui-select-choices-row-inner");if(1!==h.length)throw i("rows","Expected 1 .ui-select-choices-row-inner but got '{0}'.",h.length);h.attr("uis-transclude-append",""),s(l,r)(c),c.$watch("$select.search",function(e){e&&!a.open&&a.multiple&&a.activate(!1,!0),a.activeIndex=a.tagging.isActivated?-1:0,a.refresh(n.refresh)}),n.$observe("refreshDelay",function(){var t=c.$eval(n.refreshDelay);a.refreshDelay=void 0!==t?t:e.refreshDelay})}}}}]),i.controller("uiSelectCtrl",["$scope","$element","$timeout","$filter","uisRepeatParser","uiSelectMinErr","uiSelectConfig","$parse",function(t,i,s,c,l,n,a,r){function o(){(h.resetSearchInput||void 0===h.resetSearchInput&&a.resetSearchInput)&&(h.search=g,h.selected&&h.items.length&&!h.multiple&&(h.activeIndex=h.items.indexOf(h.selected)))}function u(e,t){var i,s,c=[];for(i=0;i<t.length;i++)for(s=0;s<e.length;s++)e[s].name==[t[i]]&&c.push(e[s]);return c}function d(t){var i=!0;switch(t){case e.DOWN:!h.open&&h.multiple?h.activate(!1,!0):h.activeIndex<h.items.length-1&&h.activeIndex++;break;case e.UP:!h.open&&h.multiple?h.activate(!1,!0):(h.activeIndex>0||0===h.search.length&&h.tagging.isActivated&&h.activeIndex>-1)&&h.activeIndex--;break;case e.TAB:(!h.multiple||h.open)&&h.select(h.items[h.activeIndex],!0);break;case e.ENTER:h.open&&(h.tagging.isActivated||h.activeIndex>=0)?h.select(h.items[h.activeIndex]):h.activate(!1,!0);break;case e.ESC:h.close();break;default:i=!1}return i}function p(){var e=i.querySelectorAll(".ui-select-choices-content"),t=e.querySelectorAll(".ui-select-choices-row");if(t.length<1)throw n("choices","Expected multiple .ui-select-choices-row but got '{0}'.",t.length);if(!(h.activeIndex<0)){var s=t[h.activeIndex],c=s.offsetTop+s.clientHeight-e[0].scrollTop,l=e[0].offsetHeight;c>l?e[0].scrollTop+=c-l:c<s.clientHeight&&(h.isGrouped&&0===h.activeIndex?e[0].scrollTop=0:e[0].scrollTop-=s.clientHeight-c)}}var h=this,g="";if(h.placeholder=a.placeholder,h.searchEnabled=a.searchEnabled,h.sortable=a.sortable,h.refreshDelay=a.refreshDelay,h.removeSelected=!1,h.closeOnSelect=!0,h.search=g,h.activeIndex=0,h.items=[],h.open=!1,h.focus=!1,h.disabled=!1,h.selected=void 0,h.dropdownPosition="auto",h.focusser=void 0,h.resetSearchInput=!0,h.multiple=void 0,h.disableChoiceExpression=void 0,h.tagging={isActivated:!1,fct:void 0},h.taggingTokens={isActivated:!1,tokens:void 0},h.lockChoiceExpression=void 0,h.clickTriggeredSelect=!1,h.$filter=c,h.searchInput=i.querySelectorAll("input.ui-select-search"),1!==h.searchInput.length)throw n("searchInput","Expected 1 input.ui-select-search but got '{0}'.",h.searchInput.length);h.isEmpty=function(){return angular.isUndefined(h.selected)||null===h.selected||""===h.selected},h.activate=function(e,i){h.disabled||h.open||(i||o(),t.$broadcast("uis:activate"),h.open=!0,h.activeIndex=h.activeIndex>=h.items.length?0:h.activeIndex,-1===h.activeIndex&&h.taggingLabel!==!1&&(h.activeIndex=0),s(function(){h.search=e||h.search,h.searchInput[0].focus(),!h.tagging.isActivated&&h.items.length>1&&p()}))},h.findGroupByName=function(e){return h.groups&&h.groups.filter(function(t){return t.name===e})[0]},h.parseRepeatAttr=function(e,i,s){function c(e){var c=t.$eval(i);if(h.groups=[],angular.forEach(e,function(e){var t=angular.isFunction(c)?c(e):e[c],i=h.findGroupByName(t);i?i.items.push(e):h.groups.push({name:t,items:[e]})}),s){var l=t.$eval(s);angular.isFunction(l)?h.groups=l(h.groups):angular.isArray(l)&&(h.groups=u(h.groups,l))}h.items=[],h.groups.forEach(function(e){h.items=h.items.concat(e.items)})}function a(e){h.items=e}h.setItemsFn=i?c:a,h.parserResult=l.parse(e),h.isGrouped=!!i,h.itemProperty=h.parserResult.itemName;var o=h.parserResult.source,d=function(){var e=o(t);t.$uisSource=Object.keys(e).map(function(t){var i={};return i[h.parserResult.keyName]=t,i.value=e[t],i})};h.parserResult.keyName&&(d(),h.parserResult.source=r("$uisSource"+h.parserResult.filters),t.$watch(o,function(e,t){e!==t&&d()},!0)),h.refreshItems=function(e){e=e||h.parserResult.source(t);var i=h.selected;if(h.isEmpty()||angular.isArray(i)&&!i.length||!h.removeSelected)h.setItemsFn(e);else if(void 0!==e){var s=e.filter(function(e){return i&&i.indexOf(e)<0});h.setItemsFn(s)}("auto"===h.dropdownPosition||"up"===h.dropdownPosition)&&t.calculateDropdownPos()},t.$watchCollection(h.parserResult.source,function(e){if(void 0===e||null===e)h.items=[];else{if(!angular.isArray(e))throw n("items","Expected an array but got '{0}'.",e);h.refreshItems(e),h.ngModel.$modelValue=null}})};var f;h.refresh=function(e){void 0!==e&&(f&&s.cancel(f),f=s(function(){t.$eval(e)},h.refreshDelay))},h.isActive=function(e){if(!h.open)return!1;var t=h.items.indexOf(e[h.itemProperty]),i=t===h.activeIndex;return!i||0>t&&h.taggingLabel!==!1||0>t&&h.taggingLabel===!1?!1:(i&&!angular.isUndefined(h.onHighlightCallback)&&e.$eval(h.onHighlightCallback),i)},h.isDisabled=function(e){if(h.open){var t,i=h.items.indexOf(e[h.itemProperty]),s=!1;return i>=0&&!angular.isUndefined(h.disableChoiceExpression)&&(t=h.items[i],s=!!e.$eval(h.disableChoiceExpression),t._uiSelectChoiceDisabled=s),s}},h.select=function(e,i,c){if(void 0===e||!e._uiSelectChoiceDisabled){if(!h.items&&!h.search)return;if(!e||!e._uiSelectChoiceDisabled){if(h.tagging.isActivated){if(h.taggingLabel===!1)if(h.activeIndex<0){if(e=void 0!==h.tagging.fct?h.tagging.fct(h.search):h.search,!e||angular.equals(h.items[0],e))return}else e=h.items[h.activeIndex];else if(0===h.activeIndex){if(void 0===e)return;if(void 0!==h.tagging.fct&&"string"==typeof e){if(e=h.tagging.fct(h.search),!e)return}else"string"==typeof e&&(e=e.replace(h.taggingLabel,"").trim())}if(h.selected&&angular.isArray(h.selected)&&h.selected.filter(function(t){return angular.equals(t,e)}).length>0)return h.close(i),void 0}t.$broadcast("uis:select",e);var l={};l[h.parserResult.itemName]=e,s(function(){h.onSelectCallback(t,{$item:e,$model:h.parserResult.modelMapper(t,l)})}),h.closeOnSelect&&h.close(i),c&&"click"===c.type&&(h.clickTriggeredSelect=!0)}}},h.close=function(e){h.open&&(h.ngModel&&h.ngModel.$setTouched&&h.ngModel.$setTouched(),o(),h.open=!1,t.$broadcast("uis:close",e))},h.setFocus=function(){h.focus||h.focusInput[0].focus()},h.clear=function(e){h.select(void 0),e.stopPropagation(),s(function(){h.focusser[0].focus()},0,!1)},h.toggle=function(e){h.open?(h.close(),e.preventDefault(),e.stopPropagation()):h.activate()},h.isLocked=function(e,t){var i,s=h.selected[t];return s&&!angular.isUndefined(h.lockChoiceExpression)&&(i=!!e.$eval(h.lockChoiceExpression),s._uiSelectChoiceLocked=i),i};var v=null;h.sizeSearchInput=function(){var e=h.searchInput[0],i=h.searchInput.parent().parent()[0],c=function(){return i.clientWidth*!!e.offsetParent},l=function(t){if(0===t)return!1;var i=t-e.offsetLeft-10;return 50>i&&(i=t),h.searchInput.css("width",i+"px"),!0};h.searchInput.css("width","10px"),s(function(){null!==v||l(c())||(v=t.$watch(c,function(e){l(e)&&(v(),v=null)}))})},h.searchInput.on("keydown",function(i){var c=i.which;t.$apply(function(){var t=!1;if((h.items.length>0||h.tagging.isActivated)&&(d(c),h.taggingTokens.isActivated)){for(var l=0;l<h.taggingTokens.tokens.length;l++)h.taggingTokens.tokens[l]===e.MAP[i.keyCode]&&h.search.length>0&&(t=!0);t&&s(function(){h.searchInput.triggerHandler("tagged");var t=h.search.replace(e.MAP[i.keyCode],"").trim();h.tagging.fct&&(t=h.tagging.fct(t)),t&&h.select(t,!0)})}}),e.isVerticalMovement(c)&&h.items.length>0&&p(),(c===e.ENTER||c===e.ESC)&&(i.preventDefault(),i.stopPropagation())}),h.searchInput.on("paste",function(e){var t=e.originalEvent.clipboardData.getData("text/plain");if(t&&t.length>0&&h.taggingTokens.isActivated&&h.tagging.fct){var i=t.split(h.taggingTokens.tokens[0]);i&&i.length>0&&(angular.forEach(i,function(e){var t=h.tagging.fct(e);t&&h.select(t,!0)}),e.preventDefault(),e.stopPropagation())}}),h.searchInput.on("tagged",function(){s(function(){o()})}),t.$on("$destroy",function(){h.searchInput.off("keyup keydown tagged blur paste")})}]),i.directive("uiSelect",["$document","uiSelectConfig","uiSelectMinErr","uisOffset","$compile","$parse","$timeout",function(e,t,i,s,c,l,n){return{restrict:"EA",templateUrl:function(e,i){var s=i.theme||t.theme;return s+(angular.isDefined(i.multiple)?"/select-multiple.tpl.html":"/select.tpl.html")},replace:!0,transclude:!0,require:["uiSelect","^ngModel"],scope:!0,controller:"uiSelectCtrl",controllerAs:"$select",compile:function(c,a){return angular.isDefined(a.multiple)?c.append("<ui-select-multiple/>").removeAttr("multiple"):c.append("<ui-select-single/>"),a.inputId&&(c.querySelectorAll("input.ui-select-search")[0].id=a.inputId),function(c,a,r,o,u){function d(e){if(g.open){var t=!1;if(t=window.jQuery?window.jQuery.contains(a[0],e.target):a[0].contains(e.target),!t&&!g.clickTriggeredSelect){var i=["input","button","textarea"],s=angular.element(e.target).controller("uiSelect"),l=s&&s!==g;l||(l=~i.indexOf(e.target.tagName.toLowerCase())),g.close(l),c.$digest()}g.clickTriggeredSelect=!1}}function p(){var t=s(a);m=angular.element('<div class="ui-select-placeholder"></div>'),m[0].style.width=t.width+"px",m[0].style.height=t.height+"px",a.after(m),$=a[0].style.width,e.find("body").append(a),a[0].style.position="absolute",a[0].style.left=t.left+"px",a[0].style.top=t.top+"px",a[0].style.width=t.width+"px"}function h(){null!==m&&(m.replaceWith(a),m=null,a[0].style.position="",a[0].style.left="",a[0].style.top="",a[0].style.width=$)}var g=o[0],f=o[1];g.generatedId=t.generateId(),g.baseTitle=r.title||"Select box",g.focusserTitle=g.baseTitle+" focus",g.focusserId="focusser-"+g.generatedId,g.closeOnSelect=function(){return angular.isDefined(r.closeOnSelect)?l(r.closeOnSelect)():t.closeOnSelect}(),g.onSelectCallback=l(r.onSelect),g.onRemoveCallback=l(r.onRemove),g.limit=angular.isDefined(r.limit)?parseInt(r.limit,10):void 0,g.ngModel=f,g.choiceGrouped=function(e){return g.isGrouped&&e&&e.name},r.tabindex&&r.$observe("tabindex",function(e){g.focusInput.attr("tabindex",e),a.removeAttr("tabindex")}),c.$watch("searchEnabled",function(){var e=c.$eval(r.searchEnabled);g.searchEnabled=void 0!==e?e:t.searchEnabled}),c.$watch("sortable",function(){var e=c.$eval(r.sortable);g.sortable=void 0!==e?e:t.sortable}),r.$observe("disabled",function(){g.disabled=void 0!==r.disabled?r.disabled:!1}),r.$observe("resetSearchInput",function(){var e=c.$eval(r.resetSearchInput);g.resetSearchInput=void 0!==e?e:!0}),r.$observe("tagging",function(){if(void 0!==r.tagging){var e=c.$eval(r.tagging);g.tagging={isActivated:!0,fct:e!==!0?e:void 0}}else g.tagging={isActivated:!1,fct:void 0}}),r.$observe("taggingLabel",function(){void 0!==r.tagging&&(g.taggingLabel="false"===r.taggingLabel?!1:void 0!==r.taggingLabel?r.taggingLabel:"(new)")}),r.$observe("taggingTokens",function(){if(void 0!==r.tagging){var e=void 0!==r.taggingTokens?r.taggingTokens.split("|"):[",","ENTER"];g.taggingTokens={isActivated:!0,tokens:e}}}),angular.isDefined(r.autofocus)&&n(function(){g.setFocus()}),angular.isDefined(r.focusOn)&&c.$on(r.focusOn,function(){n(function(){g.setFocus()})}),e.on("click",d),c.$on("$destroy",function(){e.off("click",d)}),u(c,function(e){var t=angular.element("<div>").append(e),s=t.querySelectorAll(".ui-select-match");if(s.removeAttr("ui-select-match"),s.removeAttr("data-ui-select-match"),1!==s.length)throw i("transcluded","Expected 1 .ui-select-match but got '{0}'.",s.length);a.querySelectorAll(".ui-select-match").replaceWith(s);var c=t.querySelectorAll(".ui-select-choices");if(c.removeAttr("ui-select-choices"),c.removeAttr("data-ui-select-choices"),1!==c.length)throw i("transcluded","Expected 1 .ui-select-choices but got '{0}'.",c.length);a.querySelectorAll(".ui-select-choices").replaceWith(c)});var v=c.$eval(r.appendToBody);(void 0!==v?v:t.appendToBody)&&(c.$watch("$select.open",function(e){e?p():h()}),c.$on("$destroy",function(){h()}));var m=null,$="",b=null,w="direction-up";c.$watch("$select.open",function(){("auto"===g.dropdownPosition||"up"===g.dropdownPosition)&&c.calculateDropdownPos()});var x=function(e,t){e=e||s(a),t=t||s(b),b[0].style.position="absolute",b[0].style.top=-1*t.height+"px",a.addClass(w)},y=function(e,t){a.removeClass(w),e=e||s(a),t=t||s(b),b[0].style.position="",b[0].style.top=""};c.calculateDropdownPos=function(){if(g.open){if(b=angular.element(a).querySelectorAll(".ui-select-dropdown"),0===b.length)return;b[0].style.opacity=0,n(function(){if("up"===g.dropdownPosition)x(t,i);else{a.removeClass(w);var t=s(a),i=s(b),c=e[0].documentElement.scrollTop||e[0].body.scrollTop;t.top+t.height+i.height>c+e[0].documentElement.clientHeight?x(t,i):y(t,i)}b[0].style.opacity=1})}else{if(null===b||0===b.length)return;b[0].style.position="",b[0].style.top="",a.removeClass(w)}}}}}}]),i.directive("uiSelectMatch",["uiSelectConfig",function(e){return{restrict:"EA",require:"^uiSelect",replace:!0,transclude:!0,templateUrl:function(t){var i=t.parent().attr("theme")||e.theme,s=t.parent().attr("multiple");return i+(s?"/match-multiple.tpl.html":"/match.tpl.html")},link:function(t,i,s,c){function l(e){c.allowClear=angular.isDefined(e)?""===e?!0:"true"===e.toLowerCase():!1}c.lockChoiceExpression=s.uiLockChoice,s.$observe("placeholder",function(t){c.placeholder=void 0!==t?t:e.placeholder}),s.$observe("allowClear",l),l(s.allowClear),c.multiple&&c.sizeSearchInput()}}}]),i.directive("uiSelectMultiple",["uiSelectMinErr","$timeout",function(t,i){return{restrict:"EA",require:["^uiSelect","^ngModel"],controller:["$scope","$timeout",function(e,t){var i,s=this,c=e.$select;e.$evalAsync(function(){i=e.ngModel}),s.activeMatchIndex=-1,s.updateModel=function(){i.$setViewValue(Date.now()),s.refreshComponent()},s.refreshComponent=function(){c.refreshItems(),c.sizeSearchInput()},s.removeChoice=function(i){var l=c.selected[i];if(!l._uiSelectChoiceLocked){var n={};n[c.parserResult.itemName]=l,c.selected.splice(i,1),s.activeMatchIndex=-1,c.sizeSearchInput(),t(function(){c.onRemoveCallback(e,{$item:l,$model:c.parserResult.modelMapper(e,n)})}),s.updateModel()}},s.getPlaceholder=function(){return c.selected&&c.selected.length?void 0:c.placeholder}}],controllerAs:"$selectMultiple",link:function(s,c,l,n){function a(e){return angular.isNumber(e.selectionStart)?e.selectionStart:e.value.length}function r(t){function i(){switch(t){case e.LEFT:return~h.activeMatchIndex?u:n;case e.RIGHT:return~h.activeMatchIndex&&r!==n?o:(d.activate(),!1);case e.BACKSPACE:return~h.activeMatchIndex?(h.removeChoice(r),u):n;case e.DELETE:return~h.activeMatchIndex?(h.removeChoice(h.activeMatchIndex),r):!1}}var s=a(d.searchInput[0]),c=d.selected.length,l=0,n=c-1,r=h.activeMatchIndex,o=h.activeMatchIndex+1,u=h.activeMatchIndex-1,p=r;return s>0||d.search.length&&t==e.RIGHT?!1:(d.close(),p=i(),h.activeMatchIndex=d.selected.length&&p!==!1?Math.min(n,Math.max(l,p)):-1,!0)}function o(e){if(void 0===e||void 0===d.search)return!1;var t=e.filter(function(e){return void 0===d.search.toUpperCase()||void 0===e?!1:e.toUpperCase()===d.search.toUpperCase()}).length>0;return t}function u(e,t){var i=-1;if(angular.isArray(e))for(var s=angular.copy(e),c=0;c<s.length;c++)if(void 0===d.tagging.fct)s[c]+" "+d.taggingLabel===t&&(i=c);else{var l=s[c];l.isTag=!0,angular.equals(l,t)&&(i=c)}return i}var d=n[0],p=s.ngModel=n[1],h=s.$selectMultiple;d.multiple=!0,d.removeSelected=!0,d.focusInput=d.searchInput,p.$parsers.unshift(function(){for(var e,t={},i=[],c=d.selected.length-1;c>=0;c--)t={},t[d.parserResult.itemName]=d.selected[c],e=d.parserResult.modelMapper(s,t),i.unshift(e);return i}),p.$formatters.unshift(function(e){var t,i=d.parserResult.source(s,{$select:{search:""}}),c={};if(!i)return e;var l=[],n=function(e,i){if(e&&e.length){for(var n=e.length-1;n>=0;n--){if(c[d.parserResult.itemName]=e[n],t=d.parserResult.modelMapper(s,c),d.parserResult.trackByExp){var a=/\.(.+)/.exec(d.parserResult.trackByExp);if(a.length>0&&t[a[1]]==i[a[1]])return l.unshift(e[n]),!0}if(angular.equals(t,i))return l.unshift(e[n]),!0}return!1}};if(!e)return l;for(var a=e.length-1;a>=0;a--)n(d.selected,e[a])||n(i,e[a])||l.unshift(e[a]);return l}),s.$watchCollection(function(){return p.$modelValue},function(e,t){t!=e&&(p.$modelValue=null,h.refreshComponent())}),p.$render=function(){if(!angular.isArray(p.$viewValue)){if(!angular.isUndefined(p.$viewValue)&&null!==p.$viewValue)throw t("multiarr","Expected model value to be array but got '{0}'",p.$viewValue);d.selected=[]}d.selected=p.$viewValue,s.$evalAsync()},s.$on("uis:select",function(e,t){d.selected.length>=d.limit||(d.selected.push(t),h.updateModel())}),s.$on("uis:activate",function(){h.activeMatchIndex=-1}),s.$watch("$select.disabled",function(e,t){t&&!e&&d.sizeSearchInput()}),d.searchInput.on("keydown",function(t){var i=t.which;s.$apply(function(){var s=!1;e.isHorizontalMovement(i)&&(s=r(i)),s&&i!=e.TAB&&(t.preventDefault(),t.stopPropagation())})}),d.searchInput.on("keyup",function(t){if(e.isVerticalMovement(t.which)||s.$evalAsync(function(){d.activeIndex=d.taggingLabel===!1?-1:0}),d.tagging.isActivated&&d.search.length>0){if(t.which===e.TAB||e.isControl(t)||e.isFunctionKey(t)||t.which===e.ESC||e.isVerticalMovement(t.which))return;if(d.activeIndex=d.taggingLabel===!1?-1:0,d.taggingLabel===!1)return;var i,c,l,n,a=angular.copy(d.items),r=angular.copy(d.items),p=!1,h=-1;if(void 0!==d.tagging.fct){if(l=d.$filter("filter")(a,{isTag:!0}),l.length>0&&(n=l[0]),a.length>0&&n&&(p=!0,a=a.slice(1,a.length),r=r.slice(1,r.length)),i=d.tagging.fct(d.search),i.isTag=!0,r.filter(function(e){return angular.equals(e,d.tagging.fct(d.search))}).length>0)return;i.isTag=!0}else{if(l=d.$filter("filter")(a,function(e){return e.match(d.taggingLabel)}),l.length>0&&(n=l[0]),c=a[0],void 0!==c&&a.length>0&&n&&(p=!0,a=a.slice(1,a.length),r=r.slice(1,r.length)),i=d.search+" "+d.taggingLabel,u(d.selected,d.search)>-1)return;if(o(r.concat(d.selected)))return p&&(a=r,s.$evalAsync(function(){d.activeIndex=0,d.items=a})),void 0;if(o(r))return p&&(d.items=r.slice(1,r.length)),void 0}p&&(h=u(d.selected,i)),h>-1?a=a.slice(h+1,a.length-1):(a=[],a.push(i),a=a.concat(r)),s.$evalAsync(function(){d.activeIndex=0,d.items=a})}}),d.searchInput.on("blur",function(){i(function(){h.activeMatchIndex=-1})})}}}]),i.directive("uiSelectSingle",["$timeout","$compile",function(t,i){return{restrict:"EA",require:["^uiSelect","^ngModel"],link:function(s,c,l,n){var a=n[0],r=n[1];r.$parsers.unshift(function(e){var t,i={};return i[a.parserResult.itemName]=e,t=a.parserResult.modelMapper(s,i)}),r.$formatters.unshift(function(e){var t,i=a.parserResult.source(s,{$select:{search:""}}),c={};if(i){var l=function(i){return c[a.parserResult.itemName]=i,t=a.parserResult.modelMapper(s,c),t==e};if(a.selected&&l(a.selected))return a.selected;for(var n=i.length-1;n>=0;n--)if(l(i[n]))return i[n]}return e}),s.$watch("$select.selected",function(e){r.$viewValue!==e&&r.$setViewValue(e)}),r.$render=function(){a.selected=r.$viewValue},s.$on("uis:select",function(e,t){a.selected=t}),s.$on("uis:close",function(e,i){t(function(){a.focusser.prop("disabled",!1),i||a.focusser[0].focus()},0,!1)}),s.$on("uis:activate",function(){o.prop("disabled",!0)});var o=angular.element("<input ng-disabled='$select.disabled' class='ui-select-focusser ui-select-offscreen' type='text' id='{{ $select.focusserId }}' aria-label='{{ $select.focusserTitle }}' aria-haspopup='true' role='button' />");i(o)(s),a.focusser=o,a.focusInput=o,c.parent().append(o),o.bind("focus",function(){s.$evalAsync(function(){a.focus=!0})}),o.bind("blur",function(){s.$evalAsync(function(){a.focus=!1})}),o.bind("keydown",function(t){return t.which===e.BACKSPACE?(t.preventDefault(),t.stopPropagation(),a.select(void 0),s.$apply(),void 0):(t.which===e.TAB||e.isControl(t)||e.isFunctionKey(t)||t.which===e.ESC||((t.which==e.DOWN||t.which==e.UP||t.which==e.ENTER||t.which==e.SPACE)&&(t.preventDefault(),t.stopPropagation(),a.activate()),s.$digest()),void 0)}),o.bind("keyup input",function(t){t.which===e.TAB||e.isControl(t)||e.isFunctionKey(t)||t.which===e.ESC||t.which==e.ENTER||t.which===e.BACKSPACE||(a.activate(o.val()),o.val(""),s.$digest())})}}}]),i.directive("uiSelectSort",["$timeout","uiSelectConfig","uiSelectMinErr",function(e,t,i){return{require:"^uiSelect",link:function(t,s,c,l){if(null===t[c.uiSelectSort])throw i("sort","Expected a list to sort");var n=angular.extend({axis:"horizontal"},t.$eval(c.uiSelectSortOptions)),a=n.axis,r="dragging",o="dropping",u="dropping-before",d="dropping-after";t.$watch(function(){return l.sortable},function(e){e?s.attr("draggable",!0):s.removeAttr("draggable")}),s.on("dragstart",function(e){s.addClass(r),(e.dataTransfer||e.originalEvent.dataTransfer).setData("text/plain",t.$index)}),s.on("dragend",function(){s.removeClass(r)});var p,h=function(e,t){this.splice(t,0,this.splice(e,1)[0])},g=function(e){e.preventDefault();var t="vertical"===a?e.offsetY||e.layerY||(e.originalEvent?e.originalEvent.offsetY:0):e.offsetX||e.layerX||(e.originalEvent?e.originalEvent.offsetX:0);t<this["vertical"===a?"offsetHeight":"offsetWidth"]/2?(s.removeClass(d),s.addClass(u)):(s.removeClass(u),s.addClass(d))},f=function(t){t.preventDefault();var i=parseInt((t.dataTransfer||t.originalEvent.dataTransfer).getData("text/plain"),10);e.cancel(p),p=e(function(){v(i)},20)},v=function(e){var i=t.$eval(c.uiSelectSort),l=i[e],n=null;n=s.hasClass(u)?e<t.$index?t.$index-1:t.$index:e<t.$index?t.$index:t.$index+1,h.apply(i,[e,n]),t.$apply(function(){t.$emit("uiSelectSort:change",{array:i,item:l,from:e,to:n})}),s.removeClass(o),s.removeClass(u),s.removeClass(d),s.off("drop",f)};s.on("dragenter",function(){s.hasClass(r)||(s.addClass(o),s.on("dragover",g),s.on("drop",f))}),s.on("dragleave",function(e){e.target==s&&(s.removeClass(o),s.removeClass(u),s.removeClass(d),s.off("dragover",g),s.off("drop",f))})}}}]),i.service("uisRepeatParser",["uiSelectMinErr","$parse",function(e,t){var i=this;i.parse=function(i){var s,c=/\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)/.test(i);if(s=i.match(/^\s*(?:([\s\S]+?)\s+as\s+)?(?:([\$\w][\$\w]*)|(?:\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)))\s+in\s+(([\w\.]+)?\s*(|\s*[\s\S]+?))?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/),!s)throw e("iexp","Expected expression in form of '_item_ in _collection_[ track by _id_]' but got '{0}'.",i);if(!s[6]&&c)throw e("iexp","Expected expression in form of '_item_ as (_key_, _item_) in _ObjCollection_ [ track by _id_]' but got '{0}'.",i);return{itemName:s[4]||s[2],keyName:s[3],source:t(s[3]?s[6]:s[5]),sourceName:s[6],filters:s[7],trackByExp:s[8],modelMapper:t(s[1]||s[4]||s[2]),repeatExpression:function(e){var t=this.itemName+" in "+(e?"$group.items":"$select.items");return this.trackByExp&&(t+=" track by "+this.trackByExp),t}}},i.getGroupNgRepeatExpression=function(){return"$group in $select.groups"}}])}(),angular.module("ui.select").run(["$templateCache",function(e){e.put("bootstrap/choices.tpl.html",'<ul class="ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu" role="listbox" ng-show="$select.items.length > 0"><li class="ui-select-choices-group" id="ui-select-choices-{{ $select.generatedId }}"><div class="divider" ng-show="$select.isGrouped && $index > 0"></div><div ng-show="$select.isGrouped" class="ui-select-choices-group-label dropdown-header" ng-bind="$group.name"></div><div id="ui-select-choices-row-{{ $select.generatedId }}-{{$index}}" class="ui-select-choices-row" ng-class="{active: $select.isActive(this), disabled: $select.isDisabled(this)}" role="option"><a href="javascript:void(0)" class="ui-select-choices-row-inner"></a></div></li></ul>'),e.put("bootstrap/match-multiple.tpl.html",'<span class="ui-select-match"><span ng-repeat="$item in $select.selected"><span class="ui-select-match-item btn btn-default btn-xs" tabindex="-1" type="button" ng-disabled="$select.disabled" ng-click="$selectMultiple.activeMatchIndex = $index;" ng-class="{\'btn-primary\':$selectMultiple.activeMatchIndex === $index, \'select-locked\':$select.isLocked(this, $index)}" ui-select-sort="$select.selected"><span class="close ui-select-match-close" ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)">&nbsp;&times;</span> <span uis-transclude-append=""></span></span></span></span>'),e.put("bootstrap/match.tpl.html",'<div class="ui-select-match" ng-hide="$select.open" ng-disabled="$select.disabled" ng-class="{\'btn-default-focus\':$select.focus}"><span tabindex="-1" class="btn btn-default form-control ui-select-toggle" aria-label="{{ $select.baseTitle }} activate" ng-disabled="$select.disabled" ng-click="$select.activate()" style="outline: 0;"><span ng-show="$select.isEmpty()" class="ui-select-placeholder text-muted">{{$select.placeholder}}</span> <span ng-hide="$select.isEmpty()" class="ui-select-match-text pull-left" ng-class="{\'ui-select-allow-clear\': $select.allowClear && !$select.isEmpty()}" ng-transclude=""></span> <i class="caret pull-right" ng-click="$select.toggle($event)"></i> <a ng-show="$select.allowClear && !$select.isEmpty()" aria-label="{{ $select.baseTitle }} clear" style="margin-right: 10px" ng-click="$select.clear($event)" class="btn btn-xs btn-link pull-right"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></a></span></div>'),e.put("bootstrap/select-multiple.tpl.html",'<div class="ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control" ng-class="{open: $select.open}"><div><div class="ui-select-match"></div><input type="text" autocomplete="false" autocorrect="off" autocapitalize="off" spellcheck="false" class="ui-select-search input-xs" placeholder="{{$selectMultiple.getPlaceholder()}}" ng-disabled="$select.disabled" ng-hide="$select.disabled" ng-click="$select.activate()" ng-model="$select.search" role="combobox" aria-label="{{ $select.baseTitle }}" ondrop="return false;"></div><div class="ui-select-choices"></div></div>'),e.put("bootstrap/select.tpl.html",'<div class="ui-select-container ui-select-bootstrap dropdown" ng-class="{open: $select.open}"><div class="ui-select-match"></div><input type="text" autocomplete="false" tabindex="-1" aria-expanded="true" aria-label="{{ $select.baseTitle }}" aria-owns="ui-select-choices-{{ $select.generatedId }}" aria-activedescendant="ui-select-choices-row-{{ $select.generatedId }}-{{ $select.activeIndex }}" class="form-control ui-select-search" placeholder="{{$select.placeholder}}" ng-model="$select.search" ng-show="$select.searchEnabled && $select.open"><div class="ui-select-choices"></div></div>'),e.put("selectize/choices.tpl.html",'<div ng-show="$select.open" class="ui-select-choices ui-select-dropdown selectize-dropdown single"><div class="ui-select-choices-content selectize-dropdown-content"><div class="ui-select-choices-group optgroup" role="listbox"><div ng-show="$select.isGrouped" class="ui-select-choices-group-label optgroup-header" ng-bind="$group.name"></div><div role="option" class="ui-select-choices-row" ng-class="{active: $select.isActive(this), disabled: $select.isDisabled(this)}"><div class="option ui-select-choices-row-inner" data-selectable=""></div></div></div></div></div>'),e.put("selectize/match.tpl.html",'<div ng-hide="($select.open || $select.isEmpty())" class="ui-select-match" ng-transclude=""></div>'),e.put("selectize/select.tpl.html",'<div class="ui-select-container selectize-control single" ng-class="{\'open\': $select.open}"><div class="selectize-input" ng-class="{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}" ng-click="$select.activate()"><div class="ui-select-match"></div><input type="text" autocomplete="false" tabindex="-1" class="ui-select-search ui-select-toggle" ng-click="$select.toggle($event)" placeholder="{{$select.placeholder}}" ng-model="$select.search" ng-hide="!$select.searchEnabled || ($select.selected && !$select.open)" ng-disabled="$select.disabled" aria-label="{{ $select.baseTitle }}"></div><div class="ui-select-choices"></div></div>'),e.put("select2/choices.tpl.html",'<ul class="ui-select-choices ui-select-choices-content select2-results"><li class="ui-select-choices-group" ng-class="{\'select2-result-with-children\': $select.choiceGrouped($group) }"><div ng-show="$select.choiceGrouped($group)" class="ui-select-choices-group-label select2-result-label" ng-bind="$group.name"></div><ul role="listbox" id="ui-select-choices-{{ $select.generatedId }}" ng-class="{\'select2-result-sub\': $select.choiceGrouped($group), \'select2-result-single\': !$select.choiceGrouped($group) }"><li role="option" id="ui-select-choices-row-{{ $select.generatedId }}-{{$index}}" class="ui-select-choices-row" ng-class="{\'select2-highlighted\': $select.isActive(this), \'select2-disabled\': $select.isDisabled(this)}"><div class="select2-result-label ui-select-choices-row-inner"></div></li></ul></li></ul>'),e.put("select2/match-multiple.tpl.html",'<span class="ui-select-match"><li class="ui-select-match-item select2-search-choice" ng-repeat="$item in $select.selected" ng-class="{\'select2-search-choice-focus\':$selectMultiple.activeMatchIndex === $index, \'select2-locked\':$select.isLocked(this, $index)}" ui-select-sort="$select.selected"><span uis-transclude-append=""></span> <a href="javascript:;" class="ui-select-match-close select2-search-choice-close" ng-click="$selectMultiple.removeChoice($index)" tabindex="-1"></a></li></span>'),e.put("select2/match.tpl.html",'<a class="select2-choice ui-select-match" ng-class="{\'select2-default\': $select.isEmpty()}" ng-click="$select.toggle($event)" aria-label="{{ $select.baseTitle }} select"><span ng-show="$select.isEmpty()" class="select2-chosen">{{$select.placeholder}}</span> <span ng-hide="$select.isEmpty()" class="select2-chosen" ng-transclude=""></span> <abbr ng-if="$select.allowClear && !$select.isEmpty()" class="select2-search-choice-close" ng-click="$select.clear($event)"></abbr> <span class="select2-arrow ui-select-toggle"><b></b></span></a>'),e.put("select2/select-multiple.tpl.html",'<div class="ui-select-container ui-select-multiple select2 select2-container select2-container-multi" ng-class="{\'select2-container-active select2-dropdown-open open\': $select.open, \'select2-container-disabled\': $select.disabled}"><ul class="select2-choices"><span class="ui-select-match"></span><li class="select2-search-field"><input type="text" autocomplete="false" autocorrect="off" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="true" aria-owns="ui-select-choices-{{ $select.generatedId }}" aria-label="{{ $select.baseTitle }}" aria-activedescendant="ui-select-choices-row-{{ $select.generatedId }}-{{ $select.activeIndex }}" class="select2-input ui-select-search" placeholder="{{$selectMultiple.getPlaceholder()}}" ng-disabled="$select.disabled" ng-hide="$select.disabled" ng-model="$select.search" ng-click="$select.activate()" style="width: 34px;" ondrop="return false;"></li></ul><div class="ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active" ng-class="{\'select2-display-none\': !$select.open}"><div class="ui-select-choices"></div></div></div>'),e.put("select2/select.tpl.html",'<div class="ui-select-container select2 select2-container" ng-class="{\'select2-container-active select2-dropdown-open open\': $select.open, \'select2-container-disabled\': $select.disabled, \'select2-container-active\': $select.focus, \'select2-allowclear\': $select.allowClear && !$select.isEmpty()}"><div class="ui-select-match"></div><div class="ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active" ng-class="{\'select2-display-none\': !$select.open}"><div class="select2-search" ng-show="$select.searchEnabled"><input type="text" autocomplete="false" autocorrect="false" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="true" aria-owns="ui-select-choices-{{ $select.generatedId }}" aria-label="{{ $select.baseTitle }}" aria-activedescendant="ui-select-choices-row-{{ $select.generatedId }}-{{ $select.activeIndex }}" class="ui-select-search select2-input" ng-model="$select.search"></div><div class="ui-select-choices"></div></div></div>')
-}]);
-/*
- AngularJS v1.4.8
- (c) 2010-2015 Google, Inc. http://angularjs.org
- License: MIT
-*/
-(function(n,h,p){'use strict';function E(a){var f=[];r(f,h.noop).chars(a);return f.join("")}function g(a,f){var d={},c=a.split(","),b;for(b=0;b<c.length;b++)d[f?h.lowercase(c[b]):c[b]]=!0;return d}function F(a,f){function d(a,b,d,l){b=h.lowercase(b);if(s[b])for(;e.last()&&t[e.last()];)c("",e.last());u[b]&&e.last()==b&&c("",b);(l=v[b]||!!l)||e.push(b);var m={};d.replace(G,function(b,a,f,c,d){m[a]=q(f||c||d||"")});f.start&&f.start(b,m,l)}function c(b,a){var c=0,d;if(a=h.lowercase(a))for(c=e.length-
-1;0<=c&&e[c]!=a;c--);if(0<=c){for(d=e.length-1;d>=c;d--)f.end&&f.end(e[d]);e.length=c}}"string"!==typeof a&&(a=null===a||"undefined"===typeof a?"":""+a);var b,k,e=[],m=a,l;for(e.last=function(){return e[e.length-1]};a;){l="";k=!0;if(e.last()&&w[e.last()])a=a.replace(new RegExp("([\\W\\w]*)<\\s*\\/\\s*"+e.last()+"[^>]*>","i"),function(a,b){b=b.replace(H,"$1").replace(I,"$1");f.chars&&f.chars(q(b));return""}),c("",e.last());else{if(0===a.indexOf("\x3c!--"))b=a.indexOf("--",4),0<=b&&a.lastIndexOf("--\x3e",
-b)===b&&(f.comment&&f.comment(a.substring(4,b)),a=a.substring(b+3),k=!1);else if(x.test(a)){if(b=a.match(x))a=a.replace(b[0],""),k=!1}else if(J.test(a)){if(b=a.match(y))a=a.substring(b[0].length),b[0].replace(y,c),k=!1}else K.test(a)&&((b=a.match(z))?(b[4]&&(a=a.substring(b[0].length),b[0].replace(z,d)),k=!1):(l+="<",a=a.substring(1)));k&&(b=a.indexOf("<"),l+=0>b?a:a.substring(0,b),a=0>b?"":a.substring(b),f.chars&&f.chars(q(l)))}if(a==m)throw L("badparse",a);m=a}c()}function q(a){if(!a)return"";A.innerHTML=
-a.replace(/</g,"&lt;");return A.textContent}function B(a){return a.replace(/&/g,"&amp;").replace(M,function(a){var d=a.charCodeAt(0);a=a.charCodeAt(1);return"&#"+(1024*(d-55296)+(a-56320)+65536)+";"}).replace(N,function(a){return"&#"+a.charCodeAt(0)+";"}).replace(/</g,"&lt;").replace(/>/g,"&gt;")}function r(a,f){var d=!1,c=h.bind(a,a.push);return{start:function(a,k,e){a=h.lowercase(a);!d&&w[a]&&(d=a);d||!0!==C[a]||(c("<"),c(a),h.forEach(k,function(d,e){var k=h.lowercase(e),g="img"===a&&"src"===k||
-"background"===k;!0!==O[k]||!0===D[k]&&!f(d,g)||(c(" "),c(e),c('="'),c(B(d)),c('"'))}),c(e?"/>":">"))},end:function(a){a=h.lowercase(a);d||!0!==C[a]||(c("</"),c(a),c(">"));a==d&&(d=!1)},chars:function(a){d||c(B(a))}}}var L=h.$$minErr("$sanitize"),z=/^<((?:[a-zA-Z])[\w:-]*)((?:\s+[\w:-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*(>?)/,y=/^<\/\s*([\w:-]+)[^>]*>/,G=/([\w:-]+)(?:\s*=\s*(?:(?:"((?:[^"])*)")|(?:'((?:[^'])*)')|([^>\s]+)))?/g,K=/^</,J=/^<\//,H=/\x3c!--(.*?)--\x3e/g,x=/<!DOCTYPE([^>]*?)>/i,
-I=/<!\[CDATA\[(.*?)]]\x3e/g,M=/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,N=/([^\#-~| |!])/g,v=g("area,br,col,hr,img,wbr");n=g("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr");p=g("rp,rt");var u=h.extend({},p,n),s=h.extend({},n,g("address,article,aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5,h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul")),t=h.extend({},p,g("a,abbr,acronym,b,bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s,samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
-n=g("circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph,hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline,radialGradient,rect,stop,svg,switch,text,title,tspan,use");var w=g("script,style"),C=h.extend({},v,s,t,u,n),D=g("background,cite,href,longdesc,src,usemap,xlink:href");n=g("abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,valign,value,vspace,width");
-p=g("accent-height,accumulate,additive,alphabetic,arabic-form,ascent,baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan",
-!0);var O=h.extend({},D,p,n),A=document.createElement("pre");h.module("ngSanitize",[]).provider("$sanitize",function(){this.$get=["$$sanitizeUri",function(a){return function(f){var d=[];F(f,r(d,function(c,b){return!/^unsafe/.test(a(c,b))}));return d.join("")}}]});h.module("ngSanitize").filter("linky",["$sanitize",function(a){var f=/((ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"\u201d\u2019]/i,d=/^mailto:/i;return function(c,b){function k(a){a&&g.push(E(a))}function e(a,
-c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.replace(/"/g,"&quot;"),'">');k(c);g.push("</a>")}if(!c)return c;for(var m,l=c,g=[],n,p;m=l.match(f);)n=m[0],m[2]||m[4]||(n=(m[3]?"http://":"mailto:")+n),p=m.index,k(l.substr(0,p)),e(n,m[0].replace(d,"")),l=l.substring(p+m[0].length);k(l);return a(g.join(""))}}])})(window,window.angular);
-//# sourceMappingURL=angular-sanitize.min.js.map
+function mySortableHeaderDirective() {
+    return {
+        restrict: 'E',
+        transclude: true,
+        scope: {
+            setSort: '&set',
+            getSort: '&get'
+        },
+        template: function() {
+            var template = '';
 
-/*
- AngularJS v1.4.8
- (c) 2010-2015 Google, Inc. http://angularjs.org
- License: MIT
-*/
-(function(H,u,Sa){'use strict';function wa(a,b,c){if(!a)throw ngMinErr("areq",b||"?",c||"required");return a}function xa(a,b){if(!a&&!b)return"";if(!a)return b;if(!b)return a;X(a)&&(a=a.join(" "));X(b)&&(b=b.join(" "));return a+" "+b}function Ia(a){var b={};a&&(a.to||a.from)&&(b.to=a.to,b.from=a.from);return b}function T(a,b,c){var d="";a=X(a)?a:a&&I(a)&&a.length?a.split(/\s+/):[];q(a,function(a,s){a&&0<a.length&&(d+=0<s?" ":"",d+=c?b+a:a+b)});return d}function Ja(a){if(a instanceof L)switch(a.length){case 0:return[];
-case 1:if(1===a[0].nodeType)return a;break;default:return L(ma(a))}if(1===a.nodeType)return L(a)}function ma(a){if(!a[0])return a;for(var b=0;b<a.length;b++){var c=a[b];if(1==c.nodeType)return c}}function Ka(a,b,c){q(b,function(b){a.addClass(b,c)})}function La(a,b,c){q(b,function(b){a.removeClass(b,c)})}function N(a){return function(b,c){c.addClass&&(Ka(a,b,c.addClass),c.addClass=null);c.removeClass&&(La(a,b,c.removeClass),c.removeClass=null)}}function ia(a){a=a||{};if(!a.$$prepared){var b=a.domOperation||
-M;a.domOperation=function(){a.$$domOperationFired=!0;b();b=M};a.$$prepared=!0}return a}function da(a,b){ya(a,b);za(a,b)}function ya(a,b){b.from&&(a.css(b.from),b.from=null)}function za(a,b){b.to&&(a.css(b.to),b.to=null)}function Q(a,b,c){var d=(b.addClass||"")+" "+(c.addClass||""),e=(b.removeClass||"")+" "+(c.removeClass||"");a=Ma(a.attr("class"),d,e);c.preparationClasses&&(b.preparationClasses=Y(c.preparationClasses,b.preparationClasses),delete c.preparationClasses);d=b.domOperation!==M?b.domOperation:
-null;Aa(b,c);d&&(b.domOperation=d);b.addClass=a.addClass?a.addClass:null;b.removeClass=a.removeClass?a.removeClass:null;return b}function Ma(a,b,c){function d(a){I(a)&&(a=a.split(" "));var b={};q(a,function(a){a.length&&(b[a]=!0)});return b}var e={};a=d(a);b=d(b);q(b,function(a,b){e[b]=1});c=d(c);q(c,function(a,b){e[b]=1===e[b]?null:-1});var s={addClass:"",removeClass:""};q(e,function(b,c){var e,d;1===b?(e="addClass",d=!a[c]):-1===b&&(e="removeClass",d=a[c]);d&&(s[e].length&&(s[e]+=" "),s[e]+=c)});
-return s}function B(a){return a instanceof u.element?a[0]:a}function Na(a,b,c){var d="";b&&(d=T(b,"ng-",!0));c.addClass&&(d=Y(d,T(c.addClass,"-add")));c.removeClass&&(d=Y(d,T(c.removeClass,"-remove")));d.length&&(c.preparationClasses=d,a.addClass(d))}function ja(a,b){var c=b?"-"+b+"s":"";ea(a,[fa,c]);return[fa,c]}function na(a,b){var c=b?"paused":"",d=U+"PlayState";ea(a,[d,c]);return[d,c]}function ea(a,b){a.style[b[0]]=b[1]}function Y(a,b){return a?b?a+" "+b:a:b}function Ba(a,b,c){var d=Object.create(null),
-e=a.getComputedStyle(b)||{};q(c,function(a,b){var c=e[a];if(c){var v=c.charAt(0);if("-"===v||"+"===v||0<=v)c=Oa(c);0===c&&(c=null);d[b]=c}});return d}function Oa(a){var b=0;a=a.split(/\s*,\s*/);q(a,function(a){"s"==a.charAt(a.length-1)&&(a=a.substring(0,a.length-1));a=parseFloat(a)||0;b=b?Math.max(a,b):a});return b}function oa(a){return 0===a||null!=a}function Ca(a,b){var c=O,d=a+"s";b?c+="Duration":d+=" linear all";return[c,d]}function Da(){var a=Object.create(null);return{flush:function(){a=Object.create(null)},
-count:function(b){return(b=a[b])?b.total:0},get:function(b){return(b=a[b])&&b.value},put:function(b,c){a[b]?a[b].total++:a[b]={total:1,value:c}}}}function Ea(a,b,c){q(c,function(c){a[c]=V(a[c])?a[c]:b.style.getPropertyValue(c)})}var M=u.noop,Aa=u.extend,L=u.element,q=u.forEach,X=u.isArray,I=u.isString,pa=u.isObject,qa=u.isUndefined,V=u.isDefined,Fa=u.isFunction,ra=u.isElement,O,sa,U,ta;qa(H.ontransitionend)&&V(H.onwebkittransitionend)?(O="WebkitTransition",sa="webkitTransitionEnd transitionend"):
-(O="transition",sa="transitionend");qa(H.onanimationend)&&V(H.onwebkitanimationend)?(U="WebkitAnimation",ta="webkitAnimationEnd animationend"):(U="animation",ta="animationend");var ka=U+"Delay",ua=U+"Duration",fa=O+"Delay";H=O+"Duration";var Pa={transitionDuration:H,transitionDelay:fa,transitionProperty:O+"Property",animationDuration:ua,animationDelay:ka,animationIterationCount:U+"IterationCount"},Qa={transitionDuration:H,transitionDelay:fa,animationDuration:ua,animationDelay:ka};u.module("ngAnimate",
-[]).directive("ngAnimateChildren",[function(){return function(a,b,c){a=c.ngAnimateChildren;u.isString(a)&&0===a.length?b.data("$$ngAnimateChildren",!0):c.$observe("ngAnimateChildren",function(a){b.data("$$ngAnimateChildren","on"===a||"true"===a)})}}]).factory("$$rAFScheduler",["$$rAF",function(a){function b(a){d=d.concat(a);c()}function c(){if(d.length){for(var b=d.shift(),h=0;h<b.length;h++)b[h]();e||a(function(){e||c()})}}var d,e;d=b.queue=[];b.waitUntilQuiet=function(b){e&&e();e=a(function(){e=
-null;b();c()})};return b}]).factory("$$AnimateRunner",["$q","$sniffer","$$animateAsyncRun",function(a,b,c){function d(a){this.setHost(a);this._doneCallbacks=[];this._runInAnimationFrame=c();this._state=0}d.chain=function(a,b){function c(){if(d===a.length)b(!0);else a[d](function(a){!1===a?b(!1):(d++,c())})}var d=0;c()};d.all=function(a,b){function c(h){v=v&&h;++d===a.length&&b(v)}var d=0,v=!0;q(a,function(a){a.done(c)})};d.prototype={setHost:function(a){this.host=a||{}},done:function(a){2===this._state?
-a():this._doneCallbacks.push(a)},progress:M,getPromise:function(){if(!this.promise){var b=this;this.promise=a(function(a,c){b.done(function(b){!1===b?c():a()})})}return this.promise},then:function(a,b){return this.getPromise().then(a,b)},"catch":function(a){return this.getPromise()["catch"](a)},"finally":function(a){return this.getPromise()["finally"](a)},pause:function(){this.host.pause&&this.host.pause()},resume:function(){this.host.resume&&this.host.resume()},end:function(){this.host.end&&this.host.end();
-this._resolve(!0)},cancel:function(){this.host.cancel&&this.host.cancel();this._resolve(!1)},complete:function(a){var b=this;0===b._state&&(b._state=1,b._runInAnimationFrame(function(){b._resolve(a)}))},_resolve:function(a){2!==this._state&&(q(this._doneCallbacks,function(b){b(a)}),this._doneCallbacks.length=0,this._state=2)}};return d}]).factory("$$animateAsyncRun",["$$rAF",function(a){function b(b){c.push(b);1<c.length||a(function(){for(var a=0;a<c.length;a++)c[a]();c=[]})}var c=[];return function(){var a=
-!1;b(function(){a=!0});return function(c){a?c():b(c)}}}]).provider("$$animateQueue",["$animateProvider",function(a){function b(a,b,c,q){return d[a].some(function(a){return a(b,c,q)})}function c(a,b){a=a||{};var c=0<(a.addClass||"").length,d=0<(a.removeClass||"").length;return b?c&&d:c||d}var d=this.rules={skip:[],cancel:[],join:[]};d.join.push(function(a,b,d){return!b.structural&&c(b.options)});d.skip.push(function(a,b,d){return!b.structural&&!c(b.options)});d.skip.push(function(a,b,c){return"leave"==
-c.event&&b.structural});d.skip.push(function(a,b,c){return c.structural&&2===c.state&&!b.structural});d.cancel.push(function(a,b,c){return c.structural&&b.structural});d.cancel.push(function(a,b,c){return 2===c.state&&b.structural});d.cancel.push(function(a,b,c){a=b.options;c=c.options;return a.addClass&&a.addClass===c.removeClass||a.removeClass&&a.removeClass===c.addClass});this.$get=["$$rAF","$rootScope","$rootElement","$document","$$HashMap","$$animation","$$AnimateRunner","$templateRequest","$$jqLite",
-"$$forceReflow",function(d,s,h,g,v,r,$,u,R,C){function D(){var a=!1;return function(b){a?b():s.$$postDigest(function(){a=!0;b()})}}function K(a,b,c){var f=B(b),d=B(a),n=[];(a=t[c])&&q(a,function(a){a.node.contains(f)?n.push(a.callback):"leave"===c&&a.node.contains(d)&&n.push(a.callback)});return n}function l(a,f,k){function n(b,c,f,t){R(function(){var b=K(v,a,c);b.length&&d(function(){q(b,function(b){b(a,f,t)})})});b.progress(c,f,t)}function t(b){var c=a,f=k;f.preparationClasses&&(c.removeClass(f.preparationClasses),
-f.preparationClasses=null);f.activeClasses&&(c.removeClass(f.activeClasses),f.activeClasses=null);Ha(a,k);da(a,k);k.domOperation();h.complete(!b)}var A,v;if(a=Ja(a))A=B(a),v=a.parent();k=ia(k);var h=new $,R=D();X(k.addClass)&&(k.addClass=k.addClass.join(" "));k.addClass&&!I(k.addClass)&&(k.addClass=null);X(k.removeClass)&&(k.removeClass=k.removeClass.join(" "));k.removeClass&&!I(k.removeClass)&&(k.removeClass=null);k.from&&!pa(k.from)&&(k.from=null);k.to&&!pa(k.to)&&(k.to=null);if(!A)return t(),h;
-var z=[A.className,k.addClass,k.removeClass].join(" ");if(!Ra(z))return t(),h;var l=0<=["enter","move","leave"].indexOf(f),g=!G||F.get(A),z=!g&&m.get(A)||{},C=!!z.state;g||C&&1==z.state||(g=!la(a,v,f));if(g)return t(),h;l&&y(a);g={structural:l,element:a,event:f,close:t,options:k,runner:h};if(C){if(b("skip",a,g,z)){if(2===z.state)return t(),h;Q(a,z.options,k);return z.runner}if(b("cancel",a,g,z))if(2===z.state)z.runner.end();else if(z.structural)z.close();else return Q(a,z.options,g.options),z.runner;
-else if(b("join",a,g,z))if(2===z.state)Q(a,k,{});else return Na(a,l?f:null,k),f=g.event=z.event,k=Q(a,z.options,g.options),z.runner}else Q(a,k,{});(C=g.structural)||(C="animate"===g.event&&0<Object.keys(g.options.to||{}).length||c(g.options));if(!C)return t(),w(a),h;var u=(z.counter||0)+1;g.counter=u;x(a,1,g);s.$$postDigest(function(){var b=m.get(A),d=!b,b=b||{},K=0<(a.parent()||[]).length&&("animate"===b.event||b.structural||c(b.options));if(d||b.counter!==u||!K){d&&(Ha(a,k),da(a,k));if(d||l&&b.event!==
-f)k.domOperation(),h.end();K||w(a)}else f=!b.structural&&c(b.options,!0)?"setClass":b.event,x(a,2),b=r(a,f,b.options),b.done(function(b){t(!b);(b=m.get(A))&&b.counter===u&&w(B(a));n(h,f,"close",{})}),h.setHost(b),n(h,f,"start",{})});return h}function y(a){a=B(a).querySelectorAll("[data-ng-animate]");q(a,function(a){var b=parseInt(a.getAttribute("data-ng-animate")),c=m.get(a);switch(b){case 2:c.runner.end();case 1:c&&m.remove(a)}})}function w(a){a=B(a);a.removeAttribute("data-ng-animate");m.remove(a)}
-function f(a,b){return B(a)===B(b)}function la(a,b,c){c=L(g[0].body);var d=f(a,c)||"HTML"===a[0].nodeName,t=f(a,h),n=!1,w;for((a=a.data("$ngAnimatePin"))&&(b=a);b&&b.length;){t||(t=f(b,h));a=b[0];if(1!==a.nodeType)break;var x=m.get(a)||{};n||(n=x.structural||F.get(a));if(qa(w)||!0===w)a=b.data("$$ngAnimateChildren"),V(a)&&(w=a);if(n&&!1===w)break;t||(t=f(b,h),t||(a=b.data("$ngAnimatePin"))&&(b=a));d||(d=f(b,c));b=b.parent()}return(!n||w)&&t&&d}function x(a,b,c){c=c||{};c.state=b;a=B(a);a.setAttribute("data-ng-animate",
-b);c=(b=m.get(a))?Aa(b,c):c;m.put(a,c)}var m=new v,F=new v,G=null,A=s.$watch(function(){return 0===u.totalPendingRequests},function(a){a&&(A(),s.$$postDigest(function(){s.$$postDigest(function(){null===G&&(G=!0)})}))}),t={},n=a.classNameFilter(),Ra=n?function(a){return n.test(a)}:function(){return!0},Ha=N(R);return{on:function(a,b,c){b=ma(b);t[a]=t[a]||[];t[a].push({node:b,callback:c})},off:function(a,b,c){function f(a,b,c){var d=ma(b);return a.filter(function(a){return!(a.node===d&&(!c||a.callback===
-c))})}var d=t[a];d&&(t[a]=1===arguments.length?null:f(d,b,c))},pin:function(a,b){wa(ra(a),"element","not an element");wa(ra(b),"parentElement","not an element");a.data("$ngAnimatePin",b)},push:function(a,b,c,f){c=c||{};c.domOperation=f;return l(a,b,c)},enabled:function(a,b){var c=arguments.length;if(0===c)b=!!G;else if(ra(a)){var f=B(a),d=F.get(f);1===c?b=!d:(b=!!b)?d&&F.remove(f):F.put(f,!0)}else b=G=!!a;return b}}}]}]).provider("$$animation",["$animateProvider",function(a){function b(a){return a.data("$$animationRunner")}
-var c=this.drivers=[];this.$get=["$$jqLite","$rootScope","$injector","$$AnimateRunner","$$HashMap","$$rAFScheduler",function(a,e,s,h,g,v){function r(a){function b(a){if(a.processed)return a;a.processed=!0;var f=a.domNode,d=f.parentNode;e.put(f,a);for(var x;d;){if(x=e.get(d)){x.processed||(x=b(x));break}d=d.parentNode}(x||c).children.push(a);return a}var c={children:[]},d,e=new g;for(d=0;d<a.length;d++){var h=a[d];e.put(h.domNode,a[d]={domNode:h.domNode,fn:h.fn,children:[]})}for(d=0;d<a.length;d++)b(a[d]);
-return function(a){var b=[],c=[],d;for(d=0;d<a.children.length;d++)c.push(a.children[d]);a=c.length;var m=0,e=[];for(d=0;d<c.length;d++){var h=c[d];0>=a&&(a=m,m=0,b.push(e),e=[]);e.push(h.fn);h.children.forEach(function(a){m++;c.push(a)});a--}e.length&&b.push(e);return b}(c)}var $=[],u=N(a);return function(g,C,D){function K(a){a=a.hasAttribute("ng-animate-ref")?[a]:a.querySelectorAll("[ng-animate-ref]");var b=[];q(a,function(a){var c=a.getAttribute("ng-animate-ref");c&&c.length&&b.push(a)});return b}
-function l(a){var b=[],c={};q(a,function(a,f){var d=B(a.element),t=0<=["enter","move"].indexOf(a.event),d=a.structural?K(d):[];if(d.length){var m=t?"to":"from";q(d,function(a){var b=a.getAttribute("ng-animate-ref");c[b]=c[b]||{};c[b][m]={animationID:f,element:L(a)}})}else b.push(a)});var f={},d={};q(c,function(c,m){var w=c.from,e=c.to;if(w&&e){var h=a[w.animationID],g=a[e.animationID],x=w.animationID.toString();if(!d[x]){var A=d[x]={structural:!0,beforeStart:function(){h.beforeStart();g.beforeStart()},
-close:function(){h.close();g.close()},classes:y(h.classes,g.classes),from:h,to:g,anchors:[]};A.classes.length?b.push(A):(b.push(h),b.push(g))}d[x].anchors.push({out:w.element,"in":e.element})}else w=w?w.animationID:e.animationID,e=w.toString(),f[e]||(f[e]=!0,b.push(a[w]))});return b}function y(a,b){a=a.split(" ");b=b.split(" ");for(var c=[],f=0;f<a.length;f++){var d=a[f];if("ng-"!==d.substring(0,3))for(var m=0;m<b.length;m++)if(d===b[m]){c.push(d);break}}return c.join(" ")}function w(a){for(var b=
-c.length-1;0<=b;b--){var f=c[b];if(s.has(f)&&(f=s.get(f)(a)))return f}}function f(a,c){a.from&&a.to?(b(a.from.element).setHost(c),b(a.to.element).setHost(c)):b(a.element).setHost(c)}function la(){var a=b(g);!a||"leave"===C&&D.$$domOperationFired||a.end()}function x(b){g.off("$destroy",la);g.removeData("$$animationRunner");u(g,D);da(g,D);D.domOperation();A&&a.removeClass(g,A);g.removeClass("ng-animate");F.complete(!b)}D=ia(D);var m=0<=["enter","move","leave"].indexOf(C),F=new h({end:function(){x()},
-cancel:function(){x(!0)}});if(!c.length)return x(),F;g.data("$$animationRunner",F);var G=xa(g.attr("class"),xa(D.addClass,D.removeClass)),A=D.tempClasses;A&&(G+=" "+A,D.tempClasses=null);$.push({element:g,classes:G,event:C,structural:m,options:D,beforeStart:function(){g.addClass("ng-animate");A&&a.addClass(g,A)},close:x});g.on("$destroy",la);if(1<$.length)return F;e.$$postDigest(function(){var a=[];q($,function(c){b(c.element)?a.push(c):c.close()});$.length=0;var c=l(a),d=[];q(c,function(a){d.push({domNode:B(a.from?
-a.from.element:a.element),fn:function(){a.beforeStart();var c,d=a.close;if(b(a.anchors?a.from.element||a.to.element:a.element)){var m=w(a);m&&(c=m.start)}c?(c=c(),c.done(function(a){d(!a)}),f(a,c)):d()}})});v(r(d))});return F}}]}]).provider("$animateCss",["$animateProvider",function(a){var b=Da(),c=Da();this.$get=["$window","$$jqLite","$$AnimateRunner","$timeout","$$forceReflow","$sniffer","$$rAFScheduler","$animate",function(a,e,s,h,g,v,r,u){function Ga(a,b){var c=a.parentNode;return(c.$$ngAnimateParentKey||
-(c.$$ngAnimateParentKey=++l))+"-"+a.getAttribute("class")+"-"+b}function R(w,f,h,g){var m;0<b.count(h)&&(m=c.get(h),m||(f=T(f,"-stagger"),e.addClass(w,f),m=Ba(a,w,g),m.animationDuration=Math.max(m.animationDuration,0),m.transitionDuration=Math.max(m.transitionDuration,0),e.removeClass(w,f),c.put(h,m)));return m||{}}function C(a){y.push(a);r.waitUntilQuiet(function(){b.flush();c.flush();for(var a=g(),d=0;d<y.length;d++)y[d](a);y.length=0})}function D(c,f,e){f=b.get(e);f||(f=Ba(a,c,Pa),"infinite"===
-f.animationIterationCount&&(f.animationIterationCount=1));b.put(e,f);c=f;e=c.animationDelay;f=c.transitionDelay;c.maxDelay=e&&f?Math.max(e,f):e||f;c.maxDuration=Math.max(c.animationDuration*c.animationIterationCount,c.transitionDuration);return c}var K=N(e),l=0,y=[];return function(a,c){function d(){m()}function g(){m(!0)}function m(b){if(!(ga||va&&k)){ga=!0;k=!1;c.$$skipPreparationClasses||e.removeClass(a,Z);e.removeClass(a,Y);na(n,!1);ja(n,!1);q(y,function(a){n.style[a[0]]=""});K(a,c);da(a,c);Object.keys(t).length&&
-q(t,function(a,b){a?n.style.setProperty(b,a):n.style.removeProperty(b)});if(c.onDone)c.onDone();H&&H.complete(!b)}}function F(a){p.blockTransition&&ja(n,a);p.blockKeyframeAnimation&&na(n,!!a)}function G(){H=new s({end:d,cancel:g});C(M);m();return{$$willAnimate:!1,start:function(){return H},end:d}}function A(){function b(){if(!ga){F(!1);q(y,function(a){n.style[a[0]]=a[1]});K(a,c);e.addClass(a,Y);if(p.recalculateTimingStyles){ha=n.className+" "+Z;aa=Ga(n,ha);E=D(n,ha,aa);W=E.maxDelay;I=Math.max(W,0);
-J=E.maxDuration;if(0===J){m();return}p.hasTransitions=0<E.transitionDuration;p.hasAnimations=0<E.animationDuration}p.applyAnimationDelay&&(W="boolean"!==typeof c.delay&&oa(c.delay)?parseFloat(c.delay):W,I=Math.max(W,0),E.animationDelay=W,ca=[ka,W+"s"],y.push(ca),n.style[ca[0]]=ca[1]);N=1E3*I;z=1E3*J;if(c.easing){var k,l=c.easing;p.hasTransitions&&(k=O+"TimingFunction",y.push([k,l]),n.style[k]=l);p.hasAnimations&&(k=U+"TimingFunction",y.push([k,l]),n.style[k]=l)}E.transitionDuration&&x.push(sa);E.animationDuration&&
-x.push(ta);A=Date.now();var v=N+1.5*z;k=A+v;var l=a.data("$$animateCss")||[],r=!0;if(l.length){var G=l[0];(r=k>G.expectedEndTime)?h.cancel(G.timer):l.push(m)}r&&(v=h(d,v,!1),l[0]={timer:v,expectedEndTime:k},l.push(m),a.data("$$animateCss",l));a.on(x.join(" "),g);c.to&&(c.cleanupStyles&&Ea(t,n,Object.keys(c.to)),za(a,c))}}function d(){var b=a.data("$$animateCss");if(b){for(var c=1;c<b.length;c++)b[c]();a.removeData("$$animateCss")}}function g(a){a.stopPropagation();var b=a.originalEvent||a;a=b.$manualTimeStamp||
-b.timeStamp||Date.now();b=parseFloat(b.elapsedTime.toFixed(3));Math.max(a-A,0)>=N&&b>=J&&(va=!0,m())}if(!ga)if(n.parentNode){var A,x=[],l=function(a){if(va)k&&a&&(k=!1,m());else if(k=!a,E.animationDuration)if(a=na(n,k),k)y.push(a);else{var b=y,c=b.indexOf(a);0<=a&&b.splice(c,1)}},v=0<V&&(E.transitionDuration&&0===S.transitionDuration||E.animationDuration&&0===S.animationDuration)&&Math.max(S.animationDelay,S.transitionDelay);v?h(b,Math.floor(v*V*1E3),!1):b();L.resume=function(){l(!0)};L.pause=function(){l(!1)}}else m()}
-var t={},n=B(a);if(!n||!n.parentNode||!u.enabled())return G();c=ia(c);var y=[],r=a.attr("class"),l=Ia(c),ga,k,va,H,L,I,N,J,z;if(0===c.duration||!v.animations&&!v.transitions)return G();var ba=c.event&&X(c.event)?c.event.join(" "):c.event,Q="",P="";ba&&c.structural?Q=T(ba,"ng-",!0):ba&&(Q=ba);c.addClass&&(P+=T(c.addClass,"-add"));c.removeClass&&(P.length&&(P+=" "),P+=T(c.removeClass,"-remove"));c.applyClassesEarly&&P.length&&K(a,c);var Z=[Q,P].join(" ").trim(),ha=r+" "+Z,Y=T(Z,"-active"),r=l.to&&0<
-Object.keys(l.to).length;if(!(0<(c.keyframeStyle||"").length||r||Z))return G();var aa,S;0<c.stagger?(l=parseFloat(c.stagger),S={transitionDelay:l,animationDelay:l,transitionDuration:0,animationDuration:0}):(aa=Ga(n,ha),S=R(n,Z,aa,Qa));c.$$skipPreparationClasses||e.addClass(a,Z);c.transitionStyle&&(l=[O,c.transitionStyle],ea(n,l),y.push(l));0<=c.duration&&(l=0<n.style[O].length,l=Ca(c.duration,l),ea(n,l),y.push(l));c.keyframeStyle&&(l=[U,c.keyframeStyle],ea(n,l),y.push(l));var V=S?0<=c.staggerIndex?
-c.staggerIndex:b.count(aa):0;(ba=0===V)&&!c.skipBlocking&&ja(n,9999);var E=D(n,ha,aa),W=E.maxDelay;I=Math.max(W,0);J=E.maxDuration;var p={};p.hasTransitions=0<E.transitionDuration;p.hasAnimations=0<E.animationDuration;p.hasTransitionAll=p.hasTransitions&&"all"==E.transitionProperty;p.applyTransitionDuration=r&&(p.hasTransitions&&!p.hasTransitionAll||p.hasAnimations&&!p.hasTransitions);p.applyAnimationDuration=c.duration&&p.hasAnimations;p.applyTransitionDelay=oa(c.delay)&&(p.applyTransitionDuration||
-p.hasTransitions);p.applyAnimationDelay=oa(c.delay)&&p.hasAnimations;p.recalculateTimingStyles=0<P.length;if(p.applyTransitionDuration||p.applyAnimationDuration)J=c.duration?parseFloat(c.duration):J,p.applyTransitionDuration&&(p.hasTransitions=!0,E.transitionDuration=J,l=0<n.style[O+"Property"].length,y.push(Ca(J,l))),p.applyAnimationDuration&&(p.hasAnimations=!0,E.animationDuration=J,y.push([ua,J+"s"]));if(0===J&&!p.recalculateTimingStyles)return G();if(null!=c.delay){var ca=parseFloat(c.delay);
-p.applyTransitionDelay&&y.push([fa,ca+"s"]);p.applyAnimationDelay&&y.push([ka,ca+"s"])}null==c.duration&&0<E.transitionDuration&&(p.recalculateTimingStyles=p.recalculateTimingStyles||ba);N=1E3*I;z=1E3*J;c.skipBlocking||(p.blockTransition=0<E.transitionDuration,p.blockKeyframeAnimation=0<E.animationDuration&&0<S.animationDelay&&0===S.animationDuration);c.from&&(c.cleanupStyles&&Ea(t,n,Object.keys(c.from)),ya(a,c));p.blockTransition||p.blockKeyframeAnimation?F(J):c.skipBlocking||ja(n,!1);return{$$willAnimate:!0,
-end:d,start:function(){if(!ga)return L={end:d,cancel:g,resume:null,pause:null},H=new s(L),C(A),H}}}}]}]).provider("$$animateCssDriver",["$$animationProvider",function(a){a.drivers.push("$$animateCssDriver");this.$get=["$animateCss","$rootScope","$$AnimateRunner","$rootElement","$sniffer","$$jqLite","$document",function(a,c,d,e,s,h,g){function v(a){return a.replace(/\bng-\S+\b/g,"")}function r(a,b){I(a)&&(a=a.split(" "));I(b)&&(b=b.split(" "));return a.filter(function(a){return-1===b.indexOf(a)}).join(" ")}
-function u(c,e,g){function h(a){var b={},c=B(a).getBoundingClientRect();q(["width","height","top","left"],function(a){var d=c[a];switch(a){case "top":d+=C.scrollTop;break;case "left":d+=C.scrollLeft}b[a]=Math.floor(d)+"px"});return b}function f(){var c=v(g.attr("class")||""),d=r(c,m),c=r(m,c),d=a(x,{to:h(g),addClass:"ng-anchor-in "+d,removeClass:"ng-anchor-out "+c,delay:!0});return d.$$willAnimate?d:null}function s(){x.remove();e.removeClass("ng-animate-shim");g.removeClass("ng-animate-shim")}var x=
-L(B(e).cloneNode(!0)),m=v(x.attr("class")||"");e.addClass("ng-animate-shim");g.addClass("ng-animate-shim");x.addClass("ng-anchor");D.append(x);var F;c=function(){var c=a(x,{addClass:"ng-anchor-out",delay:!0,from:h(e)});return c.$$willAnimate?c:null}();if(!c&&(F=f(),!F))return s();var G=c||F;return{start:function(){function a(){c&&c.end()}var b,c=G.start();c.done(function(){c=null;if(!F&&(F=f()))return c=F.start(),c.done(function(){c=null;s();b.complete()}),c;s();b.complete()});return b=new d({end:a,
-cancel:a})}}}function H(a,b,c,e){var f=R(a,M),g=R(b,M),h=[];q(e,function(a){(a=u(c,a.out,a["in"]))&&h.push(a)});if(f||g||0!==h.length)return{start:function(){function a(){q(b,function(a){a.end()})}var b=[];f&&b.push(f.start());g&&b.push(g.start());q(h,function(a){b.push(a.start())});var c=new d({end:a,cancel:a});d.all(b,function(a){c.complete(a)});return c}}}function R(c){var d=c.element,e=c.options||{};c.structural&&(e.event=c.event,e.structural=!0,e.applyClassesEarly=!0,"leave"===c.event&&(e.onDone=
-e.domOperation));e.preparationClasses&&(e.event=Y(e.event,e.preparationClasses));c=a(d,e);return c.$$willAnimate?c:null}if(!s.animations&&!s.transitions)return M;var C=g[0].body;c=B(e);var D=L(c.parentNode&&11===c.parentNode.nodeType||C.contains(c)?c:C);N(h);return function(a){return a.from&&a.to?H(a.from,a.to,a.classes,a.anchors):R(a)}}]}]).provider("$$animateJs",["$animateProvider",function(a){this.$get=["$injector","$$AnimateRunner","$$jqLite",function(b,c,d){function e(c){c=X(c)?c:c.split(" ");
-for(var d=[],e={},r=0;r<c.length;r++){var q=c[r],s=a.$$registeredAnimations[q];s&&!e[q]&&(d.push(b.get(s)),e[q]=!0)}return d}var s=N(d);return function(a,b,d,r){function u(){r.domOperation();s(a,r)}function H(a,b,d,e,f){switch(d){case "animate":b=[b,e.from,e.to,f];break;case "setClass":b=[b,D,K,f];break;case "addClass":b=[b,D,f];break;case "removeClass":b=[b,K,f];break;default:b=[b,f]}b.push(e);if(a=a.apply(a,b))if(Fa(a.start)&&(a=a.start()),a instanceof c)a.done(f);else if(Fa(a))return a;return M}
-function B(a,b,d,e,f){var g=[];q(e,function(e){var h=e[f];h&&g.push(function(){var e,f,g=!1,k=function(a){g||(g=!0,(f||M)(a),e.complete(!a))};e=new c({end:function(){k()},cancel:function(){k(!0)}});f=H(h,a,b,d,function(a){k(!1===a)});return e})});return g}function C(a,b,d,e,f){var g=B(a,b,d,e,f);if(0===g.length){var h,l;"beforeSetClass"===f?(h=B(a,"removeClass",d,e,"beforeRemoveClass"),l=B(a,"addClass",d,e,"beforeAddClass")):"setClass"===f&&(h=B(a,"removeClass",d,e,"removeClass"),l=B(a,"addClass",
-d,e,"addClass"));h&&(g=g.concat(h));l&&(g=g.concat(l))}if(0!==g.length)return function(a){var b=[];g.length&&q(g,function(a){b.push(a())});b.length?c.all(b,a):a();return function(a){q(b,function(b){a?b.cancel():b.end()})}}}3===arguments.length&&pa(d)&&(r=d,d=null);r=ia(r);d||(d=a.attr("class")||"",r.addClass&&(d+=" "+r.addClass),r.removeClass&&(d+=" "+r.removeClass));var D=r.addClass,K=r.removeClass,l=e(d),y,w;if(l.length){var f,I;"leave"==b?(I="leave",f="afterLeave"):(I="before"+b.charAt(0).toUpperCase()+
-b.substr(1),f=b);"enter"!==b&&"move"!==b&&(y=C(a,b,r,l,I));w=C(a,b,r,l,f)}if(y||w)return{start:function(){function b(c){f=!0;u();da(a,r);g.complete(c)}var d,e=[];y&&e.push(function(a){d=y(a)});e.length?e.push(function(a){u();a(!0)}):u();w&&e.push(function(a){d=w(a)});var f=!1,g=new c({end:function(){f||((d||M)(void 0),b(void 0))},cancel:function(){f||((d||M)(!0),b(!0))}});c.chain(e,b);return g}}}}]}]).provider("$$animateJsDriver",["$$animationProvider",function(a){a.drivers.push("$$animateJsDriver");
-this.$get=["$$animateJs","$$AnimateRunner",function(a,c){function d(c){return a(c.element,c.event,c.classes,c.options)}return function(a){if(a.from&&a.to){var b=d(a.from),h=d(a.to);if(b||h)return{start:function(){function a(){return function(){q(d,function(a){a.end()})}}var d=[];b&&d.push(b.start());h&&d.push(h.start());c.all(d,function(a){e.complete(a)});var e=new c({end:a(),cancel:a()});return e}}}else return d(a)}}]}])})(window,window.angular);
-//# sourceMappingURL=angular-animate.min.js.map
+            template += '<span ng-click="setSort()" ng-transclude></span>';
+            template += '<span ng-show="getSort() === false" class="sort-arrow glyphicon glyphicon-triangle-top"></span>';
+            template += '<span ng-show="getSort() === true" class="sort-arrow glyphicon glyphicon-triangle-bottom"></span>';
 
-/*
- * angular-auto-validate - v1.19.3 - 2015-11-30
- * https://github.com/jonsamwell/angular-auto-validate
- * Copyright (c) 2015 Jon Samwell (http://www.jonsamwell.com)
- */
-!function(a,b){"use strict";function c(){var a={},c=!0,d=!0,e=!1,f=!0,g=function(a){var b;return a&&0!==a.length?(b=a.toLowerCase(),a=!("f"===b||"0"===b||"false"===b)):a=!1,a},h=function(a,b){var c;return void 0!==a&&(c=a.attr(b)||a.attr("data-"+b)),c},i=function(a,b){var c;return void 0!==a&&(c=void 0!==a.attr(b)||void 0!==a.attr("data-"+b)),c},j=function(a,b){return g(h(a,b))},k=function(a){return c&&!j(a,"disable-valid-styling")},l=function(a){return!j(a,"disable-auto-validate")},m=function(a){return d&&!j(a,"disable-invalid-styling")};this.enable=function(a){f=a},this.isEnabled=function(){return f},this.setDefaultElementModifier=function(b){if(void 0===a[b])throw new Error("Element modifier not registered: "+b);this.defaultElementModifier=b},this.registerDomModifier=function(b,c){a[b]=c},this.setErrorMessageResolver=function(a){this.errorMessageResolver=a},this.getErrorMessage=function(a,c){var d;if(void 0===this.errorMessageResolver)throw new Error("Please set an error message resolver via the setErrorMessageResolver function before attempting to resolve an error message.");return i(c,"disable-validation-message")?(d=b.injector(["ng"]).get("$q").defer(),d.resolve(""),d.promise):this.errorMessageResolver(a,c)},this.setValidElementStyling=function(a){c=a},this.setInvalidElementStyling=function(a){d=a},this.setFirstInvalidElementScrollingOnSubmit=function(a){e=a},this.firstInvalidElementScrollingOnSubmitEnabled=function(){return e},this.getDomModifier=function(b){var c=(void 0!==b?b.attr("element-modifier"):this.defaultElementModifier)||(void 0!==b?b.attr("data-element-modifier"):this.defaultElementModifier)||this.defaultElementModifier;if(void 0===c)throw new Error("Please set a default dom modifier via the setDefaultElementModifier method on the validator class.");return a[c]},this.makeValid=function(a){l(a)&&(k(a)?this.getDomModifier(a).makeValid(a):this.makeDefault(a))},this.makeInvalid=function(a,b){l(a)&&(m(a)?this.getDomModifier(a).makeInvalid(a,b):this.makeDefault(a))},this.makeDefault=function(a){if(l(a)){var b=this.getDomModifier(a);b.makeDefault&&b.makeDefault(a)}},this.waitForAsyncValidators=function(a){if(l(a)){var b=this.getDomModifier(a);b.waitForAsyncValidators&&b.waitForAsyncValidators(a)}},this.defaultFormValidationOptions={forceValidation:!1,disabled:!1,validateNonVisibleControls:!1,removeExternalValidationErrorsOnSubmit:!0,validateOnFormSubmit:!1,waitForAsyncValidators:!0},this.$get=[function(){return this}]}function d(a){var c=["<style>.glyphicon-spin-jcs {-webkit-animation: spin 1000ms infinite linear;animation: spin 1000ms infinite linear;}@-webkit-keyframes spin {0% {-webkit-transform: rotate(0deg);transform: rotate(0deg);}100% {-webkit-transform: rotate(359deg);transform: rotate(359deg);}}@keyframes spin {0% {-webkit-transform: rotate(0deg);transform: rotate(0deg);}100% {-webkit-transform: rotate(359deg);transform: rotate(359deg);}}</style>"].join("");b.element(document.body).append(b.element(c));var d=function(a){b.forEach(a.find("span"),function(a){a=b.element(a),(a.hasClass("error-msg")||a.hasClass("form-control-feedback")||a.hasClass("control-feedback"))&&a.remove()}),a.removeClass("has-success has-error has-feedback")},e=function(a,b){for(var c,d=a,e=0;10>=e;e+=1){if(void 0!==d&&d.hasClass(b)){c=d;break}void 0!==d&&(d=d.parent())}return c},f=function(a,c){for(var d,e=0;e<a.children.length&&(d=a.children[e],void 0===d||!b.element(d).hasClass(c))&&!(void 0!==d.children&&(d=f(d,c),d.length>0));e+=1);return b.element(d)},g=function(a){return e(a,"form-group")},h=function(a){return f(a,"input-group")},i=function(a,b){a[0].parentNode.insertBefore(b[0],a[0].nextSibling)},j=!1,k=function(a){j=a},l=function(c){var e,f=g(c);if(f){if(d(f),e=h(f[0]),f.addClass("has-success "+(e.length>0||j===!1?"":"has-feedback")),j){var k='<span class="glyphicon glyphicon-ok form-control-feedback"></span>';e.length>0&&(k=k.replace("form-",""),k='<span class="input-group-addon control-feedback">'+k+"</span"),i(c,b.element(k))}}else a.error("Angular-auto-validate: invalid bs3 form structure elements must be wrapped by a form-group class")},m=function(c,e){var f,k=g(c),l=b.element('<span class="help-block has-error error-msg">'+e+"</span>");if(k){if(d(k),f=h(k[0]),k.addClass("has-error "+(f.length>0||j===!1?"":"has-feedback")),i(f.length>0?f:n(c),l),j){var m='<span class="glyphicon glyphicon-remove form-control-feedback"></span>';f.length>0&&(m=m.replace("form-",""),m='<span class="input-group-addon control-feedback">'+m+"</span>"),i(n(c),b.element(m))}}else a.error("Angular-auto-validate: invalid bs3 form structure elements must be wrapped by a form-group class")},n=function(a){var b=a,c=a[0].type?a[0].type.toLowerCase():"";return"checkbox"!==c&&"radio"!==c||"label"!==a.parent()[0].nodeName.toLowerCase()||(b=a.parent()),b},o=function(b){var c=g(b);c?d(c):a.error("Angular-auto-validate: invalid bs3 form structure elements must be wrapped by a form-group class")},p=function(c){var e,f=g(c);if(f){if(d(f),e=h(f[0]),f.addClass("has-feedback "+(e.length>0||j===!1?"":"has-feedback")),j){var k='<span class="glyphicon glyphicon-repeat glyphicon-spin-jcs form-control-feedback"></span>';e.length>0&&(k=k.replace("form-",""),k='<span class="input-group-addon control-feedback">'+k+"</span>"),i(c,b.element(k))}}else a.error("Angular-auto-validate: invalid bs3 form structure elements must be wrapped by a form-group class")};return{makeValid:l,makeInvalid:m,makeDefault:o,waitForAsyncValidators:p,enableValidationStateIcons:k,key:"bs3"}}function e(a){var b=function(b,c,d){var e;return function(){var f=this,g=arguments,h=function(){e=null,d||b.apply(f,g)},i=d&&!e;a.cancel(e),e=a(h,c,!1),i&&b.apply(f,g)}};return{debounce:b}}function f(a,c){var d,e="default",f="js/angular-auto-validate/dist/lang",g=function(a){return d=c.get("{0}/jcs-auto-validate_{1}.json".format(f,a.toLowerCase()))},h=function(a){f=a},i=function(c,f){var h=a.defer();return f=f||g,e=c.toLowerCase(),void 0===b.autoValidate.errorMessages[e]?(d=f(c),d.then(function(a){d=void 0,b.autoValidate.errorMessages[e]=a.data,h.resolve(b.autoValidate.errorMessages[e])},function(a){b.autoValidate.errorMessages[e]={defaultMsg:"Loading culture failed!"},d=null,h.reject(a)})):h.resolve(b.autoValidate.errorMessages[e]),h.promise},j=function(c){var f=a.defer();return c=void 0===c?e:c.toLowerCase(),void 0!==d?d.then(function(){f.resolve(b.autoValidate.errorMessages[c])},function(a){f.reject(a)}):f.resolve(b.autoValidate.errorMessages[c]),f.promise},k=function(a,b){var c;return b&&(a+="-err-type",c=b.attr("ng-"+a),void 0===c&&(c=b.attr("data-ng-"+a)||b.attr(a)),c&&(c=c.replace(/[\W]/g,""))),c},l=function(c,f){var g,h,i,j=a.defer(),m=[];if(void 0!==d)d.then(function(){l(c,f).then(function(a){j.resolve(a)})});else{if(g=b.autoValidate.errorMessages[e][c],i=k(c,f),i&&(g=b.autoValidate.errorMessages[e][i]),void 0===g&&void 0!==i?g=b.autoValidate.errorMessages[e].defaultMsg.format(i):void 0===g&&(g=b.autoValidate.errorMessages[e].defaultMsg.format(c)),f&&f.attr)try{h=f.attr("ng-"+c),void 0===h&&(h=f.attr("data-ng-"+c)||f.attr(c)),m.push(h||""),g=g.format(m)}catch(n){}j.resolve(g)}return j.promise};return{setI18nFileRootPath:h,setCulture:i,getErrorMessages:j,resolve:l}}function g(){var a=function(a,c){b.forEach(a.find("small"),function(a){b.element(a).hasClass("error")&&b.element(a).remove()}),c.removeClass("error")},c=function(a){for(var b=a,c=0;3>=c&&(void 0===b||!b.hasClass("columns")&&!b.hasClass("column"));c+=1)void 0!==b&&(b=b.parent());return b},d=function(b){var d=c(b);a(d&&d.length>0?d:b,b)},e=function(d,e){var f,g=c(d);a(g||d,d),d.addClass("error"),g&&(f=b.element('<small class="error">'+e+"</small>"),g.append(f))},f=function(a){d(a)};return{makeValid:d,makeInvalid:e,makeDefault:f,key:"foundation5"}}function h(){var a=function(a){return a[0].offsetWidth>0&&a[0].offsetHeight>0};return{isElementVisible:a}}function i(a,c,d){var e=["input","textarea","select","form"],f=function(a){return c.isElementVisible(a)},g=function(c){var d,e=b.element(c).controller("form");return d=void 0!==e&&null!==e?e.autoValidateFormOptions:a.defaultFormValidationOptions},h=function(a,b,c){var d,g,h,i=a&&a.length>0,j=i&&"#comment"===a[0].nodeName.toLowerCase();return i&&j===!1&&(d=f(a)||b.validateNonVisibleControls,g=e.indexOf(a[0].nodeName.toLowerCase())>-1||a[0].hasAttribute("register-custom-form-control"),h=b.validateOnFormSubmit===!1||b.validateOnFormSubmit===!0&&c===!0),i&&!j&&d&&g&&h},i=function(c,d,e){var f,i=!0,j=e||g(d),k=c.$pristine===!1||j.forceValidation,l=function(a){var c,d=!0;return b.forEach(a,function(a,b){d&&a&&(d=!1,c=b)}),c};return j.disabled===!1&&(j.forceValidation||h(d,j,j.getFormController().$submitted)&&c&&k)&&(i=!c.$invalid,j.removeExternalValidationErrorsOnSubmit&&c.removeAllExternalValidation&&c.removeAllExternalValidation(),void 0!==c.$pending&&e.waitForAsyncValidators===!0?a.waitForAsyncValidators(d):i?a.makeValid(d):(f=l(c.$errors||c.$error),void 0===f?i=!0:a.getErrorMessage(f,d).then(function(b){a.makeInvalid(d,b)}))),i},j=function(b){a.makeDefault(b)},k=function(a){b.forEach(a[0].all||a[0].elements||a[0],function(a){var c,d=b.element(a);c=d.controller("ngModel"),void 0!==c&&("form"===d[0].nodeName.toLowerCase()?k(d):c.$setPristine())})},l=function(c){var e,f=!0,j=c?b.element(c).controller("form"):void 0,k=function(c,e,k){var m,n,o,p;if(c=b.element(c),m=c.controller("ngModel"),void 0!==m&&(e||h(c,k,j.$submitted)))if("form"===c[0].nodeName.toLowerCase())l(c);else{o=g(c),p=o.forceValidation,o.forceValidation=e;try{if(n=i(m,c,o),a.firstInvalidElementScrollingOnSubmitEnabled()&&!n&&f){var q=c.attr("id");q&&d(q)}f=f&&n}finally{o.forceValidation=p}}};return void 0===c||void 0!==j&&j.autoValidateFormOptions.disabled?void 0!==c:(e=b.copy(j.autoValidateFormOptions),e.forceValidation=!0,b.forEach(c[0].elements||c[0].all||c[0],function(a){k(a,!0,e)}),c[0].customHTMLFormControlsCollection&&b.forEach(c[0].customHTMLFormControlsCollection,function(a){k(a,!0,e)}),f)},m=function(b,c,d){c?a.getErrorMessage(c,b).then(function(c){a.makeInvalid(b,c)}):a.makeInvalid(b,d)};return{setElementValidationError:m,validateElement:i,validateForm:l,resetElement:j,resetForm:k}}function j(a,b){return void 0!==a&&null!==a||void 0===b?"false"!==a:b}function k(a,c,d){var e=a.autoValidateFormOptions=a.autoValidateFormOptions||b.copy(c.defaultFormValidationOptions);e.getFormController=function(){return a},e.waitForAsyncValidators=j(d.waitForAsyncValidators,e.waitForAsyncValidators),e.forceValidation=!1,e.disabled=!c.isEnabled()||j(d.disableDynamicValidation,e.disabled),e.validateNonVisibleControls=j(d.validateNonVisibleControls,e.validateNonVisibleControls),e.validateOnFormSubmit=j(d.validateOnFormSubmit,e.validateOnFormSubmit),e.removeExternalValidationErrorsOnSubmit=void 0===d.removeExternalValidationErrorsOnSubmit?e.removeExternalValidationErrorsOnSubmit:j(d.removeExternalValidationErrorsOnSubmit,e.removeExternalValidationErrorsOnSubmit),c.isEnabled()===!1&&"false"===d.disableDynamicValidation&&(e.disabled=!1)}function l(a){return{restrict:"E",link:function(b,c){function d(){a.resetForm(c),e.$setPristine&&e.$setPristine(),e.$setUntouched&&e.$setUntouched()}var e=c.controller("form");void 0!==e&&e.autoValidateFormOptions&&e.autoValidateFormOptions.disabled===!1&&(c.on("reset",d),b.$on("$destroy",function(){c.off("reset",d)}))}}}function m(){var a=function(a){for(var c=a,d=0;50>=d&&(void 0===c||"form"!==c.nodeName.toLowerCase());d+=1)void 0!==c&&(c=b.element(c).parent()[0]);return c};return{restrict:"A",link:function(b,c){var d=a(c.parent()[0]);d&&(d.customHTMLFormControlsCollection=d.customHTMLFormControlsCollection||[],d.customHTMLFormControlsCollection.push(c[0]))}}}function n(a,b,c){return a[0].compile=function(a,d){var e=b(d.ngSubmit),f="true"===d.ngSubmitForce;return function(a,b){function d(d){a.$apply(function(){void 0!==i&&null!==i&&i.autoValidateFormOptions&&i.autoValidateFormOptions.disabled===!0?e(a,{$event:d}):(void 0===i.$setSubmitted&&(i.$submitted=!0),(c.validateForm(b)||f===!0)&&e(a,{$event:d}))})}function g(){b[0].reset?b[0].reset():c.resetForm(b)}var h,i=b.controller("form");i&&i.autoValidateFormOptions&&(i.autoValidateFormOptions.resetForm=g,void 0!==i.$name&&""!==i.$name&&(h=a.$on("form:"+i.$name+":reset",g))),b.on("submit",d),a.$on("$destroy",function(){b.off("submit",d),h&&h()})}},a}function o(a){a.decorator("ngSubmitDirective",n)}function p(a,b,c,d){a.setErrorMessageResolver(b.resolve),a.registerDomModifier(c.key,c),a.registerDomModifier(d.key,d),a.setDefaultElementModifier(c.key)}b.module("jcs-autoValidate",[]),b.module("jcs-autoValidate").provider("validator",c),d.$inject=["$log"],b.module("jcs-autoValidate").factory("bootstrap3ElementModifier",d),e.$inject=["$timeout"],b.module("jcs-autoValidate").factory("jcs-debounce",e),"format"in a.prototype||(a.prototype.format=function(){var a=arguments;return this.replace(/{(\d+)}/g,function(b,c){return void 0!==typeof a[c]?a[c]:b})}),b.autoValidate=b.autoValidate||{errorMessages:{}},b.autoValidate.errorMessages["default"]={defaultMsg:"Please add error message for {0}",email:"Please enter a valid email address",minlength:"Please enter at least {0} characters",maxlength:"You have entered more than the maximum {0} characters",min:"Please enter the minimum number of {0}",max:"Please enter the maximum number of {0}",required:"This field is required",date:"Please enter a valid date",pattern:"Please ensure the entered information adheres to this pattern {0}",number:"Please enter a valid number",url:"Please enter a valid URL in the format of http(s)://www.google.com"},f.$inject=["$q","$http"],b.module("jcs-autoValidate").factory("defaultErrorMessageResolver",f),b.module("jcs-autoValidate").factory("foundation5ElementModifier",g),i.$inject=["validator","jcs-elementUtils","$anchorScroll"],b.module("jcs-autoValidate").factory("jcs-elementUtils",h),b.module("jcs-autoValidate").factory("validationManager",i),b.module("jcs-autoValidate").directive("form",["validator",function(a){return{restrict:"E",require:"form",priority:9999,compile:function(){return{pre:function(b,c,d,e){k(e,a,d)}}}}}]),b.module("jcs-autoValidate").directive("ngForm",["validator",function(a){return{restrict:"EA",require:"form",priority:9999,compile:function(){return{pre:function(b,c,d,e){k(e,a,d)}}}}}]),l.$inject=["validationManager"],b.module("jcs-autoValidate").directive("form",l),b.module("jcs-autoValidate").directive("registerCustomFormControl",m),n.$inject=["$delegate","$parse","validationManager"],o.$inject=["$provide"],b.module("jcs-autoValidate").config(o),b.module("jcs-autoValidate").config(["$provide",function(a){a.decorator("ngModelDirective",["$timeout","$delegate","validationManager","jcs-debounce",function(a,c,d,e){var f=c[0],g=f.link||f.compile;return f.compile=function(a){var c=b.version.major>=1&&b.version.minor>=3,f=g;return c&&b.isFunction(g)&&(f=g(a)),{pre:function(a,g,h,i){var j=i[0],k=i[1],l=void 0===h.ngModelOptions?void 0:a.$eval(h.ngModelOptions),m=j.$setValidity,n=j.$setPristine,o=e.debounce(function(){var a=void 0!==k&&null!==k?k.autoValidateFormOptions:void 0;d.validateElement(j,g,a)},100);return void 0===h.formnovalidate&&void 0!==k&&null!==k&&k.autoValidateFormOptions&&k.autoValidateFormOptions.disabled===!1&&(c||!c||void 0===l||void 0===l.updateOn||""===l.updateOn?j.$setValidity=function(a,b){m.call(j,a,b),o()}:(g.on(l.updateOn,function(){o()}),a.$on("$destroy",function(){g.off(l.updateOn)})),j.$setPristine=function(){n.call(j),d.resetElement(g)},j.autoValidated=!0),j.setExternalValidation=function(a,b,c){if(c){var e=j.$error||j.$errors;e[a]=!1}j.externalErrors=j.externalErrors||{},j.externalErrors[a]=!1,d.setElementValidationError(g,a,b)},j.removeExternalValidation=function(a,b){if(b){var c=j.$error||j.$errors;delete c[a]}j.externalErrors&&delete j.externalErrors[a],d.resetElement(g)},j.removeAllExternalValidation=function(){if(j.externalErrors){var a=j.$error||j.$errors;b.forEach(j.externalErrors,function(b,c){delete a[c]}),j.externalErrors={},d.resetElement(g)}},k&&(k.setExternalValidation=function(a,b,c,d){var e=!1;return k[a]&&(k[a].setExternalValidation(b,c,d),e=!0),e},k.removeExternalValidation=function(a,b,c,d){var e=!1;return k[a]&&(k[a].removeExternalValidation(b,d),e=!0),e}),f.pre?f.pre.apply(this,arguments):this},post:function(a,b,c,d){return f.post?f.post.apply(this,arguments):f.apply(this,arguments)}}},c}])}]),p.$inject=["validator","defaultErrorMessageResolver","bootstrap3ElementModifier","foundation5ElementModifier"],b.module("jcs-autoValidate").run(p)}(String,angular);
-angular.module('jcs-autoValidate')
-    .run([
-    'defaultErrorMessageResolver',
-    function (defaultErrorMessageResolver) {
-        // passing a culture into getErrorMessages('fr-fr') will get the culture specific messages
-        // otherwise the current default culture is returned.
-        defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
-            errorMessages['defaultMsg'] = 'Please add error message for {0}';
-            errorMessages['email'] = 'Ce champ n\'est pas une adresse email valide';
-            errorMessages['minlength'] = 'Ce champ doit faire au moins {0} caractères';
-            errorMessages['maxlength'] = 'Ce champ doit faire au plus {0} caractères';
-            errorMessages['min'] = 'Ce champ doit être un nombre supérieur à {0}';
-            errorMessages['max'] = 'Ce champ doit être un nombre inférieur à {0}';
-            errorMessages['required'] = 'Ce champ est requis';
-            errorMessages['date'] = 'Ce champ n\'est pas une date valide';
-            errorMessages['pattern'] = 'Ce champ ne correspond pas au motif {0}';
-            errorMessages['number'] = 'Ce champ n\'est pas un nombre valide';
-            errorMessages['url'] = 'Ce champ n\'est pas une URL valide';
+            return template;
+        }
+    };
+}
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
 
-            errorMessages['recommended'] = 'Ce champ permet de traiter votre demande plus rapidement';
+function myCustomFilter() {
+    /**
+     * path: the remaining path to explore
+     * value: the current value
+     * filter: the filter to check against
+     */
+    function check(path, value, filter) {
+        //If there is no value to check, we get out
+        if(value != undefined) {
+            //If we've reached the end of the path 
+            if(path != undefined && path.length == 0) {
+                //We check the value
+                return (angular.lowercase('' + value).indexOf(filter) !== -1);
+            } else {
+                //We pop one from the path
+                var nextValue = value[path[0]];
+                path.splice(0,1);
+                //If we are dealing with an array, we have to iterate
+                if(Array.isArray(nextValue)) {
+                    for(var i = 0; i < nextValue.length; i++) {
+                        //When we have found something, we return immediately
+                        if(check(path, nextValue[i], filter))
+                            return true;
+                    }
+                    //We found nothing
+                    return false;
+                } else {
+                    //It's a simple value, recurse
+                    return check(path, nextValue, filter);
+                }
+            }
+        } else {
+            return false;
+        }
+
+    }
+
+    return function(input, filter) {
+        //Let's not deal with an empty filter
+        if(filter == undefined || filter == null || filter  === '' )
+            return input;
+
+        var outArray = [];
+        var lowerFilter = angular.lowercase(filter) || '';
+
+        //Pour chaque élément du tableau
+        for(elemId = 0; elemId < input.length; elemId++) {
+            //Pour chaque champ à analyser
+            for(fieldId = 2; fieldId < arguments.length; fieldId++) {
+
+                //On découpe, au cas où ça serait un sous objet (genre objet.propriete)
+                var fieldPath = arguments[fieldId].split('.');
+                var found = check(fieldPath, input[elemId], lowerFilter);
+
+                if(found) {
+                    outArray.push(input[elemId]);
+                    break;
+                }
+
+            }
+        }
+        return outArray;
+    }
+}
+
+function editableTableController($filter, dataService, tableService) {
+    var self = this;
+
+    self.dataService = dataService;
+
+    //Functions
+    self.orderBy = $filter('orderBy');
+
+    self.setSort = setSort;
+    self.getSort = getSort;
+    self.sort = sort;
+
+    self.refreshData = refreshData;
+    self.query = query;
+    self.create = create;
+    self.cancel = cancel;
+    self.update = update;
+    self.delete = del;
+    self.get = get;
+
+    self.getSuccess = getSuccess;
+
+    self.editSubmit = editSubmit;
+    self.addSubmit = addSubmit;
+
+    self.getButtonClass = getButtonClass;
+
+    self.closeAlert = closeAlert;
+    self.extractErrors = extractErrors;
+
+    //Data
+
+    self.queryParameters = {};
+    self.queryString = queryString;
+    self.createUrl = createUrl;
+
+    self.addObject = {};
+
+    self.errorMessage = "";
+    self.filterInput = "";
+
+    self.sortProp = "id";
+    self.sortReverse = false;
+
+    self.refreshControllers = refreshControllers;
+
+    if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
+        self.linkedData = tableService.getLinkedData();
+    }
+
+    if(tableService != undefined && typeof tableService.addListeners == 'function')
+        tableService.addListeners(self);
+
+    self.refreshData();
+
+    function setSort(key) {
+        if(self.sortProp == key) {
+            self.sortReverse = !self.sortReverse;
+        } else {
+            self.sortProp = key;
+            self.sortReverse = false;
+        }
+        self.sort();
+    };
+
+    function getSort(key) {
+        if(self.sortProp === key) {
+            return self.sortReverse;
+        } else {
+            return null;
+        }
+    };
+
+    function sort() {
+        self.data = self.orderBy(self.data, self.sortProp, self.sortReverse);
+    }
+
+    function getSuccess(value) {
+        value.internalKey = value.id;
+        if(tableService != undefined && typeof tableService.getSuccess == 'function') {
+            tableService.getSuccess(value);
+        }
+    }
+
+    function editSubmit(index, value, ctrlsToRefresh) {
+        //Validation
+        var form = self['form_' + index];
+        if(form.$valid) {
+            //Send update
+            self.update(value, ctrlsToRefresh);
+        } 
+    }
+
+    function addSubmit(ctrlsToRefresh) {
+        //Validation
+        var form = self['form_add'];
+        if(form.$valid) {
+            //Send update
+            self.create(self.addObject, ctrlsToRefresh);
+        }
+    }
+    function refreshData() {
+        self.data = self.query();
+    }
+
+    function query() {
+        if(tableService != undefined && typeof tableService.queryParameters == 'function') {
+            self.queryParameters = tableService.queryParameters();
+        }
+        
+        return dataService.query(self.queryParameters, function() {
+            angular.forEach(self.data, function(value, key) {
+                self.getSuccess(value);
+            });
+            self.sort();
         });
     }
-]);
 
-function elementModifier() {
-    makeInvalid = function(el, errorMsg) {
-        var angEl = angular.element(el);
-        var controller = angEl.controller('form')[angEl.attr('name')];
-        var errors = controller != undefined ? controller.$error : undefined;
+    /**
+     * Update
+     */
+     function update(type, ctrlsToRefresh) {
+        var toSend = type;
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
+            toSend = tableService.preSend(type);
+        }
 
-        var formGroup = getParentFormGroup(angEl);
+        self.errors = [];
+        toSend.$update({id: type.internalKey}, 
+            function(value, responseHeaders) {
 
-        if(errors) {
-            if(errors.recommended) {
-                formGroup.addClass("has-warning");
-                controller.tooltipClass="tooltip-warning";
-            } else {
-                formGroup.addClass("has-error");
-                controller.tooltipClass="tooltip-error";
+                self.getSuccess(value);
+                self.refreshControllers(ctrlsToRefresh);
+                value.editing = false;
+                self.data[self.data.indexOf(type)] = value;
+                self.sort();
+
+            }, 
+            function(httpResponse) {
+                self.errors = self.extractErrors(httpResponse);
+            });
+    };
+
+    /**
+     * Delete
+     */
+     function del(type, ctrlsToRefresh) {
+        self.errors = [];
+        var confirmed = false;
+        if(tableService != undefined && typeof tableService['deleteMessage'] == 'function' 
+            && window.confirm(tableService.deleteMessage())) {
+                confirmed = true;
+        } else {
+            confirmed = false;
+        }
+        if(confirmed) {
+            type.$delete({id: type.internalKey}, 
+                function(value, responseHeaders) {
+                    self.data.splice(self.data.indexOf(value), 1);
+                    self.refreshControllers(ctrlsToRefresh);
+                }, 
+                function(httpResponse) {
+                    self.errors = self.extractErrors(httpResponse);
+                });
+        }
+    };
+
+    /**
+     * Add
+     */
+     function create(obj, ctrlsToRefresh) {
+        var toSend = self.addObject;
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
+            toSend = tableService.preSend(self.addObject);
+        }
+        self.errors = [];
+        dataService.save(toSend, 
+            function(value, responseHeaders) {
+                //process value
+                self.getSuccess(value);
+
+                //Update any other controller
+                self.refreshControllers(ctrlsToRefresh);
+
+                //Update data list
+                self.data.push(value);
+                self.sort();
+                self.addObject = {};
+                self.form_add.$setPristine();
+                self.form_add.$setUntouched();
+
+            }, 
+            function(httpResponse) {
+                self.errors = self.extractErrors(httpResponse);
+            });
+    };
+
+    /**
+     * Cancel
+     */
+     function cancel(type) {
+        self.errors = [];
+        dataService.get({id: type.internalKey}, function(value, responseHeaders) {
+            self.getSuccess(value);
+            value.editing = false;
+            self.data[self.data.indexOf(type)] = value;
+        });
+    };
+
+    /** 
+     * Get
+     */
+     function get(type) {
+        dataService.get({id: type.id}, function(value, responseHeaders) {
+            self.getSuccess(value);
+            self.data[self.data.indexOf(type)] = value;
+        });
+    };
+
+    function closeAlert(index) {
+        self.errors.splice(index, 1);
+    };
+
+    function extractErrors(data) {
+        var ret = [];
+        for(field in data) {
+            for(i = 0; i < data[field].length; i++) {
+                ret.push(data[field][i]);
             }
-            controller.errorMessage = errorMsg;
         }
-    }
-
-    makeDefault = function(el) {
-        var angEl = angular.element(el);
-        var controller = angEl.controller('form')[angEl.attr('name')];
-        var formGroup = getParentFormGroup(angEl);
-
-        formGroup.removeClass("has-warning");
-        formGroup.removeClass("has-error");
-        if(controller) {
-            controller.errorMessage = '';
-            controller.tooltipClass = '';
-        }
-    }
-
-    getParentFormGroup = function(el) {
-        var localEl = el;
-        //TODO: add a check to avoid infinite loop
-        while(!localEl.hasClass('tooltip-container')) {
-            localEl = localEl.parent();
-        }
-        return (localEl.hasClass('tooltip-container') ? localEl : el);
-    }
-
-    return {
-        makeValid: makeDefault,
-        makeInvalid: makeInvalid,
-        makeDefault: makeDefault,
-        key: 'elementModifier'
+        return ret;
     };
-}
 
-//Just like a required validator
-function recommendedDirective() {
-    return {
-        require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
-          ctrl.$validators.recommended = function(modelValue, viewValue) {
-            return !ctrl.$isEmpty(modelValue);
-          };
-        }
-    };
-}
-//From this bugreport : https://github.com/angular-ui/bootstrap/issues/2072
-//Got this Gist : https://gist.github.com/weberste/354a3f0a9ea58e0ea0de
-function datepickerLocaldate() {
-    
-        var directive = {
-            restrict: 'A',
-            require: ['ngModel'],
-            link: link
-        };
-        return directive;
-
-        function link(scope, element, attr, ctrls) {
-            var ngModelController = ctrls[0];
-
-            // called with a JavaScript Date object when picked from the datepicker
-            ngModelController.$parsers.push(function (viewValue) {
-                if(viewValue) {
-                    // undo the timezone adjustment we did during the formatting
-                    viewValue.setMinutes(viewValue.getMinutes() - viewValue.getTimezoneOffset());
-                }
-                // we just want a local date in ISO format
-                return viewValue;
-            });
-
-            // called with a 'yyyy-mm-dd' string to format
-            ngModelController.$formatters.push(function (modelValue) {
-                if (!modelValue) {
-                    return undefined;
-                }
-                // date constructor will apply timezone deviations from UTC (i.e. if locale is behind UTC 'dt' will be one day behind)
-                var dt = new Date(modelValue);
-                // 'undo' the timezone offset again (so we end up on the original date again)
-                dt.setMinutes(dt.getMinutes() + dt.getTimezoneOffset());
-                return dt;
+    function refreshControllers(ctrls) {
+        if(ctrls) {
+            angular.forEach(ctrls, function (ctrl, idx) {
+                ctrl.refreshData();
             });
         }
+    }
 
+    function queryString() {
+        var ret = '';
 
+        var parameters = {};
+        if(tableService != undefined && typeof tableService.queryParameters == 'function') {
+            parameters = tableService.queryParameters();
+        }
+
+        var first = true;
+        angular.forEach(parameters, function(value, key) {
+            ret += first ? '?' : '&'; 
+            ret += key + '=' + value;
+            first = false;
+        });
+ 
+        return ret;
+    }
+
+    function createUrl(baseUrl) {
+        return baseUrl + '/create' + queryString();
+    }
+
+    function getButtonClass(index) {
+        var form = self['form_' + index];
+        var ret = 'btn';
+        if(form.$valid) {
+            ret += ' btn-default';
+        }
+        return ret;
+    }
+} 
+
+function sharedDataServiceFactory() {
+    return {
+        data: {}
+    };
 }
-
-
-
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
 
 function preinscriptionsServiceFactory($resource) {
     return $resource('/intra/api/preinscription');
 }
 
-function niveauFormationsServiceFactory($resource) {
-    return $resource('/intra/api/niveau_formation/:id', null, {
-        'update' : { method: 'PUT' }
-    });
-}
-function sessionsServiceFactory($resource) {
-    return $resource('/intra/api/session/:id', null, {
-        'update' : { 
-            method: 'PUT'
+function preinscriptionsTableServiceFactory($filter, sharedDataService) {
+    //It would deserve to factorize with sessionDetailService.titleText
+    function buildSessionLibelle(item) {
+        console.log(item);
+        var ret = '';
+
+        var preinscriptionSessions = item.preinscription_sessions;
+        console.log(preinscriptionSessions);
+
+        if(preinscriptionSessions != undefined && preinscriptionSessions.length > 1) {
+            console.log(preinscriptionSession.length);
+            ret = item.preinscription_sessions.length + ' sessions';
+        } else {
+            var session = preinscriptionSessions[0].session;
+            console.log(session);
+            ret = session.module.libelle;
+            if(session.firstDate || session.lastDate) {
+                ret += ' ('
+                if(session.firstDate) {
+                    ret += $filter('date')(session.firstDate, 'dd/MM/yyyy');
+                }
+                if(session.lastDate) {
+                    ret += ' - ' + $filter('date')(session.lastDate, 'dd/MM/yyyy');
+                }
+                ret += ')';
+            }
+        }
+        return ret;
+    };
+
+    return {
+        queryParameters: function() {
         },
-    });
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette preinscription ?';
+            return message;
+        },
+
+        getSuccess: function(data) {
+            data.session_label = buildSessionLibelle(data);
+        }
+    };
 }
 
-
-function preinscriptionsPublicController($filter, $uibModal, sessionsService, preinscriptionsService) {
-    var self = this;
-
-    /**
-     * Member declarations
-     */
-
-    /* The main data */
-    self.data = {
-        preinscription_sessions: [],
-    }
-
-    /* External data */
-    //Static
-    self.externalData = {
-        stagiaire_genre: [
-            {id: 'Mr', label: 'Mr'},
-            {id: 'Mme', label: 'Mme'},
-        ],
-        stagiaire_adherent: [
-            {id: 'true', label: 'Déjà adhérent'},
-            {id: 'false', label: 'Nouvel adhérent (un réglement de 16€ vous sera demandé)'},
-        ],
-        stagiaire_statut: [
-            {id: 'salarie', label: 'Salarié'},
-            {id: 'demandeur_emploi', label: 'Demandeur d\'emploi'},
-            {id: 'intermittent', label: 'Intermittent du spectacle'},
-            {id: 'rsa', label: 'RSA'},
-            {id: 'etudiant', label: 'Etudiant'},
-            {id: 'autre', label: 'Autre'},
-        ],
-        salarie_types : [
-            {id: 'cdi', label: 'CDI'},
-            {id: 'cdd', label: 'CDD'},
-            {id: 'cui_cae', label: 'CUI/CAE'},
-            {id: 'autre', label: 'Autre', freeText: true}
-        ],
-        demandeur_emploi_types : [
-            {id: 'indemnise', label: 'Indemnisé'},
-            {id: 'non_indemnise', label: 'Non indemnisé'},
-        ],
-        financements_types : [
-            {id: 'employeur', label: 'Financement par l\'employeur'},
-            {id: 'personnel', label: 'Financement personnel'},
-            {id: 'afdas', label: 'Financement AFDAS'},
-            {id: 'autre', label: 'Autres types de financements'},
-        ],
-        financement_afdas : [
-            {id: 'intermittent', label: 'Je suis demandeur d\'emploi'},
-            {id: 'non_intermittent', label: 'Je ne suis pas intermittent mais justifie du nombre de jours de travail requis'},
-        ],
-        financement_autre : [
-            {id: 'conseil_regional', label: 'Conseil régional'},
-            {id: 'conseil_general', label: 'Conseil général'},
-            {id: 'pole_emploi', label: 'Pôle emploi'},
-            {id: 'association', label: 'L\'association dans laquelle je suis bénévole'},
-            {id: 'opca', label: 'Autre OPCA', freeText: true},
-            {id: 'autre', label: 'Autre', freeText: true},
-        ],
-        prise_connaissance : [
-            {id: 'site_internet', label: 'Site internet du Jadin Moderne'},
-            {id: 'site_autre', label: 'Autre site internet', freeText: true},
-            {id: 'annonce_adhérents', label: 'Annonce aux adhérents du Jardin Moderne'},
-            {id: 'programme', label: 'Programmes bimensuels du Jardin Moderne'},
-            {id: 'catalogue', label: 'Notre catalogue de formations'},
-            {id: 'medias', label: 'Médias', freeText: true},
-            {id: 'bouche_a_oreille', label: 'Bouche à oreille'},
-            {id: 'recherche_internet', label: 'Recherche internet'},
-            {id: 'affichage', label: 'Affichage dans des lieux', freeText: true},
-            {id: 'autre', label: 'Autre', freeText: true},
-
-        ]
-    }
-    //Dynamic
-    self.externalData['sessions'] = sessionsService.query({}, enhanceSessions);
-
-    /* Used by components so we reserve the names */
-    //Will store the open status of the date pickers
-    self.datepickerstatus = {};
-    self.collapsedDivs = [];
-
-
-    /* Configuration for the datepickers */
-    self.datepicker_options = {
-        datenaissance: {
-            datepickerMode: 'year'
-        }
-    }
-
-
-    /* Declare controller functions */
-    self.submit = submit;
-    self.addInscription = addInscription;
-    self.removeInscription = removeInscription;
-
-    self.getValidationMessage = getValidationMessage;
-
-    self.openConditions = openConditions;
-
-    self.toApiModel = toApiModel;
-
-    /**
-     * Function implementations
-     */
-    function submit() {
-        console.log('submit');
-
-        //TODO: Check if at least one session
-
-        //TODO: Send data to server 
-        preinscriptionsService.save(self.data,
-            function(value, responseHeaders) {
-                window.location.href="/preinscription/thanks";
-            },
-            function(response) {
-                alert('error');
-                console.log(response);
-            });
-        return true;
-    }
-
-    function addInscription(item, model) {
-        self.data.preinscription_sessions.push({
-            session: self.selectedInscription, 
-            session_id: self.selectedInscription.id, 
-            collapsed: false});
-
-        self.selectedInscription = null;
-    }
-
-    function removeInscription(index) {
-        self.data.sessions.splice(index, 1);
-    }
-
-    function openConditions() {
-        var modalInstance = $uibModal.open({
-            templateUrl: 'preinscription/conditions',
-            size: 'lg'
-        });
-    }
-
-    function getValidationMessage(form, input) {
-        if(self[form] != undefined && self[form][input] != undefined)
-            return self[form][input]['errorMessage'];
-    }
-
-    function toApiModel(data) {
-    }
-
-    /**
-     * Not member functions
-     */
-     function enhanceSessions(data) {
-        angular.forEach(data, function(session) {
-            //Session label
-            session.label = buildSessionLibelle(session);
-
-            //Tarifs label
-            angular.forEach(session.module.tarifs, function(tarif){
-                tarif.label = buildTarifLibelle(tarif);
-            });
-        });
-     }
-
-     function buildSessionLibelle(session) {
-        var ret = session.module.libelle + ' ';
-        if(session.firstDate || session.lastDate) {
-            ret += '(';
-            if(session.firstDate) {
-                ret += $filter('date')(session.firstDate, 'dd/MM/yyyy');
-            }
-            if(session.lastDate) {
-                ret += ' - ' + $filter('date')(session.lastDate, 'dd/MM/yyyy');
-            }
-            ret += ')';
-        }
-
-        return ret;
-    }
-
-    function buildTarifLibelle(tarif) {
-        var ret = tarif.tarif_type.libelle + ' (' + tarif.montant + ' €)';
-        return ret;
-    }
-}
-
-angular.module('preinscriptionsPublicApp', ['ngResource', 'ngAnimate', 'ui.bootstrap', 'ui.select', 'ngSanitize', 'jcs-autoValidate'])
+angular.module('preinscriptionsList', ['ngResource', 'listTable'])
     .factory('preinscriptionsService', ['$resource', preinscriptionsServiceFactory])
-    .factory('sessionsService', ['$resource', sessionsServiceFactory])
-    .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
+    .factory('preinscriptionsTableService', ['$filter', 'sharedDataService', preinscriptionsTableServiceFactory])
+    .controller('preinscriptionsListController', ['$filter', 'preinscriptionsService', 'preinscriptionsTableService', editableTableController])
+;
 
+angular.module('preinscriptionsListApp', ['preinscriptionsList']);
 
-    .controller('preinscriptionsPublicController', ['$filter', '$uibModal', 'sessionsService', 'preinscriptionsService', preinscriptionsPublicController])
-    
-    .directive('recommended', recommendedDirective)
-    .directive('datepickerLocaldate', datepickerLocaldate)
-
-    .config(function(uiSelectConfig) {
-        uiSelectConfig.theme = 'bootstrap';
-    })
-
-    .factory('elementModifier', [elementModifier])
-    .run([
-        'validator',
-        'elementModifier',
-        function (validator, elementModifier) {
-            validator.registerDomModifier(elementModifier.key, elementModifier);
-            validator.setDefaultElementModifier(elementModifier.key);
-        }
-    ]);
-
-//# sourceMappingURL=preinscriptions.js.map
+//# sourceMappingURL=preinscriptions-list.js.map

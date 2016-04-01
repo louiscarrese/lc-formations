@@ -174,6 +174,16 @@ var financeurInscriptionsList = Array.prototype.concat(
     ]
 );
 
+var preinscriptionsList = Array.prototype.concat(
+    libraries,
+    listTable,
+    [
+        'services/data/preinscriptions-service.js',
+        'services/tables/preinscriptions-service.js',
+        'services/tables/preinscriptions-service.js',
+        'modules/tables/preinscriptions-list-module.js'
+    ]
+);
 
 var moduleDetail = Array.prototype.concat(
     libraries,
@@ -284,6 +294,7 @@ var inscriptionDetail = Array.prototype.concat(
     financeurInscriptionsList
 );
 
+
 var preinscription = Array.prototype.concat(
     libraries,
     [
@@ -345,6 +356,10 @@ elixir(function(mix) {
             inscriptionsList,
             ['app/inscriptionsApp.js']
         )), 'public/js/inscriptions-list.js')
+        .scripts(array_unique(Array.prototype.concat(
+            preinscriptionsList,
+            ['app/preinscriptionsApp.js']
+        )), 'public/js/preinscriptions-list.js')
         .scripts(array_unique(Array.prototype.concat(
             moduleDetail,
             ['app/moduleDetailApp.js']

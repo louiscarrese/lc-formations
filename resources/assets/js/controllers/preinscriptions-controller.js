@@ -110,7 +110,7 @@ function preinscriptionsPublicController($filter, $uibModal, sessionsService, pr
         //TODO: Send data to server 
         preinscriptionsService.save(self.data,
             function(value, responseHeaders) {
-                window.location.href="thanks";
+                window.location.href="/preinscription/thanks";
             },
             function(response) {
                 alert('error');
@@ -120,7 +120,11 @@ function preinscriptionsPublicController($filter, $uibModal, sessionsService, pr
     }
 
     function addInscription(item, model) {
-        self.data.preinscription_sessions.push({session: self.selectedInscription, collapsed: false});
+        self.data.preinscription_sessions.push({
+            session: self.selectedInscription, 
+            session_id: self.selectedInscription.id, 
+            collapsed: false});
+
         self.selectedInscription = null;
     }
 
@@ -155,7 +159,6 @@ function preinscriptionsPublicController($filter, $uibModal, sessionsService, pr
             angular.forEach(session.module.tarifs, function(tarif){
                 tarif.label = buildTarifLibelle(tarif);
             });
-
         });
      }
 

@@ -5,9 +5,18 @@ class PreinscriptionSessionRepository extends AbstractRepository implements Prei
 {
     protected $modelClassName = 'ModuleFormation\\PreinscriptionSession';
 
+    private $sessionRepository;
+    
+    public function __construct($app, \ModuleFormation\Repositories\SessionRepositoryInterface $sessionRepository) 
+    {
+        parent::__construct($app);
+        $this->sessionRepository = $sessionRepository;
+    }
+
 
     protected function augmentData($data) {
         $data['financement_type'] = array('id' => $data->financement);
+        $data->session = $this->sessionRepository->augmentData($data->session);
 
         return $data;
     }
