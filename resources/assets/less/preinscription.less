@@ -1,0 +1,80 @@
+@import "bootstrap/less/bootstrap";
+@import "select.min.css";
+
+@import "_variables";
+
+body {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+label {
+    font-weight: normal;
+}
+/** Preinscriptions */
+.inscription-header {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+
+    background-color: @gray-light;
+    padding: 1em 0.5em;
+
+}
+
+.inscription-header span {
+    line-height: 1em;
+}
+
+.inscription-header button {
+    margin-left: 1em;
+}
+
+.inscription-content {
+    padding: 1em;
+}
+.inscription {
+    border: solid 1px @gray-light;
+
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+
+    margin-bottom: 1em;
+}
+
+
+.form-inline input.line-2 {
+    width: 49%;
+}
+.form-inline input.line-3 {
+    width: 33%;
+}
+.form-inline input.line-4 {
+    width: 24%;
+}
+
+.rounded-border {
+    border: solid 1px @gray-light;
+
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.tooltip-error > .tooltip-inner {
+    background-color: @brand-danger;
+}
+.tooltip-error.top .tooltip-arrow {
+    border-top-color: @brand-danger !important;
+}
+.tooltip-warning > .tooltip-inner {
+    background-color: @brand-warning;
+}
+.tooltip-warning.top .tooltip-arrow {
+    border-top-color: @brand-warning !important;
+}

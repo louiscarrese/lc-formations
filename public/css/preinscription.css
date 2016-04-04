@@ -4,8 +4,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-@import "select2.css";
-@import "select2-bootstrap.css";
+@import "select.min.css";
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -1296,8 +1295,7 @@ mark,
 .text-left {
   text-align: left;
 }
-.text-right,
-td.list-action {
+.text-right {
   text-align: right;
 }
 .text-center {
@@ -6451,58 +6449,62 @@ body {
   margin-top: 1em;
   margin-bottom: 1em;
 }
-.adapt-to-content {
-  display: inline-block;
-}
-#search-form {
-  margin-right: 0;
-}
-.centered {
-  text-align: center;
-}
-.clickable {
-  cursor: pointer;
-}
-table .glyphicon {
-  color: #2e1700;
-}
-.global-actions {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-.global-actions .glyphicon {
-  color: #2e1700;
-  font-size: 2em;
-}
-.form-condensed .form-group {
-  margin-bottom: 0.2em;
-}
-.form-horizontal .control-label {
-  padding-top: 0px;
-  padding-bottom: 7px;
-}
-pre {
-  margin-top: 7px !important;
-  -webkit-margin-before: 0;
-  margin-block-start: 0;
-  -webkit-margin-after: 0;
-  margin-block-end: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  white-space: pre-wrap;
-}
-.sort-arrow {
-  margin-left: 0.2em;
-}
-td.list-action {
-  width: 1px;
-  white-space: nowrap;
-}
-.dn-timepicker-popup {
-  max-height: 300px;
-  overflow-y: scroll;
-}
 label {
   font-weight: normal;
 }
+/** Preinscriptions */
+.inscription-header {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  background-color: #ffc48a;
+  padding: 1em 0.5em;
+}
+.inscription-header span {
+  line-height: 1em;
+}
+.inscription-header button {
+  margin-left: 1em;
+}
+.inscription-content {
+  padding: 1em;
+}
+.inscription {
+  border: solid 1px #ffc48a;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  margin-bottom: 1em;
+}
+.form-inline input.line-2 {
+  width: 49%;
+}
+.form-inline input.line-3 {
+  width: 33%;
+}
+.form-inline input.line-4 {
+  width: 24%;
+}
+.rounded-border {
+  border: solid 1px #ffc48a;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+.tooltip-error > .tooltip-inner {
+  background-color: #d9534f;
+}
+.tooltip-error.top .tooltip-arrow {
+  border-top-color: #d9534f !important;
+}
+.tooltip-warning > .tooltip-inner {
+  background-color: #f0ad4e;
+}
+.tooltip-warning.top .tooltip-arrow {
+  border-top-color: #f0ad4e !important;
+}
 
-/*# sourceMappingURL=app.css.map */
+/*# sourceMappingURL=preinscription.css.map */

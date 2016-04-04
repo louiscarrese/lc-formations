@@ -4,7 +4,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Jardin Moderne - Préinscription aux formations</title>
-        <link rel="stylesheet" href="css/app.css" type="text/css" />
+        <link rel="stylesheet" href="css/preinscription.css" type="text/css" />
         <link rel="stylesheet" href="css/select.min.css" type="text/css" />
         <script type="text/javascript" src="js/preinscriptions.js"></script>
     </head>

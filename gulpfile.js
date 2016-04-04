@@ -321,6 +321,7 @@ var home = Array.prototype.concat(
 elixir(function(mix) {
     mix
         .less('app.less')
+        .less('preinscription.less')
         .less('print/emargement.less')
         .less('print/suivi-session.less')
 
