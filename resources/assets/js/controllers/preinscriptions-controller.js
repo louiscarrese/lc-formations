@@ -14,8 +14,8 @@ function preinscriptionsPublicController($filter, $uibModal, sessionsService, pr
     //Static
     self.externalData = {
         stagiaire_genre: [
-            {id: 'Mr', label: 'Mr'},
-            {id: 'Mme', label: 'Mme'},
+            {id: 'M', label: 'Mr'},
+            {id: 'F', label: 'Mme'},
         ],
         stagiaire_adherent: [
             {id: 'true', label: 'Déjà adhérent'},

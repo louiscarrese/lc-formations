@@ -5334,7 +5334,7 @@ angular.module('ui.bootstrap.dateparser', [])
           milliseconds: baseDate.getMilliseconds()
         };
       } else {
-        if (baseDate) {
+        if (baseDate && !isNaN(baseDate)) {
           $log.warn('dateparser:', 'baseDate is not a valid date');
         }
         fields = { year: 1900, month: 0, date: 1, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 };
@@ -11782,7 +11782,9 @@ angular.module('listTable', ['sortableHeader'])
 ;
 
 function preinscriptionsServiceFactory($resource) {
-    return $resource('/intra/api/preinscription');
+    return $resource('/intra/api/preinscription/:id', null, {
+        'update' : { method: 'PUT' }
+    });
 }
 
 function preinscriptionsTableServiceFactory($filter, sharedDataService) {
@@ -11836,6 +11838,7 @@ angular.module('preinscriptionsList', ['ngResource', 'listTable'])
     .controller('preinscriptionsListController', ['$filter', 'preinscriptionsService', 'preinscriptionsTableService', editableTableController])
 ;
 
-angular.module('preinscriptionsListApp', ['preinscriptionsList']);
+angular.module('preinscriptionsListApp', ['preinscriptionsList'])
+;
 
 //# sourceMappingURL=preinscriptions-list.js.map

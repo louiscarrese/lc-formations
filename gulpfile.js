@@ -294,6 +294,33 @@ var inscriptionDetail = Array.prototype.concat(
     financeurInscriptionsList
 );
 
+var preinscriptionDetail = Array.prototype.concat(
+    libraries,
+    [
+        'vendor/angular-ui-select/dist/select.min.js',
+        'vendor/angular-sanitize/angular-sanitize.min.js',
+        'vendor/checklist-model/checklist-model.js',
+        'vendor/angular-xeditable/dist/js/xeditable.js',
+        'directives/xeditable-checkbox-precision.js',
+        'directives/xeditable-radio-precision.js',
+    ],
+    detail,
+    [
+        'directives/datepickerlocaldate-directive.js',
+        'services/data/preinscriptions-service.js',
+        'services/linkedData/linkedData-service.js',
+        'services/linkedData/genre-service.js',
+        'services/linkedData/adherent-service.js',
+        'services/linkedData/statut-stagiaire-service.js',
+        'services/linkedData/type-salarie-service.js',
+        'services/linkedData/type-demandeur-emploi-service.js',
+        'services/linkedData/type-financement-service.js',
+        'services/linkedData/financement-afdas-service.js',
+        'services/linkedData/financement-autre-service.js',
+        'services/details/preinscriptiondetail-service.js',
+        'modules/details/preinscription-detail-module.js'
+    ]
+);
 
 var preinscription = Array.prototype.concat(
     libraries,
@@ -389,6 +416,10 @@ elixir(function(mix) {
             inscriptionDetail,
             ['app/inscriptionDetailApp.js']
         )), 'public/js/inscriptions-detail.js')
+        .scripts(array_unique(Array.prototype.concat(
+            preinscriptionDetail,
+            ['app/preinscriptionDetailApp.js']
+        )), 'public/js/preinscriptions-detail.js')
         .scripts(preinscription, 'public/js/preinscriptions.js')
         .scripts(home, 'public/js/home.js')
 

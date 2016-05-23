@@ -11,6 +11,8 @@ function detailController(editModeService, dataService, detailService, $q) {
     self.refreshData = refreshData;
     self.titleText = titleText;
 
+    self.submit = submit;
+
     //CRUD
     self.create = create;
     self.cancel = cancel;
@@ -53,6 +55,14 @@ function detailController(editModeService, dataService, detailService, $q) {
     function initDetail() {
         //Add custom listeners if any 
         addListeners();
+
+        //Get staticData services
+        self.staticData = detailService.staticDataServices;
+        angular.forEach(self.staticData, function(value, key) {
+            value.promise().then(function(response) {
+                self.linkedData[key] = response;
+            });
+        });
 
         //Launch all requests and retrieve their promises
         var promises = angular.extend({}, 
@@ -109,6 +119,10 @@ function detailController(editModeService, dataService, detailService, $q) {
         } else {
             return "";
         }
+    }
+
+    function submit() {
+
     }
 
     //CRUD

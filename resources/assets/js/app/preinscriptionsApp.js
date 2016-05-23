@@ -1,1 +1,2 @@
-angular.module('preinscriptionsListApp', ['preinscriptionsList']);
+angular.module('preinscriptionsListApp', ['preinscriptionsList'])
+;

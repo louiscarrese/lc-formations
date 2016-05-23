@@ -5,6 +5,7 @@ namespace ModuleFormation\Http\Controllers\Api;
 use Illuminate\Http\Request;
 
 use ModuleFormation\Http\Controllers\Controller;
+use Log;
 
 abstract class AbstractController extends Controller 
 {
@@ -17,6 +18,7 @@ abstract class AbstractController extends Controller
 
     public function index(Request $request) 
     {
+        Log::info('index');
         //Initialize with no criterias
         $criterias = array();
 
@@ -66,6 +68,7 @@ abstract class AbstractController extends Controller
      */
     public function show($id)
     {
+        Log::info('show');
         $data = $this->repository->find($id);
 
         return response()->json($data);

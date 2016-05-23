@@ -5334,7 +5334,7 @@ angular.module('ui.bootstrap.dateparser', [])
           milliseconds: baseDate.getMilliseconds()
         };
       } else {
-        if (baseDate) {
+        if (baseDate && !isNaN(baseDate)) {
           $log.warn('dateparser:', 'baseDate is not a valid date');
         }
         fields = { year: 1900, month: 0, date: 1, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 };
@@ -12073,6 +12073,8 @@ function detailController(editModeService, dataService, detailService, $q) {
     self.refreshData = refreshData;
     self.titleText = titleText;
 
+    self.submit = submit;
+
     //CRUD
     self.create = create;
     self.cancel = cancel;
@@ -12115,6 +12117,14 @@ function detailController(editModeService, dataService, detailService, $q) {
     function initDetail() {
         //Add custom listeners if any 
         addListeners();
+
+        //Get staticData services
+        self.staticData = detailService.staticDataServices;
+        angular.forEach(self.staticData, function(value, key) {
+            value.promise().then(function(response) {
+                self.linkedData[key] = response;
+            });
+        });
 
         //Launch all requests and retrieve their promises
         var promises = angular.extend({}, 
@@ -12171,6 +12181,10 @@ function detailController(editModeService, dataService, detailService, $q) {
         } else {
             return "";
         }
+    }
+
+    function submit() {
+
     }
 
     //CRUD
