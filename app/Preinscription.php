@@ -11,11 +11,15 @@ class Preinscription extends AbstractModel
         'adresse', 'code_postal', 'ville', 'tel_fixe', 'tel_portable', 'email', 
         'adherent', 'statut', 
         'salarie_type', 'demandeur_emploi_type', 'etudiant_etudes', 'type_autre', 
-        'profession', 'experiences', 'suggestions', 'formations_precedentes'];
+        'profession', 'experiences', 'suggestions', 'formations_precedentes', 'stagiaire_id'];
 
 
     public function preinscription_sessions() {
         return $this->hasMany('ModuleFormation\PreinscriptionSession');
+    }
+
+    public function stagiaire() {
+        $this->belongsTo('ModuleFormation\Stagiaire');
     }
 }
 

@@ -37,6 +37,9 @@ class CreatePreinscriptionsTables extends Migration
             $table->string('suggestions', 2000)->nullable();
             $table->string('formations_precedentes', 2000)->nullable();
 
+            $table->integer('stagiaire_id')->unsigned()->nullable();
+            $table->foreign('stagiaire_id')->references('id')->on('stagiaires');
+
             $table->timestamps();
         });
 
@@ -67,6 +70,9 @@ class CreatePreinscriptionsTables extends Migration
 
             $table->integer('session_id')->unsigned();
             $table->foreign('session_id')->references('id')->on('sessions');
+
+            $table->integer('employeur_id')->unsigned()->nullable();
+            $table->foreign('employeur_id')->references('id')->on('employeurs');
 
             $table->timestamps();
         });
