@@ -120,7 +120,7 @@
                     'model' => 'ctrl.data.type_autre'
                 ])
             </div>
-            <h2>Renseigments complémentaires</h2>
+            <h2>Renseignements complémentaires</h2>
             <div class="">
                 @include('components.xeditable.text', [
                     'id' => 'profession',
