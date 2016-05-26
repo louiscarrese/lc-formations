@@ -13975,17 +13975,6 @@ angular.module('xeditable').directive('editableRadiolistPrecision', [
       }
     });
 }]);
-function myForceIntegerDirective(){
-    return {
-        require: 'ngModel',
-        link: function(scope, ele, attr, ctrl){
-            ctrl.$parsers.unshift(function(viewValue){
-                return parseInt(viewValue, 10);
-            });
-        }
-    };
-}
-
 //From this bugreport : https://github.com/angular-ui/bootstrap/issues/2072
 //Got this Gist : https://gist.github.com/weberste/354a3f0a9ea58e0ea0de
 function datepickerLocaldate() {
@@ -14028,6 +14017,17 @@ function datepickerLocaldate() {
 
 
 
+
+function myForceIntegerDirective(){
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attr, ctrl){
+            ctrl.$parsers.unshift(function(viewValue){
+                return parseInt(viewValue, 10);
+            });
+        }
+    };
+}
 
 function myEditableDirectiveCommons() {
     return {
@@ -14898,6 +14898,18 @@ function preinscriptionsServiceFactory($resource) {
     });
 }
 
+function stagiairesServiceFactory($resource) {
+    return $resource('/intra/api/stagiaire/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
+function employeursServiceFactory($resource) {
+    return $resource('/intra/api/employeur/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
+
 function staticDataFactory($filter, $q) {
     var self = this;
     return {
@@ -14928,14 +14940,14 @@ function staticDataFactory($filter, $q) {
         }
     }
 }
-function genreDataServiceFactory($filter, $q) {
-    var genreDataService = angular.extend({}, staticDataFactory($filter, $q));
+function sexeDataServiceFactory($filter, $q) {
+    var sexeDataService = angular.extend({}, staticDataFactory($filter, $q));
 
-    genreDataService.data = [
+    sexeDataService.data = [
             {id: 'M', label: 'Mr'},
             {id: 'F', label: 'Mme'}
         ];
-    return genreDataService;
+    return sexeDataService;
 }
 function adherentDataServiceFactory($filter, $q) {
     var adherentDataService = angular.extend({}, staticDataFactory($filter, $q));
@@ -15012,7 +15024,11 @@ function financementAutreDataServiceFactory($filter, $q) {
         ];
     return financementAutreDataService;
 }
-function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, genreDataService, adherentDataService, statutStagiaireDataService, salarieTypeDataService, demandeurEmploiTypeDataService, financementTypeDataService, financementAfdasDataService, financementAutreDataService) {
+function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, 
+    sexeDataService, adherentDataService, statutStagiaireDataService, salarieTypeDataService, 
+    demandeurEmploiTypeDataService, financementTypeDataService, financementAfdasDataService, financementAutreDataService, 
+    stagiairesService, employeursService) {
+    
     var statut = [
         {id: 'salarie', label: 'Salarié'},
         {id: 'demandeur_emploi', label: 'Demandeur d\'emploi'},
@@ -15065,9 +15081,53 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, genr
         return ret;
     }
 */
+  
+    function getStagiaire(data) {
+        if(data.stagiaire_id == null) {
+            return data;
+        } else {
+            return data.stagiaire;
+        }
+    }
+
+    function createStagiaire(data) {
+        var stagiaire = {
+            nom: data.nom,
+            prenom: data.prenom,
+            sexe: data.genre,
+            date_naissance: data.date_naissance,
+            adresse: data.adresse,
+            code_postal: data.code_postal,
+            ville: data.ville,
+            tel_portable: data.tel_portable,
+            tel_fixe: data.tel_fixe,
+            email: data.email,
+            profession: data.profession,
+            etudes: null, 
+            stagiaire_type_id: null,
+            niveau_formation_id: null,
+        };
+
+        stagiairesService.save(stagiaire, 
+            function(value, responseHeaders) {
+                data.stagiaire_id = value.id;
+            }
+        );
+
+    }
+
+    function associateStagiaire() {
+        console.log("associateStagiaire");
+    }
+
+    function dissociateStagiaire(data) {
+        data.stagiaire_id = null;
+        
+    }
+
     return {
         staticDataServices: {
-            'genre': genreDataService,
+            'sexe': sexeDataService,
             'adherent': adherentDataService,
             'statut_stagiaire': statutStagiaireDataService,
             'salarie_type': salarieTypeDataService,
@@ -15139,6 +15199,12 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, genr
                 $event.stopPropagation();
                 controller.openedDatePicker[key] = !controller.openedDatePicker[key];
             }
+
+            controller.getStagiaire = getStagiaire;
+
+            controller.dissociateStagiaire = dissociateStagiaire;
+            controller.associateStagiaire = associateStagiaire;
+            controller.createStagiaire = createStagiaire;
         },
     }
 }
@@ -15146,7 +15212,7 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
     //dynamic data
     .factory('preinscriptionsService', ['$resource', preinscriptionsServiceFactory])
     //static data
-    .factory('genreDataService', ['$filter', '$q', genreDataServiceFactory])
+    .factory('sexeDataService', ['$filter', '$q', sexeDataServiceFactory])
     .factory('adherentDataService', ['$filter', '$q', adherentDataServiceFactory])
     .factory('statutStagiaireDataService', ['$filter', '$q', statutStagiaireDataServiceFactory])
     .factory('salarieTypeDataService', ['$filter', '$q', salarieTypeDataServiceFactory])
@@ -15154,10 +15220,13 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
     .factory('financementTypeDataService', ['$filter', '$q', financementTypeDataServiceFactory])
     .factory('financementAfdasDataService', ['$filter', '$q', financementAfdasDataServiceFactory])
     .factory('financementAutreDataService', ['$filter', '$q', financementAutreDataServiceFactory])
+    .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
+    .factory('employeursService', ['$resource', employeursServiceFactory])
     //detail service
     .factory('preinscriptionDetailService', 
         ['sharedDataService', '$filter', '$q', 
-        'genreDataService', 'adherentDataService', 'statutStagiaireDataService', 'salarieTypeDataService', 'demandeurEmploiTypeDataService', 'financementTypeDataService', 'financementAfdasDataService', 'financementAutreDataService',
+        'sexeDataService', 'adherentDataService', 'statutStagiaireDataService', 'salarieTypeDataService', 'demandeurEmploiTypeDataService', 'financementTypeDataService', 'financementAfdasDataService', 'financementAutreDataService',
+        'stagiairesService', 'employeursService',
         preinscriptionDetailServiceFactory])
     //generic controller
     .controller('detailController', ['editModeService', 'preinscriptionsService', 'preinscriptionDetailService', '$q', detailController])

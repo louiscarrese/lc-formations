@@ -2,7 +2,7 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
     //dynamic data
     .factory('preinscriptionsService', ['$resource', preinscriptionsServiceFactory])
     //static data
-    .factory('genreDataService', ['$filter', '$q', genreDataServiceFactory])
+    .factory('sexeDataService', ['$filter', '$q', sexeDataServiceFactory])
     .factory('adherentDataService', ['$filter', '$q', adherentDataServiceFactory])
     .factory('statutStagiaireDataService', ['$filter', '$q', statutStagiaireDataServiceFactory])
     .factory('salarieTypeDataService', ['$filter', '$q', salarieTypeDataServiceFactory])
@@ -10,10 +10,13 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
     .factory('financementTypeDataService', ['$filter', '$q', financementTypeDataServiceFactory])
     .factory('financementAfdasDataService', ['$filter', '$q', financementAfdasDataServiceFactory])
     .factory('financementAutreDataService', ['$filter', '$q', financementAutreDataServiceFactory])
+    .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
+    .factory('employeursService', ['$resource', employeursServiceFactory])
     //detail service
     .factory('preinscriptionDetailService', 
         ['sharedDataService', '$filter', '$q', 
-        'genreDataService', 'adherentDataService', 'statutStagiaireDataService', 'salarieTypeDataService', 'demandeurEmploiTypeDataService', 'financementTypeDataService', 'financementAfdasDataService', 'financementAutreDataService',
+        'sexeDataService', 'adherentDataService', 'statutStagiaireDataService', 'salarieTypeDataService', 'demandeurEmploiTypeDataService', 'financementTypeDataService', 'financementAfdasDataService', 'financementAutreDataService',
+        'stagiairesService', 'employeursService',
         preinscriptionDetailServiceFactory])
     //generic controller
     .controller('detailController', ['editModeService', 'preinscriptionsService', 'preinscriptionDetailService', '$q', detailController])

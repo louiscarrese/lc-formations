@@ -1,32 +1,38 @@
 <div ng-controller="detailController as ctrl">
-    <div class="rounded-border" id="infos-stagiaire">
+    <div class="data-block rounded-border" id="infos-stagiaire">
         <form editable-form name="ctrl.mainForm" novalidate="novalidate" onaftersave="ctrl.update()">
-            <h2>Stagiaire</h2>
+            <h2 ng-if="ctrl.data.stagiaire_id != null">Stagiaire
+                <input type="button" class="pull-right btn btn-default" value="Dissocier" ng-click="ctrl.dissociateStagiaire(ctrl.data); ctrl.update();" /> 
+            </h2>
+            <h2 ng-if="ctrl.data.stagiaire_id == null">Stagiaire (non associé)
+                <input type="button" class="pull-right btn btn-default" value="Associer" ng-click="ctrl.associateStagiaire()" /> 
+                <input type="button" class="pull-right btn btn-default" value="Créer" ng-click="ctrl.createStagiaire(ctrl.data)" /> 
+            </h2>
             <div class="form-inline">
                 @include('components.xeditable.radio', [
-                    'id' => 'genre',
-                    'label' => 'Genre',
-                    'model' => 'ctrl.data.genre',
-                    'datasource' => 'ctrl.linkedData.genre',
-                    'displayed' => 'ctrl.staticData.genre.label(ctrl.data.genre)',
+                    'id' => 'sexe',
+                    'label' => 'Sexe',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).sexe',
+                    'datasource' => 'ctrl.linkedData.sexe',
+                    'displayed' => 'ctrl.staticData.sexe.label(ctrl.data.sexe)',
                     'inline' => true,
                 ])
                 @include('components.xeditable.text', [
                     'id' => 'nom',
                     'label' => 'Nom',
-                    'model' => 'ctrl.data.nom',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).nom',
                 ])
                 @include('components.xeditable.text', [
                     'id' => 'prenom',
                     'label' => 'Prénom',
-                    'model' => 'ctrl.data.prenom',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).prenom',
                 ])
             </div>
             <div class="form-inline">
                 @include('components.xeditable.date', [
                     'id' => 'date_naissance',
                     'label' => 'Date de naissance',
-                    'model' => 'ctrl.data.date_naissance',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).date_naissance',
                     'openFlag' => 'ctrl.openedDatePicker.date_naissance',
                     'openFunction' => 'ctrl.openDatePicker($event, \'date_naissance\')',
                 ])
@@ -35,36 +41,36 @@
                 @include('components.xeditable.textarea', [
                     'id' => 'adresse',
                     'label' => 'Adresse',
-                    'model' => 'ctrl.data.adresse',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).adresse',
                 ])
             </div>
             <div class="form-inline">
                 @include('components.xeditable.text', [
                     'id' => 'code_postal',
                     'label' => 'Code postal',
-                    'model' => 'ctrl.data.code_postal',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).code_postal',
                 ])
                 @include ('components.xeditable.text', [
                     'id' => 'ville',
                     'label' => 'Ville',
-                    'model' => 'ctrl.data.ville',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).ville',
                 ])
             </div>
             <div class="form-inline">
                 @include('components.xeditable.text', [
                     'id' => 'tel_fixe',
                     'label' => 'Téléphone fixe',
-                    'model' => 'ctrl.data.tel_fixe',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).tel_fixe',
                 ])
                 @include('components.xeditable.text', [
                     'id' => 'tel_portable',
                     'label' => 'Téléphone portable',
-                    'model' => 'ctrl.data.tel_portable',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).tel_portable',
                 ])
                 @include ('components.xeditable.email', [
                     'id' => 'email',
                     'label' => 'Email',
-                    'model' => 'ctrl.data.email',
+                    'model' => 'ctrl.getStagiaire(ctrl.data).email',
                 ])
             </div>
             <div class="form-inline">
@@ -120,6 +126,20 @@
                     'model' => 'ctrl.data.type_autre'
                 ])
             </div>
+
+           <div class="buttons">
+              <!-- button to show form -->
+              <button type="button" class="btn btn-default" ng-click="ctrl.mainForm.$show()" ng-show="!ctrl.mainForm.$visible">Edit</button>
+              <!-- buttons to submit / cancel form -->
+              <span ng-show="ctrl.mainForm.$visible">
+                <button type="submit" class="btn btn-primary" ng-disabled="ctrl.mainForm.$waiting">Save</button>
+                <button type="button" class="btn btn-default" ng-disabled="ctrl.mainForm.$waiting" ng-click="ctrl.mainForm.$cancel()">Cancel</button>
+              </span>
+            </div>
+        </form>
+    </div>
+    <div class="data-block rounded-border" id="renseignements-stagiaire">
+        <form editable-form name="ctrl.renseignementsStagiaireForm" novalidate="novalidate" onaftersave="ctrl.update()">
             <h2>Renseignements complémentaires</h2>
             <div class="">
                 @include('components.xeditable.text', [
@@ -184,11 +204,11 @@
 --}}
                 <div class="buttons">
                   <!-- button to show form -->
-                  <button type="button" class="btn btn-default" ng-click="ctrl.mainForm.$show()" ng-show="!ctrl.mainForm.$visible">Edit</button>
+                  <button type="button" class="btn btn-default" ng-click="ctrl.renseignementsStagiaireForm.$show()" ng-show="!ctrl.renseignementsStagiaireForm.$visible">Edit</button>
                   <!-- buttons to submit / cancel form -->
-                  <span ng-show="ctrl.mainForm.$visible">
-                    <button type="submit" class="btn btn-primary" ng-disabled="ctrl.mainForm.$waiting">Save</button>
-                    <button type="button" class="btn btn-default" ng-disabled="ctrl.mainForm.$waiting" ng-click="ctrl.mainForm.$cancel()">Cancel</button>
+                  <span ng-show="ctrl.renseignementsStagiaireForm.$visible">
+                    <button type="submit" class="btn btn-primary" ng-disabled="ctrl.renseignementsStagiaireForm.$waiting">Save</button>
+                    <button type="button" class="btn btn-default" ng-disabled="ctrl.renseignementsStagiaireForm.$waiting" ng-click="ctrl.renseignementsStagiaireForm.$cancel()">Cancel</button>
                   </span>
                 </div>
             </form>

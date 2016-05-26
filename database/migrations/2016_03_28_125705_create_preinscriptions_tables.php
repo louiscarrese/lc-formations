@@ -16,7 +16,7 @@ class CreatePreinscriptionsTables extends Migration
         Schema::create('preinscriptions', function(Blueprint $table) {
             $table->increments('id');
 
-            $table->string('genre');
+            $table->string('sexe');
             $table->string('nom');
             $table->string('prenom');
             $table->date('date_naissance')->nullable();

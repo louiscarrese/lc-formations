@@ -17,12 +17,12 @@
                     <div class="form-group form-inline">
                         @include('components.preinscription.inputs.radio', [
                             'field' => [
-                                'id' => 'genre',
+                                'id' => 'sexe',
                                 'inline' => true,
-                                'model' => 'ctrl.data.genre',
-                                'datasource' => 'ctrl.externalData.stagiaire_genre',
+                                'model' => 'ctrl.data.sexe',
+                                'datasource' => 'ctrl.externalData.stagiaire_sexe',
                                 'validation' => 'required',
-                                'validationController' => 'ctrl.form.genre',
+                                'validationController' => 'ctrl.form.sexe',
                             ]
                         ])
                         @include('components.preinscription.inputs.text', [

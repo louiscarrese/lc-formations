@@ -13,7 +13,7 @@ function preinscriptionsPublicController($filter, $uibModal, sessionsService, pr
     /* External data */
     //Static
     self.externalData = {
-        stagiaire_genre: [
+        stagiaire_sexe: [
             {id: 'M', label: 'Mr'},
             {id: 'F', label: 'Mme'},
         ],
