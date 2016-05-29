@@ -1,4 +1,4 @@
-angular.module('moduleDetail', ['detail', 'ngResource'])
+angular.module('moduleDetail', ['detail', 'ngResource', 'myEditable'])
     //Resource services
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])

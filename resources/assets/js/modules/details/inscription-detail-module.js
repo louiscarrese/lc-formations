@@ -1,4 +1,4 @@
-angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList'])
+angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList', 'myEditable'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])

@@ -1,4 +1,4 @@
-angular.module('sessionDetail', ['detail'])
+angular.module('sessionDetail', ['detail', 'myEditable'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
