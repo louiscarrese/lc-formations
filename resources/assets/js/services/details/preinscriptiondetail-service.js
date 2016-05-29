@@ -1,4 +1,4 @@
-function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, 
+function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uibModal, 
     sexeDataService, adherentDataService, statutStagiaireDataService, salarieTypeDataService, 
     demandeurEmploiTypeDataService, financementTypeDataService, financementAfdasDataService, financementAutreDataService, 
     stagiairesService, employeursService) {
@@ -90,14 +90,35 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q,
 
     }
 
-    function associateStagiaire() {
-        console.log("associateStagiaire");
+    function associateStagiaire(controller) {
+        //Populate the stagiaire list ?
+
+        //Show the popin
+        var modalInstance = $uibModal.open({
+            templateUrl: 'associate_stagiaire',
+            size: 'lg', 
+            controller: ['$uibModalInstance', 'stagiaireAssociationService', 'stagiairesService', 'preinscriptionData', associateController],
+            controllerAs: 'associationCtrl',
+//            bindToController: true,
+            resolve: {
+                preinscriptionData: function() { return controller.data; },
+                stagiaireAssociationService: stagiaireAssociationService,
+            }
+        });
+/*
+        modalInstance.opened.then(function() {
+            modalInstance.preinscriptionData = controller.data;
+//            modalInstance.dataService = stagiairesService;
+        });
+*/
     }
+
 
     function dissociateStagiaire(data) {
         data.stagiaire_id = null;
-        
+
     }
+
 
     return {
         staticDataServices: {

@@ -6542,10 +6542,10 @@ label {
   display: block;
   font-weight: normal;
 }
-.editable-checklist-precision label.inline,
-.editable-radiolist-precision label.inline,
-.editable-checklist label.inline,
-.editable-radiolist label.inline {
+.inline .editable-checklist-precision label,
+.inline .editable-radiolist-precision label,
+.inline .editable-checklist label,
+.inline .editable-radiolist label {
   display: inline-block;
   font-weight: normal;
 }
@@ -6584,6 +6584,37 @@ label {
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   margin-bottom: 1em;
+}
+.association:before,
+.association:after {
+  content: " ";
+  display: table;
+}
+.association:after {
+  clear: both;
+}
+.association:before,
+.association:after {
+  content: " ";
+  display: table;
+}
+.association:after {
+  clear: both;
+}
+.association .left-column {
+  width: 40%;
+  float: left !important;
+}
+.association .right-column {
+  width: 40%;
+  float: right !important;
+}
+.association .center-column {
+  width: 19%;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /*# sourceMappingURL=app.css.map */

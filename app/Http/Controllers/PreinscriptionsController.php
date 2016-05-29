@@ -36,4 +36,8 @@ class PreinscriptionsController extends Controller
         return view('preinscription', ['mode' => 'edit', 'id' => $id]);
 
     }
+
+    public function associateStagiaire() {
+        return view('associate_stagiaire');
+    }
 }

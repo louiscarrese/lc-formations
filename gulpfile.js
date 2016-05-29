@@ -77,12 +77,12 @@ var editableTable = Array.prototype.concat(
 );
 
 
-var detail = myEditable.concat([
+var detail = [
     'services/editmode-service.js',
     'services/shareddata-service.js',
     'controllers/detail-controller.js',
     'modules/detail-module.js'
-]);
+];
 
 var parametres = Array.prototype.concat(
     libraries,
@@ -188,6 +188,7 @@ var preinscriptionsList = Array.prototype.concat(
 var moduleDetail = Array.prototype.concat(
     libraries,
     detail,
+    myEditable,
     [
         'services/data/modules-service.js',
         'services/data/domaineformations-service.js',
@@ -212,6 +213,7 @@ var moduleDetail = Array.prototype.concat(
 var sessionDetail = Array.prototype.concat(
     libraries,
     detail,
+    myEditable,
     [
         'services/data/sessions-service.js',
         'services/data/modules-service.js',
@@ -235,6 +237,7 @@ var sessionDetail = Array.prototype.concat(
 var formateurDetail = Array.prototype.concat(
     libraries,
     detail,
+    myEditable,
     [
         'services/data/formateurs-service.js',
         'services/data/formateurtypes-service.js',
@@ -245,6 +248,7 @@ var formateurDetail = Array.prototype.concat(
 
 var financeurDetail = Array.prototype.concat(
     libraries,
+    myEditable,
     detail,
     [
         'services/data/financeurs-service.js',
@@ -256,6 +260,7 @@ var financeurDetail = Array.prototype.concat(
 
 var employeurDetail = Array.prototype.concat(
     libraries,
+    myEditable,
     detail,
     [
         'services/data/employeurs-service.js',
@@ -267,6 +272,7 @@ var employeurDetail = Array.prototype.concat(
 var stagiaireDetail = Array.prototype.concat(
     libraries,
     detail,
+    myEditable,
     [
         'services/data/stagiaires-service.js',
         'services/data/stagiairetypes-service.js',
@@ -283,6 +289,7 @@ var stagiaireDetail = Array.prototype.concat(
 var inscriptionDetail = Array.prototype.concat(
     libraries,
     detail,
+    myEditable,
     [
         'services/data/inscriptions-service.js',
         'services/data/stagiaires-service.js',
@@ -295,9 +302,15 @@ var inscriptionDetail = Array.prototype.concat(
 );
 
 var preinscriptionDetail = Array.prototype.concat(
-    libraries,
     [
-        'vendor/angular-ui-select/dist/select.min.js',
+    'vendor/jquery/dist/jquery.min.js',
+    'vendor/angular/angular.min.js', 
+    'vendor/angular-resource/angular-resource.min.js', 
+    'vendor/angular-messages/angular-messages.min.js', 
+    'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
+    'vendor/angular-dateParser/dist/angular-dateparser.min.js',
+    'vendor/angular-timepicker/dist/angular-timepicker.js',
+        'vendor/angular-ui-select/dist/select.js',
         'vendor/angular-sanitize/angular-sanitize.min.js',
         'vendor/checklist-model/checklist-model.js',
         'vendor/angular-xeditable/dist/js/xeditable.js',
@@ -321,7 +334,9 @@ var preinscriptionDetail = Array.prototype.concat(
         'services/linkedData/financement-afdas-service.js',
         'services/linkedData/financement-autre-service.js',
         'services/details/preinscriptiondetail-service.js',
-        'modules/details/preinscription-detail-module.js'
+        'services/associations/stagiaire-association-service.js',
+        'modules/details/preinscription-detail-module.js',
+        'controllers/associate-controller.js'
     ]
 );
 

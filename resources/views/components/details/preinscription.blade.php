@@ -5,7 +5,7 @@
                 <input type="button" class="pull-right btn btn-default" value="Dissocier" ng-click="ctrl.dissociateStagiaire(ctrl.data); ctrl.update();" /> 
             </h2>
             <h2 ng-if="ctrl.data.stagiaire_id == null">Stagiaire (non associé)
-                <input type="button" class="pull-right btn btn-default" value="Associer" ng-click="ctrl.associateStagiaire()" /> 
+                <input type="button" class="pull-right btn btn-default" value="Associer" ng-click="ctrl.associateStagiaire(ctrl)" /> 
                 <input type="button" class="pull-right btn btn-default" value="Créer" ng-click="ctrl.createStagiaire(ctrl.data)" /> 
             </h2>
             <div class="form-inline">
@@ -91,6 +91,8 @@
                     'form' => 'ctrl.mainForm',
                     'name' => 'statut',
                     'displayed' => 'ctrl.staticData.statut_stagiaire.label(ctrl.data.statut)',
+                    'match_displayed' => '$select.selected.label',
+                    'choices_displayed' => 'item.label',
                     'singleProperty' => 'id',
                     'datasource' => 'ctrl.linkedData.statut_stagiaire',
                 ])
@@ -246,6 +248,8 @@
                                 'form' => 'ctrl.inscriptionForm[$index]',
                                 'name' => 'financementType',
                                 'displayed' => 'ctrl.staticData.financement_type.label(preinscription_session.financement)',
+                                'match_displayed' => '$select.selected.label',
+                                'choices_displayed' => 'item.label',
                                 'singleProperty' => 'id',
                                 'datasource' => 'ctrl.linkedData.financement_type',
                             ])

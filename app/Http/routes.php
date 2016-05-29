@@ -15,9 +15,10 @@
  * API (will return JSON data) 
  */
 Route::group(['prefix' => 'intra'], function() {
-    Route::group(['middleware' => 'auth.basic.name'], function() {
+    Route::group(['middleware' => 'auth.basic.name'], function() { // possible to merge this with the first group ?
         Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
             Route::post('session_jour/create_default', 'SessionJourController@createDefault');
+            Route::get('stagiaire/search', 'StagiaireController@search');
 
             //Listes fermées
             Route::resource('stagiaire_type', 'StagiaireTypeController', 
@@ -94,10 +95,12 @@ Route::group(['prefix' => 'intra'], function() {
             ['only' => ['index', 'create', 'show']]);
         Route::resource('/inscriptions', 'InscriptionsController', 
             ['only' => ['index', 'create', 'show']]);
+        Route::get('/preinscriptions/associate_stagiaire', 'PreinscriptionsController@associateStagiaire');
         Route::resource('/preinscriptions', 'PreinscriptionsController', 
             ['only' => ['index', 'show']]);
 
         Route::get('/search', 'SearchController@index');
+
     });
 });
 /*

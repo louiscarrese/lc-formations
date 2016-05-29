@@ -14,13 +14,14 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
     .factory('employeursService', ['$resource', employeursServiceFactory])
     //detail service
     .factory('preinscriptionDetailService', 
-        ['sharedDataService', '$filter', '$q', 
+        ['sharedDataService', '$filter', '$q', '$uibModal', 
         'sexeDataService', 'adherentDataService', 'statutStagiaireDataService', 'salarieTypeDataService', 'demandeurEmploiTypeDataService', 'financementTypeDataService', 'financementAfdasDataService', 'financementAutreDataService',
         'stagiairesService', 'employeursService',
         preinscriptionDetailServiceFactory])
     //generic controller
     .controller('detailController', ['editModeService', 'preinscriptionsService', 'preinscriptionDetailService', '$q', detailController])
     .directive('datepickerLocaldate', datepickerLocaldate)
+
 .run(function(editableOptions, editableThemes) {
   editableThemes.bs3.inputClass = 'input-sm';
   editableThemes.bs3.buttonsClass = 'btn-sm';

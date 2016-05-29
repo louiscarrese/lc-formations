@@ -22,4 +22,5 @@ class StagiairesController extends Controller
         return view('stagiaire', ['mode' => 'edit', 'id' => $id]);
 
     }
+
 }

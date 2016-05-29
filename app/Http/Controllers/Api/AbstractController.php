@@ -101,6 +101,19 @@ abstract class AbstractController extends Controller
         $this->repository->destroy($id);
     }
 
+    /**
+     * Return resources matching the specified criteria.
+     * 
+     * @param string $criteria the criteria to search for in all "searchable" fields.
+     * @return objects matching the criteria as a JSON string.
+     */
+    public function search(Request $request)
+    {
+        $criteria = $request->input('criteria');
 
+        $data = $this->repository->search([$criteria]);
+
+        return response()->json($data);
+    }
 
 }
