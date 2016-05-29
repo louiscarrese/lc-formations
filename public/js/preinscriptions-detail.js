@@ -13189,8 +13189,6 @@ function associateController($uibModalInstance, associationService, dataService,
     }
 
     function searchMatchDisplayed(item) {
-        console.log('match');
-        console.log(item);
         if(associationService != undefined && typeof associationService.searchMatchDisplayed == 'function')
             return associationService.searchMatchDisplayed(item);
         else 
@@ -13198,8 +13196,6 @@ function associateController($uibModalInstance, associationService, dataService,
     }
 
     function searchChoicesDisplayed(item) {
-        console.log('choices');
-        console.log(item);
         if(associationService != undefined && typeof associationService.searchChoicesDisplayed == 'function')
             return associationService.searchChoicesDisplayed(item);
         else 

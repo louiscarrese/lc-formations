@@ -103,7 +103,6 @@ function preinscriptionsPublicController($filter, $uibModal, sessionsService, pr
      * Function implementations
      */
     function submit() {
-        console.log('submit');
 
         //TODO: Check if at least one session
 
@@ -113,7 +112,6 @@ function preinscriptionsPublicController($filter, $uibModal, sessionsService, pr
                 window.location.href="/preinscription/thanks";
             },
             function(response) {
-                alert('error');
                 console.log(response);
             });
         return true;
