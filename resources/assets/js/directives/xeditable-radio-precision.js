@@ -9,10 +9,7 @@ angular.module('xeditable').directive('editableRadiolistPrecision', [
         this.parent.render.call(this);
 
         var parsed = editableNgOptionsParser(this.attrs.eNgOptions);
-        var html = '<label ng-repeat="'+parsed.ngRepeat+'"';
-        if(this.attrs['inline'])
-            html += ' class="inline"';
-        html += '>';
+        var html = '<label ng-repeat="'+parsed.ngRepeat+'">';
         html += '<input type="radio" ng-disabled="' + this.attrs.eNgDisabled + '" ng-model="$parent.$data" value="{{'+parsed.locals.valueFn+'}}">';
         html += '<span ng-bind="'+parsed.locals.displayFn+'"></span>';
 
