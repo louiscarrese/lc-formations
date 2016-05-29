@@ -129,6 +129,7 @@ angular.module("rt.select2", [])
 
                             options.push(optionItems[value]);
                         }
+
                         callback(options);
                     };
 
@@ -166,7 +167,7 @@ angular.module("rt.select2", [])
                     // Make sure changes to the options get filled in
                     scope.$watch(match[7], function () {
                         controller.$render();
-                    }, true);
+                    });
                 } else {
                     if (!opts.query) {
                         throw new Error("You need to supply a query function!");
@@ -215,37 +216,6 @@ angular.module("rt.select2", [])
                     }
                 }
 
-                /** 
-                 * Added 
-                 * https://github.com/rubenv/angular-select2/issues/33
-                 */
-                if (isMultiple) {
-                    scope.$watch(function () {
-                        return controller.$modelValue;
-                    }, function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
-                            getSelection(function (selection) {
-                                if (isMultiple) {
-                                    element.select2("data", selection);
-                                } else {
-                                    element.select2("val", selection.id);
-                                }
-                            });
-                        }
-                    }, true);
-                } else {
-                    controller.$render = function () {
-                        getSelection(function (selection) {
-                            if (isMultiple) {
-                                element.select2("data", selection);
-                            } else {
-                                element.select2("val", selection.id);
-                            }
-                        });
-                    };
-                }
-                /** End Added */
-                /** Removed 
                 controller.$render = function () {
                     getSelection(function (selection) {
                         if (isMultiple) {
@@ -255,7 +225,6 @@ angular.module("rt.select2", [])
                         }
                     });
                 };
-                */
 
                 if (!opts.initSelection) {
                     opts.initSelection = function (element, callback) {
@@ -302,6 +271,7 @@ angular.module("rt.select2", [])
                             }
 
                             controller.$render();
+
                         });
                     });
 
@@ -314,18 +284,6 @@ angular.module("rt.select2", [])
                     });
 
                     controller.$render();
-                    /** 
-                     * Added 
-                     * https://github.com/rubenv/angular-select2/issues/33
-                     */
-                    getSelection(function (selection) {
-                        if (isMultiple) {
-                            element.select2("data", selection);
-                        } else {
-                            element.select2("val", selection.id);
-                        }
-                    });
-                    /** End added */
                 });
             }
         };

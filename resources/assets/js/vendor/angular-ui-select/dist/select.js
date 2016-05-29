@@ -184,7 +184,6 @@ uis.directive('uiSelectChoices',
     },
 
     compile: function(tElement, tAttrs) {
-
       if (!tAttrs.repeat) throw uiSelectMinErr('repeat', "Expected 'repeat' expression.");
 
       return function link(scope, element, attrs, $select, transcludeFn) {
@@ -381,7 +380,6 @@ uis.controller('uiSelectCtrl',
     ctrl.setItemsFn = groupByExp ? updateGroups : setPlainItems;
 
     ctrl.parserResult = RepeatParser.parse(repeatAttr);
-
     ctrl.isGrouped = !!groupByExp;
     ctrl.itemProperty = ctrl.parserResult.itemName;
 
@@ -1866,7 +1864,6 @@ uis.service('uisRepeatParser', ['uiSelectMinErr','$parse', function(uiSelectMinE
     // if (isObjectCollection){
       //00000000000000000000000000000111111111000000000000000222222222222220033333333333333333333330000444444444444444444000000000000000556666660000077777777777755000000000000000000000088888880000000
     match = expression.match(/^\s*(?:([\s\S]+?)\s+as\s+)?(?:([\$\w][\$\w]*)|(?:\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)))\s+in\s+(([\w\.]+)?\s*(|\s*[\s\S]+?))?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);      
-
     // 1 Alias
     // 2 Item
     // 3 Key on (key,value)
