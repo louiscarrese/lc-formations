@@ -130,6 +130,9 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q,
                     preinscription_session.session.libelle = buildSessionLibelle(preinscription_session.session);
                 })
             }
+            if(data.date_naissance) {
+                data.date_naissance = new Date(data.date_naissance);
+            }
 
 //            data.statut = getStatutFromId(data.statut);
 //            data.trut = {values: [], precisions: {}};

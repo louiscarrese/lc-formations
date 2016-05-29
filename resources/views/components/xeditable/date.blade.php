@@ -7,8 +7,6 @@
         e-datepicker-popup-x-editable="dd/MM/yyyy"
         e-init-date="01/01/1970"
         e-show-button-bar="false"
-        ng-model="{{$model}}"
-        datepicker-localdate
         >
         <span ng-bind="{{$model}} | date:'dd/MM/yyyy'"></span>
     </div>
