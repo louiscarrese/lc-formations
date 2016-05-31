@@ -109,9 +109,16 @@ abstract class AbstractController extends Controller
      */
     public function search(Request $request)
     {
-        $criteria = $request->input('criteria');
+        $criteriasString = $request->input('criterias');
+        $criterias = null;
+        if($criteriasString) {
+            $criterias = explode(',', $criteriasString);
+        }
+        
+        $queryString = $request->input('query');
+        $query = explode(' ', $queryString);
 
-        $data = $this->repository->search([$criteria]);
+        $data = $this->repository->search($query, $criterias);
 
         return response()->json($data);
     }

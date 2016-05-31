@@ -1,10 +1,11 @@
 function stagiaireAssociationService() {
     return {
-        searchMatchDisplayed: function(item) {
-            if(item != undefined) 
+        searchMatchDisplayed: function(item, searchString) {
+            if(item && (item.nom || item.prenom) ) {    
                 return item.nom + ' ' + item.prenom;
-            else 
-                return '';
+            } else { 
+                return searchString;
+            }
         },
 
         searchChoicesDisplayed: function(item) {

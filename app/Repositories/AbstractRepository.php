@@ -106,19 +106,21 @@ abstract class AbstractRepository implements RepositoryInterface {
     }
 
     /**
-     * String search in resource properties
+     * Multiple strings search in selected searchable resource properties.
      */
-    public function search($criterias) 
-    {
+    public function search($query, $criterias = null) {
         //Start with the base model
         $data_req = $this->model;
 
-        //Get the searchable fields
-        $fields = $this->model->searchable;
-
-        foreach($criterias as $criteria) {
-            foreach($fields as $field) {
-                $data_req = $data_req->orWhere($field, 'ilike', '%' . $criteria . '%');
+        $existingCriterias = array();
+        if($criterias) {
+            $existingCriterias = array_intersect($this->model->searchable, $criterias);
+        } else {
+            $existingCriterias = $this->model->searchable;
+        }
+        foreach($existingCriterias as $criteria) {
+            foreach($query as $queryField) {
+                $data_req = $data_req->orWhere($criteria, 'ilike', '%' . $queryField . '%');
             }
         }
 
@@ -129,7 +131,6 @@ abstract class AbstractRepository implements RepositoryInterface {
         foreach($datas as $data) {
             $data = $this->augmentData($data);
         }
-
 
         return $datas;
     }
