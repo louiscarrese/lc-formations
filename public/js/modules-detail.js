@@ -12991,22 +12991,49 @@ function myCustomFilter() {
 
     }
 
+    /**
+     * input : an array of objects to filter.
+     * filter : a string to be searched in the inputs properties. Will be splitted on " "
+     */
     return function(input, filter) {
-        //Let's not deal with an empty filter
-        if(filter == undefined || filter == null || filter  === '' )
+        //Let's not deal with an empty filter or an empty input
+        if(filter == undefined || filter == null || filter  === '' || input == undefined || input == null || input.length == 0)
             return input;
 
+        //The array we will return
         var outArray = [];
+
+        //Process the filter
         var lowerFilter = angular.lowercase(filter) || '';
+        var filters = lowerFilter.split(' ');
+
+        //Make sure we have properties to search in, if not use all the properties
+        var searchedProps = [];
+        if(arguments.length > 2) {
+            for(var i = 2; i < arguments.length; i++) {
+                searchedProps.push(arguments[i]);
+            }
+        } else {
+            for(var prop in input[0]) {
+                if(input[0].hasOwnProperty(prop))
+                    searchedProps.push(prop);
+            }
+        }
 
         //Pour chaque élément du tableau
         for(elemId = 0; elemId < input.length; elemId++) {
             //Pour chaque champ à analyser
-            for(fieldId = 2; fieldId < arguments.length; fieldId++) {
+            for(fieldId = 0; fieldId < searchedProps.length; fieldId++) {
 
                 //On découpe, au cas où ça serait un sous objet (genre objet.propriete)
-                var fieldPath = arguments[fieldId].split('.');
-                var found = check(fieldPath, input[elemId], lowerFilter);
+                var fieldPath = searchedProps[fieldId].split('.');
+
+                var found = false;
+                for(filterId = 0; filterId < filters.length && !found; filterId++) {
+                    found = check(fieldPath, input[elemId], filters[filterId]);
+                }
+
+//                var found = check(fieldPath, input[elemId], lowerFilter);
 
                 if(found) {
                     outArray.push(input[elemId]);

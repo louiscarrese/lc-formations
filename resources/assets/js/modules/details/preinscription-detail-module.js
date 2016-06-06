@@ -21,6 +21,9 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
     //generic controller
     .controller('detailController', ['editModeService', 'preinscriptionsService', 'preinscriptionDetailService', '$q', detailController])
     .directive('datepickerLocaldate', datepickerLocaldate)
+    .directive('uiSelectSearchPrefill', uiSelectSearchPrefill)
+    .directive('uiSelectSearchPlaceholder', uiSelectSearchPlaceholder)
+    .filter('myCustomFilter', myCustomFilter)
 
 .run(function(editableOptions, editableThemes) {
   editableThemes.bs3.inputClass = 'input-sm';

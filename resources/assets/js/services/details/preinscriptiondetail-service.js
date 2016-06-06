@@ -92,17 +92,19 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
 
     function associateStagiaire(controller) {
         //Populate the stagiaire list ?
-
         //Show the popin
         var modalInstance = $uibModal.open({
             templateUrl: 'associate_stagiaire',
             size: 'lg', 
-            controller: ['$uibModalInstance', 'stagiaireAssociationService', 'stagiairesService', 'preinscriptionData', associateController],
+            controller: ['$uibModalInstance', 'stagiaireAssociationService', 'stagiairesService', 'preinscriptionData', 'parentController', associateController],
             controllerAs: 'associationCtrl',
 //            bindToController: true,
+            scope: this.$scope,
+            appendTo: angular.element(document.getElementById('infos-stagiaire')),
             resolve: {
                 preinscriptionData: function() { return controller.data; },
                 stagiaireAssociationService: stagiaireAssociationService,
+                parentController: controller,
             }
         });
 /*

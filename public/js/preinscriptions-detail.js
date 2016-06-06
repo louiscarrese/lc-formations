@@ -12405,6 +12405,132 @@ function datepickerLocaldate() {
 
 
 
+function uiSelectSearchPrefill() {
+  return {
+    require: 'uiSelect',
+    link: function(scope, element, attrs, $select) {
+        attrs.$observe('uiSelectSearchPrefill', function(val) {
+            $select.search = val;
+        });
+/*
+        var value = attrs.uiSelectSearchPrefill;
+        $select.search = value;
+        */
+    }
+  };
+}
+function uiSelectSearchPlaceholder() {
+  return {
+    require: 'uiSelect',
+    link: function(scope, element, attrs, $select) {
+        $select.originalPlaceholder = $select.placeholder;
+
+        scope.$watch('$select.search', function(newValue, oldValue) {
+            console.log('watch !');
+            console.log(newValue);
+            console.log(oldValue);
+            if(newValue != '') {
+                $select.placeholder = newValue;
+            } else {
+                $select.placeholder = $select.originalPlaceholder;
+            }
+        })
+    }
+
+  };
+}
+function myCustomFilter() {
+    /**
+     * path: the remaining path to explore
+     * value: the current value
+     * filter: the filter to check against
+     */
+    function check(path, value, filter) {
+        //If there is no value to check, we get out
+        if(value != undefined) {
+            //If we've reached the end of the path 
+            if(path != undefined && path.length == 0) {
+                //We check the value
+                return (angular.lowercase('' + value).indexOf(filter) !== -1);
+            } else {
+                //We pop one from the path
+                var nextValue = value[path[0]];
+                path.splice(0,1);
+                //If we are dealing with an array, we have to iterate
+                if(Array.isArray(nextValue)) {
+                    for(var i = 0; i < nextValue.length; i++) {
+                        //When we have found something, we return immediately
+                        if(check(path, nextValue[i], filter))
+                            return true;
+                    }
+                    //We found nothing
+                    return false;
+                } else {
+                    //It's a simple value, recurse
+                    return check(path, nextValue, filter);
+                }
+            }
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * input : an array of objects to filter.
+     * filter : a string to be searched in the inputs properties. Will be splitted on " "
+     */
+    return function(input, filter) {
+        //Let's not deal with an empty filter or an empty input
+        if(filter == undefined || filter == null || filter  === '' || input == undefined || input == null || input.length == 0)
+            return input;
+
+        //The array we will return
+        var outArray = [];
+
+        //Process the filter
+        var lowerFilter = angular.lowercase(filter) || '';
+        var filters = lowerFilter.split(' ');
+
+        //Make sure we have properties to search in, if not use all the properties
+        var searchedProps = [];
+        if(arguments.length > 2) {
+            for(var i = 2; i < arguments.length; i++) {
+                searchedProps.push(arguments[i]);
+            }
+        } else {
+            for(var prop in input[0]) {
+                if(input[0].hasOwnProperty(prop))
+                    searchedProps.push(prop);
+            }
+        }
+
+        //Pour chaque élément du tableau
+        for(elemId = 0; elemId < input.length; elemId++) {
+            //Pour chaque champ à analyser
+            for(fieldId = 0; fieldId < searchedProps.length; fieldId++) {
+
+                //On découpe, au cas où ça serait un sous objet (genre objet.propriete)
+                var fieldPath = searchedProps[fieldId].split('.');
+
+                var found = false;
+                for(filterId = 0; filterId < filters.length && !found; filterId++) {
+                    found = check(fieldPath, input[elemId], filters[filterId]);
+                }
+
+//                var found = check(fieldPath, input[elemId], lowerFilter);
+
+                if(found) {
+                    outArray.push(input[elemId]);
+                    break;
+                }
+
+            }
+        }
+        return outArray;
+    }
+}
+
 function editModeServiceFactory($q) {
 
     return {
@@ -12993,17 +13119,19 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
 
     function associateStagiaire(controller) {
         //Populate the stagiaire list ?
-
         //Show the popin
         var modalInstance = $uibModal.open({
             templateUrl: 'associate_stagiaire',
             size: 'lg', 
-            controller: ['$uibModalInstance', 'stagiaireAssociationService', 'stagiairesService', 'preinscriptionData', associateController],
+            controller: ['$uibModalInstance', 'stagiaireAssociationService', 'stagiairesService', 'preinscriptionData', 'parentController', associateController],
             controllerAs: 'associationCtrl',
 //            bindToController: true,
+            scope: this.$scope,
+            appendTo: angular.element(document.getElementById('infos-stagiaire')),
             resolve: {
                 preinscriptionData: function() { return controller.data; },
                 stagiaireAssociationService: stagiaireAssociationService,
+                parentController: controller,
             }
         });
 /*
@@ -13149,6 +13277,9 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
     //generic controller
     .controller('detailController', ['editModeService', 'preinscriptionsService', 'preinscriptionDetailService', '$q', detailController])
     .directive('datepickerLocaldate', datepickerLocaldate)
+    .directive('uiSelectSearchPrefill', uiSelectSearchPrefill)
+    .directive('uiSelectSearchPlaceholder', uiSelectSearchPlaceholder)
+    .filter('myCustomFilter', myCustomFilter)
 
 .run(function(editableOptions, editableThemes) {
   editableThemes.bs3.inputClass = 'input-sm';
@@ -13156,15 +13287,18 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
   editableOptions.theme = 'bs3';
 });
 
-function associateController($uibModalInstance, associationService, dataService, preinscriptionData) {
+
+function associateController($uibModalInstance, associationService, dataService, preinscriptionData, parentController) {
     var self = this;
 
-    self.preinscriptionData = preinscriptionData;
+    self.parentController = parentController;
 
     /** Data */
     //The search criteria and result
-    //ATTENTION: can be a string (criteria) or an object (result)
     self.dbSearch;
+    self.preinscriptionData = preinscriptionData;
+    self.stagiaireFound = false; //unused ?
+
 
     /** Functions */
     self.refreshList = refreshList;
@@ -13172,19 +13306,14 @@ function associateController($uibModalInstance, associationService, dataService,
     self.searchMatchDisplayed = searchMatchDisplayed;
     self.searchChoicesDisplayed = searchChoicesDisplayed;
 
-
-    /** Initialisation stuff */
-    self.$onInit = function () {
-        console.log(preinscriptionData);
-        console.log(preinscriptionData.nom + ' ' + preinscriptionData.prenom);
-        //Init code
-        refreshList(preinscriptionData.nom + ' ' + preinscriptionData.prenom);
-        self.dbSearch = preinscriptionData.nom + ' ' + preinscriptionData.prenom;
-    }
-
     $uibModalInstance.rendered.then(function() {
         //Graphical init code
         self.searchForm.$show();
+        self.sourceDataForm.$show();
+        self.dbDataForm.$show();
+
+        self.searchSelect = angular.element(document.querySelectorAll('#searchForm .ui-select-container')).scope();
+        self.searchSelect.search = 'DefaultSearch123';
     })
 
 
@@ -13194,6 +13323,10 @@ function associateController($uibModalInstance, associationService, dataService,
             dataService.search({criterias: 'nom,prenom', query: query}, 
                 function(values, responseHeaders) {
                     self.dbSearchList = values;
+                    if(values.length == 1) {
+                        self.dbSearch = values[0];
+
+                    }
                 }
             );
         } else {

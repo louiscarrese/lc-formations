@@ -1,12 +1,15 @@
-function associateController($uibModalInstance, associationService, dataService, preinscriptionData) {
+
+function associateController($uibModalInstance, associationService, dataService, preinscriptionData, parentController) {
     var self = this;
 
-    self.preinscriptionData = preinscriptionData;
+    self.parentController = parentController;
 
     /** Data */
     //The search criteria and result
-    //ATTENTION: can be a string (criteria) or an object (result)
     self.dbSearch;
+    self.preinscriptionData = preinscriptionData;
+    self.stagiaireFound = false; //unused ?
+
 
     /** Functions */
     self.refreshList = refreshList;
@@ -14,19 +17,14 @@ function associateController($uibModalInstance, associationService, dataService,
     self.searchMatchDisplayed = searchMatchDisplayed;
     self.searchChoicesDisplayed = searchChoicesDisplayed;
 
-
-    /** Initialisation stuff */
-    self.$onInit = function () {
-        console.log(preinscriptionData);
-        console.log(preinscriptionData.nom + ' ' + preinscriptionData.prenom);
-        //Init code
-        refreshList(preinscriptionData.nom + ' ' + preinscriptionData.prenom);
-        self.dbSearch = preinscriptionData.nom + ' ' + preinscriptionData.prenom;
-    }
-
     $uibModalInstance.rendered.then(function() {
         //Graphical init code
         self.searchForm.$show();
+        self.sourceDataForm.$show();
+        self.dbDataForm.$show();
+
+        self.searchSelect = angular.element(document.querySelectorAll('#searchForm .ui-select-container')).scope();
+        self.searchSelect.search = 'DefaultSearch123';
     })
 
 
@@ -36,6 +34,10 @@ function associateController($uibModalInstance, associationService, dataService,
             dataService.search({criterias: 'nom,prenom', query: query}, 
                 function(values, responseHeaders) {
                     self.dbSearchList = values;
+                    if(values.length == 1) {
+                        self.dbSearch = values[0];
+
+                    }
                 }
             );
         } else {

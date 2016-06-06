@@ -317,6 +317,9 @@ var preinscriptionDetail = Array.prototype.concat(
         'directives/xeditable-checkbox-precision.js',
         'directives/xeditable-radio-precision.js',
         'directives/datepickerlocaldate-directive.js',
+        'directives/ui-select-search-prefill-directive.js',
+        'directives/ui-select-search-placeholder-directive.js',
+        'filters/myCustomFilter-filter.js',
     ],
     detail,
     [
