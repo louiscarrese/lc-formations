@@ -168,19 +168,40 @@ label {
     .clearfix();
 }
 .association .left-column {
-    width: 40%;
+    width: 49%;
     .pull-left();
 
 }
 
 .association .right-column {
-    width: 40%;
+    width: 49%;
     .pull-right();
 }
 
-.association .center-column {
-    width: 19%;
-    text-align: center;
-    .center-block();
+.association .xeditable-container > .form-group {
+    display: inline-block;
+    width: 85%;
+    vertical-align: middle;
 }
 
+.association .left-column .merge-right {
+    display: inline-block;
+    width: 13%;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.association .right-column .merge-left {
+    display: inline-block;
+    width: 13%;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.invisible {
+    visibility: hidden;
+}
+/** Modal */
+.modal-content {
+    padding: 0.5em 1em;
+}
