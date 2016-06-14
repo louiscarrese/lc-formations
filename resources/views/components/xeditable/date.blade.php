@@ -7,6 +7,9 @@
         e-datepicker-popup-x-editable="dd/MM/yyyy"
         e-init-date="01/01/1970"
         e-show-button-bar="false"
+        @if(isset($disabled) && $disabled)
+            e-disabled
+        @endif
         >
         <span ng-bind="{{$model}} | date:'dd/MM/yyyy'"></span>
     </div>

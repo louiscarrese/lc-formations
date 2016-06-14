@@ -7,6 +7,9 @@
         @if(isset($inline) && $inline)
             inline="inline"
         @endif
+        @if(isset($disabled) && $disabled)
+            e-disabled
+        @endif
     >
         <span ng-bind="{{$displayed or 'item.label'}}"></span>
     </div>

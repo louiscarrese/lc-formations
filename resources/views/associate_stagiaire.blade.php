@@ -32,6 +32,7 @@
                     'datasource' => 'associationCtrl.parentController.linkedData.sexe',
                     'displayed' => 'associationCtrl.parentController.staticData.sexe.label(associationCtrl.parentController.data.sexe)',
                     'inline' => true,
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -42,6 +43,7 @@
                     'id' => 'nom',
                     'label' => 'Nom',
                     'model' => 'associationCtrl.preinscriptionData.nom',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -52,6 +54,7 @@
                     'id' => 'prenom',
                     'label' => 'Prénom',
                     'model' => 'associationCtrl.preinscriptionData.prenom',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -64,6 +67,7 @@
                     'model' => 'associationCtrl.preinscriptionData.date_naissance',
                     'openFlag' => 'ctrl.openedDatePicker.date_naissance',
                     'openFunction' => 'ctrl.openDatePicker($event, \'date_naissance\')',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -74,6 +78,7 @@
                     'id' => 'adresse',
                     'label' => 'Adresse',
                     'model' => 'associationCtrl.preinscriptionData.adresse',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -84,6 +89,7 @@
                     'id' => 'code_postal',
                     'label' => 'Code postal',
                     'model' => 'associationCtrl.preinscriptionData.code_postal',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -94,6 +100,7 @@
                     'id' => 'ville',
                     'label' => 'Ville',
                     'model' => 'associationCtrl.preinscriptionData.ville',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -104,6 +111,7 @@
                     'id' => 'tel_fixe',
                     'label' => 'Téléphone fixe',
                     'model' => 'associationCtrl.preinscriptionData.tel_fixe',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -114,6 +122,7 @@
                     'id' => 'tel_portable',
                     'label' => 'Téléphone portable',
                     'model' => 'associationCtrl.preinscriptionData.tel_portable',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -124,6 +133,7 @@
                     'id' => 'email',
                     'label' => 'Email',
                     'model' => 'associationCtrl.preinscriptionData.email',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -137,6 +147,7 @@
                     'datasource' => 'associationCtrl.parentController.linkedData.adherent',
                     'displayed' => 'associationCtrl.parentController.staticData.adherent.label(associationCtrl.preinscriptionData.adherent)',
                     'inline' => true,
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -154,6 +165,7 @@
                     'choices_displayed' => 'item.label',
                     'singleProperty' => 'id',
                     'datasource' => 'associationCtrl.parentController.linkedData.statut_stagiaire',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -167,6 +179,7 @@
                     'datasource' => 'associationCtrl.parentController.linkedData.salarie_type',
                     'displayed' => 'associationCtrl.parentController.staticData.salarie_type.label(associationCtrl.preinscriptionData.salarie_type, associationCtrl.preinscriptionData.salarie_type_precision)',
                     'precision_model' => 'associationCtrl.preinscriptionData.salarie_type_precision',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -178,6 +191,7 @@
                     'model' => 'associationCtrl.preinscriptionData.demandeur_emploi_type',
                     'datasource' => 'associationCtrl.parentController.linkedData.demandeur_emploi_type',
                     'displayed' => 'associationCtrl.parentController.staticData.demandeur_emploi_type.label(associationCtrl.preinscriptionData.demandeur_emploi_type)',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -188,6 +202,7 @@
                     'id' => 'etudiant_etudes',
                     'label' => 'Etudes',
                     'model' => 'associationCtrl.preinscriptionData.etudiant_etudes',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -196,7 +211,8 @@
             <div class="xeditable-container" ng-show="associationCtrl.preinscriptionData.statut == 'autre'">
                 @include ('components.xeditable.text', [
                     'id' => 'type_autre',
-                    'model' => 'associationCtrl.preinscriptionData.type_autre'
+                    'model' => 'associationCtrl.preinscriptionData.type_autre',
+                    'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
@@ -230,7 +246,7 @@
                 </div>
             </form>
         </div>
-        <form editable-form shown="true" name="associationCtrl.dbDataForm" novalidate="novalidate">
+        <form editable-form shown="true" name="associationCtrl.dbDataForm" novalidate="novalidate" ng-show="associationCtrl.dbSearch != null">
             <div class="xeditable-container">
                 <div class="merge-left">
                     <button class="btn btn-default">&lt;</button>

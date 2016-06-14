@@ -21,6 +21,9 @@
         @if(isset($no_reset_search_input) && $no_reset_search_input)
             e-reset-search-input="false"
         @endif
+        @if(isset($disabled) && $disabled)
+            disabled
+        @endif
         {{ $additional_attributes or '' }}
         >
         <span ng-bind="{{$displayed}}"></span>

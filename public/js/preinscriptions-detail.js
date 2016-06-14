@@ -13292,7 +13292,7 @@ function associateController($uibModalInstance, associationService, dataService,
 
     /** Data */
     //The search criteria and result
-    self.dbSearch;
+    self.dbSearch = null;
     self.preinscriptionData = preinscriptionData;
     self.stagiaireFound = false; //unused ?
 
@@ -13305,12 +13305,6 @@ function associateController($uibModalInstance, associationService, dataService,
 
     $uibModalInstance.rendered.then(function() {
         //Graphical init code
-        self.searchForm.$show();
-        self.sourceDataForm.$show();
-        self.dbDataForm.$show();
-
-        self.searchSelect = angular.element(document.querySelectorAll('#searchForm .ui-select-container')).scope();
-        self.searchSelect.search = 'DefaultSearch123';
     })
 
 
