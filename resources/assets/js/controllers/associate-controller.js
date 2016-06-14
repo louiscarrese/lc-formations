@@ -4,6 +4,7 @@ function associateController($uibModalInstance, associationService, dataService,
 
     self.parentController = parentController;
 
+    self.modalInstance = $uibModalInstance;
     /** Data */
     //The search criteria and result
     self.dbSearch = null;

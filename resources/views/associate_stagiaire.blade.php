@@ -429,6 +429,17 @@
     </div>
 
 </div>
-<div>
-    A footer, just to see
+<div class="buttons clearfix">
+    <div class="pull-left">
+        <div ng-show="associationCtrl.preinscriptionData.stagiaire_id == null">
+            <button type="button" class="btn btn-default" ng-click="">Créer</button>
+            <button type="button" class="btn btn-default" ng-click="">Associer</button>
+        </div>
+        <div ng-show="associationCtrl.preinscriptionData.stagiaire_id != null">
+            <button type="button" class="btn btn-default" ng-click="">Enregistrer</button>
+        </div>
+    </div>
+    <div class="pull-right">
+        <button type="button" class="btn btn-default" ng-click="associationCtrl.modalInstance.close()">Fermer</button>
+    </div>
 </div>
