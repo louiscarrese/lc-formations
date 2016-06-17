@@ -13053,11 +13053,6 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         return ret;
     };
 
-/*
-    function getStagiaireStatus() {
-        return $q.when(statut);
-    };
-*/
     function findInArray(array, key) {
         for(var i = 0; i < array.length; i++) {
             if(array[i].id == key) {
@@ -13066,19 +13061,6 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         }
         return null;
     }
-/*
-    function getStatutFromId(id) {
-        var ret = null;
-        i = 0;
-        while(ret == null && i < statut.length) {
-            if(statut[i].id == id) {
-                ret = statut[i];
-            }
-            i++;
-        }
-        return ret;
-    }
-*/
   
     function getStagiaire(data) {
         if(data.stagiaire_id == null) {
@@ -13088,11 +13070,11 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         }
     }
 
-    function createStagiaire(data) {
+    function createStagiaire(ctrl, data) {
         var stagiaire = {
             nom: data.nom,
             prenom: data.prenom,
-            sexe: data.genre,
+            sexe: data.sexe,
             date_naissance: data.date_naissance,
             adresse: data.adresse,
             code_postal: data.code_postal,
@@ -13109,40 +13091,32 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         stagiairesService.save(stagiaire, 
             function(value, responseHeaders) {
                 data.stagiaire_id = value.id;
+                ctrl.update();
             }
         );
 
     }
 
     function associateStagiaire(controller) {
-        //Populate the stagiaire list ?
         //Show the popin
         var modalInstance = $uibModal.open({
             templateUrl: 'associate_stagiaire',
             size: 'lg', 
-            controller: ['$uibModalInstance', 'stagiaireAssociationService', 'stagiairesService', 'preinscriptionData', 'parentController', associateController],
+            controller: ['$uibModalInstance', 'stagiaireAssociationService', 'stagiairesService', 'parentController', associateController],
             controllerAs: 'associationCtrl',
-//            bindToController: true,
             scope: this.$scope,
             appendTo: angular.element(document.getElementById('infos-stagiaire')),
             resolve: {
-                preinscriptionData: function() { return controller.data; },
                 stagiaireAssociationService: stagiaireAssociationService,
                 parentController: controller,
             }
         });
-/*
-        modalInstance.opened.then(function() {
-            modalInstance.preinscriptionData = controller.data;
-//            modalInstance.dataService = stagiairesService;
-        });
-*/
     }
 
 
     function dissociateStagiaire(data) {
         data.stagiaire_id = null;
-
+        data.stagiaire = null;
     }
 
 
@@ -13180,9 +13154,6 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
             if(data.date_naissance) {
                 data.date_naissance = new Date(data.date_naissance);
             }
-
-//            data.statut = getStatutFromId(data.statut);
-//            data.trut = {values: [], precisions: {}};
         },
 
         preSend: function(originalData) {
@@ -13248,6 +13219,25 @@ function stagiaireAssociationService() {
             else 
                 return '';
         },
+
+        dbData: function(data, searchResult) {
+            if(data.stagiaire != null) {
+                return data.stagiaire;
+            } else {
+                return searchResult;
+            }
+        },
+
+
+        associate: function(data, searchResult) {
+            console.log('service associate');
+            console.log(data);
+            console.log(searchResult);
+            if(searchResult != null) {
+                data.stagiaire_id = searchResult.id;
+                data.stagiaire = searchResult;
+            }
+        }
     }
 
 }
@@ -13285,17 +13275,15 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
 });
 
 
-function associateController($uibModalInstance, associationService, dataService, preinscriptionData, parentController) {
+function associateController($uibModalInstance, associationService, dataService, parentController) {
     var self = this;
 
     self.parentController = parentController;
 
     self.modalInstance = $uibModalInstance;
     /** Data */
-    //The search criteria and result
+    //The search result
     self.dbSearch = null;
-    self.preinscriptionData = preinscriptionData;
-    self.stagiaireFound = false; //unused ?
 
 
     /** Functions */
@@ -13304,11 +13292,12 @@ function associateController($uibModalInstance, associationService, dataService,
     self.searchMatchDisplayed = searchMatchDisplayed;
     self.searchChoicesDisplayed = searchChoicesDisplayed;
 
+    self.dbData = dbData;
+    self.associate = associate;
+
     $uibModalInstance.rendered.then(function() {
         //Graphical init code
     })
-
-
 
     function refreshList(query) {
         if(query != undefined && query != '') {
@@ -13338,6 +13327,24 @@ function associateController($uibModalInstance, associationService, dataService,
             return associationService.searchChoicesDisplayed(item);
         else 
             return 'you should define searchChoicesDisplayed in an association specialization service';
+    }
+
+    function dbData(data, search) {
+        if(associationService != undefined && typeof associationService.dbData == 'function') {
+            return associationService.dbData(data, search);
+        } else { 
+            return 'you should define create in an association specialization service';
+        }
+    }
+
+    function associate() {
+        console.log('associate');
+        if(associationService != undefined && typeof associationService.associate == 'function') {
+            associationService.associate(parentController.data, self.dbSearch);
+            parentController.update();
+        } else { 
+            console.log('you should define create in an association specialization service');
+        }
     }
 
 }

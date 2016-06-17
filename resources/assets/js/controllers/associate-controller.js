@@ -1,15 +1,13 @@
 
-function associateController($uibModalInstance, associationService, dataService, preinscriptionData, parentController) {
+function associateController($uibModalInstance, associationService, dataService, parentController) {
     var self = this;
 
     self.parentController = parentController;
 
     self.modalInstance = $uibModalInstance;
     /** Data */
-    //The search criteria and result
+    //The search result
     self.dbSearch = null;
-    self.preinscriptionData = preinscriptionData;
-    self.stagiaireFound = false; //unused ?
 
 
     /** Functions */
@@ -18,11 +16,12 @@ function associateController($uibModalInstance, associationService, dataService,
     self.searchMatchDisplayed = searchMatchDisplayed;
     self.searchChoicesDisplayed = searchChoicesDisplayed;
 
+    self.dbData = dbData;
+    self.associate = associate;
+
     $uibModalInstance.rendered.then(function() {
         //Graphical init code
     })
-
-
 
     function refreshList(query) {
         if(query != undefined && query != '') {
@@ -52,6 +51,24 @@ function associateController($uibModalInstance, associationService, dataService,
             return associationService.searchChoicesDisplayed(item);
         else 
             return 'you should define searchChoicesDisplayed in an association specialization service';
+    }
+
+    function dbData(data, search) {
+        if(associationService != undefined && typeof associationService.dbData == 'function') {
+            return associationService.dbData(data, search);
+        } else { 
+            return 'you should define create in an association specialization service';
+        }
+    }
+
+    function associate() {
+        console.log('associate');
+        if(associationService != undefined && typeof associationService.associate == 'function') {
+            associationService.associate(parentController.data, self.dbSearch);
+            parentController.update();
+        } else { 
+            console.log('you should define create in an association specialization service');
+        }
     }
 
 }

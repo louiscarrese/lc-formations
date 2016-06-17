@@ -3,8 +3,6 @@
         <form editable-form name="ctrl.mainForm" novalidate="novalidate" onaftersave="ctrl.update()">
             <h2>Stagiaire
             </h2>
-
-            </h2>
             <div class="form-inline">
                 @include('components.xeditable.radio', [
                     'id' => 'sexe',
@@ -141,7 +139,7 @@
                 </div>
                 <div ng-show="ctrl.data.stagiaire_id == null">
                     <button type="button" class="btn btn-default" ng-click="ctrl.associateStagiaire(ctrl)">Associer</button> 
-                    <button type="button" class="btn btn-default" ng-click="ctrl.createStagiaire(ctrl.data)">Créer</button>
+                    <button type="button" class="btn btn-default" ng-click="ctrl.createStagiaire(ctrl, ctrl.data)">Créer</button>
                 </div>
             </div>
         </form>

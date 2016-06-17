@@ -17,7 +17,7 @@
                     'form' => 'associationCtrl.searchForm',
                     'datasource' => 'associationCtrl.dbSearchList',
                     'no_reset_search_input' => true,
-                    'search_prefill' => "@{{associationCtrl.preinscriptionData.nom + ' ' + associationCtrl.preinscriptionData.prenom}}",
+                    'search_prefill' => "@{{associationCtrl.parentController.data.nom + ' ' + associationCtrl.parentController.data.prenom}}",
                     'search_placeholder' => true,
                     'filter_props' => "'nom':'prenom'",
                 ])
@@ -28,7 +28,7 @@
                 @include('components.xeditable.radio', [
                     'id' => 'sexe',
                     'label' => 'Sexe',
-                    'model' => 'associationCtrl.preinscriptionData.sexe',
+                    'model' => 'associationCtrl.parentController.data.sexe',
                     'datasource' => 'associationCtrl.parentController.linkedData.sexe',
                     'displayed' => 'associationCtrl.parentController.staticData.sexe.label(associationCtrl.parentController.data.sexe)',
                     'inline' => true,
@@ -42,7 +42,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'nom',
                     'label' => 'Nom',
-                    'model' => 'associationCtrl.preinscriptionData.nom',
+                    'model' => 'associationCtrl.parentController.data.nom',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
@@ -53,7 +53,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'prenom',
                     'label' => 'Prénom',
-                    'model' => 'associationCtrl.preinscriptionData.prenom',
+                    'model' => 'associationCtrl.parentController.data.prenom',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
@@ -64,7 +64,7 @@
                 @include('components.xeditable.date', [
                     'id' => 'date_naissance',
                     'label' => 'Date de naissance',
-                    'model' => 'associationCtrl.preinscriptionData.date_naissance',
+                    'model' => 'associationCtrl.parentController.data.date_naissance',
                     'openFlag' => 'ctrl.openedDatePicker.date_naissance',
                     'openFunction' => 'ctrl.openDatePicker($event, \'date_naissance\')',
                     'disabled' => true,
@@ -77,7 +77,7 @@
                 @include('components.xeditable.textarea', [
                     'id' => 'adresse',
                     'label' => 'Adresse',
-                    'model' => 'associationCtrl.preinscriptionData.adresse',
+                    'model' => 'associationCtrl.parentController.data.adresse',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
@@ -88,7 +88,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'code_postal',
                     'label' => 'Code postal',
-                    'model' => 'associationCtrl.preinscriptionData.code_postal',
+                    'model' => 'associationCtrl.parentController.data.code_postal',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
@@ -99,7 +99,7 @@
                 @include ('components.xeditable.text', [
                     'id' => 'ville',
                     'label' => 'Ville',
-                    'model' => 'associationCtrl.preinscriptionData.ville',
+                    'model' => 'associationCtrl.parentController.data.ville',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
@@ -110,7 +110,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'tel_fixe',
                     'label' => 'Téléphone fixe',
-                    'model' => 'associationCtrl.preinscriptionData.tel_fixe',
+                    'model' => 'associationCtrl.parentController.data.tel_fixe',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
@@ -121,7 +121,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'tel_portable',
                     'label' => 'Téléphone portable',
-                    'model' => 'associationCtrl.preinscriptionData.tel_portable',
+                    'model' => 'associationCtrl.parentController.data.tel_portable',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
@@ -132,7 +132,7 @@
                 @include ('components.xeditable.email', [
                     'id' => 'email',
                     'label' => 'Email',
-                    'model' => 'associationCtrl.preinscriptionData.email',
+                    'model' => 'associationCtrl.parentController.data.email',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
@@ -143,9 +143,9 @@
                 @include('components.xeditable.radio', [
                     'id' => 'adherent',
                     'label' => 'Adhérent',
-                    'model' => 'associationCtrl.preinscriptionData.adherent',
+                    'model' => 'associationCtrl.parentController.data.adherent',
                     'datasource' => 'associationCtrl.parentController.linkedData.adherent',
-                    'displayed' => 'associationCtrl.parentController.staticData.adherent.label(associationCtrl.preinscriptionData.adherent)',
+                    'displayed' => 'associationCtrl.parentController.staticData.adherent.label(associationCtrl.parentController.data.adherent)',
                     'inline' => true,
                     'disabled' => true,
                 ])
@@ -157,10 +157,10 @@
                 @include('components.xeditable.select', [
                     'id' =>'statut',
                     'label' => 'Statut',
-                    'model' => 'associationCtrl.preinscriptionData.statut',
+                    'model' => 'associationCtrl.parentController.data.statut',
                     'form' => 'associationCtrl.sourceDataForm',
                     'name' => 'statut',
-                    'displayed' => 'associationCtrl.parentController.staticData.statut_stagiaire.label(associationCtrl.preinscriptionData.statut)',
+                    'displayed' => 'associationCtrl.parentController.staticData.statut_stagiaire.label(associationCtrl.parentController.data.statut)',
                     'match_displayed' => '$select.selected.label',
                     'choices_displayed' => 'item.label',
                     'singleProperty' => 'id',
@@ -171,47 +171,47 @@
                     <button class="btn btn-default">&gt;</button>
                 </div>
             </div>
-            <div class="xeditable-container" ng-show="associationCtrl.preinscriptionData.statut == 'salarie'">
+            <div class="xeditable-container" ng-show="associationCtrl.parentController.data.statut == 'salarie'">
                 @include('components.xeditable.radio-precision', [
                     'id' => 'salarie_type',
                     'label' => 'Type de contrat',
-                    'model' => 'associationCtrl.preinscriptionData.salarie_type',
+                    'model' => 'associationCtrl.parentController.data.salarie_type',
                     'datasource' => 'associationCtrl.parentController.linkedData.salarie_type',
-                    'displayed' => 'associationCtrl.parentController.staticData.salarie_type.label(associationCtrl.preinscriptionData.salarie_type, associationCtrl.preinscriptionData.salarie_type_precision)',
-                    'precision_model' => 'associationCtrl.preinscriptionData.salarie_type_precision',
+                    'displayed' => 'associationCtrl.parentController.staticData.salarie_type.label(associationCtrl.parentController.data.salarie_type, associationCtrl.parentController.data.salarie_type_precision)',
+                    'precision_model' => 'associationCtrl.parentController.data.salarie_type_precision',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
                 </div>
             </div>
-            <div class="xeditable-container" ng-show="associationCtrl.preinscriptionData.statut == 'demandeur_emploi'">
+            <div class="xeditable-container" ng-show="associationCtrl.parentController.data.statut == 'demandeur_emploi'">
                 @include('components.xeditable.radio', [
                     'id' => 'demandeur_emploi_type',
-                    'model' => 'associationCtrl.preinscriptionData.demandeur_emploi_type',
+                    'model' => 'associationCtrl.parentController.data.demandeur_emploi_type',
                     'datasource' => 'associationCtrl.parentController.linkedData.demandeur_emploi_type',
-                    'displayed' => 'associationCtrl.parentController.staticData.demandeur_emploi_type.label(associationCtrl.preinscriptionData.demandeur_emploi_type)',
+                    'displayed' => 'associationCtrl.parentController.staticData.demandeur_emploi_type.label(associationCtrl.parentController.data.demandeur_emploi_type)',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
                 </div>
             </div>
-            <div class="xeditable-container" ng-show="associationCtrl.preinscriptionData.statut == 'etudiant'">
+            <div class="xeditable-container" ng-show="associationCtrl.parentController.data.statut == 'etudiant'">
                 @include('components.xeditable.text', [
                     'id' => 'etudiant_etudes',
                     'label' => 'Etudes',
-                    'model' => 'associationCtrl.preinscriptionData.etudiant_etudes',
+                    'model' => 'associationCtrl.parentController.data.etudiant_etudes',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
                     <button class="btn btn-default">&gt;</button>
                 </div>
             </div>
-            <div class="xeditable-container" ng-show="associationCtrl.preinscriptionData.statut == 'autre'">
+            <div class="xeditable-container" ng-show="associationCtrl.parentController.data.statut == 'autre'">
                 @include ('components.xeditable.text', [
                     'id' => 'type_autre',
-                    'model' => 'associationCtrl.preinscriptionData.type_autre',
+                    'model' => 'associationCtrl.parentController.data.type_autre',
                     'disabled' => true,
                 ])
                 <div class="merge-right">
@@ -239,14 +239,14 @@
                         'form' => 'associationCtrl.searchForm',
                         'datasource' => 'associationCtrl.dbSearchList',
                         'no_reset_search_input' => true,
-                        'search_prefill' => "@{{associationCtrl.preinscriptionData.nom + ' ' + associationCtrl.preinscriptionData.prenom}}",
+                        'search_prefill' => "@{{associationCtrl.parentController.data.nom + ' ' + associationCtrl.parentController.data.prenom}}",
                         'search_placeholder' => true,
                         'filter_props' => "'nom':'prenom'",
                     ])
                 </div>
             </form>
         </div>
-        <form editable-form shown="true" name="associationCtrl.dbDataForm" novalidate="novalidate" ng-show="associationCtrl.dbSearch != null">
+        <form editable-form shown="true" name="associationCtrl.dbDataForm" novalidate="novalidate" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch) != null">
             <div class="xeditable-container">
                 <div class="merge-left">
                     <button class="btn btn-default">&lt;</button>
@@ -254,7 +254,7 @@
                 @include('components.xeditable.radio', [
                     'id' => 'sexe',
                     'label' => 'Sexe',
-                    'model' => 'associationCtrl.dbSearch.sexe',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).sexe',
                     'datasource' => 'associationCtrl.parentController.linkedData.sexe',
                     'displayed' => 'associationCtrl.parentController.staticData.sexe.label(associationCtrl.parentController.data.sexe)',
                     'inline' => true,
@@ -267,7 +267,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'nom',
                     'label' => 'Nom',
-                    'model' => 'associationCtrl.dbSearch.nom',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).nom',
                 ])
             </div>
             <div class="xeditable-container">
@@ -277,7 +277,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'prenom',
                     'label' => 'Prénom',
-                    'model' => 'associationCtrl.dbSearch.prenom',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).prenom',
                 ])
             </div>  
             <div class="form-inline xeditable-container">
@@ -287,7 +287,7 @@
                 @include('components.xeditable.date', [
                     'id' => 'date_naissance',
                     'label' => 'Date de naissance',
-                    'model' => 'associationCtrl.dbSearch.date_naissance',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).date_naissance',
                     'openFlag' => 'ctrl.openedDatePicker.date_naissance',
                     'openFunction' => 'ctrl.openDatePicker($event, \'date_naissance\')',
                 ])
@@ -299,7 +299,7 @@
                 @include('components.xeditable.textarea', [
                     'id' => 'adresse',
                     'label' => 'Adresse',
-                    'model' => 'associationCtrl.dbSearch.adresse',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).adresse',
                 ])
             </div>
             <div class="xeditable-container">
@@ -309,7 +309,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'code_postal',
                     'label' => 'Code postal',
-                    'model' => 'associationCtrl.dbSearch.code_postal',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).code_postal',
                 ])
             </div>
             <div class="xeditable-container">
@@ -319,7 +319,7 @@
                 @include ('components.xeditable.text', [
                     'id' => 'ville',
                     'label' => 'Ville',
-                    'model' => 'associationCtrl.dbSearch.ville',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).ville',
                 ])
             </div>
             <div class="xeditable-container">
@@ -329,7 +329,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'tel_fixe',
                     'label' => 'Téléphone fixe',
-                    'model' => 'associationCtrl.dbSearch.tel_fixe',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).tel_fixe',
                 ])
             </div>
             <div class="xeditable-container">
@@ -339,7 +339,7 @@
                 @include('components.xeditable.text', [
                     'id' => 'tel_portable',
                     'label' => 'Téléphone portable',
-                    'model' => 'associationCtrl.dbSearch.tel_portable',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).tel_portable',
                 ])
             </div>
             <div class="xeditable-container">
@@ -349,7 +349,7 @@
                 @include ('components.xeditable.email', [
                     'id' => 'email',
                     'label' => 'Email',
-                    'model' => 'associationCtrl.dbSearch.email',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).email',
                 ])
             </div>
             <div class="xeditable-container">
@@ -359,9 +359,9 @@
                 @include('components.xeditable.radio', [
                     'id' => 'adherent',
                     'label' => 'Adhérent',
-                    'model' => 'associationCtrl.dbSearch.adherent',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).adherent',
                     'datasource' => 'associationCtrl.parentController.linkedData.adherent',
-                    'displayed' => 'associationCtrl.parentController.staticData.adherent.label(associationCtrl.dbSearch.adherent)',
+                    'displayed' => 'associationCtrl.parentController.staticData.adherent.label(associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).adherent)',
                     'inline' => true,
                 ])
             </div>
@@ -372,57 +372,57 @@
                 @include('components.xeditable.select', [
                     'id' =>'statut',
                     'label' => 'Statut',
-                    'model' => 'associationCtrl.dbSearch.statut',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut',
                     'form' => 'associationCtrl.dbDataForm',
                     'name' => 'statut',
-                    'displayed' => 'associationCtrl.parentController.staticData.statut_stagiaire.label(associationCtrl.dbSearch.statut)',
+                    'displayed' => 'associationCtrl.parentController.staticData.statut_stagiaire.label(associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut)',
                     'match_displayed' => '$select.selected.label',
                     'choices_displayed' => 'item.label',
                     'singleProperty' => 'id',
                     'datasource' => 'associationCtrl.parentController.linkedData.statut_stagiaire',
                 ])
             </div>
-            <div class="xeditable-container" ng-show="associationCtrl.dbSearch.statut == 'salarie'">
+            <div class="xeditable-container" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut == 'salarie'">
                 <div class="merge-left">
                     <button class="btn btn-default">&lt;</button>
                 </div>
                 @include('components.xeditable.radio-precision', [
                     'id' => 'salarie_type',
                     'label' => 'Type de contrat',
-                    'model' => 'associationCtrl.dbSearch.salarie_type',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).salarie_type',
                     'datasource' => 'associationCtrl.parentController.linkedData.salarie_type',
-                    'displayed' => 'associationCtrl.parentController.staticData.salarie_type.label(associationCtrl.dbSearch.salarie_type, associationCtrl.dbSearch.salarie_type_precision)',
-                    'precision_model' => 'associationCtrl.dbSearch.salarie_type_precision',
+                    'displayed' => 'associationCtrl.parentController.staticData.salarie_type.label(associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).salarie_type, associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).salarie_type_precision)',
+                    'precision_model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).salarie_type_precision',
                 ])
             </div>
-            <div class="xeditable-container" ng-show="associationCtrl.dbSearch.statut == 'demandeur_emploi'">
+            <div class="xeditable-container" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut == 'demandeur_emploi'">
                 <div class="merge-left">
                     <button class="btn btn-default">&lt;</button>
                 </div>
                 @include('components.xeditable.radio', [
                     'id' => 'demandeur_emploi_type',
-                    'model' => 'associationCtrl.dbSearch.demandeur_emploi_type',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).demandeur_emploi_type',
                     'datasource' => 'associationCtrl.parentController.linkedData.demandeur_emploi_type',
-                    'displayed' => 'associationCtrl.parentController.staticData.demandeur_emploi_type.label(associationCtrl.dbSearch.demandeur_emploi_type)',
+                    'displayed' => 'associationCtrl.parentController.staticData.demandeur_emploi_type.label(associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).demandeur_emploi_type)',
                 ])
             </div>
-            <div class="xeditable-container" ng-show="associationCtrl.dbSearch.statut == 'etudiant'">
+            <div class="xeditable-container" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut == 'etudiant'">
                 <div class="merge-left">
                     <button class="btn btn-default">&lt;</button>
                 </div>
                 @include('components.xeditable.text', [
                     'id' => 'etudiant_etudes',
                     'label' => 'Etudes',
-                    'model' => 'associationCtrl.dbSearch.etudiant_etudes',
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).etudiant_etudes',
                 ])
             </div>
-            <div class="xeditable-container" ng-show="associationCtrl.dbSearch.statut == 'autre'">
+            <div class="xeditable-container" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut == 'autre'">
                 <div class="merge-left">
                     <button class="btn btn-default">&lt;</button>
                 </div>
                 @include ('components.xeditable.text', [
                     'id' => 'type_autre',
-                    'model' => 'associationCtrl.dbSearch.type_autre'
+                    'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).type_autre'
                 ])
             </div>
         </form>
@@ -431,12 +431,13 @@
 </div>
 <div class="buttons clearfix">
     <div class="pull-left">
-        <div ng-show="associationCtrl.preinscriptionData.stagiaire_id == null">
-            <button type="button" class="btn btn-default" ng-click="">Créer</button>
-            <button type="button" class="btn btn-default" ng-click="">Associer</button>
+        <div ng-show="associationCtrl.parentController.data.stagiaire_id == null">
+            <button type="button" class="btn btn-default" ng-click="associationCtrl.parentController.createStagiaire(associationCtrl.parentController, associationCtrl.parentController.data)">Créer</button>
+            <button type="button" class="btn btn-default" ng-show="associationCtrl.dbSearch != null" ng-click="associationCtrl.associate()">Associer</button>
         </div>
-        <div ng-show="associationCtrl.preinscriptionData.stagiaire_id != null">
+        <div ng-show="associationCtrl.parentController.data.stagiaire_id != null">
             <button type="button" class="btn btn-default" ng-click="">Enregistrer</button>
+            <button type="button" class="btn btn-default" ng-click="associationCtrl.parentController.dissociateStagiaire()">Dissocier</button>
         </div>
     </div>
     <div class="pull-right">

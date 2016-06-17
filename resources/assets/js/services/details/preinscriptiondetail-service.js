@@ -29,11 +29,6 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         return ret;
     };
 
-/*
-    function getStagiaireStatus() {
-        return $q.when(statut);
-    };
-*/
     function findInArray(array, key) {
         for(var i = 0; i < array.length; i++) {
             if(array[i].id == key) {
@@ -42,19 +37,6 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         }
         return null;
     }
-/*
-    function getStatutFromId(id) {
-        var ret = null;
-        i = 0;
-        while(ret == null && i < statut.length) {
-            if(statut[i].id == id) {
-                ret = statut[i];
-            }
-            i++;
-        }
-        return ret;
-    }
-*/
   
     function getStagiaire(data) {
         if(data.stagiaire_id == null) {
@@ -64,11 +46,11 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         }
     }
 
-    function createStagiaire(data) {
+    function createStagiaire(ctrl, data) {
         var stagiaire = {
             nom: data.nom,
             prenom: data.prenom,
-            sexe: data.genre,
+            sexe: data.sexe,
             date_naissance: data.date_naissance,
             adresse: data.adresse,
             code_postal: data.code_postal,
@@ -85,40 +67,32 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         stagiairesService.save(stagiaire, 
             function(value, responseHeaders) {
                 data.stagiaire_id = value.id;
+                ctrl.update();
             }
         );
 
     }
 
     function associateStagiaire(controller) {
-        //Populate the stagiaire list ?
         //Show the popin
         var modalInstance = $uibModal.open({
             templateUrl: 'associate_stagiaire',
             size: 'lg', 
-            controller: ['$uibModalInstance', 'stagiaireAssociationService', 'stagiairesService', 'preinscriptionData', 'parentController', associateController],
+            controller: ['$uibModalInstance', 'stagiaireAssociationService', 'stagiairesService', 'parentController', associateController],
             controllerAs: 'associationCtrl',
-//            bindToController: true,
             scope: this.$scope,
             appendTo: angular.element(document.getElementById('infos-stagiaire')),
             resolve: {
-                preinscriptionData: function() { return controller.data; },
                 stagiaireAssociationService: stagiaireAssociationService,
                 parentController: controller,
             }
         });
-/*
-        modalInstance.opened.then(function() {
-            modalInstance.preinscriptionData = controller.data;
-//            modalInstance.dataService = stagiairesService;
-        });
-*/
     }
 
 
     function dissociateStagiaire(data) {
         data.stagiaire_id = null;
-
+        data.stagiaire = null;
     }
 
 
@@ -156,9 +130,6 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
             if(data.date_naissance) {
                 data.date_naissance = new Date(data.date_naissance);
             }
-
-//            data.statut = getStatutFromId(data.statut);
-//            data.trut = {values: [], precisions: {}};
         },
 
         preSend: function(originalData) {
