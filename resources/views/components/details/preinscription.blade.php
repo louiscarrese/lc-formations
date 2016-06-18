@@ -1,8 +1,7 @@
 <div ng-controller="detailController as ctrl">
     <div class="data-block rounded-border" id="infos-stagiaire">
-        <form editable-form name="ctrl.mainForm" novalidate="novalidate" onaftersave="ctrl.update()">
-            <h2>Stagiaire
-            </h2>
+        <form editable-form name="ctrl.stagiaireForm" onaftersave="ctrl.updateStagiaire(ctrl, ctrl.data)">
+            <h2>Stagiaire</h2>
             <div class="form-inline">
                 @include('components.xeditable.radio', [
                     'id' => 'sexe',
@@ -83,8 +82,8 @@
                     'id' =>'statut',
                     'label' => 'Statut',
                     'model' => 'ctrl.data.statut',
-                    'form' => 'ctrl.mainForm',
                     'name' => 'statut',
+                    'form' => 'ctrl.stagiaireForm',
                     'displayed' => 'ctrl.staticData.statut_stagiaire.label(ctrl.data.statut)',
                     'match_displayed' => '$select.selected.label',
                     'choices_displayed' => 'item.label',
@@ -123,18 +122,17 @@
                     'model' => 'ctrl.data.type_autre'
                 ])
             </div>
-
             <div class="buttons">
                 <div ng-show="ctrl.data.stagiaire_id != null">
-                    <span ng-show="!crtl.mainForm.$visible">
+                    <span ng-show="!ctrl.stagiaireForm.$visible">
                         <!-- button to show form -->
-                        <button type="button" class="btn btn-default" ng-click="ctrl.mainForm.$show()">Edit</button>
+                        <button type="button" class="btn btn-default" ng-click="ctrl.stagiaireForm.$show()">Editer</button>
                         <button type="button" class="btn btn-default" ng-click="ctrl.dissociateStagiaire(ctrl.data); ctrl.update();">Dissocier</button> 
                     </span>
                     <!-- buttons to submit / cancel form -->
-                    <span ng-show="ctrl.mainForm.$visible">
-                        <button type="submit" class="btn btn-primary" ng-disabled="ctrl.mainForm.$waiting">Save</button>
-                        <button type="button" class="btn btn-default" ng-disabled="ctrl.mainForm.$waiting" ng-click="ctrl.mainForm.$cancel()">Cancel</button>
+                    <span ng-show="ctrl.stagiaireForm.$visible">
+                        <button type="submit" class="btn btn-primary" ng-disabled="ctrl.stagiaireForm.$waiting">Save</button>
+                        <button type="button" class="btn btn-default" ng-disabled="ctrl.stagiaireForm.$waiting" ng-click="ctrl.stagiaireForm.$cancel()">Cancel</button>
                     </span>
                 </div>
                 <div ng-show="ctrl.data.stagiaire_id == null">

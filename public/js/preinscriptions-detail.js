@@ -13119,6 +13119,14 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         data.stagiaire = null;
     }
 
+    function updateStagiaire(ctrl, data) {
+        if(data.stagiaire_id != null && data.stagiaire != null) {
+            stagiairesService.update({id:data.stagiaire_id}, data.stagiaire, 
+                function(value, responseHeaders) {
+                    ctrl.refreshData();
+                })
+        }
+    }
 
     return {
         staticDataServices: {
@@ -13200,6 +13208,8 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
             controller.dissociateStagiaire = dissociateStagiaire;
             controller.associateStagiaire = associateStagiaire;
             controller.createStagiaire = createStagiaire;
+
+            controller.updateStagiaire = updateStagiaire;
         },
     }
 }
