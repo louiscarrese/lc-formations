@@ -35,13 +35,13 @@
                 'label' => 'Module',
                 'sortable' => true,
                 'filterable' => true,
-                'displayedField' => '<a href="/modules/@{{session.module.id}}">@{{session.module.libelle}}</a>',
+                'displayedField' => '<a href="modules/@{{session.module.id}}">@{{session.module.libelle}}</a>',
             ],
             'session.libelle' => [
                 'label' => 'Session',
                 'sortable' => true,
                 'filterable' => true,
-                'displayedField' => '<a href="/sessions/@{{session.id}}">@{{session.libelle}}</a>',
+                'displayedField' => '<a href="sessions/@{{session.id}}">@{{session.libelle}}</a>',
             ],
             'statut.libelle' => [
                 'label' => 'Statut',
