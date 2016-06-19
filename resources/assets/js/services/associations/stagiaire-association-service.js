@@ -32,6 +32,10 @@ function stagiaireAssociationService() {
                 data.stagiaire_id = searchResult.id;
                 data.stagiaire = searchResult;
             }
+        },
+
+        mergeData: function(key, data) {
+            data.stagiaire[key] = data[key];
         }
     }
 

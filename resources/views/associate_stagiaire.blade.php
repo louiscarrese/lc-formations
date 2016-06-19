@@ -35,7 +35,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('sexe');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -46,7 +46,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('nom');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -57,7 +57,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('prenom');">&gt;</button>
                 </div>
             </div>  
             <div class="form-inline xeditable-container">
@@ -70,7 +70,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('date_naissance');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -81,7 +81,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <intput type="button" class="btn btn-default" ng-click="associationCtrl.mergeData('adresse');">&gt;</input>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -92,7 +92,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('code_postal');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -103,7 +103,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('ville');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -114,7 +114,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('tel_fixe');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -125,7 +125,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('tel_portable');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -136,7 +136,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('email');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -150,7 +150,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('adherent');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container">
@@ -168,7 +168,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('statut');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container" ng-show="associationCtrl.parentController.data.statut == 'salarie'">
@@ -182,7 +182,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('salarie_type');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container" ng-show="associationCtrl.parentController.data.statut == 'demandeur_emploi'">
@@ -194,7 +194,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('demandeur_emploi_type');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container" ng-show="associationCtrl.parentController.data.statut == 'etudiant'">
@@ -205,7 +205,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('etudiant_etudes');">&gt;</button>
                 </div>
             </div>
             <div class="xeditable-container" ng-show="associationCtrl.parentController.data.statut == 'autre'">
@@ -215,7 +215,7 @@
                     'disabled' => true,
                 ])
                 <div class="merge-right">
-                    <button class="btn btn-default">&gt;</button>
+                    <button class="btn btn-default" ng-click="associationCtrl.mergeData('type_autre');">&gt;</button>
                 </div>
             </div>
         </form>
@@ -248,9 +248,6 @@
         </div>
         <form editable-form shown="true" name="associationCtrl.dbDataForm" novalidate="novalidate" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch) != null">
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.radio', [
                     'id' => 'sexe',
                     'label' => 'Sexe',
@@ -261,9 +258,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.text', [
                     'id' => 'nom',
                     'label' => 'Nom',
@@ -271,9 +265,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.text', [
                     'id' => 'prenom',
                     'label' => 'Prénom',
@@ -281,9 +272,6 @@
                 ])
             </div>  
             <div class="form-inline xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.date', [
                     'id' => 'date_naissance',
                     'label' => 'Date de naissance',
@@ -293,9 +281,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.textarea', [
                     'id' => 'adresse',
                     'label' => 'Adresse',
@@ -303,9 +288,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.text', [
                     'id' => 'code_postal',
                     'label' => 'Code postal',
@@ -313,9 +295,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include ('components.xeditable.text', [
                     'id' => 'ville',
                     'label' => 'Ville',
@@ -323,9 +302,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.text', [
                     'id' => 'tel_fixe',
                     'label' => 'Téléphone fixe',
@@ -333,9 +309,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.text', [
                     'id' => 'tel_portable',
                     'label' => 'Téléphone portable',
@@ -343,9 +316,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include ('components.xeditable.email', [
                     'id' => 'email',
                     'label' => 'Email',
@@ -353,9 +323,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.radio', [
                     'id' => 'adherent',
                     'label' => 'Adhérent',
@@ -366,9 +333,6 @@
                 ])
             </div>
             <div class="xeditable-container">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.select', [
                     'id' =>'statut',
                     'label' => 'Statut',
@@ -384,7 +348,7 @@
             </div>
             <div class="xeditable-container" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut == 'salarie'">
                 <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
+                    <button class="btn btn-default" onclick="associationCtrl.mergeData('statut')">&lt;</button>
                 </div>
                 @include('components.xeditable.radio-precision', [
                     'id' => 'salarie_type',
@@ -396,9 +360,6 @@
                 ])
             </div>
             <div class="xeditable-container" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut == 'demandeur_emploi'">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.radio', [
                     'id' => 'demandeur_emploi_type',
                     'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).demandeur_emploi_type',
@@ -407,9 +368,6 @@
                 ])
             </div>
             <div class="xeditable-container" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut == 'etudiant'">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include('components.xeditable.text', [
                     'id' => 'etudiant_etudes',
                     'label' => 'Etudes',
@@ -417,9 +375,6 @@
                 ])
             </div>
             <div class="xeditable-container" ng-show="associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).statut == 'autre'">
-                <div class="merge-left">
-                    <button class="btn btn-default">&lt;</button>
-                </div>
                 @include ('components.xeditable.text', [
                     'id' => 'type_autre',
                     'model' => 'associationCtrl.dbData(associationCtrl.parentController.data, associationCtrl.dbSearch).type_autre'
@@ -436,7 +391,7 @@
             <button type="button" class="btn btn-default" ng-show="associationCtrl.dbSearch != null" ng-click="associationCtrl.associate()">Associer</button>
         </div>
         <div ng-show="associationCtrl.parentController.data.stagiaire_id != null">
-            <button type="button" class="btn btn-default" ng-click="">Enregistrer</button>
+            <button type="button" class="btn btn-default" ng-click="associationCtrl.parentController.updateStagiaire(associationCtrl.parentController, associationCtrl.parentController.data)">Enregistrer</button>
             <button type="button" class="btn btn-default" ng-click="associationCtrl.parentController.dissociateStagiaire()">Dissocier</button>
         </div>
     </div>

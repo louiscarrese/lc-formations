@@ -13247,6 +13247,10 @@ function stagiaireAssociationService() {
                 data.stagiaire_id = searchResult.id;
                 data.stagiaire = searchResult;
             }
+        },
+
+        mergeData: function(key, data) {
+            data.stagiaire[key] = data[key];
         }
     }
 
@@ -13304,6 +13308,7 @@ function associateController($uibModalInstance, associationService, dataService,
 
     self.dbData = dbData;
     self.associate = associate;
+    self.mergeData = mergeData;
 
     $uibModalInstance.rendered.then(function() {
         //Graphical init code
@@ -13343,7 +13348,7 @@ function associateController($uibModalInstance, associationService, dataService,
         if(associationService != undefined && typeof associationService.dbData == 'function') {
             return associationService.dbData(data, search);
         } else { 
-            return 'you should define create in an association specialization service';
+            return 'you should define dbData in an association specialization service';
         }
     }
 
@@ -13353,7 +13358,15 @@ function associateController($uibModalInstance, associationService, dataService,
             associationService.associate(parentController.data, self.dbSearch);
             parentController.update();
         } else { 
-            console.log('you should define create in an association specialization service');
+            console.log('you should define associate in an association specialization service');
+        }
+    }
+
+    function mergeData(key) {
+        if(associationService != undefined && typeof associationService.mergeData == 'function') {
+            associationService.mergeData(key, self.parentController.data);
+        } else {
+            console.log('you should define mergeData in an association specialization service');
         }
     }
 

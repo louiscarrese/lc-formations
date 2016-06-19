@@ -127,6 +127,7 @@
                     <span ng-show="!ctrl.stagiaireForm.$visible">
                         <!-- button to show form -->
                         <button type="button" class="btn btn-default" ng-click="ctrl.stagiaireForm.$show()">Editer</button>
+                    <button type="button" class="btn btn-default" ng-click="ctrl.associateStagiaire(ctrl)">Fusionner</button> 
                         <button type="button" class="btn btn-default" ng-click="ctrl.dissociateStagiaire(ctrl.data); ctrl.update();">Dissocier</button> 
                     </span>
                     <!-- buttons to submit / cancel form -->
