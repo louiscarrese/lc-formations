@@ -109,6 +109,7 @@
                         [
                             'label' => 'Financeur',
                             'sortable' => 'financeur_id',
+                            'defaultSort' => true,
                             'fields' => [
                                 'financeur_id' => [
                                     'filterable' => 'financeur.libelle',

@@ -11,6 +11,7 @@
             $filter .= ":'" . $filterField . "'";
         }
     }
+    $filter .= '| orderBy:ctrl.sortProp:ctrl.sortReverse';
     $filter .= ' track by item.' . $idField;
 ?>
 
@@ -26,9 +27,11 @@
                 @foreach($fields as $fieldId => $field)
                     @if(!isset($displayedField) || in_array($fieldId, $displayedField))
                         @if($field['sortable'])
-                            <th class="clickable {{$field['tdClass'] or ''}}">
-                                <my-sortable-header set="ctrl.setSort('{{$fieldId}}')" get="ctrl.getSort('{{$fieldId}}')">{{$field['label']}}</my-sortable-header>
-                            </th>
+                            <th class="clickable {{$field['tdClass'] or ''}}" my-sortable-header order="'{{$fieldId}}'" by="ctrl.sortProp" reverse="ctrl.sortReverse"
+                            @if(isset($field['defaultSort']) && $field['defaultSort'])
+                                default-sort
+                            @endif
+                            >{{$field['label']}}
                         @else
                             <td><span>{{$field['label']}}</span></td>
                         @endif

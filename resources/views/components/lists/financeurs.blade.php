@@ -8,6 +8,7 @@
             'libelle' => [
                 'label' => 'Libelle',
                 'sortable' => true,
+                'defaultSort' => true,
                 'filterable' => true,
             ],
             'structure' => [

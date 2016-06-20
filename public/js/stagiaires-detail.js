@@ -12923,20 +12923,33 @@ angular.module('stagiaireDetail', ['detail', 'ngResource', 'myEditable'])
 
 function mySortableHeaderDirective() {
     return {
-        restrict: 'E',
+        restrict: 'A',
         transclude: true,
         scope: {
-            setSort: '&set',
-            getSort: '&get'
+            order: '=',
+            by: '=',
+            reverse: '=',
         },
         template: function() {
             var template = '';
 
-            template += '<span ng-click="setSort()" ng-transclude></span>';
-            template += '<span ng-show="getSort() === false" class="sort-arrow glyphicon glyphicon-triangle-top"></span>';
-            template += '<span ng-show="getSort() === true" class="sort-arrow glyphicon glyphicon-triangle-bottom"></span>';
-
+            template += '<span ng-click="onClick()" ng-transclude></span>';
+            template += '<span class="glyphicon sort-arrow" ng-class="{\'glyphicon-triangle-top\' : order === by && !reverse,  \'glyphicon-triangle-bottom\' : order===by && reverse}"></span>';
             return template;
+        },
+        link: function(scope, element, attrs) {
+            if(attrs["defaultSort"] != undefined) {
+                scope.by = scope.order;
+                scope.reverse = false;
+            }
+            scope.onClick = function () {
+                if(scope.order === scope.by) {
+                   scope.reverse = !scope.reverse 
+                } else {
+                  scope.by = scope.order ;
+                  scope.reverse = false; 
+                }
+            }
         }
     };
 }

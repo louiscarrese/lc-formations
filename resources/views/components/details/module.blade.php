@@ -150,6 +150,7 @@
                     [
                         'label' => 'Tarif',
                         'sortable' => 'tarif_type_id',
+                        'defaultSort' => true,
                         'fields' => [
                             'tarif_type_id' => [
                                 'filterable' => 'tarif_type.libelle',

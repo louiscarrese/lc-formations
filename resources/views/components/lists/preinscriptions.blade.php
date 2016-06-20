@@ -8,6 +8,7 @@
             'created_at' => [
                 'label' => 'Date',
                 'sortable' => true,
+                'defaultSort' => true,
                 'filterable' => true,
             ],
             'nom' => [

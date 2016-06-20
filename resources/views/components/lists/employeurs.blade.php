@@ -8,6 +8,7 @@
             'nom' => [
                 'label' => 'Nom',
                 'sortable' => true,
+                'defaultSort' => true,
                 'filterable' => true,
             ],
             'raison_sociale' => [

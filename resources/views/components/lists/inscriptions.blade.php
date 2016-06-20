@@ -8,6 +8,7 @@
             'stagiaire.nom' => [
                 'label' => 'Nom',
                 'sortable' => true,
+                'defaultSort' => true,
                 'filterable' => true,
             ],
             'stagiaire.prenom' => [

@@ -69,6 +69,7 @@
                     [
                         'label' => 'Date',
                         'sortable' => 'date',
+                        'defaultSort' => true,
                         'size' => 2,
                         'fields' => [
                             'date' => [

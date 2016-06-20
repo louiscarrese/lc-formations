@@ -13,6 +13,7 @@
             }
         }
     }
+    $filter .= '| orderBy:'.$controllerName.'.sortProp:'.$controllerName.'.sortReverse';
     $filter .= ' track by elem.' . $idField;
 
     if(!function_exists('generateErrorClass')) {
@@ -51,9 +52,8 @@
                 {{-- Configured Headers --}}
                 @foreach($columns as $column)
                     @if($column['sortable'] != false)
-                        <th class="clickable {{$column['tdClass'] or ''}} <?php echo (isset($column['size']) ? 'col-sm-' . $column['size'] : ''); ?>">
-                            <my-sortable-header set="{{$controllerName}}.setSort('{{$column['sortable']}}')"
-                                                get="{{$controllerName}}.getSort('{{$column['sortable']}}')"
+                        <th class="clickable {{$column['tdClass'] or ''}} <?php echo (isset($column['size']) ? 'col-sm-' . $column['size'] : ''); ?>"
+                            my-sortable-header order="'{{$column['sortable']}}'" by="{{$controllerName}}.sortProp" reverse="{{$controllerName}}.sortReverse" <?php echo (isset($column['defaultSort']) ? 'default-sort' : ''); ?>
                             >
                             {{$column['label']}}
                         </th>
