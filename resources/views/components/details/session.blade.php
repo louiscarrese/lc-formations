@@ -27,6 +27,15 @@
                     ],
                 ]
             ],[
+                'label' => 'Effectif inscrit',
+                'fields' => [
+                    'dummy' => [
+                        'type' => 'raw',
+                        'displayed' => '<i class="text-info">@{{effectifPending}} en cours</i> + <i class="text-warning">@{{effectifWaitingList}} en attente</i> + <i class="text-danger">@{{effectifValidated}} validées</i> (@{{effectifTotal}} total)',
+                        'sizeValue' => 4,
+                    ],
+                ]
+            ],[
                 'label' => 'Effectif maximum',
                 'fields' => [
                     'effectif_max' => [

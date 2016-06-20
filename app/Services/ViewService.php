@@ -3,14 +3,14 @@
 namespace ModuleFormation\Services;
 
 class ViewService {
-    public function displayedField($fieldId, $field) {
+    public function displayedField($fieldId, $displayedField, $prefix) {
         $displayed = "";
-        if(isset($field["displayedField"])) {
+        if($displayedField != null) {
             $find[] = '{{';
-            $replace[] = '{{item.';
-            $displayed = str_replace($find, $replace, $field['displayedField']);
+            $replace[] = '{{'.$prefix;
+            $displayed = str_replace($find, $replace, $displayedField);
         } else {
-            $displayed = "{{item.".$fieldId."}}";
+            $displayed = "{{".$prefix.$fieldId."}}";
         }
         return $displayed;
     }

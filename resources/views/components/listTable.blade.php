@@ -53,7 +53,7 @@
                     @if((isset($displayedField) && in_array($fieldId, $displayedField)) 
                     || (!isset($displayedField) && (!isset($field['defaultHidden']) || !$field['defaultHidden'])))
                         <td class="{{$field['tdClass'] or ''}}">
-                            <span><?php echo $viewService->displayedField($fieldId, $field); ?></span>
+                            <span><?php echo $viewService->displayedField($fieldId, (isset($field['displayedField']) ? $field['displayedField'] : null), 'item.') ?></span>
                         </td>
                     @endif
                 @endforeach

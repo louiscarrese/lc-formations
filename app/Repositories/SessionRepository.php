@@ -14,6 +14,7 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
     }
 
     protected function augmentData($data) {
+        //first and last dates
         $minMaxDate = $this->sessionService->getMinMaxDates($data->id);
 
         if($minMaxDate != null) {
@@ -21,6 +22,11 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
             $data->lastDate = $minMaxDate['last'];
         } 
         
+        //nb inscriptions
+        $data->effectifPending = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_PENDING);
+        $data->effectifValidated = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_VALIDATED);
+        $data->effectifWaitingList = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_WAITING_LIST);
+        $data->effectifTotal = $data->effectifPending + $data->effectifValidated + $data->effectifWaitingList;
         return $data;
     }
 

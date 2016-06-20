@@ -17,7 +17,7 @@
         return $ret;
     }
 ?>
-
+@inject('viewService', 'ModuleFormation\Services\ViewService')
 <h2>{{<?php echo($controller); ?>.titleText()}}</h2>
 
 <div class="alerts">
@@ -32,6 +32,8 @@
                 <span class="col-sm-{{$field['sizeValue']}} detail-value">
                     @if(isset($field['readonly']) && $field['readonly'])
                         <?php echo '{{' . $controller . '.data.' . $fieldId . '}}' ?>
+                    @elseif($field['type'] == 'raw')
+                        {!! $viewService->displayedField($fieldId, $field['displayed'], $controller.'.data.') !!}
                     @else
                         @include('components.myEditable', [
                             'controllerName' => $controller,

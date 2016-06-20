@@ -3,6 +3,7 @@
 namespace ModuleFormation\Services;
 
 use ModuleFormation\SessionJour;
+use ModuleFormation\Inscription;
 
 class SessionService implements SessionServiceInterface
 {
@@ -19,5 +20,11 @@ class SessionService implements SessionServiceInterface
         } else {
             return null;
         }
+    }
+
+    public function getNbInscriptions($sessionId, $statut) {
+        $ret = Inscription::where(['session_id' => $sessionId, 'statut' => $statut])->count();
+
+        return $ret;
     }
 }
