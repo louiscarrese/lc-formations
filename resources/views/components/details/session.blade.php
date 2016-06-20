@@ -57,7 +57,7 @@
     ])
 
     <div ng-if="detailCtrl.inited && detailCtrl.mode != 'create'">
-        @include('components.lists.inscriptions', ['displayedField' => ['stagiaire.nom', 'stagiaire.prenom', 'stagiaire.email', 'stagiaire.tel_fixe', 'stagiaire.tel_portable', 'statut_libelle']])
+        @include('components.lists.inscriptions', ['displayedField' => ['stagiaire.nom', 'stagiaire.prenom', 'stagiaire.email', 'stagiaire.tel_fixe', 'stagiaire.tel_portable', 'statut.libelle']])
 
         <div ng-controller="sessionJoursController as sessionJoursController">
             @include('components.editableTable',
@@ -179,6 +179,7 @@
                     </span>
                 </ng-form>
             </div>
+
             <h3>Impressions</h3>
             <div class="custom-actions row">
                 <span class="col-sm-2">
