@@ -14,4 +14,8 @@ class ViewService {
         }
         return $displayed;
     }
+
+    public function privateUrl($url) {
+        return '/intra/' . $url;
+    }
 }

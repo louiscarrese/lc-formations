@@ -59,14 +59,14 @@
                 @endforeach
                 <td class="list-action">
                     <span>
-                        <a ng-href="{{$detailUri}}/<?php echo '{{item.'.$idField.'}}'; ?>" class="btn btn-default center-block">
+                        <a ng-href="{{$viewService->privateUrl($detailUri)}}/<?php echo '{{item.'.$idField.'}}'; ?>" class="btn btn-default center-block">
                             <span>Détail</span>
                         </a>
                     </span>
                 </td>
                 <td class="list-action">
                     <span>
-                        <a ng-href="{{$detailUri}}/<?php echo '{{item.'.$idField.'}}'; ?>?edit=true" class="btn btn-default center-block">
+                        <a ng-href="{{$viewService->privateUrl($detailUri)}}/<?php echo '{{item.'.$idField.'}}'; ?>?edit=true" class="btn btn-default center-block">
                             <span>Editer</span>
                         </a>
                     </span>
@@ -76,7 +76,7 @@
     </table>
 
     <div class="global-actions clearfix">
-        <a ng-href="<?php echo '{{ ctrl.createUrl(\'' . $detailUri . '\')}}'; ?>" class="btn btn-default">
+        <a ng-href="<?php echo '{{ctrl.createUrl(\'' . $viewService->privateUrl($detailUri) . '\')}}' ?>" class="btn btn-default">
             <span>Ajouter</span>
         </a>
     </div>
