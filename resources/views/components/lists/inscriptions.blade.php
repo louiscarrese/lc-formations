@@ -10,6 +10,7 @@
                 'sortable' => true,
                 'defaultSort' => (isset($defaultSort) ? ($defaultSort == 'created_at') : true),
                 'filterable' => true,
+                'defaultHidden' => true,
             ],
             'stagiaire.nom' => [
                 'label' => 'Nom',

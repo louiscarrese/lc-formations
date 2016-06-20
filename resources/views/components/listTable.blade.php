@@ -25,7 +25,9 @@
         <thead>
             <tr>
                 @foreach($fields as $fieldId => $field)
-                    @if(!isset($displayedField) || in_array($fieldId, $displayedField))
+
+                    @if((isset($displayedField) && in_array($fieldId, $displayedField)) 
+                    || (!isset($displayedField) && (!isset($field['defaultHidden']) || !$field['defaultHidden'])))
                         @if($field['sortable'])
                             <th class="clickable {{$field['tdClass'] or ''}}" my-sortable-header order="'{{$fieldId}}'" by="ctrl.sortProp" reverse="ctrl.sortReverse"
                             @if(isset($field['defaultSort']) && $field['defaultSort'])
@@ -48,7 +50,8 @@
         <tbody>
             <tr ng-repeat="item in ctrl.data | {{$filter}}" ng-class="ctrl.getRowClass(item)">
                 @foreach($fields as $fieldId => $field)
-                    @if(!isset($displayedField) || in_array($fieldId, $displayedField))
+                    @if((isset($displayedField) && in_array($fieldId, $displayedField)) 
+                    || (!isset($displayedField) && (!isset($field['defaultHidden']) || !$field['defaultHidden'])))
                         <td class="{{$field['tdClass'] or ''}}">
                             <span><?php echo $viewService->displayedField($fieldId, $field); ?></span>
                         </td>
