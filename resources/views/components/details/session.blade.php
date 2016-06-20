@@ -57,7 +57,7 @@
     ])
 
     <div ng-if="detailCtrl.inited && detailCtrl.mode != 'create'">
-        @include('components.lists.inscriptions', ['displayedField' => ['stagiaire.nom', 'stagiaire.prenom', 'stagiaire.email', 'stagiaire.tel_fixe', 'stagiaire.tel_portable', 'statut.libelle'], 'defaultSort' => 'stagiaire.email'])
+        @include('components.lists.inscriptions', ['displayedField' => ['created_at', 'stagiaire.nom', 'stagiaire.prenom', 'stagiaire.email', 'stagiaire.tel_fixe', 'stagiaire.tel_portable', 'statut.libelle'], 'defaultSort' => 'created_at'])
 
         <div ng-controller="sessionJoursController as sessionJoursController">
             @include('components.editableTable',

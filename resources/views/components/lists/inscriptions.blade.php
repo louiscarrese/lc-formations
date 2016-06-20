@@ -5,6 +5,12 @@
         'detailUri' => 'inscriptions',
         'idField' => 'id',
         'fields' => [
+            'created_at' => [
+                'label' => 'Date',
+                'sortable' => true,
+                'defaultSort' => (isset($defaultSort) ? ($defaultSort == 'created_at') : true),
+                'filterable' => true,
+            ],
             'stagiaire.nom' => [
                 'label' => 'Nom',
                 'sortable' => true,
