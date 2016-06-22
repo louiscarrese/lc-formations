@@ -17,14 +17,14 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('ModuleFormation\Services\ViewService', function($app) {
+        $this->app->singleton('ModuleFormation\Services\ViewServiceInterface', function($app) {
             return new \ModuleFormation\Services\ViewService();
         });
     }
 
     public function provides()
     {
-        return ['ModuleFormation\Services\ViewService'];
+        return ['ModuleFormation\Services\ViewServiceInterface'];
     }
 
 }
