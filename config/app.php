@@ -177,6 +177,7 @@ return [
         /*
          * Service Providers
          */
+        ModuleFormation\Providers\MailGeneratorServiceProvider::class,
         ModuleFormation\Providers\SearchServiceProvider::class,
         ModuleFormation\Providers\SessionServiceProvider::class,
         ModuleFormation\Providers\ViewServiceProvider::class,

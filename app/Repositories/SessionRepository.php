@@ -6,11 +6,15 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
     protected $modelClassName = 'ModuleFormation\\Session';
 
     private $sessionService;
+    private $mailGeneratorService;
 
-    public function __construct($app, \ModuleFormation\Services\SessionServiceInterface $sessionService) 
+    public function __construct($app, 
+        \ModuleFormation\Services\SessionServiceInterface $sessionService,
+        \ModuleFormation\Services\MailGeneratorServiceInterface $mailGeneratorService) 
     {
         parent::__construct($app);
         $this->sessionService = $sessionService;
+        $this->mailGeneratorService = $mailGeneratorService;
     }
 
     protected function augmentData($data) {
@@ -27,6 +31,9 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
         $data->effectifValidated = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_VALIDATED);
         $data->effectifWaitingList = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_WAITING_LIST);
         $data->effectifTotal = $data->effectifPending + $data->effectifValidated + $data->effectifWaitingList;
+
+        //Mails
+        $data->mailFormateurs = $this->mailGeneratorService->infosStagiairesToFormateur($data);
         return $data;
     }
 

@@ -18,7 +18,10 @@ class SessionRepositoryProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('ModuleFormation\Repositories\SessionRepositoryInterface', function($app) {
-            return new SessionRepository($app, $this->app->make('ModuleFormation\Services\SessionServiceInterface'));
+            return new SessionRepository($app, 
+                $this->app->make('ModuleFormation\Services\SessionServiceInterface'),
+                $this->app->make('ModuleFormation\Services\MailGeneratorServiceInterface')
+                );
         });
     }
 
