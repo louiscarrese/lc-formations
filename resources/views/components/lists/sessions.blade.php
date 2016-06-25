@@ -16,6 +16,13 @@
                 'sortable' => true,
                 'filterable' => true,
             ],
+            'effectifTotal' => [
+                'label' => 'Inscriptions',
+                'sortable' => true,
+                'filterable' => false,
+                'displayedField' => '<i class="text-success">@{{effectifValidated}}</i> + <i class="text-warning">@{{effectifPending}}</i> + <i class="text-danger">@{{effectifWaitingList}}</i> (@{{effectifTotal}}) / @{{effectif_max}}',
+            ],
+
         ]
     ])
 
