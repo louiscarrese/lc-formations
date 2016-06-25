@@ -10,7 +10,6 @@
                 'sortable' => true,
                 'defaultSort' => true,
                 'filterable' => true,
-                'displayedField' => '<a href="modules/@{{module.id}}">@{{module.libelle}}</a>', 
             ],
             'libelle' => [
                 'label' => 'Dates',
