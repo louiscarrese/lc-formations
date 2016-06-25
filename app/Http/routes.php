@@ -75,6 +75,7 @@ Route::group(['prefix' => 'intra'], function() {
         Route::group(['prefix' => 'print'], function() {
             Route::get('emargement/{session_id}', 'PrintController@emargement');
             Route::get('suivi_session/{session_id}', 'PrintController@suiviSession');
+            Route::get('dataExtraction', 'PrintController@dataExtraction');
         });
 
         Route::get('/', 'IndexController@index');

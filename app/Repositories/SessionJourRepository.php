@@ -56,4 +56,7 @@ class SessionJourRepository extends AbstractRepository implements SessionJourRep
         }
     }
 
+    public function getAllBetween($date_min, $date_max) {
+        return $this->model->whereBetween('date', $date_min, $date_max)->get();
+    }
 }

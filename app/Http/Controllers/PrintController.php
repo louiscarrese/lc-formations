@@ -56,4 +56,8 @@ class PrintController extends Controller
 
         return $pdf->stream($title);
     }
+
+    public function dataExtraction() {
+        return view('data_extraction');
+    }
 }

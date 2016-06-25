@@ -12,4 +12,7 @@ class FinanceurInscription extends AbstractModel
         return $this->belongsTo('ModuleFormation\Financeur');
     }
 
+    function inscription() {
+        return $this->belongsTo('ModuleFormation\Inscription');
+    }
 }
