@@ -34,6 +34,7 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
 
         //Mails
         $data->mailFormateurs = $this->mailGeneratorService->infosStagiairesToFormateur($data);
+        $data->mailParticipants = $this->mailGeneratorService->participants($data);
         return $data;
     }
 

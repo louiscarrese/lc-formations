@@ -33,9 +33,9 @@ class MailGeneratorService implements MailGeneratorServiceInterface{
 
         /** Libellé formation */
         $sessionLabel = $session->module()->first()->libelle;
-        $sessionLabel .= " du " . $sessionJours[0]->date;
+        $sessionLabel .= " du " . $this->formatDate($sessionJours[0]->date);
         if(count($sessionJours) > 1) {
-            $sessionLabel .= " au " . $sessionJours[count($sessionJours) - 1]->date;
+            $sessionLabel .= " au " . $this->formatDate($sessionJours[count($sessionJours) - 1]->date);
         }
         $adresses = implode(';', $formateurEmails);
         $subject = "Infos stagiaires pour la formation " . $sessionLabel;
@@ -53,6 +53,36 @@ EOT;
         return $mailHref;
     }
 
+    public function participants($session) {
+        /** Get the different objects */
+        /* Formateurs */
+        $formateurs = array();
+        //Get the SessionJours
+        $sessionJours = $session->session_jours()->orderBy('date')->get();
+        foreach($sessionJours as $sessionJour) {
+            $formateurs = array_merge($formateurs, $sessionJour->formateurs()->get()->all());
+        }
+
+        //We don't want doubles
+        $formateurs = $this->uniqueFormateurs($formateurs);
+
+        //Extract emails
+        $formateurEmails = array_map(array($this, "extractFormateurEmail"), $formateurs);
+
+        /* Stagiaires */
+        $stagiaireEmails = \ModuleFormation\Stagiaire::whereHas('inscriptions', function($q) use ($session) {
+            $q->where('statut', '=', \ModuleFormation\Inscription::STATUS_VALIDATED)
+            ->where('session_id', '=', $session->id);
+        })->lists('email')->toArray();
+
+        $to = implode(';', $stagiaireEmails);
+        $cc = implode(';', $formateurEmails);
+
+        return 'mailto:' . $to . '?cc=' . $cc;
+
+    }
+
+
     private function extractFormateurEmail($formateur) {
         return $formateur->email;
     }
@@ -68,6 +98,12 @@ EOT;
         $ret = array_values($ret);
 
         return $ret;
+    }
+
+    private function formatDate($stringDate) {
+        $date = \Carbon\Carbon::parse($stringDate);
+
+        return $date->format('d/m/Y');
     }
 
 }

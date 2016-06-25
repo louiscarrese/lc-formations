@@ -204,6 +204,9 @@
                 <span class="col-sm-2">
                     <a ng-href="@{{detailCtrl.data.mailFormateurs}}" class="btn btn-default">Mail formateur</a>
                 </span>
+                <span class="col-sm-2">
+                    <a ng-href="@{{detailCtrl.data.mailParticipants}}" class="btn btn-default">Mail participants</a>
+                </span>
             </div>
          </div>
     </div>
