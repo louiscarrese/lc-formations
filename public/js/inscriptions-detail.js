@@ -12848,6 +12848,11 @@ function sessionsServiceFactory($resource) {
         'update' : { 
             method: 'PUT'
         },
+        mailFormateurs : { 
+            url: '/intra/api/session/mail_formateurs',
+            method: 'GET', 
+            params: {session_id: '@session_id'} 
+        }
     });
 }
 

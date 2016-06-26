@@ -202,7 +202,7 @@
             <h3>Mails</h3>
             <div class="custom-actions row">
                 <span class="col-sm-2">
-                    <a ng-href="@{{detailCtrl.data.mailFormateurs}}" class="btn btn-default">Mail formateur</a>
+                    <a ng-click="detailCtrl.mailFormateurs()" class="btn btn-default">Mail formateur</a>
                 </span>
                 <span class="col-sm-2">
                     <a ng-href="@{{detailCtrl.data.mailParticipants}}" class="btn btn-default">Mail participants</a>

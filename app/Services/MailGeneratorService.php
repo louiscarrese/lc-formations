@@ -41,11 +41,19 @@ class MailGeneratorService implements MailGeneratorServiceInterface{
         $subject = "Infos stagiaires pour la formation " . $sessionLabel;
         $body = <<<EOT
 Bonjour ,
-Vous trouverez ci dessous la liste des stagiaires inscrits à la formation {$session->module()->first()->libelle}.
+Vous trouverez ci dessous la liste des stagiaires inscrits à la formation {$session->module->libelle}.
 
 EOT;
         foreach($session->inscriptions()->get() as $inscription) {
-            $body .= "{$inscription->stagiaire()->first()->prenom} {$inscription->stagiaire()->first()->nom}" . PHP_EOL;
+            $body .= "- {$inscription->stagiaire->prenom} {$inscription->stagiaire->nom}" . PHP_EOL;
+            $body .= "Domaine professionel : {$inscription->stagiaire->domaine_pro}" . PHP_EOL; 
+            if($inscription->stagiaire->niveau_formation != null) 
+                $body .= "Niveau de formation : {$inscription->stagiaire->niveau_formation->libelle}" . PHP_EOL;
+            $body .= "Expériences professionelles : {$inscription->experiences}" . PHP_EOL;
+            $body .= "Attentes : {$inscription->attentes}" . PHP_EOL;
+            $body .= "Formations précédentes : {$inscription->formations_precedentes}" . PHP_EOL;
+
+            $body .= PHP_EOL;
         }
 
         $mailHref = 'mailto:' . $adresses . '?subject=' . rawurlencode($subject) . '&body=' . rawurlencode($body);

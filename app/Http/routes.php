@@ -19,6 +19,7 @@ Route::group(['prefix' => 'intra'], function() {
         Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
             Route::post('session_jour/create_default', 'SessionJourController@createDefault');
             Route::get('stagiaire/search', 'StagiaireController@search');
+            Route::get('session/mail_formateurs', 'SessionController@generateFormateursMail');
 
             //Listes fermées
             Route::resource('stagiaire_type', 'StagiaireTypeController', 

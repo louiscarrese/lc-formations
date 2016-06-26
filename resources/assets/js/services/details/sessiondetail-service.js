@@ -73,6 +73,13 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
                 var module = findInArray(controller.linkedData.modules, moduleId);
                 controller.data = angular.extend(controller.data, extractModuleInfo(module));
                 controller.data.module = module;
+            };
+            controller.mailFormateurs = function() {
+                controller.dataService.mailFormateurs({'session_id': controller.data.id}, 
+                    function(value, responseHeadersr) {
+                        window.location.href = value.mailtoLink;
+                    }
+                );
             }
         },
 

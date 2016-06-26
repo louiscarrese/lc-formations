@@ -34,7 +34,7 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
 
         //Mails
         $data->mailFormateurs = $this->mailGeneratorService->infosStagiairesToFormateur($data);
-        $data->mailParticipants = $this->mailGeneratorService->participants($data);
+
         return $data;
     }
 
@@ -75,4 +75,9 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
         return array_values($formateursMap);
     }
 
+    public function generateFormateursMail($session_id) {
+        $session = $this->find($session_id);
+
+        return $this->mailGeneratorService->infosStagiairesToFormateur($session);
+    }
 }
