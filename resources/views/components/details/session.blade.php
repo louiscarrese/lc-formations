@@ -31,7 +31,7 @@
                 'fields' => [
                     'dummy' => [
                         'type' => 'raw',
-                        'displayed' => '<i class="text-success">@{{effectifValidated}} validées</i> + <i class="text-warning">@{{effectifPending}} en cours</i> + <i class="text-danger">@{{effectifWaitingList}} en attente</i> (@{{effectifTotal}} total)',
+                        'displayed' => '<i class="text-success">@{{effectifValidated || 0}} validées</i> + <i class="text-warning">@{{effectifPending || 0}} en cours</i> + <i class="text-danger">@{{effectifWaitingList || 0}} en attente</i> (@{{effectifTotal || 0}} total)',
                         'sizeValue' => 4,
                     ],
                 ]
