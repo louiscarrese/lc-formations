@@ -33,9 +33,11 @@ class MailGeneratorService implements MailGeneratorServiceInterface{
 
         /** Libellé formation */
         $sessionLabel = $session->module()->first()->libelle;
-        $sessionLabel .= " du " . $this->formatDate($sessionJours[0]->date);
-        if(count($sessionJours) > 1) {
-            $sessionLabel .= " au " . $this->formatDate($sessionJours[count($sessionJours) - 1]->date);
+        if(count($sessionJours) > 0) {
+            $sessionLabel .= " du " . $this->formatDate($sessionJours[0]->date);
+            if(count($sessionJours) > 1) {
+                $sessionLabel .= " au " . $this->formatDate($sessionJours[count($sessionJours) - 1]->date);
+            }
         }
         $adresses = implode(';', $formateurEmails);
         $subject = "Infos stagiaires pour la formation " . $sessionLabel;
