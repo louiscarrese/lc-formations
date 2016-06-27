@@ -12552,7 +12552,6 @@ function editModeServiceFactory($q) {
         });
         return result;
     }
-
 }
 function sharedDataServiceFactory() {
     return {
@@ -12644,8 +12643,8 @@ function detailController(editModeService, dataService, detailService, $q) {
             });
 
             //Manually fill the "eager loading" objects
-            if(typeof detailService.populateLinkedObjects == 'function') {
-                self.data = angular.merge(self.data, detailService.populateLinkedObjects(self.data, self.linkedData));
+            if(typeof detailService.populateLinkedObjects == 'function' && self.mode == 'create') {
+                self.data = angular.merge(self.data, detailService.populateLinkedObjects(self.dataFromUrl, self.linkedData));
             }
 
             //It's almost like we just did a GET...

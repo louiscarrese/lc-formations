@@ -80,5 +80,4 @@ function editModeServiceFactory($q) {
         });
         return result;
     }
-
 }
