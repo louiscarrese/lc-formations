@@ -12901,7 +12901,7 @@ function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService,
         },
 
         getListUrl: function() {
-            return '/stagiaires';
+            return '/intra/stagiaires';
         },
 
         deleteMessage: function() {

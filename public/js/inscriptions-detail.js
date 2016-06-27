@@ -12928,7 +12928,7 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         },
 
         getListUrl: function() {
-            return '/inscriptions';
+            return '/intra/inscriptions';
         },
 
         deleteMessage: function() {

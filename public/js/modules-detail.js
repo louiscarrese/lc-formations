@@ -12895,7 +12895,7 @@ function moduleDetailServiceFactory($filter, sharedDataService, domaineFormation
         },
 
         getListUrl: function() {
-            return '/modules';
+            return '/intra/modules';
         },
 
         deleteMessage: function() {

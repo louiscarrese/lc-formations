@@ -12915,7 +12915,7 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
         },
 
         getListUrl: function() {
-            return '/sessions';
+            return '/intra/sessions';
         },
 
         addListeners: function(controller) {

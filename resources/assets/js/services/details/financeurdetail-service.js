@@ -17,7 +17,7 @@ function financeurDetailServiceFactory(sharedDataService, financeurTypesService)
         },
 
         getListUrl: function() {
-            return '/financeurs';
+            return '/intra/financeurs';
         },
 
         deleteMessage: function() {

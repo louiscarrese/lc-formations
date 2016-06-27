@@ -12845,7 +12845,7 @@ function employeurDetailServiceFactory(sharedDataService) {
         },
 
         getListUrl: function() {
-            return '/employeurs';
+            return '/intra/employeurs';
         },
 
         deleteMessage: function() {

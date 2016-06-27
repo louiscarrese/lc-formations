@@ -17,7 +17,7 @@ function formateurDetailServiceFactory(sharedDataService, formateurTypesService)
         },
 
         getListUrl: function() {
-            return '/formateurs';
+            return '/intra/formateurs';
         },
 
         deleteMessage: function() {

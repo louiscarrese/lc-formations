@@ -13179,7 +13179,7 @@ function preinscriptionDetailServiceFactory(sharedDataService, $filter, $q, $uib
         },
 
         getListUrl: function() {
-            return '/preinscriptions';
+            return '/intra/preinscriptions';
         },
 
         deleteMessage: function() {
