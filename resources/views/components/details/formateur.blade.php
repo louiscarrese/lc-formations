@@ -89,14 +89,6 @@
                     ],
                 ]
             ],[
-                'label' => 'Téléphone fixe',
-                'fields' => [
-                    'tel_fixe' => [
-                        'type' => 'text',
-                        'sizeValue' => 2,
-                    ],
-                ]
-            ], [
                 'label' => 'Type',
                 'fields' => [
                     'formateur_type_id' => [
