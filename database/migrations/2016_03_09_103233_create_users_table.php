@@ -24,9 +24,9 @@ class CreateUsersTable extends Migration
         });
 
         $mainUser = new User();
-        $mainUser->name="administrator";
+        $mainUser->name="intra";
         $mainUser->email="";
-        $mainUser->password=bcrypt('newadmin');
+        $mainUser->password=bcrypt('moduleformations');
         $mainUser->save();
     }
 
