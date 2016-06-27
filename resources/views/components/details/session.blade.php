@@ -14,7 +14,7 @@
                         'change' => 'detailCtrl.onModuleChange',
                         'displayed' => '<libelle>',
                         'placeholder' => 'Module',
-                        'href' => $viewService->privateUrl('/modules/'),
+                        'href' => $viewService->privateUrl('modules/'),
                         'sizeValue' => 5,
                     ],
                 ]
