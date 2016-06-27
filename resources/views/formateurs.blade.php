@@ -1,3 +1,4 @@
+@inject('viewService', 'ModuleFormation\Services\ViewService')
 @extends('layouts.master', ['current_menu' => 'formateur'])
 
 @section('title', 'Formateurs')

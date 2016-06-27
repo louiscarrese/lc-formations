@@ -17,7 +17,6 @@
         return $ret;
     }
 ?>
-@inject('viewService', 'ModuleFormation\Services\ViewService')
 <h2>{{<?php echo($controller); ?>.titleText()}}</h2>
 
 <div class="alerts">

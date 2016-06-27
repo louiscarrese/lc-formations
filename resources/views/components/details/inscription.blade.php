@@ -27,7 +27,7 @@
                         'dataId' => 'id', //relative to an item in the dropdownDatasource
                         'modelObject' => 'session', //relative to an item in the controller data 
                         'displayed' => '<module.libelle> <libelle>',
-                        'href' => '/sessions/',
+                        'href' => $viewService->privateUrl('/sessions/'),
                         'placeholder' => 'Session',
                         'searchable' => true,
                         'sizeValue' => 6,

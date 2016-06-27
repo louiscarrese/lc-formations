@@ -15,7 +15,6 @@
     $filter .= ' track by item.' . $idField;
 ?>
 
-@inject('viewService', 'ModuleFormation\Services\ViewService')
 <h2>{{$title}}</h2>
 
 <div ng-controller="{{$controllerName}} as ctrl">
