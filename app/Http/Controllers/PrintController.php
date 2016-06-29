@@ -30,11 +30,18 @@ class PrintController extends Controller
             ]);
 
         $firstDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->firstDate)->format('d/m/Y');
-        $lastDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->lastDate)->format('d/m/Y');
+        if($session->lastDate != null) {
+            $lastDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->lastDate)->format('d/m/Y');
+        }
 
         $title = 'Emargement ';
         $title .= $session->module->libelle;
-        $title .= ' (' . $firstDate . ' - ' . $lastDate . ')';
+        if($session->lastDate != null) {
+            $title .= ' (' . $firstDate . ' - ' . $lastDate . ')';
+        } else {
+            $title .= ' (' . $firstDate . ')';
+        }
+        
         return $pdf->stream($title);
     }
 
@@ -48,11 +55,17 @@ class PrintController extends Controller
             ]);
 
         $firstDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->firstDate)->format('d/m/Y');
-        $lastDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->lastDate)->format('d/m/Y');
+        if($session->lastDate != null) {
+            $lastDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->lastDate)->format('d/m/Y');
+        }
 
         $title = 'Couverture ';
         $title .= $session->module->libelle;
-        $title .= ' (' . $firstDate . ' - ' . $lastDate . ')';
+        if($session->lastDate != null) {
+            $title .= ' (' . $firstDate . ' - ' . $lastDate . ')';
+        } else {
+            $title .= ' (' . $firstDate . ')';
+        }
 
         return $pdf->stream($title);
     }
