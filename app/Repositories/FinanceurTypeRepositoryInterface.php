@@ -2,7 +2,7 @@
 
 namespace ModuleFormation\Repositories;
 
-interface FinanceurTypeRepositoryInterface extends RepositoryInterface {
+interface FinanceurTypeRepositoryInterface extends StaticRepositoryInterface {
     
 
 }

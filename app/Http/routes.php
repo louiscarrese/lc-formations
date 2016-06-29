@@ -33,7 +33,7 @@ Route::group(['prefix' => 'intra'], function() {
             Route::resource('formateur_type', 'FormateurTypeController', 
                 ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
             Route::resource('financeur_type', 'FinanceurTypeController', 
-                ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+                ['only' => ['index', 'show']]);
             Route::resource('niveau_formation', 'NiveauFormationController', 
                 ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 

@@ -50,6 +50,7 @@ return array(
     'DeleteCascade' => $baseDir . '/database/migrations/2016_01_18_151437_delete_cascade.php',
     'DemiJours' => $baseDir . '/database/migrations/2016_02_06_141204_demi_jours.php',
     'DomaineFormationsTableSeeder' => $baseDir . '/database/seeds/DomaineFormationsTableSeeder.php',
+    'DropFinanceurTypes' => $baseDir . '/database/migrations/2016_06_29_150243_drop_financeur_types.php',
     'Encoding_Map' => $vendorDir . '/phenx/php-font-lib/classes/Encoding_Map.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',

@@ -4,14 +4,11 @@ namespace ModuleFormation\Http\Controllers\Api;
 
 use ModuleFormation\Repositories\FinanceurTypeRepositoryInterface;
 
-class FinanceurTypeController extends AbstractController
+class FinanceurTypeController extends AbstractStaticController
 {
-    protected $validation_rules = [
-        'libelle' => 'required',
-    ];
-
     public function __construct(FinanceurTypeRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
+
 }

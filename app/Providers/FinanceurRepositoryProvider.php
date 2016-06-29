@@ -18,7 +18,7 @@ class FinanceurRepositoryProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('ModuleFormation\Repositories\FinanceurRepositoryInterface', function($app) {
-            return new FinanceurRepository($app);
+            return new FinanceurRepository($app, $this->app->make('ModuleFormation\Repositories\FinanceurTypeRepositoryInterface'));
         });
     }
 

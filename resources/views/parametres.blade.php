@@ -135,44 +135,6 @@
              ]
         ])
     </div>
-    <div ng-controller="financeurTypesController as financeurTypesController">
-        @include('components.editableTable',
-            ['controllerName' => 'financeurTypesController',
-             'title' => 'Types de financeurs',
-             'adaptToContent' => true,
-             'idField' => 'id',
-             'columns' => [
-                [
-                    'label' => 'Id',
-                    'sortable' => true,
-                    'fields' => [
-                        'id' => [
-                            'filterable' => true,
-                            'editable' => true,
-                            'type' => 'integer',
-                            'addLine' => true,
-                            'tdClass' => 'centered',
-                            'additionalAttributes' => 'size=1',
-                            'validation' => 'required',
-                        ], //id
-                    ]
-                ],
-                [
-                    'label' => 'Libellé',
-                    'sortable' => true,
-                     'fields' => [
-                        'libelle' => [
-                            'filterable' => true,
-                            'editable' => true,
-                            'type' => 'text',
-                            'addLine' => true,
-                            'validation' => 'required',
-                        ], //libelle
-                    ], //fields
-                ]
-             ]
-        ])
-    </div>
     <div ng-controller="tarifTypesController as tarifTypesController">
         @include('components.editableTable',
             ['controllerName' => 'tarifTypesController',
