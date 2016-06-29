@@ -124,6 +124,16 @@
                 ]
             ],
             [
+                'label' => 'Formation confiée à un autre organisme de formation (portage)',
+                'fields' => [
+                    'portage' => [
+                        'type' => 'checkbox',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
+            ],
+            [
                 'label' => 'Formateurs habituels',
                 'fields' => [
                     'formateurs_id' => [
