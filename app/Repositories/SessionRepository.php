@@ -33,7 +33,7 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
         $data->effectifTotal = $data->effectifPending + $data->effectifValidated + $data->effectifWaitingList;
 
         //Mails
-        $data->mailFormateurs = $this->mailGeneratorService->infosStagiairesToFormateur($data);
+        $data->mailParticipants = $this->mailGeneratorService->participants($data);
 
         return $data;
     }
