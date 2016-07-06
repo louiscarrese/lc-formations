@@ -12820,6 +12820,7 @@ function detailController(editModeService, dataService, detailService, $q) {
     }
 
 }
+
 //angular.module('detail', ['myEditable'])
 angular.module('detail', [])
     .factory('sharedDataService', sharedDataServiceFactory)

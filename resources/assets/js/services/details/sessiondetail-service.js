@@ -85,7 +85,7 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
 
         populateLinkedObjects: function(dataFromUrl, linkedData) {
             var ret = {};
-            if(dataFromUrl.hasOwnProperty('module_id') && dataFromUrl.module_id != undefined) {
+            if(dataFromUrl && dataFromUrl.hasOwnProperty('module_id') && dataFromUrl.module_id != undefined) {
                 ret.module = findInArray(linkedData.modules, dataFromUrl.module_id);
                 angular.extend(ret, extractModuleInfo(ret.module));
             }
