@@ -14,6 +14,7 @@
             'libelle' => [
                 'label' => 'Dates',
                 'sortable' => true,
+                'sortable_field' => 'firstDate',
                 'filterable' => true,
             ],
             'effectifTotal' => [

@@ -28,7 +28,7 @@
                     @if((isset($displayedField) && in_array($fieldId, $displayedField)) 
                     || (!isset($displayedField) && (!isset($field['defaultHidden']) || !$field['defaultHidden'])))
                         @if($field['sortable'])
-                            <th class="clickable {{$field['tdClass'] or ''}}" my-sortable-header order="'{{$fieldId}}'" by="ctrl.sortProp" reverse="ctrl.sortReverse"
+                            <th class="clickable {{$field['tdClass'] or ''}}" my-sortable-header order="'{{$field['sortable_field'] or $fieldId}}'" by="ctrl.sortProp" reverse="ctrl.sortReverse"
                             @if(isset($field['defaultSort']) && $field['defaultSort'])
                                 default-sort
                             @endif
