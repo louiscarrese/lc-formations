@@ -34,17 +34,26 @@ abstract class AbstractRepository implements RepositoryInterface {
         foreach($this->subObjects as $subObjectDefinition) {
             //For each instance of the sub object found in the data
             if(isset($data[$subObjectDefinition['data_id']])) {
-                foreach($data[$subObjectDefinition['data_id']] as $subObjectData) {
-                    //Call the repository to augment it
-                    $subObjectDefinition['repository']->augmentData($subObjectData);
-                }
+                //Call the repository to augment it
+                $subObjectDefinition['repository']->augmentData($data[$subObjectDefinition['data_id']]);
             }
         }
 
         return $data;
     }
 
-    protected function augmentListData($data) { return $data; }
+    protected function augmentListData($data) { 
+        //For each of the declared sub objects
+        foreach($this->subObjects as $subObjectDefinition) {
+            //For each instance of the sub object found in the data
+            if(isset($data[$subObjectDefinition['data_id']])) {
+                //Call the repository to augment it
+                $subObjectDefinition['repository']->augmentListData($data[$subObjectDefinition['data_id']]);
+            }
+        }
+
+        return $data; 
+    }
 
     /**
      * This method will be called on each incoming object and should be 

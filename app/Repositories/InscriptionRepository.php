@@ -10,12 +10,21 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
     public function __construct($app, \ModuleFormation\Repositories\SessionRepositoryInterface $sessionRepository) 
     {
         parent::__construct($app);
+
         $this->sessionRepository = $sessionRepository;
+
+        $this->subObjects = [
+            [
+                'data_id' => 'session',
+                'repository' => $this->sessionRepository,
+                'parent_key' => 'session_id',
+            ]
+        ];
     }
 
     protected function augmentData($data) 
     {
-        $data->session = $this->sessionRepository->augmentData($data->session);
+        $data = parent::augmentData($data);
 
         $data = $this->fillStatut($data);
 
@@ -23,8 +32,8 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
     }
 
     protected function augmentListData($data) {
-        $data->session = $this->sessionRepository->augmentListData($data->session);
-        
+        $data = parent::augmentListData($data);
+
         $data = $this->fillStatut($data);
 
         return $data;
