@@ -14,6 +14,15 @@ class FinanceurRepository extends AbstractRepository implements FinanceurReposit
 
     protected function augmentData($data) {
         //Add financeur type
+        $data = $this->fillFinanceurType($data);
+    }
+
+    protected function augmentListData($data) {
+         $data = $this->fillFinanceurType($data);
+   }
+
+    private function fillFinanceurType($data) {
         $data->financeur_type = $this->financeurTypeRepository->find($data->financeur_type_id);
+        return $data;
     }
 }

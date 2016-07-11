@@ -19,22 +19,20 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
 
     protected function augmentData($data) {
         //first and last dates
-        $minMaxDate = $this->sessionService->getMinMaxDates($data->id);
-
-        if($minMaxDate != null) {
-            $data->firstDate = $minMaxDate['first'];
-            $data->lastDate = $minMaxDate['last'];
-        } 
+        $data = $this->fillFirstLastDate($data);
         
         //nb inscriptions
-        $data->effectifPending = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_PENDING);
-        $data->effectifValidated = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_VALIDATED);
-        $data->effectifWaitingList = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_WAITING_LIST);
-        $data->effectifTotal = $data->effectifPending + $data->effectifValidated + $data->effectifWaitingList;
+        $data = $this->fillNbInscriptions($data);
 
         //Mails
-        $data->mailParticipants = $this->mailGeneratorService->participants($data);
+        $data = $this->fillMails($data);
 
+        return $data;
+    }
+
+    protected function augmentListData($data) {
+        $data = $this->fillFirstLastDate($data);
+        $data = $this->fillNbInscriptions($data);
         return $data;
     }
 
@@ -79,5 +77,31 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
         $session = $this->find($session_id);
 
         return $this->mailGeneratorService->infosStagiairesToFormateur($session);
+    }
+
+    private function fillFirstLastDate($data) {
+        $minMaxDate = $this->sessionService->getMinMaxDates($data->id);
+
+        if($minMaxDate != null) {
+            $data->firstDate = $minMaxDate['first'];
+            $data->lastDate = $minMaxDate['last'];
+        } 
+
+        return $data;
+    }
+
+    private function fillNbInscriptions($data) {
+        $data->effectifPending = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_PENDING);
+        $data->effectifValidated = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_VALIDATED);
+        $data->effectifWaitingList = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_WAITING_LIST);
+        $data->effectifTotal = $data->effectifPending + $data->effectifValidated + $data->effectifWaitingList;
+
+        return $data;
+    }
+
+    private function fillMails($data) {
+        $data->mailParticipants = $this->mailGeneratorService->participants($data);
+
+        return $data;
     }
 }

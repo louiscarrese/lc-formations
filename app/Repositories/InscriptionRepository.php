@@ -17,9 +17,15 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
     {
         $data->session = $this->sessionRepository->augmentData($data->session);
 
-        $statut_id = $data->statut;
-        $statut_libelle = $this->getStatutLibelle($data->statut);
-        $data->statut = array('id' => $statut_id, 'libelle' => $statut_libelle);
+        $data = $this->fillStatut($data);
+
+        return $data;
+    }
+
+    protected function augmentListData($data) {
+        $data->session = $this->sessionRepository->augmentListData($data->session);
+        
+        $data = $this->fillStatut($data);
 
         return $data;
     }
@@ -28,6 +34,14 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
         $statut_id = $data['statut']['id'];
 
         $data['statut'] = $statut_id;
+
+        return $data;
+    }
+
+    private function fillStatut($data) {
+        $statut_id = $data->statut;
+        $statut_libelle = $this->getStatutLibelle($data->statut);
+        $data->statut = array('id' => $statut_id, 'libelle' => $statut_libelle);
 
         return $data;
     }

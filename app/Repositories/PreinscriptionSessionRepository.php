@@ -21,6 +21,13 @@ class PreinscriptionSessionRepository extends AbstractRepository implements Prei
         return $data;
     }
 
+    //TODO: A specific function ?
+    protected function augmentListData($data) {
+        $data = $this->augmentData($data);
+
+        return $data;
+    }
+
     protected function processIncomingData($data) {
         $data['financement'] = $data['financement_type']['id'];
         $data['session_id'] = $data['session']['id'];

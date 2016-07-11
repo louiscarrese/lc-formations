@@ -44,6 +44,8 @@ abstract class AbstractRepository implements RepositoryInterface {
         return $data;
     }
 
+    protected function augmentListData($data) { return $data; }
+
     /**
      * This method will be called on each incoming object and should be 
      * overloaded to process data coming from the front end.
@@ -66,7 +68,7 @@ abstract class AbstractRepository implements RepositoryInterface {
         $datas = $this->model->get();
 
         foreach($datas as $data) {
-            $data = $this->augmentData($data);
+            $data = $this->augmentListData($data);
         }
 
         return $datas;
@@ -103,7 +105,7 @@ abstract class AbstractRepository implements RepositoryInterface {
 
         //Augment data
         foreach($datas as $data) {
-            $data = $this->augmentData($data);
+            $data = $this->augmentListData($data);
         }
         
         return $datas;
@@ -133,7 +135,7 @@ abstract class AbstractRepository implements RepositoryInterface {
 
         //Augment data
         foreach($datas as $data) {
-            $data = $this->augmentData($data);
+            $data = $this->augmentListData($data);
         }
 
         return $datas;
