@@ -55,6 +55,10 @@ abstract class AbstractRepository implements RepositoryInterface {
         $this->model = $app->make($this->modelClassName);
     }
 
+    public function model() {
+        return $this->model;
+    }
+
     /**
      * Retrieve all the objects from the database.
      */
