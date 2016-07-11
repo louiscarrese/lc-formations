@@ -2,6 +2,8 @@
 
 namespace ModuleFormation\Services;
 
+use DB;
+
 use ModuleFormation\SessionJour;
 use ModuleFormation\Inscription;
 
@@ -22,8 +24,16 @@ class SessionService implements SessionServiceInterface
         }
     }
 
-    public function getNbInscriptions($sessionId, $statut) {
-        $ret = Inscription::where(['session_id' => $sessionId, 'statut' => $statut])->count();
+    public function getNbInscriptionsByStatut($sessionId) {
+        $datas = Inscription::where('session_id', '=', $sessionId)
+            ->groupBy('statut')
+            ->select('statut', DB::Raw('count(id) as count'))
+            ->get();
+
+        $ret = array();
+        foreach($datas as $data) {
+            $ret[$data['statut']] = $data['count'];
+        }
 
         return $ret;
     }

@@ -91,9 +91,23 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
     }
 
     private function fillNbInscriptions($data) {
-        $data->effectifPending = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_PENDING);
-        $data->effectifValidated = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_VALIDATED);
-        $data->effectifWaitingList = $this->sessionService->getNbInscriptions($data->id, \ModuleFormation\Inscription::STATUS_WAITING_LIST);
+        $counts = $this->sessionService->getNbInscriptionsByStatut($data->id);
+
+        if(isset($counts[\ModuleFormation\Inscription::STATUS_PENDING]))
+            $data->effectifPending = $counts[\ModuleFormation\Inscription::STATUS_PENDING];
+        else 
+            $data->effectifPending = 0;
+
+        if(isset($counts[\ModuleFormation\Inscription::STATUS_VALIDATED]))
+            $data->effectifValidated = $counts[\ModuleFormation\Inscription::STATUS_VALIDATED];
+        else 
+            $data->effectifValidated = 0;
+
+        if(isset($counts[\ModuleFormation\Inscription::STATUS_WAITING_LIST]))
+            $data->effectifWaitingList = $counts[\ModuleFormation\Inscription::STATUS_WAITING_LIST];
+        else 
+            $data->effectifWaitingList = 0;
+
         $data->effectifTotal = $data->effectifPending + $data->effectifValidated + $data->effectifWaitingList;
 
         return $data;
