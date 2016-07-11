@@ -18,7 +18,6 @@ abstract class AbstractController extends Controller
 
     public function index(Request $request) 
     {
-        Log::info('index');
         //Initialize with no criterias
         $criterias = array();
 
@@ -68,7 +67,6 @@ abstract class AbstractController extends Controller
      */
     public function show($id)
     {
-        Log::info('show');
         $data = $this->repository->find($id);
 
         return response()->json($data);
