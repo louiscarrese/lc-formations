@@ -14,7 +14,11 @@ abstract class AbstractStaticRepository implements StaticRepositoryInterface {
      * Get an object from the database by its id.
      */
     public function find($id) {
-        return $this->data[$id];
+      foreach($this->data as $item) {
+	if($item['id'] == $id) 
+	  return $item;
+      }
+      return null;
     }
 
 
