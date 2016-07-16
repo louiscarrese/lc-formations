@@ -17,7 +17,11 @@
 
 <h2>{{$title}}</h2>
 
-<div ng-controller="{{$controllerName}} as ctrl">
+<div ng-controller="{{$controllerName}} as ctrl"
+    @if(isset($queryMethod))
+        query-method="{{$queryMethod}}"
+    @endif
+>
     <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="form-control" />
 
     <table class="table table-striped">

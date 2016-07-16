@@ -3,9 +3,10 @@
 
 @section('title', 'Module Formation')
 @section('js-file', '/js/home.js')
-{{--
-@section('angularApp', 'inscriptionsDetailApp')
---}}
+@section('angularApp', 'homeApp')
+
 @section('css-file', '/css/app.css')
 @section('content')
+    @include('components.lists.sessions', ['queryMethod' => 'upcoming'])
+
 @endsection

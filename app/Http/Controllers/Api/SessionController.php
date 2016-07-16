@@ -23,4 +23,10 @@ class SessionController extends AbstractController
 
         return ['mailtoLink' => $this->repository->generateFormateursMail($session_id)];
     }
+
+    public function upcoming() {
+        $data = $this->repository->upcoming();
+
+        return response()->json($data);
+    }
 }

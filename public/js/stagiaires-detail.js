@@ -13049,7 +13049,7 @@ function myCustomFilter() {
     }
 }
 
-function editableTableController($filter, dataService, tableService) {
+function editableTableController($filter, $attrs, dataService, tableService) {
     var self = this;
 
     self.dataService = dataService;
@@ -13101,6 +13101,8 @@ function editableTableController($filter, dataService, tableService) {
 
     if(tableService != undefined && typeof tableService.addListeners == 'function')
         tableService.addListeners(self);
+
+    self.queryMethod = $attrs['queryMethod'] ? $attrs['queryMethod'] : 'query';
 
     self.refreshData();
 
@@ -13159,7 +13161,7 @@ function editableTableController($filter, dataService, tableService) {
             self.queryParameters = tableService.queryParameters();
         }
         
-        return dataService.query(self.queryParameters, function() {
+        return dataService[self.queryMethod](self.queryParameters, function() {
             angular.forEach(self.data, function(value, key) {
                 self.getSuccess(value);
             });
@@ -13382,7 +13384,7 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
 angular.module('inscriptionsList', ['ngResource', 'listTable'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('inscriptionsTableService', ['$filter', 'sharedDataService', inscriptionsTableServiceFactory])
-    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
+    .controller('inscriptionsListController', ['$filter', '$attrs', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
 ;
 
 angular.module('stagiairesDetailApp', ['stagiaireDetail', 'inscriptionsList']);

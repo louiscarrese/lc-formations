@@ -79,6 +79,24 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
         return $this->mailGeneratorService->infosStagiairesToFormateur($session);
     }
 
+    public function upcoming() {
+        //First get 5 distinct session_ids from the session_jours table where the date is in the future
+        $session_jours = \ModuleFormation\SessionJour::where('date', '>', \Carbon\Carbon::now())
+            ->orderBy('date')
+            ->take(5)
+            ->get();
+
+        $sessions = $this->model()
+            ->whereIn('id', $session_jours->pluck('session_id'))
+            ->get();
+
+        foreach($sessions as $data) {
+            $data = $this->augmentData($data);
+        }
+
+        return $sessions;
+    }
+
     private function fillFirstLastDate($data) {
         $minMaxDate = $this->sessionService->getMinMaxDates($data->id);
 

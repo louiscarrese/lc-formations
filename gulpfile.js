@@ -363,7 +363,12 @@ var preinscription = Array.prototype.concat(
 );
 
 var home = Array.prototype.concat(
-    libraries
+    libraries,
+    listTable,
+    [
+        'services/data/sessions-service.js',
+        'services/tables/sessions-service.js',
+    ]
 );
 
 elixir(function(mix) {
@@ -377,6 +382,10 @@ elixir(function(mix) {
             parametres,
             ['app/parametresApp.js']
         )), 'public/js/parametres.js')
+        .scripts(array_unique(Array.prototype.concat(
+            home,
+            ['app/homeApp.js']
+        )), 'public/js/home.js')
         .scripts(array_unique(Array.prototype.concat(
             modulesList,
             ['app/modulesApp.js']

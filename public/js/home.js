@@ -11909,4 +11909,479 @@ angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInli
         };
     });
 })(angular);
+function mySortableHeaderDirective() {
+    return {
+        restrict: 'A',
+        transclude: true,
+        scope: {
+            order: '=',
+            by: '=',
+            reverse: '=',
+        },
+        template: function() {
+            var template = '';
+
+            template += '<span ng-click="onClick()" ng-transclude></span>';
+            template += '<span class="glyphicon sort-arrow" ng-class="{\'glyphicon-triangle-top\' : order === by && !reverse,  \'glyphicon-triangle-bottom\' : order===by && reverse}"></span>';
+            return template;
+        },
+        link: function(scope, element, attrs) {
+            if(attrs["defaultSort"] != undefined) {
+                scope.by = scope.order;
+                scope.reverse = false;
+            }
+            scope.onClick = function () {
+                if(scope.order === scope.by) {
+                   scope.reverse = !scope.reverse 
+                } else {
+                  scope.by = scope.order ;
+                  scope.reverse = false; 
+                }
+            }
+        }
+    };
+}
+angular.module('sortableHeader', [])
+    .directive('mySortableHeader', mySortableHeaderDirective)
+;
+
+function myCustomFilter() {
+    /**
+     * path: the remaining path to explore
+     * value: the current value
+     * filter: the filter to check against
+     */
+    function check(path, value, filter) {
+        //If there is no value to check, we get out
+        if(value != undefined) {
+            //If we've reached the end of the path 
+            if(path != undefined && path.length == 0) {
+                //We check the value
+                return (angular.lowercase('' + value).indexOf(filter) !== -1);
+            } else {
+                //We pop one from the path
+                var nextValue = value[path[0]];
+                path.splice(0,1);
+                //If we are dealing with an array, we have to iterate
+                if(Array.isArray(nextValue)) {
+                    for(var i = 0; i < nextValue.length; i++) {
+                        //When we have found something, we return immediately
+                        if(check(path, nextValue[i], filter))
+                            return true;
+                    }
+                    //We found nothing
+                    return false;
+                } else {
+                    //It's a simple value, recurse
+                    return check(path, nextValue, filter);
+                }
+            }
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * input : an array of objects to filter.
+     * filter : a string to be searched in the inputs properties. Will be splitted on " "
+     */
+    return function(input, filter) {
+        //Let's not deal with an empty filter or an empty input
+        if(filter == undefined || filter == null || filter  === '' || input == undefined || input == null || input.length == 0)
+            return input;
+
+        //The array we will return
+        var outArray = [];
+
+        //Process the filter
+        var lowerFilter = angular.lowercase(filter) || '';
+        var filters = lowerFilter.split(' ');
+
+        //Make sure we have properties to search in, if not use all the properties
+        var searchedProps = [];
+        if(arguments.length > 2) {
+            for(var i = 2; i < arguments.length; i++) {
+                searchedProps.push(arguments[i]);
+            }
+        } else {
+            for(var prop in input[0]) {
+                if(input[0].hasOwnProperty(prop))
+                    searchedProps.push(prop);
+            }
+        }
+
+        //Pour chaque élément du tableau
+        for(elemId = 0; elemId < input.length; elemId++) {
+            //Pour chaque champ à analyser
+            for(fieldId = 0; fieldId < searchedProps.length; fieldId++) {
+
+                //On découpe, au cas où ça serait un sous objet (genre objet.propriete)
+                var fieldPath = searchedProps[fieldId].split('.');
+
+                var found = false;
+                for(filterId = 0; filterId < filters.length && !found; filterId++) {
+                    found = check(fieldPath, input[elemId], filters[filterId]);
+                }
+
+//                var found = check(fieldPath, input[elemId], lowerFilter);
+
+                if(found) {
+                    outArray.push(input[elemId]);
+                    break;
+                }
+
+            }
+        }
+        return outArray;
+    }
+}
+
+function editableTableController($filter, $attrs, dataService, tableService) {
+    var self = this;
+
+    self.dataService = dataService;
+
+    //Functions
+    self.orderBy = $filter('orderBy');
+
+    self.setSort = setSort;
+    self.getSort = getSort;
+    self.sort = sort;
+
+    self.refreshData = refreshData;
+    self.query = query;
+    self.create = create;
+    self.cancel = cancel;
+    self.update = update;
+    self.delete = del;
+    self.get = get;
+
+    self.getSuccess = getSuccess;
+
+    self.editSubmit = editSubmit;
+    self.addSubmit = addSubmit;
+
+    self.getButtonClass = getButtonClass;
+
+    self.closeAlert = closeAlert;
+    self.extractErrors = extractErrors;
+
+    //Data
+
+    self.queryParameters = {};
+    self.queryString = queryString;
+    self.createUrl = createUrl;
+
+    self.addObject = {};
+
+    self.errorMessage = "";
+    self.filterInput = "";
+
+    self.sortProp = "id";
+    self.sortReverse = false;
+
+    self.refreshControllers = refreshControllers;
+
+    if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
+        self.linkedData = tableService.getLinkedData();
+    }
+
+    if(tableService != undefined && typeof tableService.addListeners == 'function')
+        tableService.addListeners(self);
+
+    self.queryMethod = $attrs['queryMethod'] ? $attrs['queryMethod'] : 'query';
+
+    self.refreshData();
+
+    function setSort(key) {
+        if(self.sortProp == key) {
+            self.sortReverse = !self.sortReverse;
+        } else {
+            self.sortProp = key;
+            self.sortReverse = false;
+        }
+        self.sort();
+    };
+
+    function getSort(key) {
+        if(self.sortProp === key) {
+            return self.sortReverse;
+        } else {
+            return null;
+        }
+    };
+
+    function sort() {
+        self.data = self.orderBy(self.data, self.sortProp, self.sortReverse);
+    }
+
+    function getSuccess(value) {
+        value.internalKey = value.id;
+        if(tableService != undefined && typeof tableService.getSuccess == 'function') {
+            tableService.getSuccess(value);
+        }
+    }
+
+    function editSubmit(index, value, ctrlsToRefresh) {
+        //Validation
+        var form = self['form_' + index];
+        if(form.$valid) {
+            //Send update
+            self.update(value, ctrlsToRefresh);
+        } 
+    }
+
+    function addSubmit(ctrlsToRefresh) {
+        //Validation
+        var form = self['form_add'];
+        if(form.$valid) {
+            //Send update
+            self.create(self.addObject, ctrlsToRefresh);
+        }
+    }
+    function refreshData() {
+        self.data = self.query();
+    }
+
+    function query() {
+        if(tableService != undefined && typeof tableService.queryParameters == 'function') {
+            self.queryParameters = tableService.queryParameters();
+        }
+        
+        return dataService[self.queryMethod](self.queryParameters, function() {
+            angular.forEach(self.data, function(value, key) {
+                self.getSuccess(value);
+            });
+            self.sort();
+        });
+    }
+
+    /**
+     * Update
+     */
+     function update(type, ctrlsToRefresh) {
+        var toSend = type;
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
+            toSend = tableService.preSend(type);
+        }
+
+        self.errors = [];
+        toSend.$update({id: type.internalKey}, 
+            function(value, responseHeaders) {
+
+                self.getSuccess(value);
+                self.refreshControllers(ctrlsToRefresh);
+                value.editing = false;
+                self.data[self.data.indexOf(type)] = value;
+                self.sort();
+
+            }, 
+            function(httpResponse) {
+                self.errors = self.extractErrors(httpResponse);
+            });
+    };
+
+    /**
+     * Delete
+     */
+     function del(type, ctrlsToRefresh) {
+        self.errors = [];
+        var confirmed = false;
+        if(tableService != undefined && typeof tableService['deleteMessage'] == 'function' 
+            && window.confirm(tableService.deleteMessage())) {
+                confirmed = true;
+        } else {
+            confirmed = false;
+        }
+        if(confirmed) {
+            type.$delete({id: type.internalKey}, 
+                function(value, responseHeaders) {
+                    self.data.splice(self.data.indexOf(value), 1);
+                    self.refreshControllers(ctrlsToRefresh);
+                }, 
+                function(httpResponse) {
+                    self.errors = self.extractErrors(httpResponse);
+                });
+        }
+    };
+
+    /**
+     * Add
+     */
+     function create(obj, ctrlsToRefresh) {
+        var toSend = self.addObject;
+        if(tableService != undefined && typeof tableService.preSend == 'function') {
+            toSend = tableService.preSend(self.addObject);
+        }
+        self.errors = [];
+        dataService.save(toSend, 
+            function(value, responseHeaders) {
+                //process value
+                self.getSuccess(value);
+
+                //Update any other controller
+                self.refreshControllers(ctrlsToRefresh);
+
+                //Update data list
+                self.data.push(value);
+                self.sort();
+                self.addObject = {};
+                self.form_add.$setPristine();
+                self.form_add.$setUntouched();
+
+            }, 
+            function(httpResponse) {
+                self.errors = self.extractErrors(httpResponse);
+            });
+    };
+
+    /**
+     * Cancel
+     */
+     function cancel(type) {
+        self.errors = [];
+        dataService.get({id: type.internalKey}, function(value, responseHeaders) {
+            self.getSuccess(value);
+            value.editing = false;
+            self.data[self.data.indexOf(type)] = value;
+        });
+    };
+
+    /** 
+     * Get
+     */
+     function get(type) {
+        dataService.get({id: type.id}, function(value, responseHeaders) {
+            self.getSuccess(value);
+            self.data[self.data.indexOf(type)] = value;
+        });
+    };
+
+    function closeAlert(index) {
+        self.errors.splice(index, 1);
+    };
+
+    function extractErrors(data) {
+        var ret = [];
+        for(field in data) {
+            for(i = 0; i < data[field].length; i++) {
+                ret.push(data[field][i]);
+            }
+        }
+        return ret;
+    };
+
+    function refreshControllers(ctrls) {
+        if(ctrls) {
+            angular.forEach(ctrls, function (ctrl, idx) {
+                ctrl.refreshData();
+            });
+        }
+    }
+
+    function queryString() {
+        var ret = '';
+
+        var parameters = {};
+        if(tableService != undefined && typeof tableService.queryParameters == 'function') {
+            parameters = tableService.queryParameters();
+        }
+
+        var first = true;
+        angular.forEach(parameters, function(value, key) {
+            ret += first ? '?' : '&'; 
+            ret += key + '=' + value;
+            first = false;
+        });
+ 
+        return ret;
+    }
+
+    function createUrl(baseUrl) {
+        return baseUrl + '/create' + queryString();
+    }
+
+    function getButtonClass(index) {
+        var form = self['form_' + index];
+        var ret = 'btn';
+        if(form.$valid) {
+            ret += ' btn-default';
+        }
+        return ret;
+    }
+} 
+
+function sharedDataServiceFactory() {
+    return {
+        data: {}
+    };
+}
+angular.module('listTable', ['sortableHeader'])
+    .factory('sharedDataService', sharedDataServiceFactory)
+    .filter('myCustomFilter', myCustomFilter)
+;
+
+function sessionsServiceFactory($resource) {
+    return $resource('/intra/api/session/:id', null, {
+        'update' : { 
+            method: 'PUT'
+        },
+        mailFormateurs : { 
+            url: '/intra/api/session/mail_formateurs',
+            method: 'GET', 
+            params: {session_id: '@session_id'} 
+        },
+        'upcoming': {
+            url: '/intra/api/session/upcoming',
+            method: 'GET',
+            isArray: true
+        }
+    });
+}
+
+
+function sessionsTableServiceFactory($filter, sharedDataService) {
+    //It would deserve to factorize with sessionDetailService.titleText
+    function buildSessionLibelle(item) {
+        var ret = '';
+        if(item.firstDate || item.lastDate) {
+            if(item.firstDate) {
+                ret += $filter('date')(item.firstDate, 'dd/MM/yyyy');
+            }
+            if(item.lastDate) {
+                ret += ' - ' + $filter('date')(item.lastDate, 'dd/MM/yyyy');
+            }
+        }
+        return ret;
+    };
+
+    return {
+        queryParameters: function() {
+            var ret = {};
+            if(sharedDataService.data.module_id) {
+                ret['module_id'] = sharedDataService.data.module_id;
+            }
+            return ret;
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette session ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Inscriptions ';
+            return message;
+        },
+
+        getSuccess: function(data) {
+            data.libelle = buildSessionLibelle(data);
+        }
+    };
+}
+
+angular.module('homeApp', ['ngResource', 'listTable'])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('sessionsTableService', ['$filter', 'sharedDataService', sessionsTableServiceFactory])
+
+    .controller('sessionsListController', ['$filter', '$attrs', 'sessionsService', 'sessionsTableService', editableTableController])
+;
 //# sourceMappingURL=home.js.map

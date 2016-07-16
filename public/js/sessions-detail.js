@@ -12836,6 +12836,11 @@ function sessionsServiceFactory($resource) {
             url: '/intra/api/session/mail_formateurs',
             method: 'GET', 
             params: {session_id: '@session_id'} 
+        },
+        'upcoming': {
+            url: '/intra/api/session/upcoming',
+            method: 'GET',
+            isArray: true
         }
     });
 }
@@ -13088,7 +13093,7 @@ function myCustomFilter() {
     }
 }
 
-function editableTableController($filter, dataService, tableService) {
+function editableTableController($filter, $attrs, dataService, tableService) {
     var self = this;
 
     self.dataService = dataService;
@@ -13140,6 +13145,8 @@ function editableTableController($filter, dataService, tableService) {
 
     if(tableService != undefined && typeof tableService.addListeners == 'function')
         tableService.addListeners(self);
+
+    self.queryMethod = $attrs['queryMethod'] ? $attrs['queryMethod'] : 'query';
 
     self.refreshData();
 
@@ -13198,7 +13205,7 @@ function editableTableController($filter, dataService, tableService) {
             self.queryParameters = tableService.queryParameters();
         }
         
-        return dataService.query(self.queryParameters, function() {
+        return dataService[self.queryMethod](self.queryParameters, function() {
             angular.forEach(self.data, function(value, key) {
                 self.getSuccess(value);
             });
@@ -13471,7 +13478,7 @@ angular.module('sessionJoursList', ['editableTable', 'ngResource'])
     .factory('formateursService', ['$resource', formateursServiceFactory])
     .factory('lieuService', ['$resource', lieuServiceFactory])
     .factory('sessionJoursTableService', ['$filter', 'sharedDataService', 'lieuService', 'formateursService', sessionJoursTableServiceFactory])
-    .controller('sessionJoursController', ['$filter', 'sessionJoursService', 'sessionJoursTableService', editableTableController])
+    .controller('sessionJoursController', ['$filter', '$attrs', 'sessionJoursService', 'sessionJoursTableService', editableTableController])
 ;
 
 angular.module('listTable', ['sortableHeader'])
@@ -13534,7 +13541,7 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
 angular.module('inscriptionsList', ['ngResource', 'listTable'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('inscriptionsTableService', ['$filter', 'sharedDataService', inscriptionsTableServiceFactory])
-    .controller('inscriptionsListController', ['$filter', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
+    .controller('inscriptionsListController', ['$filter', '$attrs', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
 ;
 
 angular.module('sessionsDetailApp', ['sessionDetail', 'sessionJoursList', 'inscriptionsList']);

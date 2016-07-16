@@ -7,6 +7,11 @@ function sessionsServiceFactory($resource) {
             url: '/intra/api/session/mail_formateurs',
             method: 'GET', 
             params: {session_id: '@session_id'} 
+        },
+        'upcoming': {
+            url: '/intra/api/session/upcoming',
+            method: 'GET',
+            isArray: true
         }
     });
 }

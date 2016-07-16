@@ -12598,7 +12598,7 @@ function myCustomFilter() {
     }
 }
 
-function editableTableController($filter, dataService, tableService) {
+function editableTableController($filter, $attrs, dataService, tableService) {
     var self = this;
 
     self.dataService = dataService;
@@ -12650,6 +12650,8 @@ function editableTableController($filter, dataService, tableService) {
 
     if(tableService != undefined && typeof tableService.addListeners == 'function')
         tableService.addListeners(self);
+
+    self.queryMethod = $attrs['queryMethod'] ? $attrs['queryMethod'] : 'query';
 
     self.refreshData();
 
@@ -12708,7 +12710,7 @@ function editableTableController($filter, dataService, tableService) {
             self.queryParameters = tableService.queryParameters();
         }
         
-        return dataService.query(self.queryParameters, function() {
+        return dataService[self.queryMethod](self.queryParameters, function() {
             angular.forEach(self.data, function(value, key) {
                 self.getSuccess(value);
             });
@@ -12947,13 +12949,13 @@ angular.module('parametresApp', ['editableTable', 'ngResource'])
     .factory('lieuService', ['$resource', lieuServiceFactory])
     .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
 
-    .controller('stagiaireTypesController', ['$filter', 'stagiaireTypesService', editableTableController])
-    .controller('formateurTypesController', ['$filter', 'formateurTypesService', editableTableController])
-    .controller('financeurTypesController', ['$filter', 'financeurTypesService', editableTableController])
-    .controller('tarifTypesController', ['$filter', 'tarifTypesService', editableTableController])
-    .controller('domaineFormationsController', ['$filter', 'domaineFormationsService', editableTableController])
-    .controller('lieuController', ['$filter', 'lieuService', editableTableController])
-    .controller('niveauFormationsController', ['$filter', 'niveauFormationsService', editableTableController])
+    .controller('stagiaireTypesController', ['$filter', '$attrs', 'stagiaireTypesService', editableTableController])
+    .controller('formateurTypesController', ['$filter', '$attrs', 'formateurTypesService', editableTableController])
+    .controller('financeurTypesController', ['$filter', '$attrs', 'financeurTypesService', editableTableController])
+    .controller('tarifTypesController', ['$filter', '$attrs', 'tarifTypesService', editableTableController])
+    .controller('domaineFormationsController', ['$filter', '$attrs', 'domaineFormationsService', editableTableController])
+    .controller('lieuController', ['$filter', '$attrs', 'lieuService', editableTableController])
+    .controller('niveauFormationsController', ['$filter', '$attrs', 'niveauFormationsService', editableTableController])
 ;
 
 //# sourceMappingURL=parametres.js.map

@@ -20,6 +20,7 @@ Route::group(['prefix' => 'intra'], function() {
             Route::post('session_jour/create_default', 'SessionJourController@createDefault');
             Route::get('stagiaire/search', 'StagiaireController@search');
             Route::get('session/mail_formateurs', 'SessionController@generateFormateursMail');
+            Route::get('session/upcoming', 'SessionController@upcoming');
 
             //Listes fermées
             Route::resource('stagiaire_type', 'StagiaireTypeController', 

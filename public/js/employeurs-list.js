@@ -12037,7 +12037,7 @@ function myCustomFilter() {
     }
 }
 
-function editableTableController($filter, dataService, tableService) {
+function editableTableController($filter, $attrs, dataService, tableService) {
     var self = this;
 
     self.dataService = dataService;
@@ -12089,6 +12089,8 @@ function editableTableController($filter, dataService, tableService) {
 
     if(tableService != undefined && typeof tableService.addListeners == 'function')
         tableService.addListeners(self);
+
+    self.queryMethod = $attrs['queryMethod'] ? $attrs['queryMethod'] : 'query';
 
     self.refreshData();
 
@@ -12147,7 +12149,7 @@ function editableTableController($filter, dataService, tableService) {
             self.queryParameters = tableService.queryParameters();
         }
         
-        return dataService.query(self.queryParameters, function() {
+        return dataService[self.queryMethod](self.queryParameters, function() {
             angular.forEach(self.data, function(value, key) {
                 self.getSuccess(value);
             });
@@ -12328,7 +12330,7 @@ function employeursServiceFactory($resource) {
 
 angular.module('employeursList', ['ngResource', 'listTable'])
     .factory('employeursService', ['$resource', employeursServiceFactory])
-    .controller('employeursListController', ['$filter', 'employeursService', editableTableController])
+    .controller('employeursListController', ['$filter', '$attrs', 'employeursService', editableTableController])
 ;
 
 angular.module('employeursListApp', ['employeursList']);

@@ -3,5 +3,5 @@ angular.module('sessionJoursList', ['editableTable', 'ngResource'])
     .factory('formateursService', ['$resource', formateursServiceFactory])
     .factory('lieuService', ['$resource', lieuServiceFactory])
     .factory('sessionJoursTableService', ['$filter', 'sharedDataService', 'lieuService', 'formateursService', sessionJoursTableServiceFactory])
-    .controller('sessionJoursController', ['$filter', 'sessionJoursService', 'sessionJoursTableService', editableTableController])
+    .controller('sessionJoursController', ['$filter', '$attrs', 'sessionJoursService', 'sessionJoursTableService', editableTableController])
 ;
