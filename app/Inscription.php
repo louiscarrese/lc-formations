@@ -32,4 +32,24 @@ class Inscription extends AbstractModel
     function financeurs() {
         return $this->hasManyThrough('ModuleFormation\Financeur', 'ModuleFormation\FinanceurInscription');
     }
+
+    public function scopeCurrent($query) {
+        $currentDate = \Carbon\Carbon::now();
+
+        $startDate = null;
+        $endDate = null;
+
+        if($currentDate->month < 8) {
+            $startDate = $currentDate->copy()->subYear()->month(8)->startOfMonth();
+            $endDate = $currentDate->copy()->month(7)->endOfMonth();
+        } else {
+            $startDate = $currentDate->copy()->month(8)->startOfMonth();
+            $endDate = $currentDate->copy()->addYear()->month(7)->endOfMonth();
+        }
+
+        return $query->whereHas('session.session_jours', function($q) use ($startDate, $endDate) {
+            $q->whereBetween('date', [$startDate, $endDate]);
+        });
+    }
+
 }

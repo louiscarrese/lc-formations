@@ -7,6 +7,8 @@ abstract class AbstractRepository implements RepositoryInterface {
 
     protected $model;
 
+    protected $defaultScope = null;
+
     /**
      * A list of the n-n relations described like this : 
      *  'data_id' => the field in the front end data containing an array of id for the relation
@@ -74,7 +76,13 @@ abstract class AbstractRepository implements RepositoryInterface {
      * Retrieve all the objects from the database.
      */
     public function getAll() {
-        $datas = $this->model->get();
+        $datas = array();
+
+        if($this->defaultScope) {
+            $datas = $this->model->{$this->defaultScope}()->get();
+        } else {
+            $datas = $this->model->get();
+        }
 
         foreach($datas as $data) {
             $data = $this->augmentListData($data);
@@ -87,8 +95,16 @@ abstract class AbstractRepository implements RepositoryInterface {
      * Get an object from the database by its id.
      */
     public function find($id) {
-        $data = $this->model->findOrFail($id);
+        $data = null;
+
+        if($this->defaultScope) {
+            $data = $this->model->{$this->defaultScope}()->findOrFail($id);
+        } else {
+            $data = $this->model->findOrFail($id);
+        }
+
         $data = $this->augmentData($data);
+
         return $data;
     }
 
@@ -99,6 +115,10 @@ abstract class AbstractRepository implements RepositoryInterface {
     {
         //Start with the base model
         $data_req = $this->model;
+
+        if($this->defaultScope) {
+            $data_req = $data_req->{$this->defaultScope}();
+        }
 
         //Add each criteria
         foreach($criterias as $key => $value) {
@@ -126,6 +146,10 @@ abstract class AbstractRepository implements RepositoryInterface {
     public function search($query, $criterias = null) {
         //Start with the base model
         $data_req = $this->model;
+
+        if($this->defaultScope) {
+            $data_req = $data_req->{$this->defaultScope}();
+        }
 
         $existingCriterias = array();
         if($criterias) {

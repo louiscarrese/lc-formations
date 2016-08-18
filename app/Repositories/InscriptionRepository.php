@@ -5,6 +5,8 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
 {
     protected $modelClassName = 'ModuleFormation\\Inscription';
 
+    protected $defaultScope = "current";
+
     private $sessionRepository;
     
     public function __construct($app, \ModuleFormation\Repositories\SessionRepositoryInterface $sessionRepository) 
