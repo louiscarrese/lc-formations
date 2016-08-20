@@ -75,13 +75,20 @@ abstract class AbstractRepository implements RepositoryInterface {
     /**
      * Retrieve all the objects from the database.
      */
-    public function getAll() {
+    public function getAll($scope = null) {
         $datas = array();
 
-        if($this->defaultScope) {
-            $datas = $this->model->{$this->defaultScope}()->get();
-        } else {
+        //If there is no scope available or we are told not to use it
+        if($scope === false || ($scope === null && $this->defaultScope === null)) {
             $datas = $this->model->get();
+        } else { //$scope !== false && ($scope !== null || $this->defaultScope !== null)
+            //If a scope has been provided, use it
+            if($scope !== null) {
+                $datas = $this->model->{$scope}()->get();
+            } else {
+                //Use the default scope
+                $datas = $this->model->{$this->defaultScope}()->get();
+            }
         }
 
         foreach($datas as $data) {
@@ -93,14 +100,24 @@ abstract class AbstractRepository implements RepositoryInterface {
 
     /**
      * Get an object from the database by its id.
+     * $scope : null => use default scope
+     *          false => use no scope
+     *          <string> => use <string> scope
      */
-    public function find($id) {
+    public function find($id, $scope = null) {
         $data = null;
 
-        if($this->defaultScope) {
-            $data = $this->model->{$this->defaultScope}()->findOrFail($id);
-        } else {
-            $data = $this->model->findOrFail($id);
+        //If there is no scope available or we are told not to use it
+        if($scope === false || ($scope === null && $this->defaultScope === null)) {
+            $data = $this->model->get();
+        } else { //$scope !== false && ($scope !== null || $this->defaultScope !== null)
+            //If a scope has been provided, use it
+            if($scope !== null) {
+                $data = $this->model->{$scope}()->get();
+            } else {
+                //Use the default scope
+                $data = $this->model->{$this->defaultScope}()->get();
+            }
         }
 
         $data = $this->augmentData($data);
@@ -111,13 +128,19 @@ abstract class AbstractRepository implements RepositoryInterface {
     /**
      * Select resource based on criterias.
      */
-    public function findBy($criterias) 
+    public function findBy($criterias, $scope = null) 
     {
         //Start with the base model
         $data_req = $this->model;
 
-        if($this->defaultScope) {
-            $data_req = $data_req->{$this->defaultScope}();
+        //If we are not told to ignore scope and there is a scope available
+        if($scope !== false && ($scope !== null || $this->defaultScope !== null)) {
+            if($scope) {
+                $data_req = $data_req->{$scope}();
+            } else {
+                $data_req = $data_req->{$this->defaultScope}();
+            }
+
         }
 
         //Add each criteria
@@ -143,12 +166,18 @@ abstract class AbstractRepository implements RepositoryInterface {
     /**
      * Multiple strings search in selected searchable resource properties.
      */
-    public function search($query, $criterias = null) {
+    public function search($query, $criterias = null, $scope = null) {
         //Start with the base model
         $data_req = $this->model;
 
-        if($this->defaultScope) {
-            $data_req = $data_req->{$this->defaultScope}();
+        //If we are not told to ignore scope and there is a scope available
+        if($scope !== false && ($scope !== null || $this->defaultScope !== null)) {
+            if($scope) {
+                $data_req = $data_req->{$scope}();
+            } else {
+                $data_req = $data_req->{$this->defaultScope}();
+            }
+
         }
 
         $existingCriterias = array();
@@ -209,7 +238,7 @@ abstract class AbstractRepository implements RepositoryInterface {
         $this->reattachRelations($object, $data);
 
         //Refetch the object (so it updates associated data)
-        $data = $this->find($object->id);
+        $data = $this->find($object->id, false);
         return $data;
     }
 
@@ -234,6 +263,10 @@ abstract class AbstractRepository implements RepositoryInterface {
      */
     public function destroy($id) {
         return $this->model->destroy($id);
+    }
+
+    private function resolveScope($scope, $defaultScope) {
+        return ($scope === null) ? $defaultScope : $scope;
     }
 
 }

@@ -49,6 +49,11 @@ class Inscription extends AbstractModel
 
         return $query->whereHas('session.session_jours', function($q) use ($startDate, $endDate) {
             $q->whereBetween('date', [$startDate, $endDate]);
+        })
+        ->orWhereNotExists(function ($q) {
+            $q->select(\DB::Raw(1))
+                ->from('session_jours')
+                ->whereRaw('session_jours.session_id = inscriptions.session_id');
         });
     }
 
