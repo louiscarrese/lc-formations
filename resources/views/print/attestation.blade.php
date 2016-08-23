@@ -12,7 +12,7 @@
 
             <div class="main">
                 <p class="">
-    Je, soussignée Rozenn Lebastard, responsable des formations du Jardin Moderne, certifie que <strong>{{$inscription->stagiaire->prenom}} {{$inscription->stagiaire->nom}}</strong> a suivi avec assiduité la formation :
+    Je, soussigné {{$responsableFormation}}, responsable des formations du Jardin Moderne, certifie que <strong>{{$inscription->stagiaire->prenom}} {{$inscription->stagiaire->nom}}</strong> a suivi avec assiduité la formation :
                 </p>
                 <p class="formation-title">
                     <strong>
@@ -45,7 +45,7 @@
                         Secteur formations
                     </p>
                     <p class="signature-placeholder"></p>
-                    <p>Rozenn LEBASTARD</p>
+                    <p>{{$responsableFormation}}</p>
                 </div>
             </div>
             <div class="footer">

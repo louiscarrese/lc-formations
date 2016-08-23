@@ -8,6 +8,7 @@ use ModuleFormation\Http\Requests;
 use ModuleFormation\Http\Controllers\Controller;
 use ModuleFormation\Repositories\SessionRepositoryInterface;
 use ModuleFormation\Repositories\InscriptionRepositoryInterface;
+use ModuleFormation\Repositories\ParametreRepositoryInterface;
 use PDF;
 
 
@@ -16,6 +17,7 @@ class PrintController extends Controller
 
     public function emargement(SessionRepositoryInterface $sessionRepository, 
         InscriptionRepositoryInterface $inscriptionRepository, 
+        ParametreRepositoryInterface $parametreRepository,
         $session_id) {
         $session = $sessionRepository->find($session_id);
         $inscriptions = $inscriptionRepository->findBy([
@@ -26,7 +28,8 @@ class PrintController extends Controller
 
         $pdf = PDF::loadView('print.emargement', [
             'session' => $session, 
-            'inscriptions' => $inscriptions
+            'inscriptions' => $inscriptions,
+            'responsableFormation' => $parametreRepository->responsableFormation()
             ]);
 
         $firstDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->firstDate)->format('d/m/Y');
@@ -72,6 +75,7 @@ class PrintController extends Controller
 
     public function attestation(SessionRepositoryInterface $sessionRepository,
         InscriptionRepositoryInterface $inscriptionRepository, 
+        ParametreRepositoryInterface $parametreRepository,
         $session_id) {
         
         $session = $sessionRepository->find($session_id, false);
@@ -103,6 +107,7 @@ class PrintController extends Controller
             'inscriptions' => $inscriptions,
             'dureeFormation' => $dureeFormation,
             'formateurs' => $formateurs,
+            'responsableFormation' => $parametreRepository->responsableFormation()
             ]);
 
         $firstDate = '';

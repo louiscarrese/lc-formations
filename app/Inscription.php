@@ -38,8 +38,7 @@ class Inscription extends AbstractModel
 
         $parametreRepository = \Illuminate\Foundation\Application::getInstance()->make('ModuleFormation\Repositories\ParametreRepositoryInterface');
 
-        $limitDateString = $parametreRepository->findBy(['key' => 'debut_saison'])->first()->value;
-        $limitDate = \Carbon\Carbon::createFromFormat('d/m/Y', $limitDateString);
+        $limitDate = $parametreRepository->debutSaison();
 
         return $query->whereHas('session.session_jours', function($q) use ($limitDate) {
             $q->where('date', '>', $limitDate);
