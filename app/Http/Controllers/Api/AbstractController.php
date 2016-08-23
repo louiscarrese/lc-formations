@@ -67,7 +67,7 @@ abstract class AbstractController extends Controller
      */
     public function show($id)
     {
-        $data = $this->repository->find($id);
+        $data = $this->repository->find($id, false);
 
         return response()->json($data);
     }
