@@ -4,7 +4,7 @@ namespace ModuleFormation;
 
 class Session extends AbstractModel
 {
-
+    
     protected $with = ['module'];
 
     protected $fillable = ['id', 'effectif_max', 'objectifs_pedagogiques', 'materiel', 'module_id'];
@@ -24,19 +24,13 @@ class Session extends AbstractModel
     public function scopeCurrent($query) {
         $currentDate = \Carbon\Carbon::now();
 
-        $startDate = null;
-        $endDate = null;
+        $parametreRepository = \Illuminate\Foundation\Application::getInstance()->make('ModuleFormation\Repositories\ParametreRepositoryInterface');
 
-        if($currentDate->month < 8) {
-            $startDate = $currentDate->copy()->subYear()->month(8)->startOfMonth();
-            $endDate = $currentDate->copy()->month(7)->endOfMonth();
-        } else {
-            $startDate = $currentDate->copy()->month(8)->startOfMonth();
-            $endDate = $currentDate->copy()->addYear()->month(7)->endOfMonth();
-        }
+        $limitDateString = $parametreRepository->findBy(['key' => 'debut_saison'])->first()->value;
+        $limitDate = \Carbon\Carbon::createFromFormat('d/m/Y', $limitDateString);
 
-        return $query->whereHas('session_jours', function($q) use ($startDate, $endDate) {
-            $q->whereBetween('date', [$startDate, $endDate]);
+        return $query->whereHas('session_jours', function($q) use ($limitDate) {
+            $q->where('date', '>', $limitDate);
         })
         ->orWhereNotExists(function ($q) {
             $q->select(\DB::Raw(1))
