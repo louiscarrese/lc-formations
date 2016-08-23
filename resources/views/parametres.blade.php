@@ -287,4 +287,40 @@
              ]
         ])
     </div>
+    <div ng-controller="parametresController as parametresController">
+        @include('components.editableTable',
+            ['controllerName' => 'parametresController',
+             'title' => 'Paramètres',
+             'adaptToContent' => true,
+             'idField' => 'id',
+             'columns' => [
+                [
+                    'label' => 'Clé',
+                    'sortable' => true,
+                    'fields' => [
+                        'key' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'text',
+                            'addLine' => true,
+                            'validation' => 'required',
+                        ], //id
+                    ]
+                ],
+                [
+                    'label' => 'Valeur',
+                    'sortable' => true,
+                     'fields' => [
+                        'value' => [
+                            'filterable' => true,
+                            'editable' => true,
+                            'type' => 'text',
+                            'addLine' => true,
+                            'validation' => 'required',
+                        ], //libelle
+                    ], //fields
+                ]
+             ]
+        ])
+    </div>
 @endsection

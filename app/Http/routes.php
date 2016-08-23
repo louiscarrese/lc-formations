@@ -37,6 +37,8 @@ Route::group(['prefix' => 'intra'], function() {
                 ['only' => ['index', 'show']]);
             Route::resource('niveau_formation', 'NiveauFormationController', 
                 ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+            Route::resource('parametre', 'ParametreController', 
+                ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 
 
             Route::resource('module', 'ModuleController', 

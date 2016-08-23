@@ -12940,6 +12940,11 @@ function niveauFormationsServiceFactory($resource) {
         'update' : { method: 'PUT' }
     });
 }
+function parametresServiceFactory($resource) {
+    return $resource('/intra/api/parametre/:id', null, {
+        'update' : { method: 'PUT' }
+    });
+}
 angular.module('parametresApp', ['editableTable', 'ngResource'])
     .factory('stagiaireTypesService', ['$resource', stagiaireTypesServiceFactory])
     .factory('formateurTypesService', ['$resource', formateurTypesServiceFactory])
@@ -12948,6 +12953,7 @@ angular.module('parametresApp', ['editableTable', 'ngResource'])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
     .factory('lieuService', ['$resource', lieuServiceFactory])
     .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
+    .factory('parametresService', ['$resource', parametresServiceFactory])
 
     .controller('stagiaireTypesController', ['$filter', '$attrs', 'stagiaireTypesService', editableTableController])
     .controller('formateurTypesController', ['$filter', '$attrs', 'formateurTypesService', editableTableController])
@@ -12956,6 +12962,7 @@ angular.module('parametresApp', ['editableTable', 'ngResource'])
     .controller('domaineFormationsController', ['$filter', '$attrs', 'domaineFormationsService', editableTableController])
     .controller('lieuController', ['$filter', '$attrs', 'lieuService', editableTableController])
     .controller('niveauFormationsController', ['$filter', '$attrs', 'niveauFormationsService', editableTableController])
+    .controller('parametresController', ['$filter', '$attrs', 'parametresService', editableTableController])
 ;
 
 //# sourceMappingURL=parametres.js.map

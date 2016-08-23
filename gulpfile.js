@@ -95,6 +95,7 @@ var parametres = Array.prototype.concat(
         '/services/data/lieu-service.js',
         '/services/data/domaineformations-service.js',
         '/services/data/niveauformations-service.js',
+        '/services/data/parametres-service.js',
     ]
 );
 

@@ -6,6 +6,7 @@ angular.module('parametresApp', ['editableTable', 'ngResource'])
     .factory('domaineFormationsService', ['$resource', domaineFormationsServiceFactory])
     .factory('lieuService', ['$resource', lieuServiceFactory])
     .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
+    .factory('parametresService', ['$resource', parametresServiceFactory])
 
     .controller('stagiaireTypesController', ['$filter', '$attrs', 'stagiaireTypesService', editableTableController])
     .controller('formateurTypesController', ['$filter', '$attrs', 'formateurTypesService', editableTableController])
@@ -14,4 +15,5 @@ angular.module('parametresApp', ['editableTable', 'ngResource'])
     .controller('domaineFormationsController', ['$filter', '$attrs', 'domaineFormationsService', editableTableController])
     .controller('lieuController', ['$filter', '$attrs', 'lieuService', editableTableController])
     .controller('niveauFormationsController', ['$filter', '$attrs', 'niveauFormationsService', editableTableController])
+    .controller('parametresController', ['$filter', '$attrs', 'parametresService', editableTableController])
 ;

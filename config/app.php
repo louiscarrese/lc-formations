@@ -164,6 +164,7 @@ return [
         ModuleFormation\Providers\LieuRepositoryProvider::class,
         ModuleFormation\Providers\ModuleRepositoryProvider::class,
         ModuleFormation\Providers\NiveauFormationRepositoryProvider::class,
+        ModuleFormation\Providers\ParametreRepositoryProvider::class,
         ModuleFormation\Providers\PreinscriptionRepositoryProvider::class,
         ModuleFormation\Providers\PreinscriptionSessionRepositoryProvider::class,
         ModuleFormation\Providers\SessionRepositoryProvider::class,
