@@ -70,6 +70,59 @@ class PrintController extends Controller
         return $pdf->stream($title);
     }
 
+    public function attestation(SessionRepositoryInterface $sessionRepository,
+        InscriptionRepositoryInterface $inscriptionRepository, 
+        $session_id) {
+        
+        $session = $sessionRepository->find($session_id, false);
+
+        $inscriptions = $inscriptionRepository->findBy([
+            'session_id' => $session_id, 
+            'statut' => \ModuleFormation\Inscription::STATUS_VALIDATED
+            ], false);
+
+        $dureeFormation = 0;
+        foreach($session->session_jours as $session_jour) {
+            if($session_jour->heure_debut_matin != null && $session_jour->heure_fin_matin != null) {
+                $dureeFormation += 3.5;
+            }
+            if($session_jour->heure_debut_apresmidi != null && $session_jour->heure_fin_apresmidi != null) {
+                $dureeFormation += 3.5;
+            }
+        }
+
+        $formateurs = array();
+        foreach($session->session_jours as $session_jour) {
+            foreach($session_jour->formateurs as $formateur) {
+                $formateurs[$formateur->id] = $formateur;
+            }
+        }
+
+        $pdf = PDF::loadView('print.attestation', [
+            'session' => $session, 
+            'inscriptions' => $inscriptions,
+            'dureeFormation' => $dureeFormation,
+            'formateurs' => $formateurs,
+            ]);
+
+        $firstDate = '';
+        if($session->firstDate != null) {
+            $firstDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->firstDate)->format('d/m/Y');
+        }
+        if($session->lastDate != null) {
+            $lastDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->lastDate)->format('d/m/Y');
+        }
+        $title = 'Attestations ';
+        $title .= $session->module->libelle;
+        if($session->lastDate != null) {
+            $title .= ' (' . $firstDate . ' - ' . $lastDate . ')';
+        } else {
+            $title .= ' (' . $firstDate . ')';
+        }
+        
+        return $pdf->stream($title);
+    }
+
     public function dataExtraction() {
         return view('data_extraction');
     }

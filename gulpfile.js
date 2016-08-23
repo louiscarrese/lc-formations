@@ -377,6 +377,7 @@ elixir(function(mix) {
         .less('preinscription.less')
         .less('print/emargement.less')
         .less('print/suivi-session.less')
+        .less('print/attestation.less')
 
         .scripts(array_unique(Array.prototype.concat(
             parametres,
