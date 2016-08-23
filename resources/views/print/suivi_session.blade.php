@@ -26,9 +26,10 @@
                 <p class="header-value">
                     <ul>
                         @foreach($formateurs as $formateur)
-                            <li>{{$formateur->prenom}} {{$formateur->nom}}
+                            <li>{{$formateur->prenom}} {{$formateur->nom}}</li>
                         @endforeach
                     </ul>
+                </p>
             </td>
         </tr>
     </table>
