@@ -109,14 +109,14 @@ abstract class AbstractRepository implements RepositoryInterface {
 
         //If there is no scope available or we are told not to use it
         if($scope === false || ($scope === null && $this->defaultScope === null)) {
-            $data = $this->model->get();
+            $data = $this->model->findOrFail($id);
         } else { //$scope !== false && ($scope !== null || $this->defaultScope !== null)
             //If a scope has been provided, use it
             if($scope !== null) {
-                $data = $this->model->{$scope}()->get();
+                $data = $this->model->{$scope}()->findOrFail($id);
             } else {
                 //Use the default scope
-                $data = $this->model->{$this->defaultScope}()->get();
+                $data = $this->model->{$this->defaultScope}()->findOrFail($id);
             }
         }
 
