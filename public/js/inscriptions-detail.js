@@ -12838,11 +12838,6 @@ function printParameterController($uibModalInstance) {
     }
     
 }
-function contratPrintParameterService() {
-    return {
-        
-    }
-}
 function inscriptionsServiceFactory($resource) {
     return $resource('/intra/api/inscription/:id', null, {
         'update' : { method: 'PUT' }

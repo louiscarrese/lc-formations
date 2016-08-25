@@ -12,10 +12,10 @@ class Inscription extends AbstractModel
     const STATUS_WAITING_LIST = "waiting_list";
 
 
-    protected $with = ['stagiaire', 'session.module'];
+    protected $with = ['stagiaire', 'session.module', 'tarif'];
 
     protected $fillable = ['id', 'profession_structure', 'experiences', 'attentes', 
-        'suggestions', 'formations_precedentes', 'statut', 'stagiaire_id', 'session_id'];
+        'suggestions', 'formations_precedentes', 'statut', 'stagiaire_id', 'session_id', 'tarif_id'];
 
     function stagiaire() {
         return $this->belongsTo('ModuleFormation\Stagiaire');
@@ -31,6 +31,10 @@ class Inscription extends AbstractModel
 
     function financeurs() {
         return $this->hasManyThrough('ModuleFormation\Financeur', 'ModuleFormation\FinanceurInscription');
+    }
+
+    function tarif() {
+        return $this->belongsTo('ModuleFormation\Tarif');
     }
 
     public function scopeCurrent($query) {

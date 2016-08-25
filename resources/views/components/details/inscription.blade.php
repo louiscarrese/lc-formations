@@ -35,6 +35,20 @@
                     ],
                 ]
             ],[
+                'label' => 'Tarif',
+                'fields' => [
+                    'tarif_id' => [
+                        'type' => 'dropdown',
+                        'datasource' => 'data.available_tarifs', //relative to the controller
+                        'dataId' => 'id', //relative to an item in the dropdownDatasource
+                        'modelObject' => 'tarif', //relative to an item in the controller data 
+                        'displayed' => '<tarif_type.libelle> (<montant> €)',
+                        'placeholder' => 'Tarif',
+                        'searchable' => false,
+                        'sizeValue' => 4,
+                    ],
+                ]
+            ],[
                 'label' => 'Statut',
                 'fields' => [
 

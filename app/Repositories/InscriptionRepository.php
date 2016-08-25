@@ -8,12 +8,16 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
     protected $defaultScope = "current";
 
     private $sessionRepository;
+    private $tarifRepository;
     
-    public function __construct($app, \ModuleFormation\Repositories\SessionRepositoryInterface $sessionRepository) 
+    public function __construct($app, 
+        \ModuleFormation\Repositories\SessionRepositoryInterface $sessionRepository,
+        \ModuleFormation\Repositories\TarifRepositoryInterface $tarifRepository) 
     {
         parent::__construct($app);
 
         $this->sessionRepository = $sessionRepository;
+        $this->tarifRepository = $tarifRepository;
 
         $this->subObjects = [
             [
@@ -29,6 +33,8 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
         $data = parent::augmentData($data);
 
         $data = $this->fillStatut($data);
+
+        $data->available_tarifs = $this->getAvailableTarifs($data);
 
         return $data;
     }
@@ -47,6 +53,13 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
         $data['statut'] = $statut_id;
 
         return $data;
+    }
+
+    private function getAvailableTarifs($data) {
+        if($data->session)
+            return $this->tarifRepository->findBy(['module_id' => $data->session->module_id]);
+        else 
+            return null;
     }
 
     private function fillStatut($data) {

@@ -18,7 +18,9 @@ class InscriptionRepositoryProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('ModuleFormation\Repositories\InscriptionRepositoryInterface', function($app) {
-            return new InscriptionRepository($app, $this->app->make('ModuleFormation\Repositories\SessionRepositoryInterface'));
+            return new InscriptionRepository($app, 
+                $this->app->make('ModuleFormation\Repositories\SessionRepositoryInterface'),
+                $this->app->make('ModuleFormation\Repositories\TarifRepositoryInterface'));
         });
     }
 
