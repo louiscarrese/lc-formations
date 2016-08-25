@@ -5,13 +5,23 @@ namespace ModuleFormation\Services;
 use Log;
 
 use ModuleFormation\Repositories\InscriptionRepositoryInterface;
+use ModuleFormation\Repositories\SessionRepositoryInterface;
+use ModuleFormation\Repositories\ParametreRepositoryInterface;
 
 class PrintService implements PrintServiceInterface {
 
     private $inscriptionRepository;
+    private $sessionRepository;
+    private $parametreRepository;
 
-    public function __construct(InscriptionRepositoryInterface $inscriptionRepository) {
+
+    public function __construct(InscriptionRepositoryInterface $inscriptionRepository,
+        SessionRepositoryInterface $sessionRepository, 
+        ParametreRepositoryInterface $parametreRepository) {
+
         $this->inscriptionRepository = $inscriptionRepository;
+        $this->sessionRepository = $sessionRepository;
+        $this->parametreRepository = $parametreRepository;
 
     }
 
@@ -42,6 +52,71 @@ class PrintService implements PrintServiceInterface {
         return $ret;
     }
 
+    public function prepareEmargementParameters($session) {
+        $ret = array();
+
+        $ret["session"] = $session;
+        $ret["inscriptions"] = $this->inscriptionRepository->findBy([
+            'session_id' => $session->id, 
+            'statut' => \ModuleFormation\Inscription::STATUS_VALIDATED
+            ]);
+        $ret["responsableFormation"] = $this->parametreRepository->responsableFormation();
+
+        return $ret;
+    }
+
+    public function prepareSuiviSessionParameters($session) {
+
+        $ret = array();
+
+        $ret["session"] = $session;
+        $ret["nb_minutes"] = $this->sessionRepository->getDuree($session);
+        $ret["formateurs"] = $this->sessionRepository->getFormateurs($session);
+
+        return $ret;
+    }
+
+    public function prepapreAttestationParameters($session) {
+        $inscriptions = $this->inscriptionRepository->findBy([
+            'session_id' => $session->id, 
+            'statut' => \ModuleFormation\Inscription::STATUS_VALIDATED
+            ], false);
+
+        $formateurs = array();
+        foreach($session->session_jours as $session_jour) {
+            foreach($session_jour->formateurs as $formateur) {
+                $formateurs[$formateur->id] = $formateur;
+            }
+        }
+
+        $ret = [
+            'session' => $session,
+            'inscriptions' => $inscriptions,
+            'dureeFormation' => $this->calculateDuree($session),
+            'formateurs' => $formateurs,
+            'responsableFormation' => $this->parametreRepository->responsableFormation()
+        ];
+
+        return $ret;
+    }
+
+    public function getSessionLibelleForTitle($session) {
+        //Get the dates
+        $firstDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->firstDate)->format('d/m/Y');
+        if($session->lastDate != null) {
+            $lastDate = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $session->lastDate)->format('d/m/Y');
+        }
+
+        //Format a string
+        $ret = $session->module->libelle;
+        if($session->lastDate != null) {
+            $ret .= ' (' . $firstDate . ' - ' . $lastDate . ')';
+        } else {
+            $ret .= ' (' . $firstDate . ')';
+        }
+
+        return $ret;
+    } 
 
     private function calculateDuree($session) {
         $ret = 0;

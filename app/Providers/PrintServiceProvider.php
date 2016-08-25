@@ -19,7 +19,9 @@ class PrintServiceProvider extends ServiceProvider
     {
         $this->app->singleton('ModuleFormation\Services\PrintServiceInterface', function($app) {
             return new PrintService(
-                $this->app->make('ModuleFormation\Repositories\InscriptionRepositoryInterface')
+                $this->app->make('ModuleFormation\Repositories\InscriptionRepositoryInterface'),
+                $this->app->make('ModuleFormation\Repositories\SessionRepositoryInterface'),
+                $this->app->make('ModuleFormation\Repositories\ParametreRepositoryInterface')
             );
         });
     }
