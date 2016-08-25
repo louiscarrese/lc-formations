@@ -16,11 +16,12 @@ class PrintService implements PrintServiceInterface {
     }
 
     public function prepareContratParameters($inscription_id) {
-        $inscription = $this->inscriptionRepository->find($inscription_id);
+        $inscription = $this->inscriptionRepository->find($inscription_id, false);
 
         $ret = array();
         $ret["inscription_id"] = $inscription_id;
         $ret["nom_prenom_stagiaire"] = $inscription->stagiaire->prenom . " " . $inscription->stagiaire->nom;
+        $ret["adresse_stagiaire"] = $inscription->stagiaire->adresse . " " . $inscription->stagiaire->code_postal . " " . $inscription->stagiaire->ville;
         $ret["libelle_module"] = $inscription->session->module->libelle;
 
         if($inscription->session->firstDate != null) {
@@ -36,6 +37,7 @@ class PrintService implements PrintServiceInterface {
 
         $ret["duree"] = $this->calculateDuree($inscription->session);
         $ret["effectif"] = $inscription->session->effectif_max;
+        $ret["montant"] = $inscription->tarif->montant;
 
         return $ret;
     }
