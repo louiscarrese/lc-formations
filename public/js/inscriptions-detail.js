@@ -12827,6 +12827,22 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap', 'dnTim
     .directive('datepickerLocaldate', datepickerLocaldate)
 ;
 
+function printParameterController($uibModalInstance) {
+    var self = this;
+    self.modalInstance = $uibModalInstance;
+
+    self.close = close;
+
+    function close() {
+        self.modalInstance.close();
+    }
+    
+}
+function contratPrintParameterService() {
+    return {
+        
+    }
+}
 function inscriptionsServiceFactory($resource) {
     return $resource('/intra/api/inscription/:id', null, {
         'update' : { method: 'PUT' }
@@ -12862,7 +12878,7 @@ function sessionsServiceFactory($resource) {
 }
 
 
-function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter, $q) {
+function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter, $q, $uibModal) {
 
     //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
@@ -12942,13 +12958,27 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
             message += '\n - Financements ';
             return message;
         },
+
+        addListeners: function(controller) {
+            controller.contratFormation = function(event) {
+                controller.contratParameterModal = $uibModal.open({
+                    templateUrl: '../print/parameterContrat/' + controller.data.id,
+                    size: 'lg',
+                    appendTo: angular.element(document.getElementById('impressions')),
+                    controller: ['$uibModalInstance', printParameterController],
+                    controllerAs: 'printParameterCtrl',
+                });
+
+                event.preventDefault();
+            }
+        }
     }
 }
-angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList', 'myEditable'])
+angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList', 'myEditable', 'ui.bootstrap'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
-    .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', '$filter', '$q', inscriptionDetailServiceFactory])
+    .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', '$filter', '$q', '$uibModal', inscriptionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', '$q', detailController])
 ;
 

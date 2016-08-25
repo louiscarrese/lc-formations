@@ -1,4 +1,4 @@
-function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter, $q) {
+function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter, $q, $uibModal) {
 
     //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
@@ -78,5 +78,19 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
             message += '\n - Financements ';
             return message;
         },
+
+        addListeners: function(controller) {
+            controller.contratFormation = function(event) {
+                controller.contratParameterModal = $uibModal.open({
+                    templateUrl: '../print/parameterContrat/' + controller.data.id,
+                    size: 'lg',
+                    appendTo: angular.element(document.getElementById('impressions')),
+                    controller: ['$uibModalInstance', printParameterController],
+                    controllerAs: 'printParameterCtrl',
+                });
+
+                event.preventDefault();
+            }
+        }
     }
 }

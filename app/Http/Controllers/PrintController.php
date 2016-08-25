@@ -9,6 +9,7 @@ use ModuleFormation\Http\Controllers\Controller;
 use ModuleFormation\Repositories\SessionRepositoryInterface;
 use ModuleFormation\Repositories\InscriptionRepositoryInterface;
 use ModuleFormation\Repositories\ParametreRepositoryInterface;
+use ModuleFormation\Services\PrintServiceInterface;
 use PDF;
 
 
@@ -128,7 +129,23 @@ class PrintController extends Controller
         return $pdf->stream($title);
     }
 
+    public function contrat($inscription_id, Request $request, PrintServiceInterface $printService) {
+
+        $parameters = array_merge($printService->prepareContratParameters($inscription_id), $request->all());
+
+        $pdf = PDF::loadView('print.contrat', $parameters);
+
+        return $pdf->stream('title test');
+
+    }
+
     public function dataExtraction() {
         return view('data_extraction');
+    }
+
+    public function parameterContrat(PrintServiceInterface $printService, $inscription_id) {
+        $parameters = $printService->prepareContratParameters($inscription_id);
+
+        return view('print.parameters.parameterContrat', $parameters);
     }
 }

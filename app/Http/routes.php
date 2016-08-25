@@ -81,6 +81,8 @@ Route::group(['prefix' => 'intra'], function() {
             Route::get('suivi_session/{session_id}', 'PrintController@suiviSession');
             Route::get('attestation/{session_id}', 'PrintController@attestation');
             Route::get('dataExtraction', 'PrintController@dataExtraction');
+            Route::get('contrat/{inscription_id}', 'PrintController@contrat');
+            Route::get('parameterContrat/{inscription_id}', 'PrintController@parameterContrat');
         });
 
         Route::get('/', 'IndexController@index');

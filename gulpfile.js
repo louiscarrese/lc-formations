@@ -292,6 +292,7 @@ var inscriptionDetail = Array.prototype.concat(
     detail,
     myEditable,
     [
+        'controllers/printParameter-controller.js',
         'services/data/inscriptions-service.js',
         'services/data/stagiaires-service.js',
         'services/data/sessions-service.js',
@@ -379,6 +380,7 @@ elixir(function(mix) {
         .less('print/emargement.less')
         .less('print/suivi-session.less')
         .less('print/attestation.less')
+        .less('print/contrat.less')
 
         .scripts(array_unique(Array.prototype.concat(
             parametres,

@@ -180,6 +180,7 @@ return [
          */
         ModuleFormation\Providers\DireccteServiceProvider::class,
         ModuleFormation\Providers\MailGeneratorServiceProvider::class,
+        ModuleFormation\Providers\PrintServiceProvider::class,
         ModuleFormation\Providers\SearchServiceProvider::class,
         ModuleFormation\Providers\SessionServiceProvider::class,
         ModuleFormation\Providers\ViewServiceProvider::class,
