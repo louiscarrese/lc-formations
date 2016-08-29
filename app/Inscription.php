@@ -44,14 +44,17 @@ class Inscription extends AbstractModel
 
         $limitDate = $parametreRepository->debutSaison();
 
-        return $query->whereHas('session.session_jours', function($q) use ($limitDate) {
-            $q->where('date', '>', $limitDate);
-        })
-        ->orWhereNotExists(function ($q) {
-            $q->select(\DB::Raw(1))
-                ->from('session_jours')
-                ->whereRaw('session_jours.session_id = inscriptions.session_id');
+        return $query->where(function($qu) use ($limitDate) {
+            $qu->whereHas('session.session_jours', function($q) use ($limitDate) {
+                $q->where('date', '>', $limitDate);
+            })
+            ->orWhereNotExists(function ($q) {
+                $q->select(\DB::Raw(1))
+                    ->from('session_jours')
+                    ->whereRaw('session_jours.session_id = inscriptions.session_id');
+            });
         });
+
     }
 
 }

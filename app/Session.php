@@ -28,14 +28,17 @@ class Session extends AbstractModel
 
         $limitDate = $parametreRepository->debutSaison();
 
-        return $query->whereHas('session_jours', function($q) use ($limitDate) {
-            $q->where('date', '>', $limitDate);
-        })
-        ->orWhereNotExists(function ($q) {
-            $q->select(\DB::Raw(1))
-                ->from('session_jours')
-                ->whereRaw('session_jours.session_id = sessions.id');
+        return $query->where(function($qu) use ($limitDate) {
+            $qu->whereHas('session_jours', function($q) use ($limitDate) {
+                $q->where('date', '>', $limitDate);
+            })
+            ->orWhereNotExists(function ($q) {
+                $q->select(\DB::Raw(1))
+                    ->from('session_jours')
+                    ->whereRaw('session_jours.session_id = sessions.id');
+            });
         });
+
     }
 
 }
