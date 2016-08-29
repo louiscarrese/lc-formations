@@ -15,7 +15,7 @@
     $filter .= ' track by item.' . $idField;
 ?>
 
-<h2>{{$title}}</h2>
+<h2>{{$customTitle or $title}}</h2>
 
 <div ng-controller="{{$controllerName}} as ctrl"
     @if(isset($queryMethod))
