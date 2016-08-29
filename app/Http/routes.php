@@ -21,6 +21,7 @@ Route::group(['prefix' => 'intra'], function() {
             Route::get('stagiaire/search', 'StagiaireController@search');
             Route::get('session/mail_formateurs', 'SessionController@generateFormateursMail');
             Route::get('session/upcoming', 'SessionController@upcoming');
+            Route::get('inscription/en_cours', 'InscriptionController@enCours');
 
             //Listes fermées
             Route::resource('stagiaire_type', 'StagiaireTypeController', 

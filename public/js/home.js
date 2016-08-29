@@ -12341,6 +12341,16 @@ function sessionsServiceFactory($resource) {
 }
 
 
+function inscriptionsServiceFactory($resource) {
+    return $resource('/intra/api/inscription/:id', null, {
+        'update' : { method: 'PUT' },
+        'en_cours': {
+            url: '/intra/api/inscription/en_cours',
+            method: 'GET',
+            isArray: true
+        }
+    });
+}
 function sessionsTableServiceFactory($filter, sharedDataService) {
     //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
@@ -12378,4 +12388,62 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
     };
 }
 
+function inscriptionsTableServiceFactory($filter, sharedDataService) {
+    return {
+        queryParameters: function() {
+            var ret = {};
+            if(sharedDataService.data.stagiaire_id) {
+                ret['stagiaire_id'] = sharedDataService.data.stagiaire_id;
+            } else if(sharedDataService.data.session_id) {
+                ret['session_id'] = sharedDataService.data.session_id;
+            }
+            return ret;
+        },
+
+        getSuccess:  function(data) {
+            data.session.libelle = '';
+            if(data.session.firstDate || data.session.lastDate) {
+                if(data.session.firstDate) {
+                    data.session.libelle += $filter('date')(data.session.firstDate, 'dd/MM/yyyy');
+                }
+                if(data.session.lastDate) {
+                    data.session.libelle += ' - ' + $filter('date')(data.session.lastDate, 'dd/MM/yyyy');
+                }
+            }
+        },
+
+        deleteMessage: function() {
+            var message = 'Etes vous sur de vouloir supprimer cette inscription ?';
+            message += '\nLes éléments associés suivants seront également supprimés : ';
+            message += '\n - Financements ';
+            return message;
+        },
+
+        addListeners: function(ctrl) {
+            ctrl.getRowClass = function(item) {
+                if(item.statut.id == 'pending') {
+                    return 'warning';
+                } else if(item.statut.id == 'validated') {
+                    return 'success';
+                } else if(item.statut.id == 'canceled') {
+                    return 'danger';
+                } else if(item.statut.id == 'withdrawn') {
+                    return 'danger';
+                }
+                return null;
+            }
+        }
+    };
+}
+angular.module('homeApp', ['ngResource', 'listTable'])
+    .factory('sessionsService', ['$resource', sessionsServiceFactory])
+    .factory('sessionsTableService', ['$filter', 'sharedDataService', sessionsTableServiceFactory])
+
+    .controller('sessionsListController', ['$filter', '$attrs', 'sessionsService', 'sessionsTableService', editableTableController])
+
+    .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
+    .factory('inscriptionsTableService', ['$filter', 'sharedDataService', inscriptionsTableServiceFactory])
+
+    .controller('inscriptionsListController', ['$filter', '$attrs', 'inscriptionsService', 'sessionsTableService', editableTableController])
+;
 //# sourceMappingURL=home.js.map

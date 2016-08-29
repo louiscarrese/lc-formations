@@ -9,4 +9,5 @@
 @section('content')
     @include('components.lists.sessions', ['queryMethod' => 'upcoming'])
 
+    @include('components.lists.inscriptions', ['queryMethod' => 'en_cours'])
 @endsection

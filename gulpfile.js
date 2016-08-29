@@ -369,7 +369,9 @@ var home = Array.prototype.concat(
     listTable,
     [
         'services/data/sessions-service.js',
+        'services/data/inscriptions-service.js',
         'services/tables/sessions-service.js',
+        'services/tables/inscriptions-service.js',
     ]
 );
 
