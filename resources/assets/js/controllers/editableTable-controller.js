@@ -148,13 +148,13 @@ function editableTableController($filter, $attrs, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
+        
         var confirmed = false;
-        if(tableService != undefined && typeof tableService['deleteMessage'] == 'function' 
-            && window.confirm(tableService.deleteMessage())) {
-                confirmed = true;
-        } else {
-            confirmed = false;
+        if(tableService == undefined || typeof tableService['deleteMessage'] != 'function'
+            || window.confirm(tableService.deleteMessage())) {
+            confirmed = true;
         }
+
         if(confirmed) {
             type.$delete({id: type.internalKey}, 
                 function(value, responseHeaders) {
