@@ -12829,6 +12829,7 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap', 'dnTim
 
 function modulesServiceFactory($resource) {
     return $resource('/intra/api/module/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
@@ -12842,6 +12843,7 @@ function domaineFormationsServiceFactory($resource) {
 
 function formateursServiceFactory($resource) {
     return $resource('/intra/api/formateur/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
@@ -13079,6 +13081,9 @@ function editableTableController($filter, $attrs, dataService, tableService) {
     self.delete = del;
     self.get = get;
 
+    //Paginator
+    self.gotoPage = gotoPage;
+
     self.getSuccess = getSuccess;
 
     self.editSubmit = editSubmit;
@@ -13090,6 +13095,8 @@ function editableTableController($filter, $attrs, dataService, tableService) {
     self.extractErrors = extractErrors;
 
     //Data
+    self.data = {};
+    self.paginator = {};
 
     self.queryParameters = {};
     self.queryString = queryString;
@@ -13166,15 +13173,37 @@ function editableTableController($filter, $attrs, dataService, tableService) {
         self.data = self.query();
     }
 
-    function query() {
+    function query(pageId) {
+        //If we have custom query parameters in the table service, use them
         if(tableService != undefined && typeof tableService.queryParameters == 'function') {
             self.queryParameters = tableService.queryParameters();
         }
         
-        return dataService[self.queryMethod](self.queryParameters, function() {
+        //If we were given a page id, use it
+        if(pageId != undefined) {
+            self.queryParameters['page'] = pageId;
+        }
+
+        return dataService[self.queryMethod](self.queryParameters, function(result) {
+            //if the result looks like a paginated result
+            if(result.current_page != undefined) {
+                //Store the given data
+                self.data = result.data;
+                
+                //Store the paginator infos and remove the data from it
+                self.paginator = result;
+                delete self.paginator.data;
+            } else {
+                self.data = result;
+                self.paginator = {};
+            }
+
+            //Augment data with whatever is needed
             angular.forEach(self.data, function(value, key) {
                 self.getSuccess(value);
             });
+
+            //Init sort
             self.sort();
         });
     }
@@ -13209,13 +13238,13 @@ function editableTableController($filter, $attrs, dataService, tableService) {
      */
      function del(type, ctrlsToRefresh) {
         self.errors = [];
+        
         var confirmed = false;
-        if(tableService != undefined && typeof tableService['deleteMessage'] == 'function' 
-            && window.confirm(tableService.deleteMessage())) {
-                confirmed = true;
-        } else {
-            confirmed = false;
+        if(tableService == undefined || typeof tableService['deleteMessage'] != 'function'
+            || window.confirm(tableService.deleteMessage())) {
+            confirmed = true;
         }
+
         if(confirmed) {
             type.$delete({id: type.internalKey}, 
                 function(value, responseHeaders) {
@@ -13279,6 +13308,10 @@ function editableTableController($filter, $attrs, dataService, tableService) {
             self.data[self.data.indexOf(type)] = value;
         });
     };
+
+    function gotoPage(pageNum) {
+        self.query(pageNum);
+    }
 
     function closeAlert(index) {
         self.errors.splice(index, 1);
@@ -13382,13 +13415,88 @@ angular.module('tarifsList', ['ngResource', 'editableTable'])
     .controller('tarifsController', ['$filter', '$attrs', 'tarifsService', 'tarifsTableService', editableTableController])
 ;
 
+function myPaginator() {
+    function buildPaginator(paginator, scope, elem) {
+        elem.empty();
+
+        var mainDiv = angular.element('<div></div>')
+            .addClass('paginator');
+        elem.append(mainDiv);
+
+        if(paginator.last_page > 1) {
+
+            var prevBtn = angular.element('<button>&lt;</button>')
+                .addClass('btn btn-default')
+                .on('click', scope.prevPage);
+            if(paginator.prev_page_url == null) {
+                prevBtn.addClass('disabled');
+            }
+
+            mainDiv.append(prevBtn);
+
+            for(var i = 1; i <= paginator.last_page; i++) {                
+                var pageBtn = angular.element('<button>' + i + '</button>')
+                    .addClass('btn btn-default')
+                    .data('pageNum', i)
+                    .on('click', function() {
+                        scope.gotoPage()(angular.element(this).data('pageNum'))
+                    });
+                if(paginator.current_page == i) {
+                    pageBtn.addClass('disabled');
+                }                
+                mainDiv.append(pageBtn);
+            }
+
+            var nextBtn = angular.element('<button>&gt;</button>')
+                .addClass('btn btn-default')
+                .on('click', scope.nextPage);
+            if(paginator.next_page_url == null) {
+                nextBtn.addClass('disabled');
+            }
+            mainDiv.append(nextBtn);
+
+        }
+    }
+
+    var directive = {
+        restrict: 'E', 
+        scope: {
+            paginator: '=',
+            gotoPage: '&'
+        },
+        controller: ['$scope', function($scope) {
+
+            $scope.nextPage = function () {
+                $scope.gotoPage()($scope.paginator.current_page + 1);
+            }
+
+            $scope.prevPage = function () {
+                $scope.gotoPage()($scope.paginator.current_page - 1);
+            };
+
+        }],
+
+        link: function(scope, elem, attrs) {
+            scope.$watch('paginator', function(newValue, oldValue) {
+                if(newValue !== oldValue) {
+                    buildPaginator(newValue, scope, elem);
+                }
+            }, true);
+        }
+
+    }
+
+    return directive;
+}
 angular.module('listTable', ['sortableHeader'])
     .factory('sharedDataService', sharedDataServiceFactory)
     .filter('myCustomFilter', myCustomFilter)
+    .directive('myPaginator', myPaginator)
 ;
 
 function sessionsServiceFactory($resource) {
     return $resource('/intra/api/session/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { 
             method: 'PUT'
         },

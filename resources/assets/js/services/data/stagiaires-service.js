@@ -1,5 +1,6 @@
 function stagiairesServiceFactory($resource) {
     return $resource('/intra/api/stagiaire/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',

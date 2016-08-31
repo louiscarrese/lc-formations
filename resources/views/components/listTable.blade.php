@@ -83,4 +83,6 @@
             <span>Ajouter</span>
         </a>
     </div>
+
+    <my-paginator paginator="ctrl.paginator" goto-page="ctrl.gotoPage"></my-paginator>
 </div>

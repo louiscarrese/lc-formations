@@ -61,6 +61,7 @@ var listTable = Array.prototype.concat(
         'filters/myCustomFilter-filter.js',
         'controllers/editableTable-controller.js',
         'services/shareddata-service.js',
+        'directives/my-paginator-directive.js',
         'modules/list-table-module.js'
     ]
 );

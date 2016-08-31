@@ -6,6 +6,7 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
     protected $modelClassName = 'ModuleFormation\\Inscription';
 
     protected $defaultScope = "current";
+    protected $isPaginated = true;
 
     private $sessionRepository;
     private $tarifRepository;

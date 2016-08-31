@@ -7,6 +7,10 @@ abstract class AbstractRepository implements RepositoryInterface {
 
     protected $model;
 
+    protected $isPaginated = false;
+
+    protected $parametreRepository;
+
     protected $defaultScope = null;
 
     /**
@@ -66,6 +70,7 @@ abstract class AbstractRepository implements RepositoryInterface {
     public function __construct($app)
     {
         $this->model = $app->make($this->modelClassName);
+        $this->parametreRepository = $app->make('ModuleFormation\Repositories\ParametreRepositoryInterface');
     }
 
     public function model() {
@@ -80,15 +85,22 @@ abstract class AbstractRepository implements RepositoryInterface {
 
         //If there is no scope available or we are told not to use it
         if($scope === false || ($scope === null && $this->defaultScope === null)) {
-            $datas = $this->model->get();
+            $req = $this->model;
         } else { //$scope !== false && ($scope !== null || $this->defaultScope !== null)
             //If a scope has been provided, use it
             if($scope !== null) {
-                $datas = $this->model->{$scope}()->get();
+                $req = $this->model->{$scope}();
             } else {
                 //Use the default scope
-                $datas = $this->model->{$this->defaultScope}()->get();
+                $req = $this->model->{$this->defaultScope}();
             }
+        }
+
+        //Pagination
+        if($this->isPaginated) {
+            $datas = $req->paginate($this->parametreRepository->paginationThreshold());
+        } else {
+            $datas = $req->get();
         }
 
         foreach($datas as $data) {

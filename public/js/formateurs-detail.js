@@ -12829,6 +12829,7 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap', 'dnTim
 
 function formateursServiceFactory($resource) {
     return $resource('/intra/api/formateur/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }

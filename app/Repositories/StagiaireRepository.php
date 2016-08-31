@@ -4,5 +4,6 @@ namespace ModuleFormation\Repositories;
 class StagiaireRepository extends AbstractRepository implements StagiaireRepositoryInterface
 {
     protected $modelClassName = 'ModuleFormation\\Stagiaire';
+    protected $isPaginated = true;
 
 }

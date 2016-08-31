@@ -6,7 +6,8 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
     protected $modelClassName = 'ModuleFormation\\Session';
 
     protected $defaultScope = "current";
-
+    protected $isPaginated = true;
+    
     private $sessionService;
     private $mailGeneratorService;
 

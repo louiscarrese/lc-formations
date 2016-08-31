@@ -18,6 +18,9 @@ function editableTableController($filter, $attrs, dataService, tableService) {
     self.delete = del;
     self.get = get;
 
+    //Paginator
+    self.gotoPage = gotoPage;
+
     self.getSuccess = getSuccess;
 
     self.editSubmit = editSubmit;
@@ -29,6 +32,8 @@ function editableTableController($filter, $attrs, dataService, tableService) {
     self.extractErrors = extractErrors;
 
     //Data
+    self.data = {};
+    self.paginator = {};
 
     self.queryParameters = {};
     self.queryString = queryString;
@@ -105,15 +110,37 @@ function editableTableController($filter, $attrs, dataService, tableService) {
         self.data = self.query();
     }
 
-    function query() {
+    function query(pageId) {
+        //If we have custom query parameters in the table service, use them
         if(tableService != undefined && typeof tableService.queryParameters == 'function') {
             self.queryParameters = tableService.queryParameters();
         }
         
-        return dataService[self.queryMethod](self.queryParameters, function() {
+        //If we were given a page id, use it
+        if(pageId != undefined) {
+            self.queryParameters['page'] = pageId;
+        }
+
+        return dataService[self.queryMethod](self.queryParameters, function(result) {
+            //if the result looks like a paginated result
+            if(result.current_page != undefined) {
+                //Store the given data
+                self.data = result.data;
+                
+                //Store the paginator infos and remove the data from it
+                self.paginator = result;
+                delete self.paginator.data;
+            } else {
+                self.data = result;
+                self.paginator = {};
+            }
+
+            //Augment data with whatever is needed
             angular.forEach(self.data, function(value, key) {
                 self.getSuccess(value);
             });
+
+            //Init sort
             self.sort();
         });
     }
@@ -218,6 +245,10 @@ function editableTableController($filter, $attrs, dataService, tableService) {
             self.data[self.data.indexOf(type)] = value;
         });
     };
+
+    function gotoPage(pageNum) {
+        self.query(pageNum);
+    }
 
     function closeAlert(index) {
         self.errors.splice(index, 1);

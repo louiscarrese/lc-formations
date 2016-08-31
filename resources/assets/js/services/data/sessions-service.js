@@ -1,5 +1,6 @@
 function sessionsServiceFactory($resource) {
     return $resource('/intra/api/session/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { 
             method: 'PUT'
         },

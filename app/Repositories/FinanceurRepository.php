@@ -4,7 +4,8 @@ namespace ModuleFormation\Repositories;
 class FinanceurRepository extends AbstractRepository implements FinanceurRepositoryInterface
 {
     protected $modelClassName = 'ModuleFormation\\Financeur';
-
+    protected $isPaginated = true;
+    
     protected $financeurTypeRepository;
 
     function __construct($app, FinanceurTypeRepositoryInterface $financeurTypeRepository) {

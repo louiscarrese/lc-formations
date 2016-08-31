@@ -30,6 +30,11 @@ class CreateParametreTable extends Migration
         $responsable->key = 'responsable_formations';
         $responsable->value = 'Rozenn Lebastard';
         $responsable->save();
+
+        $responsable = new Parametre();
+        $responsable->key = 'pagination_threshold';
+        $responsable->value = '10';
+        $responsable->save();
     }
 
     /**

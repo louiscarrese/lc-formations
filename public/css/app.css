@@ -6561,6 +6561,15 @@ label {
   display: inline-block;
   width: 24%;
 }
+/** Paginator */
+my-paginator {
+  text-align: center;
+}
+my-paginator .paginator {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 /** Preinscriptions */
 .inscription-header {
   border-top-left-radius: 6px;
