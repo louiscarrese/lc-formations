@@ -17,6 +17,8 @@ class Inscription extends AbstractModel
     protected $fillable = ['id', 'profession_structure', 'experiences', 'attentes', 
         'suggestions', 'formations_precedentes', 'statut', 'stagiaire_id', 'session_id', 'tarif_id'];
 
+    public $searchable = ['profession_structure', 'experiences', 'attentes', 'suggestions', 'formations_precedentes', 'statut'];
+
     function stagiaire() {
         return $this->belongsTo('ModuleFormation\Stagiaire');
     }

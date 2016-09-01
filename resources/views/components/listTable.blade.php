@@ -1,20 +1,3 @@
-{{-- Some things have to be computed beforehand ot it becomes a real mess later --}}
-<?php 
-    //We'll compute the filter string for the ng-repeat
-    $filter = 'myCustomFilter:ctrl.filterInput';
-
-    //Keep the identifying property
-    foreach($fields as $fieldId => $field) {
-        if(isset($field['filterable']) && $field['filterable'] != false) {
-            $filterField = $field['filterable'] === true ? $fieldId : $field['filterable'];
-
-            $filter .= ":'" . $filterField . "'";
-        }
-    }
-    $filter .= '| orderBy:ctrl.sortProp:ctrl.sortReverse';
-    $filter .= ' track by item.' . $idField;
-?>
-
 <h2>{{$customTitle or $title}}</h2>
 
 <div ng-controller="{{$controllerName}} as ctrl"
@@ -22,8 +5,14 @@
         query-method="{{$queryMethod}}"
     @endif
 >
-    <input type="text" ng-model="ctrl.filterInput" placeholder="Recherche locale" class="form-control" />
-
+    <form>
+        <div class="input-group">
+            <input type="text" ng-model="ctrl.searchQuery" placeholder="Recherche locale" class="form-control" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="ctrl.search()" type="submit">Search</button>
+            </span>
+        </div>
+    </form>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -51,7 +40,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in ctrl.data | {{$filter}}" ng-class="ctrl.getRowClass(item)">
+            <tr ng-repeat="item in ctrl.data | orderBy:ctrl.sortProp:ctrl.sortReverse track by item.{{$idField}}">
                 @foreach($fields as $fieldId => $field)
                     @if((isset($displayedField) && in_array($fieldId, $displayedField)) 
                     || (!isset($displayedField) && (!isset($field['defaultHidden']) || !$field['defaultHidden'])))

@@ -13,6 +13,11 @@ function sessionsServiceFactory($resource) {
             url: '/intra/api/session/upcoming',
             method: 'GET',
             isArray: true
+        },
+        'search' : {
+            method: 'GET',
+            url: '/intra/api/session/search',
+            isArray: true
         }
     });
 }

@@ -18,10 +18,19 @@ Route::group(['prefix' => 'intra'], function() {
     Route::group(['middleware' => 'auth.basic.name'], function() { // possible to merge this with the first group ?
         Route::group(['prefix' => 'api', 'namespace' => 'Api'], function() {
             Route::post('session_jour/create_default', 'SessionJourController@createDefault');
-            Route::get('stagiaire/search', 'StagiaireController@search');
             Route::get('session/mail_formateurs', 'SessionController@generateFormateursMail');
             Route::get('session/upcoming', 'SessionController@upcoming');
             Route::get('inscription/en_cours', 'InscriptionController@enCours');
+
+            //Recherches
+            Route::get('employeur/search', 'EmployeurController@search');
+            Route::get('financeur/search', 'FinanceurController@search');
+            Route::get('formateur/search', 'FormateurController@search');
+            Route::get('inscription/search', 'InscriptionController@search');
+            Route::get('module/search', 'ModuleController@search');
+            Route::get('session/search', 'SessionController@search');
+            Route::get('stagiaire/search', 'StagiaireController@search');
+
 
             //Listes fermées
             Route::resource('stagiaire_type', 'StagiaireTypeController', 

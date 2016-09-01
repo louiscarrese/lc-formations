@@ -9,6 +9,8 @@ class Session extends AbstractModel
 
     protected $fillable = ['id', 'effectif_max', 'objectifs_pedagogiques', 'materiel', 'module_id'];
 
+    public $searchable = ['objectifs_pedagogiques', 'materiel'];
+
     public function module() {
         return $this->belongsTo('ModuleFormation\Module');
     }

@@ -12056,6 +12056,7 @@ function editableTableController($filter, $attrs, dataService, tableService) {
     self.update = update;
     self.delete = del;
     self.get = get;
+    self.search = search;
 
     //Paginator
     self.gotoPage = gotoPage;
@@ -12082,6 +12083,7 @@ function editableTableController($filter, $attrs, dataService, tableService) {
 
     self.errorMessage = "";
     self.filterInput = "";
+    self.searchQuery = "";
 
     self.sortProp = "id";
     self.sortReverse = false;
@@ -12285,6 +12287,25 @@ function editableTableController($filter, $attrs, dataService, tableService) {
         });
     };
 
+    function search() {
+        if(self.searchQuery == "") {
+            return self.query();
+        }
+
+        dataService.search({query: self.searchQuery}, function(result) {
+            self.data = result;
+            self.paginator = {};
+
+            //Augment data with whatever is needed
+            angular.forEach(self.data, function(value, key) {
+                self.getSuccess(value);
+            });
+
+            //Init sort
+            self.sort();
+        });
+    }
+
     function gotoPage(pageNum) {
         self.query(pageNum);
     }
@@ -12442,6 +12463,11 @@ function sessionsServiceFactory($resource) {
             url: '/intra/api/session/upcoming',
             method: 'GET',
             isArray: true
+        },
+        'search' : {
+            method: 'GET',
+            url: '/intra/api/session/search',
+            isArray: true
         }
     });
 }
@@ -12454,6 +12480,11 @@ function inscriptionsServiceFactory($resource) {
         'en_cours': {
             url: '/intra/api/inscription/en_cours',
             method: 'GET',
+            isArray: true
+        },
+        'search' : {
+            method: 'GET',
+            url: '/intra/api/inscription/search',
             isArray: true
         }
     });

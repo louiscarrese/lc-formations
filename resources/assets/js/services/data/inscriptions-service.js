@@ -6,6 +6,11 @@ function inscriptionsServiceFactory($resource) {
             url: '/intra/api/inscription/en_cours',
             method: 'GET',
             isArray: true
+        },
+        'search' : {
+            method: 'GET',
+            url: '/intra/api/inscription/search',
+            isArray: true
         }
     });
 }
