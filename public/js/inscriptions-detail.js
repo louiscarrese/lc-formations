@@ -12841,6 +12841,11 @@ function printParameterController($uibModalInstance) {
 function inscriptionsServiceFactory($resource) {
     return $resource('/intra/api/inscription/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/inscription/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'en_cours': {
             url: '/intra/api/inscription/en_cours',
@@ -12857,6 +12862,11 @@ function inscriptionsServiceFactory($resource) {
 function stagiairesServiceFactory($resource) {
     return $resource('/intra/api/stagiaire/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/stagiaire/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -12869,6 +12879,11 @@ function stagiairesServiceFactory($resource) {
 function sessionsServiceFactory($resource) {
     return $resource('/intra/api/session/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/session/all',
+            isArray: true
+        }, 
         'update' : { 
             method: 'PUT'
         },
@@ -12922,8 +12937,8 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
 
     return {
         getLinkedData: function() {
-            var stagiaire = stagiairesService.query();
-            var sessions = sessionsService.query();
+            var stagiaire = stagiairesService.all();
+            var sessions = sessionsService.all();
             var status = getInscriptionStatus();
 
             sessions.$promise.then(function(data) {
@@ -13464,6 +13479,11 @@ function financeurInscriptionsServiceFactory($resource) {
 function financeursServiceFactory($resource) {
     return $resource('/intra/api/financeur/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/financeur/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',

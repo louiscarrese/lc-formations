@@ -12830,6 +12830,11 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap', 'dnTim
 function sessionsServiceFactory($resource) {
     return $resource('/intra/api/session/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/session/all',
+            isArray: true
+        }, 
         'update' : { 
             method: 'PUT'
         },
@@ -12855,6 +12860,11 @@ function sessionsServiceFactory($resource) {
 function modulesServiceFactory($resource) {
     return $resource('/intra/api/module/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/module/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -12891,7 +12901,7 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
 
     return {
         getLinkedData: function() {
-            var modules = modulesService.query();
+            var modules = modulesService.all();
 
             return {
                 'modules': modules.$promise,
@@ -13452,6 +13462,11 @@ function sessionJoursServiceFactory($resource) {
 function formateursServiceFactory($resource) {
     return $resource('/intra/api/formateur/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/formateur/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -13633,6 +13648,11 @@ angular.module('listTable', ['sortableHeader'])
 function inscriptionsServiceFactory($resource) {
     return $resource('/intra/api/inscription/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/inscription/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'en_cours': {
             url: '/intra/api/inscription/en_cours',

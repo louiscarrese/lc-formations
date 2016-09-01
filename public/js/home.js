@@ -12451,6 +12451,11 @@ angular.module('listTable', ['sortableHeader'])
 function sessionsServiceFactory($resource) {
     return $resource('/intra/api/session/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/session/all',
+            isArray: true
+        }, 
         'update' : { 
             method: 'PUT'
         },
@@ -12476,6 +12481,11 @@ function sessionsServiceFactory($resource) {
 function inscriptionsServiceFactory($resource) {
     return $resource('/intra/api/inscription/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/inscription/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'en_cours': {
             url: '/intra/api/inscription/en_cours',

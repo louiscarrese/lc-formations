@@ -31,6 +31,15 @@ Route::group(['prefix' => 'intra'], function() {
             Route::get('session/search', 'SessionController@search');
             Route::get('stagiaire/search', 'StagiaireController@search');
 
+            //Listes sans pagination
+            Route::get('employeur/all', 'EmployeurController@all');
+            Route::get('financeur/all', 'FinanceurController@all');
+            Route::get('formateur/all', 'FormateurController@all');
+            Route::get('inscription/all', 'InscriptionController@all');
+            Route::get('module/all', 'ModuleController@all');
+            Route::get('session/all', 'SessionController@all');
+            Route::get('stagiaire/all', 'StagiaireController@all');
+
 
             //Listes fermées
             Route::resource('stagiaire_type', 'StagiaireTypeController', 

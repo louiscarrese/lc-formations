@@ -24,7 +24,7 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
 
     return {
         getLinkedData: function() {
-            var modules = modulesService.query();
+            var modules = modulesService.all();
 
             return {
                 'modules': modules.$promise,

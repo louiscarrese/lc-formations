@@ -12830,6 +12830,11 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap', 'dnTim
 function modulesServiceFactory($resource) {
     return $resource('/intra/api/module/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/module/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -12849,6 +12854,11 @@ function domaineFormationsServiceFactory($resource) {
 function formateursServiceFactory($resource) {
     return $resource('/intra/api/formateur/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/formateur/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -12876,7 +12886,7 @@ function moduleDetailServiceFactory($filter, sharedDataService, domaineFormation
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
-            var formateurs = formateursService.query();
+            var formateurs = formateursService.all();
             var lieus = lieuService.query();
 
             return {
@@ -13528,6 +13538,11 @@ angular.module('listTable', ['sortableHeader'])
 function sessionsServiceFactory($resource) {
     return $resource('/intra/api/session/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/session/all',
+            isArray: true
+        }, 
         'update' : { 
             method: 'PUT'
         },

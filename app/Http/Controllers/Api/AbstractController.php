@@ -18,6 +18,20 @@ abstract class AbstractController extends Controller
 
     public function index(Request $request) 
     {
+        $data = $this->getList($request);
+
+        return response()->json($data);
+    }
+
+    public function all(Request $request) 
+    {
+        $data = $this->getList($request, true);
+
+        return response()->json($data);
+    }
+
+    private function getList(Request $request, $forceNoPaginate = false)
+    {
         //Initialize with no criterias
         $criterias = array();
 
@@ -37,11 +51,10 @@ abstract class AbstractController extends Controller
             $data = $this->repository->findBy($criterias);
         } else {
             //else getAll
-            $data = $this->repository->getAll();
+            $data = $this->repository->getAll(null, $forceNoPaginate);
         }
 
-
-        return response()->json($data);
+        return $data;
     }
 
     /**

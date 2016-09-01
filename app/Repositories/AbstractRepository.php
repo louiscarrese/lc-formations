@@ -80,7 +80,7 @@ abstract class AbstractRepository implements RepositoryInterface {
     /**
      * Retrieve all the objects from the database.
      */
-    public function getAll($scope = null) {
+    public function getAll($scope = null, $forceNoPaginate = false) {
         $datas = array();
 
         //If there is no scope available or we are told not to use it
@@ -97,7 +97,7 @@ abstract class AbstractRepository implements RepositoryInterface {
         }
 
         //Pagination
-        if($this->isPaginated) {
+        if($this->isPaginated && !$forceNoPaginate) {
             $datas = $req->paginate($this->parametreRepository->paginationThreshold());
         } else {
             $datas = $req->get();

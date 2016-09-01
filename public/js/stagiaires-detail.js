@@ -12830,6 +12830,11 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap', 'dnTim
 function stagiairesServiceFactory($resource) {
     return $resource('/intra/api/stagiaire/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/stagiaire/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -12867,6 +12872,11 @@ function stagiairesServiceFactory($resource) {
 function employeursServiceFactory($resource) {
     return $resource('/intra/api/employeur/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/employeur/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -12885,7 +12895,7 @@ function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService,
     return {
         getLinkedData: function() {
             var stagiaireType = stagiaireTypesService.query();
-            var employeur = employeursService.query();
+            var employeur = employeursService.all();
             var niveau_formation = niveauFormationsService.query();
 
             return {
@@ -13465,6 +13475,11 @@ angular.module('listTable', ['sortableHeader'])
 function inscriptionsServiceFactory($resource) {
     return $resource('/intra/api/inscription/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
+        'all' : {
+            method: 'GET', 
+            url: '/intra/api/inscription/all',
+            isArray: true
+        }, 
         'update' : { method: 'PUT' },
         'en_cours': {
             url: '/intra/api/inscription/en_cours',

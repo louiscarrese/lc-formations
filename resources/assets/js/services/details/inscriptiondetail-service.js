@@ -29,8 +29,8 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
 
     return {
         getLinkedData: function() {
-            var stagiaire = stagiairesService.query();
-            var sessions = sessionsService.query();
+            var stagiaire = stagiairesService.all();
+            var sessions = sessionsService.all();
             var status = getInscriptionStatus();
 
             sessions.$promise.then(function(data) {
