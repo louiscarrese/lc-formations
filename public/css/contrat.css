@@ -22,5 +22,24 @@ h1 {
 .article {
   page-break-inside: avoid;
 }
+.date {
+  text-align: center;
+  margin-top: 3em;
+  margin-bottom: 2em;
+}
+.signature {
+  width: 49%;
+  display: inline-block;
+  margin-bottom: 4em;
+}
+.footer {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+}
+.footer span {
+  display: inline-block;
+  width: 33%;
+}
 
 /*# sourceMappingURL=contrat.css.map */

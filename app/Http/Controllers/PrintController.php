@@ -6,6 +6,7 @@ use Log;
 use Illuminate\Http\Request;
 use ModuleFormation\Http\Controllers\Controller;
 use ModuleFormation\Repositories\SessionRepositoryInterface;
+use ModuleFormation\Repositories\InscriptionRepositoryInterface;
 use ModuleFormation\Services\PrintServiceInterface;
 use PDF;
 
@@ -50,13 +51,17 @@ class PrintController extends Controller
         return $pdf->stream($title);
     }
 
-    public function contrat($inscription_id, Request $request, PrintServiceInterface $printService) {
+    public function contrat($inscription_id, Request $request, PrintServiceInterface $printService, InscriptionRepositoryInterface $inscriptionRepository) {
 
-        $parameters = array_merge($printService->prepareContratParameters($inscription_id), $request->all());
+        $inscription = $inscriptionRepository->find($inscription_id, false);
+
+        $parameters = array_merge($printService->prepareContratParameters($inscription), $request->all());
 
         $pdf = PDF::loadView('print.contrat', $parameters);
 
-        return $pdf->stream('title test');
+        $title = 'Contrat ' . $printService->getLibelleForContrat($inscription);
+
+        return $pdf->stream($title);
 
     }
 

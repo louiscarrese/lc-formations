@@ -75,23 +75,38 @@
         </p>
     Si une contestation ou un différend ne peuvent être réglés à l’amiable, le Tribunal de Rennes sera seul compétent pour se prononcer sur le litige.
     </div>
-    <p class="date">
-    Fait en double exemplaire, à Rennes, le.....................................
-    </p>
-    <p class="signature stagiaire">
-    Pour le stagiaire <strong>{{$nom_prenom_stagiaire}}</strong>
-    Signature
-    </p>
-    <p class="signature jardin">
-    Pour l'ASSOCIATION LE JARDIN MODERNE Rozenn Lebastard, responsable des formations
-    Signature
-    </p>
-    <p class="notice">
-    ￼La convention est à renvoyer à l’adresse suivante :
-    l'Association le Jardin Moderne, 11 rue du Manoir de Servigné (ZI Lorient) 35000 RENNES
-    </p>
-    <p class="footer">
-    Tél : 02 99 14 04 68 / Fax : 02 99 14 04 69 www.jardinmoderne.org N° de SIREN : 419 541 719 00011 – Code APE 9499 Z
-    </p>
+    <div class="date">
+    Fait en double exemplaire, à Rennes, le {{\Carbon\Carbon::now()->format('d/m/Y')}}
+    </div>
+    <div class="signature stagiaire">
+        <p>
+            Pour le stagiaire <strong>{{$nom_prenom_stagiaire}}</strong><br /><br />
+        </p>
+        <p>
+            Signature
+        </p>
+    </div>
+    <div class="signature jardin">
+        <p>
+            Pour l'<strong>ASSOCIATION LE JARDIN MODERNE</strong> Rozenn Lebastard, responsable des formations
+        </p>
+        <p>
+            Signature
+        </p>
+    </div>
+    <div class="notice">
+        <p>
+            La convention est à renvoyer à l’adresse suivante :
+        </p>
+        <p>
+            l'Association le Jardin Moderne, 11 rue du Manoir de Servigné (ZI Lorient) 35000 RENNES
+        </p>
+    </div>
+    <div class="footer">
+        <p>
+            <span>Tél : 02 99 14 04 68</span><span>Fax : 02 99 14 04 69</span><span>www.jardinmoderne.org</span><br />
+            N° de SIREN : 419 541 719 00011 – Code APE 9499 Z
+        </p>
+    </div>
 </div>
 @endsection

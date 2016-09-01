@@ -11,4 +11,5 @@ interface PrintServiceInterface {
     public function prepareSuiviSessionParameters($session);
     
     public function getSessionLibelleForTitle($session);
+    public function getLibelleForContrat($inscription);
 }

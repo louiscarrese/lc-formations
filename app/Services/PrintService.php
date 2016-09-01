@@ -25,11 +25,9 @@ class PrintService implements PrintServiceInterface {
 
     }
 
-    public function prepareContratParameters($inscription_id) {
-        $inscription = $this->inscriptionRepository->find($inscription_id, false);
-
+    public function prepareContratParameters($inscription) {
         $ret = array();
-        $ret["inscription_id"] = $inscription_id;
+        $ret["inscription_id"] = $inscription->id;
         $ret["nom_prenom_stagiaire"] = $inscription->stagiaire->prenom . " " . $inscription->stagiaire->nom;
         $ret["adresse_stagiaire"] = $inscription->stagiaire->adresse . " " . $inscription->stagiaire->code_postal . " " . $inscription->stagiaire->ville;
         $ret["libelle_module"] = $inscription->session->module->libelle;
@@ -117,6 +115,15 @@ class PrintService implements PrintServiceInterface {
 
         return $ret;
     } 
+
+    public function getLibelleForContrat($inscription) {
+        $stagiaire_name = $inscription->stagiaire->prenom . " " . $inscription->stagiaire->nom;
+        $module_label = $inscription->session->module->libelle;
+
+        $ret = $stagiaire_name . ' - ' . $module_label;
+
+        return $ret;
+    }
 
     private function calculateDuree($session) {
         $ret = 0;
