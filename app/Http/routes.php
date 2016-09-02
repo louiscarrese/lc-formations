@@ -102,6 +102,8 @@ Route::group(['prefix' => 'intra'], function() {
             Route::get('dataExtraction', 'PrintController@dataExtraction');
             Route::get('contrat/{inscription_id}', 'PrintController@contrat');
             Route::get('parameterContrat/{inscription_id}', 'PrintController@parameterContrat');
+            Route::get('convention/{inscription_id}', 'PrintController@convention');
+            Route::get('parameterConvention/{inscription_id}', 'PrintController@parameterConvention');
         });
 
         Route::get('/', 'IndexController@index');

@@ -12999,6 +12999,17 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
 
                 event.preventDefault();
             }
+            controller.conventionFormation = function(event) {
+                controller.conventionParameterModal = $uibModal.open({
+                    templateUrl: '../print/parameterConvention/' + controller.data.id,
+                    size: 'lg',
+                    appendTo: angular.element(document.getElementById('impressions')),
+                    controller: ['$uibModalInstance', printParameterController],
+                    controllerAs: 'printParameterCtrl',
+                });
+
+                event.preventDefault();
+            }
         }
     }
 }

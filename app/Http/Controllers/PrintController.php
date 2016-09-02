@@ -65,13 +65,37 @@ class PrintController extends Controller
 
     }
 
+    public function convention($inscription_id, Request $request, PrintServiceInterface $printService, InscriptionRepositoryInterface $inscriptionRepository) {
+
+        $inscription = $inscriptionRepository->find($inscription_id, false);
+
+        $parameters = array_merge($printService->prepareConventionParameters($inscription), $request->all());
+
+        $pdf = PDF::loadView('print.convention', $parameters);
+
+        $title = 'Convention ' . $printService->getLibelleForContrat($inscription);
+
+        return $pdf->stream($title);
+
+    }
+
     public function dataExtraction() {
         return view('data_extraction');
     }
 
-    public function parameterContrat(PrintServiceInterface $printService, $inscription_id) {
-        $parameters = $printService->prepareContratParameters($inscription_id);
+    public function parameterContrat(PrintServiceInterface $printService, InscriptionRepositoryInterface $inscriptionRepository, $inscription_id) {
+        $inscription = $inscriptionRepository->find($inscription_id, false);
+
+        $parameters = $printService->prepareContratParameters($inscription);
 
         return view('print.parameters.parameterContrat', $parameters);
+    }
+
+    public function parameterConvention(PrintServiceInterface $printService, InscriptionRepositoryInterface $inscriptionRepository,  $inscription_id) {
+        $inscription = $inscriptionRepository->find($inscription_id, false);
+
+        $parameters = $printService->prepareConventionParameters($inscription);
+
+        return view('print.parameters.parameterConvention', $parameters);
     }
 }

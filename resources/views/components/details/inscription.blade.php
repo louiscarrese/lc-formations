@@ -162,6 +162,9 @@
         <span class="col-sm-2">
             <button ng-click="detailCtrl.contratFormation($event);" class="btn btn-default">Contrat de formation</button>
         </span>
+        <span class="col-sm-2">
+            <button ng-click="detailCtrl.conventionFormation($event);" class="btn btn-default">Convention de formation</button>
+        </span>
     </div>
 
 </div>

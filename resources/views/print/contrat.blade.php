@@ -19,22 +19,22 @@
     </p>
     <p>
     2) <strong>{{$nom_prenom_stagiaire}}</strong><br />
-    Rue du paradis, 35000 Rennes
+    {{$adresse_stagiaire}}
     </p>
     <div class="article">
         <p class="article-title">
             Article 1er : objet de la convention
         </p>
-    En exécution de la présente convention, l'association LE JARDIN MODERNE s'engage à organiser une formation intitulée <strong>{{$libelle_module}}</strong>, qui se déroulera <strong>{{$dates}}</strong>, décrite à l'annexe ci-jointe dans les conditions fixées par les articles suivants.
+    En exécution de la présente convention, l'association <strong>LE JARDIN MODERNE</strong> s'engage à organiser une formation intitulée <strong>{{$libelle_module}}</strong>, qui se déroulera <strong>{{$dates}}</strong>, décrite à l'annexe ci-jointe dans les conditions fixées par les articles suivants.
     </div>
     <div class="article">
         <p class="article-title">
             Article 2 : nature et caractéristiques de l’action de formation
         </p>
-    a) L'action de formation envisagée entre dans l'une des catégories prévues à l'article L.6313-1 de la sixième partie du Code du travail.
-    b) Cette action de formation est définie par une annexe jointe à la présente convention, qui indique ses objectifs, son programme plus détaillé, ses horaires, le public présenté à la formation, le lieu de déroulement du stage, les moyens pédagogiques, le formateur, les modalités de suivi et appréciation des résultats.
-    A l'issue de la formation, une attestation de formation sera délivrée au stagiaire.
-    Sa durée est fixée à <strong>{{$duree}}</strong> heures.
+    a) L'action de formation envisagée entre dans l'une des catégories prévues à l'article L.6313-1 de la sixième partie du Code du travail.<br />
+    b) Cette action de formation est définie par une annexe jointe à la présente convention, qui indique ses objectifs, son programme plus détaillé, ses horaires, le public présenté à la formation, le lieu de déroulement du stage, les moyens pédagogiques, le formateur, les modalités de suivi et appréciation des résultats.<br />
+    A l'issue de la formation, une attestation de formation sera délivrée au stagiaire.<br />
+    Sa durée est fixée à <strong>{{$duree}}</strong> heures.<br />
     Elle est organisée pour un effective de <strong>{{$effectif}}</strong> stagiaires.
     </div>
     <div class="article">
@@ -47,21 +47,21 @@
         <p class="article-title">
             Article 4 : dispositions financières
         </p>
-    a) <strong>{{$nom_prenom_stagiaire}}</strong>, en contrepartie de l'action de formation réalisée, s’engage à verser à l’association LE JARDIN MODERNE, une somme correspondant aux frais de formation de 300 €, net de TVA.
-    b) L’association LE JARDIN MODERNE en contrepartie des sommes reçues, s’engage à réaliser l'action de formation prévue dans le cadre de la présente convention ainsi qu’à fournir tout document et pièce de nature à justifier la réalité et la validité des dépenses de formation engagées à ce titre.
+    a) <strong>{{$nom_prenom_stagiaire}}</strong>, en contrepartie de l'action de formation réalisée, s’engage à verser à l’association <strong>LE JARDIN MODERNE</strong>, une somme correspondant aux frais de formation de <strong>{{$montant}} €</strong>, net de TVA.<br />
+    b) L’association <strong>LE JARDIN MODERNE</strong> en contrepartie des sommes reçues, s’engage à réaliser l'action de formation prévue dans le cadre de la présente convention ainsi qu’à fournir tout document et pièce de nature à justifier la réalité et la validité des dépenses de formation engagées à ce titre.
     </div>
     <div class="article">
         <p class="article-title">
             Article 5 : résiliation de la convention
         </p>
-    a) En cas de résiliation de la présente convention par <strong>{{$nom_prenom_stagiaire}}</strong> à moins de 10 jours francs avant le début de la formation, l’association LE JARDIN MODERNE retiendra sur le coût total, les sommes qu’elle aura réellement dépensées ou engagées pour la résiliation de l’action.
-    b) En cas de modification unilatérale par l’association LE JARDIN MODERNE de l’un des éléments fixés à l’article 1er, se réserve le droit de mettre fin à la présente convention. Le délai d’annulation étant toutefois limité à 30 jours francs avant la date prévue de commencement de l’une des actions mentionnées à la présente convention. Il sera, dans ce cas, procédé à une résorption anticipée de la convention.
+    a) En cas de résiliation de la présente convention par <strong>{{$nom_prenom_stagiaire}}</strong> à moins de 10 jours francs avant le début de la formation, l’association LE JARDIN MODERNE retiendra sur le coût total, les sommes qu’elle aura réellement dépensées ou engagées pour la résiliation de l’action.<br />
+    b) En cas de modification unilatérale par l’association <strong>LE JARDIN MODERNE</strong> de l’un des éléments fixés à l’article 1er, se réserve le droit de mettre fin à la présente convention. Le délai d’annulation étant toutefois limité à 30 jours francs avant la date prévue de commencement de l’une des actions mentionnées à la présente convention. Il sera, dans ce cas, procédé à une résorption anticipée de la convention.
     </div>
     <div class="article">
         <p class="article-title">
             Article 6 : délai de rétractation
         </p>
-    A compter de la date de signature du présent contrat, le stagiaire présenté par <strong>{{$nom_prenom_stagiaire}}</strong> a un délai de 5 jours ouvrés pour se rétracter. Il en informe l’association LE JARDIN MODERNE par lettre au moins 14 jours ouvrés avant le début de la formation. Si la rétractation n’a pas eu lieu dans les 5 jours ouvrés suivant la commande ou si la période des 14 jours ouvrés n’est pas respectée, le coût de la formation sera intégralement payé par <strong>{{$nom_prenom_stagiaire}}</strong> sur présentation de la facture.
+    A compter de la date de signature du présent contrat, le stagiaire présenté par <strong>{{$nom_prenom_stagiaire}}</strong> a un délai de 5 jours ouvrés pour se rétracter. Il en informe l’association <strong>LE JARDIN MODERNE</strong> par lettre au moins 14 jours ouvrés avant le début de la formation. Si la rétractation n’a pas eu lieu dans les 5 jours ouvrés suivant la commande ou si la période des 14 jours ouvrés n’est pas respectée, le coût de la formation sera intégralement payé par <strong>{{$nom_prenom_stagiaire}}</strong> sur présentation de la facture.
     </div>
     <div class="article">
         <p class="article-title">
@@ -88,7 +88,7 @@
     </div>
     <div class="signature jardin">
         <p>
-            Pour l'<strong>ASSOCIATION LE JARDIN MODERNE</strong> Rozenn Lebastard, responsable des formations
+            Pour l'<strong>ASSOCIATION LE JARDIN MODERNE</strong> {{$responsable_formation}}, responsable des formations
         </p>
         <p>
             Signature

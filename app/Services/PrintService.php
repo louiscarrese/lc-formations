@@ -46,9 +46,37 @@ class PrintService implements PrintServiceInterface {
         $ret["duree"] = $this->calculateDuree($inscription->session);
         $ret["effectif"] = $inscription->session->effectif_max;
         $ret["montant"] = $inscription->tarif->montant;
+        $ret["responsable_formation"] = $this->parametreRepository->responsableFormation();
 
         return $ret;
     }
+
+    public function prepareConventionParameters($inscription) {
+        $ret = array();
+        $ret["inscription_id"] = $inscription->id;
+        $ret["nom_prenom_stagiaire"] = $inscription->stagiaire->prenom . " " . $inscription->stagiaire->nom;
+        $ret["libelle_employeur"] = $inscription->stagiaire->employeur->raison_sociale;
+        $ret["adresse_employeur"] = $inscription->stagiaire->employeur->adresse . " " . $inscription->stagiaire->employeur->code_postal . " " . $inscription->stagiaire->employeur->ville;
+        $ret["libelle_module"] = $inscription->session->module->libelle;
+
+        if($inscription->session->firstDate != null) {
+            if($inscription->session->lastDate != null) {
+                $ret["dates"] = "du " . \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $inscription->session->firstDate)->format('d/m/Y');
+                $ret["dates"] .= " au " . \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $inscription->session->lastDate)->format('d/m/Y');
+            } else {
+                $ret["dates"] = "le " . \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $inscription->session->firstDate)->format('d/m/Y');
+            }
+        } else {
+            $ret["dates"] = "";
+        }
+
+        $ret["duree"] = $this->calculateDuree($inscription->session);
+        $ret["montant"] = $inscription->tarif->montant;
+        $ret["responsable_formation"] = $this->parametreRepository->responsableFormation();
+
+        return $ret;
+    }
+
 
     public function prepareEmargementParameters($session) {
         $ret = array();
