@@ -2,7 +2,7 @@ function stagiaireDetailServiceFactory(sharedDataService, stagiaireTypesService,
     return {
         getLinkedData: function() {
             var stagiaireType = stagiaireTypesService.query();
-            var employeur = employeursService.all();
+            var employeur = employeursService.query({forceNoPaginate: true});
             var niveau_formation = niveauFormationsService.query();
 
             return {

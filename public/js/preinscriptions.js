@@ -12127,12 +12127,14 @@ function datepickerLocaldate() {
 
 function preinscriptionsServiceFactory($resource) {
     return $resource('/intra/api/preinscription/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
 
 function niveauFormationsServiceFactory($resource) {
     return $resource('/intra/api/niveau_formation/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }

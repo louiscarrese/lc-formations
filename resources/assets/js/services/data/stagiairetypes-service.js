@@ -16,6 +16,7 @@
 
     function stagiaireTypesServiceFactory($resource) {
         return $resource('/intra/api/stagiaire_type/:id', null, {
+            'query' : {method: 'GET', isArray: false}, 
             'update' : { method: 'PUT' }
         });
     }

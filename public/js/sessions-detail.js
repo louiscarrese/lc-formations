@@ -12860,11 +12860,6 @@ function sessionsServiceFactory($resource) {
 function modulesServiceFactory($resource) {
     return $resource('/intra/api/module/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
-        'all' : {
-            method: 'GET', 
-            url: '/intra/api/module/all',
-            isArray: true
-        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -12901,7 +12896,7 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
 
     return {
         getLinkedData: function() {
-            var modules = modulesService.all();
+            var modules = modulesService.query({forceNoPaginate: true});
 
             return {
                 'modules': modules.$promise,
@@ -13241,18 +13236,15 @@ function editableTableController($filter, $attrs, dataService, tableService) {
         }
 
         return dataService[self.queryMethod](self.queryParameters, function(result) {
+            //Store the given data
+            self.data = result.data;
+
             //if the result looks like a paginated result
             if(result.current_page != undefined) {
-                //Store the given data
-                self.data = result.data;
-                
                 //Store the paginator infos and remove the data from it
                 self.paginator = result;
                 delete self.paginator.data;
-            } else {
-                self.data = result;
-                self.paginator = {};
-            }
+            } 
 
             //Augment data with whatever is needed
             angular.forEach(self.data, function(value, key) {
@@ -13449,8 +13441,9 @@ angular.module('editableTable', ['myEditable', 'sortableHeader'])
 
 function sessionJoursServiceFactory($resource) {
     return $resource('/intra/api/session_jour/:id', null, {
-        update : { method: 'PUT' },
-        createDefault : { 
+        'query' : {method: 'GET', isArray: false}, 
+        'update' : { method: 'PUT' },
+        'createDefault' : { 
             url: '/intra/api/session_jour/create_default',
             method: 'POST', 
             params: {session_id: '@session_id', base_date: '@base_date'} 
@@ -13462,11 +13455,6 @@ function sessionJoursServiceFactory($resource) {
 function formateursServiceFactory($resource) {
     return $resource('/intra/api/formateur/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
-        'all' : {
-            method: 'GET', 
-            url: '/intra/api/formateur/all',
-            isArray: true
-        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -13478,6 +13466,7 @@ function formateursServiceFactory($resource) {
 
 function lieuServiceFactory($resource) {
     return $resource('/intra/api/lieu/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
@@ -13648,11 +13637,6 @@ angular.module('listTable', ['sortableHeader'])
 function inscriptionsServiceFactory($resource) {
     return $resource('/intra/api/inscription/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
-        'all' : {
-            method: 'GET', 
-            url: '/intra/api/inscription/all',
-            isArray: true
-        }, 
         'update' : { method: 'PUT' },
         'en_cours': {
             url: '/intra/api/inscription/en_cours',

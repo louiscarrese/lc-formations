@@ -7,7 +7,7 @@ abstract class AbstractStaticRepository implements StaticRepositoryInterface {
      * Retrieve all the objects from the database.
      */
     public function getAll() {
-        return $this->data;
+        return ['data' => $this->data];
     }
 
     /**

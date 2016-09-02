@@ -12724,18 +12724,15 @@ function editableTableController($filter, $attrs, dataService, tableService) {
         }
 
         return dataService[self.queryMethod](self.queryParameters, function(result) {
+            //Store the given data
+            self.data = result.data;
+
             //if the result looks like a paginated result
             if(result.current_page != undefined) {
-                //Store the given data
-                self.data = result.data;
-                
                 //Store the paginator infos and remove the data from it
                 self.paginator = result;
                 delete self.paginator.data;
-            } else {
-                self.data = result;
-                self.paginator = {};
-            }
+            } 
 
             //Augment data with whatever is needed
             angular.forEach(self.data, function(value, key) {
@@ -12953,6 +12950,7 @@ angular.module('editableTable', ['myEditable', 'sortableHeader'])
 
     function stagiaireTypesServiceFactory($resource) {
         return $resource('/intra/api/stagiaire_type/:id', null, {
+            'query' : {method: 'GET', isArray: false}, 
             'update' : { method: 'PUT' }
         });
     }
@@ -12962,38 +12960,45 @@ angular.module('editableTable', ['myEditable', 'sortableHeader'])
 */
 function formateurTypesServiceFactory($resource) {
     return $resource('/intra/api/formateur_type/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
 function financeurTypesServiceFactory($resource) {
     return $resource('/intra/api/financeur_type/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
 function tarifTypesServiceFactory($resource) {
     return $resource('/intra/api/tarif_type/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
 function lieuServiceFactory($resource) {
     return $resource('/intra/api/lieu/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
 
 function domaineFormationsServiceFactory($resource) {
     return $resource('/intra/api/domaine_formation/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
 
 function niveauFormationsServiceFactory($resource) {
     return $resource('/intra/api/niveau_formation/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
 function parametresServiceFactory($resource) {
     return $resource('/intra/api/parametre/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }

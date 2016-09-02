@@ -29,12 +29,12 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
 
     return {
         getLinkedData: function() {
-            var stagiaire = stagiairesService.all();
-            var sessions = sessionsService.all();
+            var stagiaire = stagiairesService.query({forceNoPaginate: true});
+            var sessions = sessionsService.query({forceNoPaginate: true});
             var status = getInscriptionStatus();
 
             sessions.$promise.then(function(data) {
-                angular.forEach(data, function(session) {
+                angular.forEach(data.data, function(session) {
                     session.libelle = buildSessionLibelle(session);
                 });
             });

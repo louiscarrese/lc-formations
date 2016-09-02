@@ -12163,18 +12163,15 @@ function editableTableController($filter, $attrs, dataService, tableService) {
         }
 
         return dataService[self.queryMethod](self.queryParameters, function(result) {
+            //Store the given data
+            self.data = result.data;
+
             //if the result looks like a paginated result
             if(result.current_page != undefined) {
-                //Store the given data
-                self.data = result.data;
-                
                 //Store the paginator infos and remove the data from it
                 self.paginator = result;
                 delete self.paginator.data;
-            } else {
-                self.data = result;
-                self.paginator = {};
-            }
+            } 
 
             //Augment data with whatever is needed
             angular.forEach(self.data, function(value, key) {
@@ -12451,11 +12448,6 @@ angular.module('listTable', ['sortableHeader'])
 function stagiairesServiceFactory($resource) {
     return $resource('/intra/api/stagiaire/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
-        'all' : {
-            method: 'GET', 
-            url: '/intra/api/stagiaire/all',
-            isArray: true
-        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',

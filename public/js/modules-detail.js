@@ -12830,11 +12830,6 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap', 'dnTim
 function modulesServiceFactory($resource) {
     return $resource('/intra/api/module/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
-        'all' : {
-            method: 'GET', 
-            url: '/intra/api/module/all',
-            isArray: true
-        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -12847,6 +12842,7 @@ function modulesServiceFactory($resource) {
 
 function domaineFormationsServiceFactory($resource) {
     return $resource('/intra/api/domaine_formation/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
@@ -12854,11 +12850,6 @@ function domaineFormationsServiceFactory($resource) {
 function formateursServiceFactory($resource) {
     return $resource('/intra/api/formateur/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
-        'all' : {
-            method: 'GET', 
-            url: '/intra/api/formateur/all',
-            isArray: true
-        }, 
         'update' : { method: 'PUT' },
         'search' : {
             method: 'GET',
@@ -12870,6 +12861,7 @@ function formateursServiceFactory($resource) {
 
 function lieuServiceFactory($resource) {
     return $resource('/intra/api/lieu/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
@@ -12886,7 +12878,7 @@ function moduleDetailServiceFactory($filter, sharedDataService, domaineFormation
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
-            var formateurs = formateursService.all();
+            var formateurs = formateursService.query({forceNoPaginate: true});
             var lieus = lieuService.query();
 
             return {
@@ -13207,18 +13199,15 @@ function editableTableController($filter, $attrs, dataService, tableService) {
         }
 
         return dataService[self.queryMethod](self.queryParameters, function(result) {
+            //Store the given data
+            self.data = result.data;
+
             //if the result looks like a paginated result
             if(result.current_page != undefined) {
-                //Store the given data
-                self.data = result.data;
-                
                 //Store the paginator infos and remove the data from it
                 self.paginator = result;
                 delete self.paginator.data;
-            } else {
-                self.data = result;
-                self.paginator = {};
-            }
+            } 
 
             //Augment data with whatever is needed
             angular.forEach(self.data, function(value, key) {
@@ -13415,12 +13404,14 @@ angular.module('editableTable', ['myEditable', 'sortableHeader'])
 
 function tarifsServiceFactory($resource) {
     return $resource('/intra/api/tarif/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }
 
 function tarifTypesServiceFactory($resource) {
     return $resource('/intra/api/tarif_type/:id', null, {
+        'query' : {method: 'GET', isArray: false}, 
         'update' : { method: 'PUT' }
     });
 }

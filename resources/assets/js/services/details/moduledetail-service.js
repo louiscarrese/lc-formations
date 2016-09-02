@@ -10,7 +10,7 @@ function moduleDetailServiceFactory($filter, sharedDataService, domaineFormation
     return {
         getLinkedData: function() {
             var domaineFormations = domaineFormationsService.query();
-            var formateurs = formateursService.all();
+            var formateurs = formateursService.query({forceNoPaginate: true});
             var lieus = lieuService.query();
 
             return {

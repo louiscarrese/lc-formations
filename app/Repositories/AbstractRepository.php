@@ -99,12 +99,16 @@ abstract class AbstractRepository implements RepositoryInterface {
         //Pagination
         if($this->isPaginated && !$forceNoPaginate) {
             $datas = $req->paginate($this->parametreRepository->paginationThreshold());
-        } else {
-            $datas = $req->get();
-        }
 
-        foreach($datas as $data) {
-            $data = $this->augmentListData($data);
+            foreach($datas as $data) {
+                $data = $this->augmentListData($data);
+            }
+        } else {
+            $datas = ['data' => $req->get()];
+
+            foreach($datas['data'] as $data) {
+                $data = $this->augmentListData($data);
+            }
         }
 
         return $datas;
@@ -165,10 +169,10 @@ abstract class AbstractRepository implements RepositoryInterface {
         }
 
         //Execute request
-        $datas = $data_req->get();
+        $datas = ['data' => $data_req->get()];
 
         //Augment data
-        foreach($datas as $data) {
+        foreach($datas['data'] as $data) {
             $data = $this->augmentListData($data);
         }
         
@@ -205,10 +209,10 @@ abstract class AbstractRepository implements RepositoryInterface {
         }
 
         //Execute request
-        $datas = $data_req->get();
+        $datas = ['data' => $data_req->get()];
 
         //Augment data
-        foreach($datas as $data) {
+        foreach($datas['data'] as $data) {
             $data = $this->augmentListData($data);
         }
 
