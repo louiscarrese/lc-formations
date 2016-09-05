@@ -458,7 +458,7 @@ elixir(function(mix) {
             ['app/preinscriptionDetailApp.js']
         )), 'public/js/preinscriptions-detail.js')
         .scripts(preinscription, 'public/js/preinscriptions.js')
-        .scripts(home, 'public/js/home.js')
+//        .scripts(home, 'public/js/home.js')
 
 });
 
