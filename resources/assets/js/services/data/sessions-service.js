@@ -17,7 +17,7 @@ function sessionsServiceFactory($resource) {
         'upcoming': {
             url: '/intra/api/session/upcoming',
             method: 'GET',
-            isArray: true
+            isArray: false
         },
         'search' : {
             method: 'GET',

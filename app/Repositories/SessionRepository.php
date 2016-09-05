@@ -97,7 +97,7 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
             $data = $this->augmentData($data);
         }
 
-        return $sessions;
+        return ['data' => $sessions];
     }
 
     private function fillFirstLastDate($data) {
