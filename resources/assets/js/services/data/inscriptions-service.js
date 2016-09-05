@@ -5,7 +5,7 @@ function inscriptionsServiceFactory($resource) {
         'en_cours': {
             url: '/intra/api/inscription/en_cours',
             method: 'GET',
-            isArray: true
+            isArray: false
         },
         'search' : {
             method: 'GET',
