@@ -12695,7 +12695,7 @@ function detailController(editModeService, dataService, detailService, $q) {
                 if(key == 'initData') {
                     initFromUrl(value);
                 } else { //Those we don't know come from getLinkedData()
-                    self.linkedData[key] = value;
+                    self.linkedData[key] = value['data'];
                 }
 
             });
