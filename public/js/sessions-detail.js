@@ -13265,8 +13265,8 @@ function editableTableController($filter, $attrs, dataService, tableService) {
             toSend = tableService.preSend(type);
         }
 
-        self.errors = [];
-        toSend.$update({id: type.internalKey}, 
+         self.errors = [];
+	 dataService.update({id: type.internalKey}, toSend,
             function(value, responseHeaders) {
 
                 self.getSuccess(value);
@@ -13294,7 +13294,7 @@ function editableTableController($filter, $attrs, dataService, tableService) {
         }
 
         if(confirmed) {
-            type.$delete({id: type.internalKey}, 
+            dataService.delete({id: type.internalKey}, 
                 function(value, responseHeaders) {
                     self.data.splice(self.data.indexOf(value), 1);
                     self.refreshControllers(ctrlsToRefresh);
@@ -13641,7 +13641,7 @@ function inscriptionsServiceFactory($resource) {
         'en_cours': {
             url: '/intra/api/inscription/en_cours',
             method: 'GET',
-            isArray: true
+            isArray: false
         },
         'search' : {
             method: 'GET',
@@ -13650,6 +13650,7 @@ function inscriptionsServiceFactory($resource) {
         }
     });
 }
+
 function inscriptionsTableServiceFactory($filter, sharedDataService) {
     return {
         queryParameters: function() {
