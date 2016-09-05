@@ -51,7 +51,7 @@ class ParametreRepository implements ParametreRepositoryInterface
             $this->cache[$data['key']] = $data['value'];
         }
 
-        return $datas;
+        return ['data' => $datas];
     }
 
     public function store($data, $id = null) {
