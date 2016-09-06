@@ -45,7 +45,11 @@ class PrintService implements PrintServiceInterface {
 
         $ret["duree"] = $this->calculateDuree($inscription->session);
         $ret["effectif"] = $inscription->session->effectif_max;
-        $ret["montant"] = $inscription->tarif->montant;
+	if($inscription->tarif) {
+	  $ret["montant"] = $inscription->tarif->montant;
+	} else {
+	  $ret["montant"] = 0;
+	}
         $ret["responsable_formation"] = $this->parametreRepository->responsableFormation();
 
         return $ret;
@@ -55,8 +59,13 @@ class PrintService implements PrintServiceInterface {
         $ret = array();
         $ret["inscription_id"] = $inscription->id;
         $ret["nom_prenom_stagiaire"] = $inscription->stagiaire->prenom . " " . $inscription->stagiaire->nom;
-        $ret["libelle_employeur"] = $inscription->stagiaire->employeur->raison_sociale;
-        $ret["adresse_employeur"] = $inscription->stagiaire->employeur->adresse . " " . $inscription->stagiaire->employeur->code_postal . " " . $inscription->stagiaire->employeur->ville;
+	if($inscription->stagiaire->employeur) {
+	  $ret["libelle_employeur"] = $inscription->stagiaire->employeur->raison_sociale;
+	  $ret["adresse_employeur"] = $inscription->stagiaire->employeur->adresse . " " . $inscription->stagiaire->employeur->code_postal . " " . $inscription->stagiaire->employeur->ville;
+	} else {
+	  $ret["libelle_employeur"] = "";
+	  $ret["adresse_employeur"] = "";
+	}
         $ret["libelle_module"] = $inscription->session->module->libelle;
 
         if($inscription->session->firstDate != null) {
@@ -71,7 +80,11 @@ class PrintService implements PrintServiceInterface {
         }
 
         $ret["duree"] = $this->calculateDuree($inscription->session);
-        $ret["montant"] = $inscription->tarif->montant;
+	if($inscription->tarif) {
+	  $ret["montant"] = $inscription->tarif->montant;
+	} else {
+	  $ret["montant"] = 0;
+	}
         $ret["responsable_formation"] = $this->parametreRepository->responsableFormation();
 
         return $ret;
