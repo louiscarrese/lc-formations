@@ -196,7 +196,7 @@
                     <a ng-href="{{$viewService->privateUrl('print/emargement/')}}@{{detailCtrl.data.id}}" target="_blank" class="btn btn-default">Feuilles d'émargement</a>
                 </span>
                 <span>
-                    <a ng-href="{{$viewService->privateUrl('print/suivi_session/')}}@{{detailCtrl.data.id}}" target="_blank" class="btn btn-default">Feuille de suivi de session</a>
+                    <a ng-href="{{$viewService->privateUrl('print/suivi_session/')}}@{{detailCtrl.data.id}}" target="_blank" class="btn btn-default">Couverture pochette</a>
                 </span>
                 <span>
                     <a ng-href="{{$viewService->privateUrl('print/attestation/')}}@{{detailCtrl.data.id}}" target="_blank" class="btn btn-default">Attestations de fin de stage</a>
