@@ -98,7 +98,7 @@ class PrintService implements PrintServiceInterface {
         $ret["inscriptions"] = $this->inscriptionRepository->findBy([
             'session_id' => $session->id, 
             'statut' => \ModuleFormation\Inscription::STATUS_VALIDATED
-            ]);
+            ])['data'];
         $ret["responsableFormation"] = $this->parametreRepository->responsableFormation();
 
         return $ret;
@@ -119,7 +119,7 @@ class PrintService implements PrintServiceInterface {
         $inscriptions = $this->inscriptionRepository->findBy([
             'session_id' => $session->id, 
             'statut' => \ModuleFormation\Inscription::STATUS_VALIDATED
-            ], false);
+            ], false)['data'];
 
         $formateurs = array();
         foreach($session->session_jours as $session_jour) {

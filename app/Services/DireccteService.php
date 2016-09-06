@@ -52,7 +52,7 @@ class DireccteService implements DireccteServiceInterface
     /** GENERAL */
     public function G_D($date_min, $date_max) {
 
-        $formateur_types = $this->formateurTypeRepository->getAll();
+        $formateur_types = $this->formateurTypeRepository->getAll()['data'];
 
         $ret = array();
         $ret['data'] = array();
