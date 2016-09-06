@@ -12916,13 +12916,13 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
     };
 
     function getInscriptionStatus() {
-        return $q.when([
+        return $q.when({'data' : [
                 {id: 'pending', libelle: 'En cours'},
                 {id: 'canceled', libelle: 'Annulée'},
                 {id: 'validated', libelle: 'Validée'},
                 {id: 'withdrawn', libelle: 'Désistée'},
                 {id: 'waiting_list', libelle: 'Liste d\'attente'},
-                ]
+                ]}
             );
     }
 
@@ -13004,6 +13004,7 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         }
     }
 }
+
 angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscriptionsList', 'myEditable', 'ui.bootstrap'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
