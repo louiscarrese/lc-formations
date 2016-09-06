@@ -98,12 +98,13 @@
         </p>
     </div>
     <div class="footer">
-        <p>
-            <span>Tél : 02 99 14 04 68</span>
-            <span>Fax : 02 99 14 04 69</span>
-            <span>www.jardinmoderne.org</span><br />
-            N° de SIREN : 419 541 719 00011 – Code APE 9499 Z
-        </p>
+      <p>
+	<span></span>
+        <span>Tél : 02 99 14 04 68</span>
+        <span>www.jardinmoderne.org</span>
+	<span></span><br />
+        N° de SIREN : 419 541 719 00011 – Code APE 9499 Z
+      </p>
     </div>
 </div>
 @endsection
