@@ -12037,7 +12037,7 @@ function myCustomFilter() {
     }
 }
 
-function editableTableController($filter, $attrs, dataService, tableService) {
+function editableTableController($filter, $attrs, $q, dataService, tableService) {
     var self = this;
 
     self.dataService = dataService;
@@ -12073,6 +12073,7 @@ function editableTableController($filter, $attrs, dataService, tableService) {
 
     //Data
     self.data = {};
+    self.linkedData = {};
     self.paginator = {};
 
     self.queryParameters = {};
@@ -12091,7 +12092,12 @@ function editableTableController($filter, $attrs, dataService, tableService) {
     self.refreshControllers = refreshControllers;
 
     if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
-        self.linkedData = tableService.getLinkedData();
+	promises = tableService.getLinkedData();
+	$q.all(promises).then(function(responses) {
+	    angular.forEach(responses, function(value, key) {
+		self.linkedData[key] = value.data;
+	    })
+	});
     }
 
     if(tableService != undefined && typeof tableService.addListeners == 'function')
@@ -12502,7 +12508,7 @@ function preinscriptionsTableServiceFactory($filter, sharedDataService) {
 angular.module('preinscriptionsList', ['ngResource', 'listTable'])
     .factory('preinscriptionsService', ['$resource', preinscriptionsServiceFactory])
     .factory('preinscriptionsTableService', ['$filter', 'sharedDataService', preinscriptionsTableServiceFactory])
-    .controller('preinscriptionsListController', ['$filter', '$attrs', 'preinscriptionsService', 'preinscriptionsTableService', editableTableController])
+    .controller('preinscriptionsListController', ['$filter', '$attrs', '$q', 'preinscriptionsService', 'preinscriptionsTableService', editableTableController])
 ;
 
 angular.module('preinscriptionsListApp', ['preinscriptionsList'])

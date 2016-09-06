@@ -4,7 +4,7 @@ function tarifsTableServiceFactory(sharedDataService, tarifTypesService) {
             var tarifTypes = tarifTypesService.query();
 
             return {
-                'tarifTypes': tarifTypes,
+                'tarifTypes': tarifTypes.$promise,
             }
         },
 

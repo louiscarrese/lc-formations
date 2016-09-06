@@ -13058,7 +13058,7 @@ function myCustomFilter() {
     }
 }
 
-function editableTableController($filter, $attrs, dataService, tableService) {
+function editableTableController($filter, $attrs, $q, dataService, tableService) {
     var self = this;
 
     self.dataService = dataService;
@@ -13094,6 +13094,7 @@ function editableTableController($filter, $attrs, dataService, tableService) {
 
     //Data
     self.data = {};
+    self.linkedData = {};
     self.paginator = {};
 
     self.queryParameters = {};
@@ -13112,7 +13113,12 @@ function editableTableController($filter, $attrs, dataService, tableService) {
     self.refreshControllers = refreshControllers;
 
     if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
-        self.linkedData = tableService.getLinkedData();
+	promises = tableService.getLinkedData();
+	$q.all(promises).then(function(responses) {
+	    angular.forEach(responses, function(value, key) {
+		self.linkedData[key] = value.data;
+	    })
+	});
     }
 
     if(tableService != undefined && typeof tableService.addListeners == 'function')
@@ -13528,7 +13534,7 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
 angular.module('inscriptionsList', ['ngResource', 'listTable'])
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('inscriptionsTableService', ['$filter', 'sharedDataService', inscriptionsTableServiceFactory])
-    .controller('inscriptionsListController', ['$filter', '$attrs', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
+    .controller('inscriptionsListController', ['$filter', '$attrs', '$q', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
 ;
 
 angular.module('stagiairesDetailApp', ['stagiaireDetail', 'inscriptionsList']);

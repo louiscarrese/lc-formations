@@ -12037,7 +12037,7 @@ function myCustomFilter() {
     }
 }
 
-function editableTableController($filter, $attrs, dataService, tableService) {
+function editableTableController($filter, $attrs, $q, dataService, tableService) {
     var self = this;
 
     self.dataService = dataService;
@@ -12073,6 +12073,7 @@ function editableTableController($filter, $attrs, dataService, tableService) {
 
     //Data
     self.data = {};
+    self.linkedData = {};
     self.paginator = {};
 
     self.queryParameters = {};
@@ -12091,7 +12092,12 @@ function editableTableController($filter, $attrs, dataService, tableService) {
     self.refreshControllers = refreshControllers;
 
     if(tableService != undefined && typeof tableService.getLinkedData == 'function') {
-        self.linkedData = tableService.getLinkedData();
+	promises = tableService.getLinkedData();
+	$q.all(promises).then(function(responses) {
+	    angular.forEach(responses, function(value, key) {
+		self.linkedData[key] = value.data;
+	    })
+	});
     }
 
     if(tableService != undefined && typeof tableService.addListeners == 'function')
@@ -12515,7 +12521,7 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
 angular.module('sessionsList', ['ngResource', 'listTable'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sessionsTableService', ['$filter', 'sharedDataService', sessionsTableServiceFactory])
-    .controller('sessionsListController', ['$filter', '$attrs', 'sessionsService', 'sessionsTableService', editableTableController])
+    .controller('sessionsListController', ['$filter', '$attrs', '$q', 'sessionsService', 'sessionsTableService', editableTableController])
 ;
 
 angular.module('sessionsListApp', ['sessionsList']);

@@ -4,7 +4,7 @@ function financeurInscriptionsTableServiceFactory(sharedDataService, financeursS
             var financeurs = financeursService.query();
 
             return {
-                'financeurs': financeurs,
+                'financeurs': financeurs.$promise,
             }
         },
 

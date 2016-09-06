@@ -1,4 +1,4 @@
 angular.module('modulesList', ['ngResource', 'listTable'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
-    .controller('modulesListController', ['$filter', '$attrs', 'modulesService', editableTableController])
+    .controller('modulesListController', ['$filter', '$attrs', '$q', 'modulesService', editableTableController])
 ;

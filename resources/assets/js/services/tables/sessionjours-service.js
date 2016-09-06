@@ -13,8 +13,8 @@ function sessionJoursTableServiceFactory($filter, sharedDataService, lieuService
             var formateurs = formateursService.query();
 
             return {
-                'lieus': lieus,
-                'formateurs': formateurs
+                'lieus': lieus.$promise,
+                'formateurs': formateurs.$promise
             }
         },
 
