@@ -38,7 +38,7 @@
       @if($i % 8 == 0)
 	<div class="page-breaker"></div>
       @endif
-      
+
         <table class="stagiaire-table">
             <tr>
                 <th class="stagiaire-col">Stagiaire {{$i}}</th>

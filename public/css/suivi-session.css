@@ -50,6 +50,9 @@ body {
 .fillable {
   vertical-align: top;
 }
+.page-breaker {
+  page-break-after: always;
+}
 .stagiaire-table {
   page-break-inside: avoid;
   text-align: center;
