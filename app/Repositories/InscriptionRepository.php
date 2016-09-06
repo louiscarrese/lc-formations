@@ -58,7 +58,7 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
 
     private function getAvailableTarifs($data) {
         if($data->session)
-            return $this->tarifRepository->findBy(['module_id' => $data->session->module_id]);
+            return $this->tarifRepository->findBy(['module_id' => $data->session->module_id])['data'];
         else 
             return null;
     }
