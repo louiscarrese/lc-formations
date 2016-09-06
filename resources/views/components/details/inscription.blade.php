@@ -158,11 +158,11 @@
     </div>
 
     <h3>Impressions</h3>
-    <div id="impressions" class="custom-actions row">
-        <span class="col-sm-2">
+    <div id="impressions" class="custom-actions">
+        <span>
             <button ng-click="detailCtrl.contratFormation($event);" class="btn btn-default">Contrat de formation</button>
         </span>
-        <span class="col-sm-2">
+        <span>
             <button ng-click="detailCtrl.conventionFormation($event);" class="btn btn-default">Convention de formation</button>
         </span>
     </div>
