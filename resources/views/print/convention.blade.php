@@ -47,7 +47,7 @@
             Article 4 : résiliation de la convention
         </p>
         a) En cas de résiliation de la présente convention par <strong>{{$libelle_employeur}}</strong> à moins de 10 jours francs avant le début de la formation, l’association <strong>LE JARDIN MODERNE</strong> retiendra sur le coût total, les sommes qu’elle aura réellement dépensées ou engagées pour la résiliation de l’action.<br />
-        b) En cas de modification unilatérale par l’association <strong>LE JARDIN MODERNE</strong> de l’un des éléments fixés à l’article 1er, se réserve le droit de mettre fin à la présente convention. Le délai d’annulation étant toutefois limité à 30 jours francs avant la date prévue de commencement de l’une des actions mentionnées à la présente convention. Il sera, dans ce cas, procédé à une résorption anticipé de la convention.
+        b) En cas de modification unilatérale par l’association <strong>LE JARDIN MODERNE</strong> de l’un des éléments fixés à l’article 1er, <strong>{{$libelle_employeur}}</strong> se réserve le droit de mettre fin à la présente convention. Le délai d’annulation étant toutefois limité à 30 jours francs avant la date prévue de commencement de l’une des actions mentionnées à la présente convention. Il sera, dans ce cas, procédé à une résorption anticipé de la convention.
     </div>
     <div class="article">
         <p class="article-title">
