@@ -10,7 +10,7 @@ function sessionJoursTableServiceFactory($filter, sharedDataService, lieuService
     return {
         getLinkedData: function() {
             var lieus = lieuService.query();
-            var formateurs = formateursService.query();
+            var formateurs = formateursService.query({forceNoPaginate:true});
 
             return {
                 'lieus': lieus.$promise,
