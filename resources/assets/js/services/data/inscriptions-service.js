@@ -10,7 +10,7 @@ function inscriptionsServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/inscription/search',
-            isArray: true
+            isArray: false
         }
     });
 }

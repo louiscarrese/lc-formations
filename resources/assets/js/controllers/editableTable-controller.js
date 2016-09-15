@@ -257,7 +257,7 @@ function editableTableController($filter, $attrs, $q, dataService, tableService)
         }
 
         dataService.search({query: self.searchQuery}, function(result) {
-            self.data = result;
+            self.data = result.data;
             self.paginator = {};
 
             //Augment data with whatever is needed

@@ -5,7 +5,7 @@ function employeursServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/employeur/search',
-            isArray: true
+            isArray: false
         }
     });
 }

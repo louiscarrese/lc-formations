@@ -5,7 +5,7 @@ function stagiairesServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/stagiaire/search',
-            isArray: true
+            isArray: false
         }
     });
 }

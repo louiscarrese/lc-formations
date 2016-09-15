@@ -22,7 +22,7 @@ function sessionsServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/session/search',
-            isArray: true
+            isArray: false
         }
     });
 }

@@ -12834,7 +12834,7 @@ function financeursServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/financeur/search',
-            isArray: true
+            isArray: false
         }
     });
 }

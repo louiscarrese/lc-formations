@@ -5,7 +5,7 @@ function modulesServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/module/search',
-            isArray: true
+            isArray: false
         }
     });
 }

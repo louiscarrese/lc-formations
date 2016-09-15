@@ -12834,7 +12834,7 @@ function formateursServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/formateur/search',
-            isArray: true
+            isArray: false
         }
     });
 }

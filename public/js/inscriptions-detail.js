@@ -12850,7 +12850,7 @@ function inscriptionsServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/inscription/search',
-            isArray: true
+            isArray: false
         }
     });
 }
@@ -12862,7 +12862,7 @@ function stagiairesServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/stagiaire/search',
-            isArray: true
+            isArray: false
         }
     });
 }
@@ -12891,7 +12891,7 @@ function sessionsServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/session/search',
-            isArray: true
+            isArray: false
         }
     });
 }
@@ -13400,7 +13400,7 @@ function editableTableController($filter, $attrs, $q, dataService, tableService)
         }
 
         dataService.search({query: self.searchQuery}, function(result) {
-            self.data = result;
+            self.data = result.data;
             self.paginator = {};
 
             //Augment data with whatever is needed
@@ -13490,7 +13490,7 @@ function financeursServiceFactory($resource) {
         'search' : {
             method: 'GET',
             url: '/intra/api/financeur/search',
-            isArray: true
+            isArray: false
         }
     });
 }
