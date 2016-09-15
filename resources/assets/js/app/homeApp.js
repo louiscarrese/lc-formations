@@ -2,10 +2,10 @@ angular.module('homeApp', ['ngResource', 'listTable'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sessionsTableService', ['$filter', 'sharedDataService', sessionsTableServiceFactory])
 
-    .controller('sessionsListController', ['$filter', '$attrs', 'sessionsService', 'sessionsTableService', editableTableController])
+    .controller('sessionsListController', ['$filter', '$attrs', '$q', 'sessionsService', 'sessionsTableService', editableTableController])
 
     .factory('inscriptionsService', ['$resource', inscriptionsServiceFactory])
     .factory('inscriptionsTableService', ['$filter', 'sharedDataService', inscriptionsTableServiceFactory])
 
-    .controller('inscriptionsListController', ['$filter', '$attrs', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
+    .controller('inscriptionsListController', ['$filter', '$attrs', '$q', 'inscriptionsService', 'inscriptionsTableService', editableTableController])
 ;

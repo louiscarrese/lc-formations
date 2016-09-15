@@ -13018,14 +13018,14 @@ angular.module('parametresApp', ['editableTable', 'ngResource'])
     .factory('niveauFormationsService', ['$resource', niveauFormationsServiceFactory])
     .factory('parametresService', ['$resource', parametresServiceFactory])
 
-    .controller('stagiaireTypesController', ['$filter', '$attrs', 'stagiaireTypesService', editableTableController])
-    .controller('formateurTypesController', ['$filter', '$attrs', 'formateurTypesService', editableTableController])
-    .controller('financeurTypesController', ['$filter', '$attrs', 'financeurTypesService', editableTableController])
-    .controller('tarifTypesController', ['$filter', '$attrs', 'tarifTypesService', editableTableController])
-    .controller('domaineFormationsController', ['$filter', '$attrs', 'domaineFormationsService', editableTableController])
-    .controller('lieuController', ['$filter', '$attrs', 'lieuService', editableTableController])
-    .controller('niveauFormationsController', ['$filter', '$attrs', 'niveauFormationsService', editableTableController])
-    .controller('parametresController', ['$filter', '$attrs', 'parametresService', editableTableController])
+    .controller('stagiaireTypesController', ['$filter', '$attrs', '$q', 'stagiaireTypesService', editableTableController])
+    .controller('formateurTypesController', ['$filter', '$attrs', '$q', 'formateurTypesService', editableTableController])
+    .controller('financeurTypesController', ['$filter', '$attrs', '$q', 'financeurTypesService', editableTableController])
+    .controller('tarifTypesController', ['$filter', '$attrs', '$q', 'tarifTypesService', editableTableController])
+    .controller('domaineFormationsController', ['$filter', '$attrs', '$q', 'domaineFormationsService', editableTableController])
+    .controller('lieuController', ['$filter', '$attrs', '$q', 'lieuService', editableTableController])
+    .controller('niveauFormationsController', ['$filter', '$attrs', '$q', 'niveauFormationsService', editableTableController])
+    .controller('parametresController', ['$filter', '$attrs', '$q', 'parametresService', editableTableController])
 ;
 
 //# sourceMappingURL=parametres.js.map
