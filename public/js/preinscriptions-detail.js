@@ -12702,7 +12702,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
             //Manually fill the "eager loading" objects
             if(typeof detailService.populateLinkedObjects == 'function' && self.mode == 'create') {
-                self.data = angular.merge(self.data, detailService.populateLinkedObjects(self.dataFromUrl, self.linkedData));
+                self.data = angular.merge(self.data, detailService.populateLinkedObjects(self.data, self.linkedData));
             }
 
             //It's almost like we just did a GET...
