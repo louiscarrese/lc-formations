@@ -35,7 +35,7 @@
     b) Cette action de formation est définie par une annexe jointe à la présente convention, qui indique ses objectifs, son programme plus détaillé, ses horaires, le public présenté à la formation, le lieu de déroulement du stage, les moyens pédagogiques, le formateur, les modalités de suivi et appréciation des résultats.<br />
     A l'issue de la formation, une attestation de formation sera délivrée au stagiaire.<br />
     Sa durée est fixée à <strong>{{$duree}}</strong> heures.<br />
-    Elle est organisée pour un effective de <strong>{{$effectif}}</strong> stagiaires.
+    Elle est organisée pour un effectif de <strong>{{$effectif}}</strong> stagiaires.
     </div>
     <div class="article">
         <p class="article-title">
