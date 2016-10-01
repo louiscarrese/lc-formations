@@ -34,7 +34,7 @@
         </tr>
     </table>
 
-    @for($i = 1; $i <= $session->module->effectif_max; $i++)
+    @for($i = 1; $i <= $session->effectif_max; $i++)
       @if($i % 8 == 0)
 	<div class="page-breaker"></div>
       @endif
