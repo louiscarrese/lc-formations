@@ -27,7 +27,7 @@
         <input class="col-sm-1" type="text" name="montant" value="{{$montant}}" />
     </p>
     <div class="buttons row">
-        <button type="submit" class="btn btn-default">En avant !</button>
-        <button type="button" class="btn" ng-click="printParameterCtrl.close()">Close</button>
+        <button type="submit" class="btn btn-default">Générer le PDF</button>
+        <button type="button" class="btn" ng-click="printParameterCtrl.close()">Fermer</button>
     </div>
 </form>
