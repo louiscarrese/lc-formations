@@ -215,6 +215,7 @@ abstract class AbstractRepository implements RepositoryInterface {
 	      }
 	    }
 	  });
+	$data_req->select($this->model->getTableName() . '.*');
 
         //Execute request
         $datas = ['data' => $data_req->get()];
