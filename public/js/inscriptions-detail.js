@@ -12898,6 +12898,15 @@ function sessionsServiceFactory($resource) {
 
 
 function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, sessionsService, $filter, $q, $uibModal) {
+    //Should use $filter...
+    function findInArray(array, key) {
+        for(var i = 0; i < array.length; i++) {
+            if(array[i].id == key) {
+                return array[i];
+            }
+        }
+        return null;
+    }
 
     //It would deserve to factorize with sessionDetailService.titleText
     function buildSessionLibelle(item) {
@@ -12979,6 +12988,11 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         },
 
         addListeners: function(controller) {
+	    controller.onSessionChange = function(sessionId) {
+		var session = findInArray(controller.linkedData.session, sessionId);
+		controller.data.available_tarifs = session.module.tarifs;
+	    }
+
             controller.contratFormation = function(event) {
                 controller.contratParameterModal = $uibModal.open({
                     templateUrl: '../print/parameterContrat/' + controller.data.id,
@@ -13001,7 +13015,18 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
 
                 event.preventDefault();
             }
-        }
+        },
+
+	populateLinkedObjects: function(dataFromUrl, linkedData) {
+	    var ret = {};
+	    
+	    if(dataFromUrl && dataFromUrl.hasOwnProperty('session_id') && dataFromUrl.session_id != undefined) {
+		session = findInArray(linkedData.session, dataFromUrl.session_id);
+		ret.available_tarifs = session.module.tarifs;
+	    }
+
+	    return ret;
+	}
     }
 }
 

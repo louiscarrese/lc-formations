@@ -32,6 +32,7 @@
                         'searchable' => true,
                         'sizeValue' => 6,
                         'validation' => 'required',
+                        'change' => 'detailCtrl.onSessionChange',
                     ],
                 ]
             ],[
