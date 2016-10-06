@@ -205,8 +205,9 @@ abstract class AbstractRepository implements RepositoryInterface {
             $existingCriterias = $this->model->searchable;
         }
 
+	$data_req = $data_req->select($this->model->getTableName() . '.*');
 	//We add a big AND clause to isolate from scope issues
-	$data_req->where(function($q) use ($existingCriterias, $query, $data_req) {
+	$data_req = $data_req->where(function($q) use ($existingCriterias, $query, $data_req) {
 	    //for each field to search
 	    foreach($existingCriterias as $criteria) {
 	      //for each query term
@@ -215,7 +216,6 @@ abstract class AbstractRepository implements RepositoryInterface {
 	      }
 	    }
 	  });
-	$data_req->select($this->model->getTableName() . '.*');
 
         //Execute request
         $datas = ['data' => $data_req->get()];
