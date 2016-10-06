@@ -27,7 +27,7 @@ class PrintController extends Controller
     }
 
     public function suiviSession(SessionRepositoryInterface $sessionRepository, PrintServiceInterface $printService, $session_id) {
-        $session = $sessionRepository->find($session_id);
+      $session = $sessionRepository->find($session_id, false);
 
         $parameters = $printService->prepareSuiviSessionParameters($session);
 
