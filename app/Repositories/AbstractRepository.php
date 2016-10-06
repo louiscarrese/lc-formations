@@ -193,20 +193,28 @@ abstract class AbstractRepository implements RepositoryInterface {
             } else {
                 $data_req = $data_req->{$this->defaultScope}();
             }
-
         }
 
+	//Define in which fields we are going to search
         $existingCriterias = array();
         if($criterias) {
+	  //If some were given, we recoup with the searchable fields
             $existingCriterias = array_intersect($this->model->searchable, $criterias);
         } else {
+	  //If none were given, we search in all the searchables
             $existingCriterias = $this->model->searchable;
         }
-        foreach($existingCriterias as $criteria) {
-            foreach($query as $queryField) {
-                $data_req = $data_req->orWhere($criteria, 'ilike', '%' . $queryField . '%');
-            }
-        }
+
+	//We add a big AND clause to isolate from scope issues
+	$data_req->where(function($q) use ($existingCriterias, $query, $data_req) {
+	    //for each field to search
+	    foreach($existingCriterias as $criteria) {
+	      //for each query term
+	      foreach($query as $queryField) {
+		$q = $this->addSearchCriteria($q, $data_req, $criteria, $queryField);
+	      }
+	    }
+	  });
 
         //Execute request
         $datas = ['data' => $data_req->get()];
@@ -217,6 +225,36 @@ abstract class AbstractRepository implements RepositoryInterface {
         }
 
         return $datas;
+    }
+
+    //clause: the search clause
+    //mainReq: the main request (to add joins)
+    //column: the column in which we want to search
+    //query: the query term
+    private function addSearchCriteria($clause, $mainReq, $column, $query) {
+      //split on "." to get subobjects
+      $objectPath = explode('.', $column);
+      
+      //if there was a subobject
+      if(count($objectPath) == 2) {
+	$subObjectTableName = $objectPath[0] . 's';
+	$subObjectField = $objectPath[1];
+	
+	//Add a join to the main request
+	$mainReq->join($subObjectTableName, 
+		   $this->model->getTableName() . '.' . $objectPath[0] . '_id', 
+		   '=', 
+		   $subObjectTableName . '.id');
+	//Add a where to the clause
+	$clause->orWhere($subObjectTableName . '.' . $subObjectField, 
+		      'ilike', 
+		      '%' . $query . '%');
+      } else {
+	//Just add a where to the clause
+	$clause->orWhere($this->model->getTableName() . '.' . $column,
+		      'ilike', '%' . $query . '%');
+      }
+      return $clause;
     }
 
     /**

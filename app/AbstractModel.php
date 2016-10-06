@@ -18,6 +18,11 @@ class AbstractModel extends Model
     protected static $myDates = [];
     protected static $myTimes = [];
 
+    //getTable() is protected, we want it public for the Repositories
+    public function getTableName() {
+      return $this->getTable();
+    }
+
     protected function dateGetter($value) {
         if($value != null) {
             $date = Carbon::createFromFormat($this->dbDateFormat, $value);
