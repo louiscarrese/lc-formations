@@ -39,7 +39,7 @@ class MailGeneratorService implements MailGeneratorServiceInterface{
                 $sessionLabel .= " au " . $this->formatDate($sessionJours[count($sessionJours) - 1]->date);
             }
         }
-        $adresses = implode(';', $formateurEmails);
+        $adresses = implode(',', $formateurEmails);
         $subject = "Infos stagiaires pour la formation " . $sessionLabel;
         $body = <<<EOT
 Bonjour ,
@@ -85,8 +85,8 @@ EOT;
             ->where('session_id', '=', $session->id);
         })->lists('email')->toArray();
 
-        $to = implode(';', $stagiaireEmails);
-        $cc = implode(';', $formateurEmails);
+        $to = implode(',', $stagiaireEmails);
+        $cc = implode(',', $formateurEmails);
 
         return 'mailto:' . $to . '?cc=' . $cc;
 
