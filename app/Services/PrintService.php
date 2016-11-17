@@ -99,7 +99,7 @@ class PrintService implements PrintServiceInterface {
             'session_id' => $session->id, 
             'statut' => \ModuleFormation\Inscription::STATUS_VALIDATED
             ])['data'];
-        $ret["responsableFormation"] = $this->parametreRepository->responsableFormation();
+        $ret["responsable_formation"] = $this->parametreRepository->responsableFormation();
 
         return $ret;
     }
