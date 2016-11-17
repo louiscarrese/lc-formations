@@ -73,7 +73,15 @@
                         <td></td>
                 </tbody>
             </table>
-            <span>Signature : </span>
+            <div class="signature">Signature : </div>
+
+	    <div>
+              @foreach($session_jour->formateurs as $formateur)
+	      <div class="signature signature-formateur">
+		{{$formateur->prenom}} {{$formateur->nom}} :
+	      </div>
+	      @endforeach
+	    </div>
             <div class="footer">
                 11 rue du Manoir de Servigné 35000 Rennes / 02 99 14 04 68 / www.jardinmoderne.org /  SIRET 419 541 719 00011 / APE 9499 Z
             </div>
