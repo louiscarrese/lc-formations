@@ -247,13 +247,10 @@ abstract class AbstractRepository implements RepositoryInterface {
 		   '=', 
 		   $subObjectTableName . '.id');
 	//Add a where to the clause
-	$clause->orWhere($subObjectTableName . '.' . $subObjectField, 
-		      'ilike', 
-		      '%' . $query . '%');
+	$clause->orWhereRaw("lower(" . $subObjectTableName . "." . $subObjectField . ") like ?", array('%' . strtolower($query) . '%')); 
       } else {
 	//Just add a where to the clause
-	$clause->orWhere($this->model->getTableName() . '.' . $column,
-		      'ilike', '%' . $query . '%');
+	  $clause->orWhereRaw("lower(" . $this->model->getTableName() . "." . $column . ") like ?", array('%' . strtolower($query) . '%'));
       }
       return $clause;
     }
