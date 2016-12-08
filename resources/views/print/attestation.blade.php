@@ -35,7 +35,7 @@
                     @else
                         <li>Intervenants : {{implode(', ', $formateurs)}}</li>
                     @endif
-                    <li>Lieu : Le Jardin Moderne</li>
+                    <li>Lieu : {{$lieuFormation}}</li>
                 </ul>
 
                 <div class="signature">

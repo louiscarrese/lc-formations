@@ -217,6 +217,7 @@ var sessionDetail = Array.prototype.concat(
     detail,
     myEditable,
     [
+        'controllers/printParameter-controller.js',
         'services/data/sessions-service.js',
         'services/data/modules-service.js',
         'services/details/sessiondetail-service.js',

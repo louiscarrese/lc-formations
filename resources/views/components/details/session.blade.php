@@ -191,7 +191,7 @@
             </div>
 
             <h3>Impressions</h3>
-            <div class="custom-actions">
+            <div id="impressions" class="custom-actions">
                 <span>
                     <a ng-href="{{$viewService->privateUrl('print/emargement/')}}@{{detailCtrl.data.id}}" target="_blank" class="btn btn-default">Feuilles d'émargement</a>
                 </span>
@@ -199,7 +199,7 @@
                     <a ng-href="{{$viewService->privateUrl('print/suivi_session/')}}@{{detailCtrl.data.id}}" target="_blank" class="btn btn-default">Couverture pochette</a>
                 </span>
                 <span>
-                    <a ng-href="{{$viewService->privateUrl('print/attestation/')}}@{{detailCtrl.data.id}}" target="_blank" class="btn btn-default">Attestations de fin de stage</a>
+                    <button ng-click="detailCtrl.attestation($event);" class="btn btn-default">Attestations de fin de stage</button>
                 </span>
             </div>
             <h3>Mails</h3>

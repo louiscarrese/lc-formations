@@ -12827,6 +12827,17 @@ angular.module('myEditable', ['ngMessages', 'rt.select2', 'ui.bootstrap', 'dnTim
     .directive('datepickerLocaldate', datepickerLocaldate)
 ;
 
+function printParameterController($uibModalInstance) {
+    var self = this;
+    self.modalInstance = $uibModalInstance;
+
+    self.close = close;
+
+    function close() {
+        self.modalInstance.close();
+    }
+    
+}
 function sessionsServiceFactory($resource) {
     return $resource('/intra/api/session/:id', null, {
         'query' : {method: 'GET', isArray: false}, 
@@ -12870,7 +12881,7 @@ function modulesServiceFactory($resource) {
 }
 
 
-function sessionDetailServiceFactory(sharedDataService, modulesService, $filter) {
+function sessionDetailServiceFactory(sharedDataService, modulesService, $filter, $uibModal) {
     function extractModuleInfo(module) {
         var ret = {};
 
@@ -12952,6 +12963,17 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
                         window.location.href = value.mailtoLink;
                     }
                 );
+            };
+            controller.attestation = function(event) {
+                controller.attestationParameterModal = $uibModal.open({
+                    templateUrl: '../print/parameterAttestation/' + controller.data.id,
+                    size: 'lg',
+                    appendTo: angular.element(document.getElementById('impressions')),
+                    controller: ['$uibModalInstance', printParameterController],
+                    controllerAs: 'printParameterCtrl',
+                });
+
+                event.preventDefault();
             }
         },
 
@@ -12978,7 +13000,7 @@ angular.module('sessionDetail', ['detail', 'myEditable'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
-    .factory('sessionDetailService', ['sharedDataService', 'modulesService', '$filter', sessionDetailServiceFactory])
+    .factory('sessionDetailService', ['sharedDataService', 'modulesService', '$filter', '$uibModal', sessionDetailServiceFactory])
     .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', '$q', detailController])
 ;
 

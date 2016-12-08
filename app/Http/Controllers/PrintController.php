@@ -38,11 +38,11 @@ class PrintController extends Controller
         return $pdf->stream($title);
     }
 
-    public function attestation(SessionRepositoryInterface $sessionRepository, PrintServiceInterface $printService, $session_id) {
+    public function attestation(Request $request, SessionRepositoryInterface $sessionRepository, PrintServiceInterface $printService, $session_id) {
         
         $session = $sessionRepository->find($session_id, false);
 
-        $parameters = $printService->prepapreAttestationParameters($session);
+        $parameters = array_merge($printService->prepareAttestationParameters($session), $request->all());
 
         $pdf = PDF::loadView('print.attestation', $parameters);
 
@@ -97,5 +97,13 @@ class PrintController extends Controller
         $parameters = $printService->prepareConventionParameters($inscription);
 
         return view('print.parameters.parameterConvention', $parameters);
+    }
+
+    public function parameterAttestation(PrintServiceInterface $printService, SessionRepositoryInterface $sessionRepository,  $session_id) {
+        $session = $sessionRepository->find($session_id, false);
+
+        $parameters = $printService->prepareAttestationParameters($session);
+
+        return view('print.parameters.parameterAttestation', $parameters);
     }
 }

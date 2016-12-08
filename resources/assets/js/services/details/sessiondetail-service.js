@@ -1,4 +1,4 @@
-function sessionDetailServiceFactory(sharedDataService, modulesService, $filter) {
+function sessionDetailServiceFactory(sharedDataService, modulesService, $filter, $uibModal) {
     function extractModuleInfo(module) {
         var ret = {};
 
@@ -80,6 +80,17 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter)
                         window.location.href = value.mailtoLink;
                     }
                 );
+            };
+            controller.attestation = function(event) {
+                controller.attestationParameterModal = $uibModal.open({
+                    templateUrl: '../print/parameterAttestation/' + controller.data.id,
+                    size: 'lg',
+                    appendTo: angular.element(document.getElementById('impressions')),
+                    controller: ['$uibModalInstance', printParameterController],
+                    controllerAs: 'printParameterCtrl',
+                });
+
+                event.preventDefault();
             }
         },
 

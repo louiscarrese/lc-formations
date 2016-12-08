@@ -115,7 +115,7 @@ class PrintService implements PrintServiceInterface {
         return $ret;
     }
 
-    public function prepapreAttestationParameters($session) {
+    public function prepareAttestationParameters($session) {
         $inscriptions = $this->inscriptionRepository->findBy([
             'session_id' => $session->id, 
             'statut' => \ModuleFormation\Inscription::STATUS_VALIDATED
@@ -129,11 +129,13 @@ class PrintService implements PrintServiceInterface {
         }
 
         $ret = [
+            'session_id' => $session->id,
             'session' => $session,
             'inscriptions' => $inscriptions,
             'dureeFormation' => $this->calculateDuree($session),
             'formateurs' => $formateurs,
-            'responsableFormation' => $this->parametreRepository->responsableFormation()
+            'responsableFormation' => $this->parametreRepository->responsableFormation(),
+            'lieuFormation' => 'Le Jardin Moderne'
         ];
 
         return $ret;
