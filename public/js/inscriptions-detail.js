@@ -13523,7 +13523,7 @@ function financeursServiceFactory($resource) {
 function financeurInscriptionsTableServiceFactory(sharedDataService, financeursService) {
     return {
         getLinkedData: function() {
-            var financeurs = financeursService.query();
+            var financeurs = financeursService.query({forceNoPaginate: true});
 
             return {
                 'financeurs': financeurs.$promise,
