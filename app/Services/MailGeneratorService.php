@@ -22,15 +22,6 @@ class MailGeneratorService implements MailGeneratorServiceInterface{
         //Extract emails
         $formateurEmails = array_map(array($this, "extractFormateurEmail"), $formateurs);
 
-
-        /** Stagiaires */
-        $stagiaires = array();
-        foreach($session->inscriptions()->get() as $inscription) {
-            if($inscription->statut == \ModuleFormation\Inscription::STATUS_VALIDATED) {
-                $stagiaires[] = $inscription->stagiaire()->first();
-            }
-        }
-
         /** Libellé formation */
         $sessionLabel = $session->module()->first()->libelle;
         if(count($sessionJours) > 0) {
@@ -47,15 +38,17 @@ Vous trouverez ci dessous la liste des stagiaires inscrits à la formation {$ses
 
 EOT;
         foreach($session->inscriptions()->get() as $inscription) {
-            $body .= "- {$inscription->stagiaire->prenom} {$inscription->stagiaire->nom}" . PHP_EOL;
-            $body .= "Domaine professionnel : {$inscription->stagiaire->domaine_pro}" . PHP_EOL; 
-            if($inscription->stagiaire->niveau_formation != null) 
-                $body .= "Niveau de formation : {$inscription->stagiaire->niveau_formation->libelle}" . PHP_EOL;
-            $body .= "Expériences professionnelles : {$inscription->experiences}" . PHP_EOL;
-            $body .= "Attentes : {$inscription->attentes}" . PHP_EOL;
-            $body .= "Formations précédentes : {$inscription->formations_precedentes}" . PHP_EOL;
-
-            $body .= PHP_EOL;
+            if($inscription->statut == \ModuleFormation\Inscription::STATUS_VALIDATED) {
+		$body .= "- {$inscription->stagiaire->prenom} {$inscription->stagiaire->nom}" . PHP_EOL;
+		$body .= "Domaine professionnel : {$inscription->stagiaire->domaine_pro}" . PHP_EOL; 
+		if($inscription->stagiaire->niveau_formation != null) 
+                    $body .= "Niveau de formation : {$inscription->stagiaire->niveau_formation->libelle}" . PHP_EOL;
+		$body .= "Expériences professionnelles : {$inscription->experiences}" . PHP_EOL;
+		$body .= "Attentes : {$inscription->attentes}" . PHP_EOL;
+		$body .= "Formations précédentes : {$inscription->formations_precedentes}" . PHP_EOL;
+		
+		$body .= PHP_EOL;
+	    }
         }
 
         $mailHref = 'mailto:' . $adresses . '?subject=' . rawurlencode($subject) . '&body=' . rawurlencode($body);
