@@ -12,6 +12,7 @@
                         'dataId' => 'id', //relative to an item in the dropdownDatasource
                         'modelObject' => 'stagiaire', //relative to an item in the controller data 
                         'displayed' => '<nom> <prenom>',
+                        'href' => $viewService->privateUrl('stagiaires/'),
                         'placeholder' => 'Stagiaire',
                         'searchable' => true,
                         'sizeValue' => 3,
