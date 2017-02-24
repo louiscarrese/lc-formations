@@ -61,6 +61,15 @@
                             'sizeValue' => 10,
                         ],
                 ]
+            ],[
+                'label' => 'Annulée',
+                'fields' => [
+                    'canceled' => [
+                        'type' => 'checkbox',
+                        'additionalAttributes' => 'rows=5',
+                        'sizeValue' => 10,
+                    ],
+                ]
             ]
         ]
     ])

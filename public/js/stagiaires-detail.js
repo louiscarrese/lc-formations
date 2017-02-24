@@ -12599,7 +12599,7 @@ function myEditableDirectiveCheckbox() {
 
             var template = '';
 
-            template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="ngModel" name="' + fieldName + '" ' + htmlAttrs + '"/>';
+            template += '<input type="checkbox" ng-disabled="!editingFlag" ng-model="ngModel" ng-true-value="1" ng-false-value="0" name="' + fieldName + '" ' + htmlAttrs + '"/>';
 
             template += this.validationTemplate(fieldName);
             return template;
@@ -12613,6 +12613,7 @@ function myEditableDirectiveCheckbox() {
 
     return directive;
 }
+
 function myEditableDirectiveDropdown() {
     var directive = {
         restrict: 'E',

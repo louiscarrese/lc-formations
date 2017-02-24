@@ -7,7 +7,7 @@ class Session extends AbstractModel
     
     protected $with = ['module'];
 
-    protected $fillable = ['id', 'effectif_max', 'objectifs_pedagogiques', 'materiel', 'module_id'];
+    protected $fillable = ['id', 'effectif_max', 'objectifs_pedagogiques', 'materiel', 'canceled', 'module_id'];
 
     public $searchable = ['objectifs_pedagogiques', 'materiel', 'module.libelle'];
 
