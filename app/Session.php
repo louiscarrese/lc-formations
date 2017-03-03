@@ -28,11 +28,12 @@ class Session extends AbstractModel
 
         $parametreRepository = \Illuminate\Foundation\Application::getInstance()->make('ModuleFormation\Repositories\ParametreRepositoryInterface');
 
-        $limitDate = $parametreRepository->debutSaison();
+        $startDate = $parametreRepository->debutSaison();
+	$endDate = $parametreRepository->finSaison();
 
-        return $query->where(function($qu) use ($limitDate) {
-            $qu->whereHas('session_jours', function($q) use ($limitDate) {
-                $q->where('date', '>', $limitDate);
+        return $query->where(function($qu) use ($startDate, $endDate) {
+            $qu->whereHas('session_jours', function($q) use ($startDate, $endDate) {
+                $q->whereBetween('date', [$startDate, $endDate]);
             })
             ->orWhereNotExists(function ($q) {
                 $q->select(\DB::Raw(1))

@@ -29,6 +29,14 @@ class ParametreRepository implements ParametreRepositoryInterface
         return $value;
     }
 
+    public function finSaison() {
+	$stringValue = $this->findByKey('fin_saison');
+
+	$value = \Carbon\Carbon::createFromFormat('d/m/Y', $stringValue);
+
+	return $value;
+    }
+
     public function paginationThreshold() {
         $stringValue = $this->findByKey('pagination_threshold');
 
