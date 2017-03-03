@@ -27,6 +27,6 @@ class SessionController extends AbstractController
     public function upcoming() {
         $data = $this->repository->upcoming();
 
-        return response()->json($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 }

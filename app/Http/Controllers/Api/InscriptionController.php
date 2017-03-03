@@ -21,7 +21,7 @@ class InscriptionController extends AbstractController
     public function enCours() {
         $data = $this->repository->findBy(['statut' => 'pending']);
 
-        return response()->json($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
     public function validateInscription($id) 

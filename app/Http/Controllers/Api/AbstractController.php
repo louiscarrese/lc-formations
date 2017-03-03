@@ -43,7 +43,7 @@ abstract class AbstractController extends Controller
             $data = $this->repository->getAll(null, $forceNoPaginate);
         }
 
-        return response()->json($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class AbstractController extends Controller
 
         $data = $this->repository->store($request->all());
 
-        return response()->json($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -71,7 +71,7 @@ abstract class AbstractController extends Controller
     {
         $data = $this->repository->find($id, false);
 
-        return response()->json($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -87,7 +87,7 @@ abstract class AbstractController extends Controller
 
         $data = $this->repository->store($request->all(), $id);
 
-        return response()->json($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -120,7 +120,7 @@ abstract class AbstractController extends Controller
 
         $data = $this->repository->search($query, $criterias);
 
-        return response()->json($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
 }
