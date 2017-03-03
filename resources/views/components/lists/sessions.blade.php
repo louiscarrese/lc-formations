@@ -10,6 +10,7 @@
                 'sortable' => true,
                 'defaultSort' => true,
                 'filterable' => true,
+                'tdClass' => "{'strike-through': item.canceled}"
             ],
             'libelle' => [
                 'label' => 'Dates',
