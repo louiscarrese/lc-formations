@@ -85,6 +85,13 @@ EOT;
 
     }
 
+    public function formateursActifs($formateurs)
+    {
+	$formateurEmails = array_map(array($this, "extractFormateurEmail"), $formateurs);
+	$to = implode(',', $formateurEmails);
+
+	return 'mailto:' . $to;
+    }
 
     private function extractFormateurEmail($formateur) {
         return $formateur->email;

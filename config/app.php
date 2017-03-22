@@ -179,6 +179,7 @@ return [
          * Service Providers
          */
         ModuleFormation\Providers\DireccteServiceProvider::class,
+        ModuleFormation\Providers\FormateurServiceProvider::class,
         ModuleFormation\Providers\MailGeneratorServiceProvider::class,
         ModuleFormation\Providers\PrintServiceProvider::class,
         ModuleFormation\Providers\SearchServiceProvider::class,

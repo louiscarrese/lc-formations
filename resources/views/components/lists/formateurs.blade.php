@@ -1,3 +1,5 @@
+@inject('formateurService', 'ModuleFormation\Services\FormateurService')
+
 @include('components.listTable', 
     [
         'title' => 'Formateurs',
@@ -43,4 +45,11 @@
                 'displayedField' => '@{{formateur_type.libelle}}'
             ],
         ]
-    ])
+])
+
+<h3>Mails</h3>
+<div class="custom-actions">
+    <span>
+        <a href="{{$formateurService->mailFormateursActifs()}}" class="btn btn-default">Mail formateurs actifs</a>
+    </span>
+</div>
