@@ -42,7 +42,6 @@
                     <p>Fait à Rennes, le {{\Carbon\Carbon::now()->format('d/m/Y')}}</p>
                     <p>
                         Pour le Jardin Moderne<br/>
-                        Secteur formations
                     </p>
                     <p class="signature-placeholder"></p>
                     <p>{{$responsableFormation}}</p>
