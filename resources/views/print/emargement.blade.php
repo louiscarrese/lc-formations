@@ -67,7 +67,7 @@
                     @endforeach
                     <tr>
                         <td colspan="2" class="mention-certif">
-                            Certifié exact par l'organisme, par {{$responsable_formation}}, responsable de formation,
+                            Certifié exact par l'organisme, par {{$responsable_formation}}, coordinateur des formations,
                         </td>
                         <td class="total">TOTAL HEURES STAGIAIRES</td>
                         <td></td>

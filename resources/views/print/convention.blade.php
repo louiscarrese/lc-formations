@@ -83,7 +83,7 @@
     <div class="signature">
         <p>
             Pour l'<strong>ASSOCIATION LE JARDIN MODERNE</strong>
-            {{$responsable_formation}}, responsable des formations
+            {{$responsable_formation}}, coordinateur des formations
         </p>
         <p>
             Signature

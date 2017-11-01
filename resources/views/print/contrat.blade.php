@@ -88,7 +88,7 @@
     </div>
     <div class="signature jardin">
         <p>
-            Pour l'<strong>ASSOCIATION LE JARDIN MODERNE</strong> {{$responsable_formation}}, responsable des formations
+            Pour l'<strong>ASSOCIATION LE JARDIN MODERNE</strong> {{$responsable_formation}}, coordinateur des formations
         </p>
         <p>
             Signature
