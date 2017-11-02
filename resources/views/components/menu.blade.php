@@ -10,10 +10,4 @@
         <li class="{{ $current_menu=='financeur' ? 'active' : '' }}"><a href="/intra/financeurs">Financeurs</a></li>
         <li class="{{ $current_menu=='dataExtraction' ? 'active' : '' }}"><a href="/intra/print/dataExtraction">Extractions</a></li>
     </ul>
-    <form method="get" action="universal_search.php" id="search-form" class="navbar-form navbar-right">
-        <div class="form-group">
-            <input id="search-input" name="search-input" type="text" placeholder="Recherche universelle" size="19" class="form-control"/>
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" /></button>
-        </div>
-    </form>
 </nav>
