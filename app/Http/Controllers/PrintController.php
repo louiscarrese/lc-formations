@@ -81,8 +81,13 @@ class PrintController extends Controller
     }
 
     public function dataExtraction(Request $request, ExtractionRepositoryInterface $extractionRepository) {
-	$min_date = $request->input("min_date") ? $request->input("min_date") : \Carbon\Carbon::now()->subYear()->startOfYear();
-	$max_date = $request->input("max_date") ? $request->input("max_date") : \Carbon\Carbon::now()->subYear()->endOfYear();
+	$min_date = \Carbon\Carbon::now()->subYear()->startOfYear();
+	if($request->input("min_date"))
+	    $min_date = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input("min_date"));
+
+	$max_date = \Carbon\Carbon::now()->subYear()->endOfYear();
+	if($request->input("max_date"))
+	    $max_date = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input("max_date"));
 
 	$data = array();
 	$data['min_date'] = $min_date;

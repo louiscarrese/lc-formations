@@ -2,11 +2,17 @@
 //    $min_date = Carbon\Carbon::now()->subYear()->startOfYear();
 //    $max_date = Carbon\Carbon::now()->subYear()->endOfYear();
 ?>
-
-
 <h2>Extractions pour la période du {{$min_date->format('d/m/Y')}} - {{$max_date->format('d/m/Y')}}</h2>
 <div>
-    Bientôt ici : sélection des dates d'extraction.
+    <form class="form-inline" method="GET">
+	<div class="form-group">
+	    <label for="datepicker-start">A partir de : </label>
+	    <input type="date" id="datepicker-start" name="min_date" value="{{$min_date->format('Y-m-d')}}">
+	    <label for="datepicker-end">Jusqu'à : </label>
+	    <input type="date" id="datepicker-end" name="max_date" value="{{$max_date->format('Y-m-d')}}">
+	    <input type="submit">
+	</div>
+    </form>
 </div>
 <h2>Statistiques</h2>
 <h4>Par domaine de formation</h4>
