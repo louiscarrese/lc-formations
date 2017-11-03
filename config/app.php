@@ -155,6 +155,7 @@ return [
          */
         ModuleFormation\Providers\DomaineFormationRepositoryProvider::class,
         ModuleFormation\Providers\EmployeurRepositoryProvider::class,
+        ModuleFormation\Providers\ExtractionRepositoryProvider::class,
         ModuleFormation\Providers\FinanceurRepositoryProvider::class,
         ModuleFormation\Providers\FinanceurInscriptionRepositoryProvider::class,
         ModuleFormation\Providers\FinanceurTypeRepositoryProvider::class,
