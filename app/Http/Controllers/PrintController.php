@@ -5,6 +5,7 @@ use Log;
 
 use Illuminate\Http\Request;
 use ModuleFormation\Http\Controllers\Controller;
+use ModuleFormation\Repositories\ExtractionRepositoryInterface;
 use ModuleFormation\Repositories\SessionRepositoryInterface;
 use ModuleFormation\Repositories\InscriptionRepositoryInterface;
 use ModuleFormation\Services\PrintServiceInterface;
@@ -79,8 +80,17 @@ class PrintController extends Controller
 
     }
 
-    public function dataExtraction() {
-        return view('data_extraction');
+    public function dataExtraction(Request $request, ExtractionRepositoryInterface $extractionRepository) {
+	$min_date = $request->input("min_date") ? $request->input("min_date") : \Carbon\Carbon::now()->subYear()->startOfYear();
+	$max_date = $request->input("max_date") ? $request->input("max_date") : \Carbon\Carbon::now()->subYear()->endOfYear();
+
+	$data = array();
+	$data['min_date'] = $min_date;
+	$data['max_date'] = $max_date;
+	$data['byDomaine'] = $extractionRepository->getByDomaineFormation($min_date, $max_date);
+	$data['byModule'] = $extractionRepository->getByModule($min_date, $max_date);
+	
+        return view('data_extraction', $data);
     }
 
     public function parameterContrat(PrintServiceInterface $printService, InscriptionRepositoryInterface $inscriptionRepository, $inscription_id) {
