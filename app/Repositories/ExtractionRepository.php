@@ -50,8 +50,13 @@ group by m.id
 	$resultsHeures = DB::select($queryHeures, ['date_min' => $min_date, 'date_max' => $max_date]);
 	foreach($resultsHeures as $result) {
 	    $module = $result->module;
-	    $ret[$module]['nb_heures_sessions'] = $result->nb_heures_sessions;
-	    $ret[$module]['nb_heures_stagiaires'] = $ret[$module]['nb_heures_sessions'] * $ret[$module]['nb_inscriptions'];
+	    if(!isset($ret[$module])) {
+	        $ret[$module]['nb_sessions'] = 0;
+	        $ret[$module]['nb_inscriptions'] = 0;
+	        $ret[$module]['nb_formateurs'] = 0;
+	    }
+            $ret[$module]['nb_heures_sessions'] = $result->nb_heures_sessions;
+            $ret[$module]['nb_heures_stagiaires'] = $ret[$module]['nb_heures_sessions'] * $ret[$module]['nb_inscriptions'];
 	}
 	return $ret;
     }

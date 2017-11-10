@@ -32,12 +32,12 @@
 	@foreach($byDomaine as $domaine => $data)
 	    <tr>
 		<td>{{$domaine}}</td>
-		<td>{{$data['nb_modules']}}</td>
-		<td>{{$data['nb_sessions']}}</td>
-		<td>{{$data['nb_inscriptions']}}</td>
-		<td>{{$data['nb_formateurs']}}</td>
-		<td>{{$data['nb_heures_sessions']}}</td>
-		<td>{{$data['nb_heures_stagiaires']}}</td>
+		<td>{{$data['nb_modules'] or "N/A"}}</td>
+		<td>{{$data['nb_sessions'] or "N/A"}}</td>
+		<td>{{$data['nb_inscriptions'] or "N/A"}}</td>
+		<td>{{$data['nb_formateurs'] or "N/A"}}</td>
+		<td>{{$data['nb_heures_sessions'] or "N/A"}}</td>
+		<td>{{$data['nb_heures_stagiaires'] or "N/A"}}</td>
 	    </tr>
 	@endforeach
     </tbody>
@@ -59,11 +59,11 @@
 	@foreach($byModule as $module => $data)
 	    <tr>
 		<td>{{$module}}</td>
-		<td>{{$data['nb_sessions']}}</td>
-		<td>{{$data['nb_inscriptions']}}</td>
-		<td>{{$data['nb_formateurs']}}</td>
-		<td>{{$data['nb_heures_sessions']}}</td>
-		<td>{{$data['nb_heures_stagiaires']}}</td>
+		<td>{{$data['nb_sessions'] or "N/A"}}</td>
+		<td>{{$data['nb_inscriptions'] or "N/A"}}</td>
+		<td>{{$data['nb_formateurs'] or "N/A"}}</td>
+		<td>{{$data['nb_heures_sessions'] or "N/A"}}</td>
+		<td>{{$data['nb_heures_stagiaires'] or "N/A"}}</td>
 	    </tr>
 	@endforeach
     </tbody>
