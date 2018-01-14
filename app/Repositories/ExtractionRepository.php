@@ -7,6 +7,8 @@ use ModuleFormation\Module;
 class ExtractionRepository implements ExtractionRepositoryInterface
 {
     public function getByModule($min_date, $max_date) {
+	$ret = array();
+
 	$query = "
 select
   m.libelle as module,
@@ -21,48 +23,82 @@ inner join inscriptions i on i.session_id = s.id
 where 
   sj.date > :date_min and sj.date < :date_max
   and i.statut = 'validated'
+  and s.canceled = 0
 group by m.id
 ";
 
-	$ret = array();
 	$results = DB::select($query, ['date_min' => $min_date, 'date_max' => $max_date]);
 	foreach($results as $result) {
 	    $module = $result->module;
 	    $ret[$module]['nb_sessions'] = $result->nb_sessions;
 	    $ret[$module]['nb_inscriptions'] = $result->nb_inscriptions;
 	    $ret[$module]['nb_formateurs'] = $result->nb_formateurs;
+	    $ret[$module]['nb_heures_sessions'] = 0;
+	    $ret[$module]['nb_heures_stagiaires'] = 0;
 	}
 
-	$queryHeures = "
+	//On récupère le nombre d inscriptions validées à des sessions non annulées, par session
+	$queryInscriptionsBySession = "
+select
+  s.id as session_id,
+  count(distinct i.id) as nb_inscriptions
+from
+  sessions s
+  left outer join inscriptions i on i.session_id = s.id and i.statut = 'validated'
+where
+  s.canceled = 0
+group by s.id
+";
+	$resultInscriptions = DB::select($queryInscriptionsBySession);
+	$inscriptionsBySessions = array();
+	foreach($resultInscriptions as $result) {
+	    $inscriptionsBySessions[$result->session_id] = $result->nb_inscriptions;
+	}
+
+	//On récupère le nombre d'heures de chaque session non annulées et son module
+	$queryHeuresBySession = "
 select 
+  s.id as session_id,
   m.libelle as module,
   sum(
     (sj.heure_debut_matin is not null) * 3.5 + (sj.heure_debut_apresmidi is not null) * 3.5
-  ) as nb_heures_sessions
-from modules m
-inner join sessions s on s.module_id = m.id
-inner join session_jours sj on sj.session_id = s.id
+  ) as nb_heures_session
+from
+  sessions s
+  inner join modules m on s.module_id = m.id
+  inner join session_jours sj on sj.session_id = s.id
 where
-  sj.date > :date_min and sj.date < :date_max 
-group by m.id
+  s.canceled = 0
+  and sj.date > :date_min and sj.date < :date_max
+group by s.id, m.libelle
 ";
 
-	$resultsHeures = DB::select($queryHeures, ['date_min' => $min_date, 'date_max' => $max_date]);
+	$resultsHeures = DB::select($queryHeuresBySession, ['date_min' => $min_date, 'date_max' => $max_date]);
 	foreach($resultsHeures as $result) {
-	    $module = $result->module;
-	    if(!isset($ret[$module])) {
-	        $ret[$module]['nb_sessions'] = 0;
-	        $ret[$module]['nb_inscriptions'] = 0;
-	        $ret[$module]['nb_formateurs'] = 0;
+	    //Il est possible que des sessions ne soient pas annulées mais n'aient pas d'inscriptions ou de jours...
+	    if($result->nb_heures_session > 0 && $inscriptionsBySessions[$result->session_id] > 0) {
+		$module = $result->module;
+		//On agrège par domaine de formation
+		$ret[$module]['nb_heures_sessions'] += $result->nb_heures_session;
+		$ret[$module]['nb_heures_stagiaires'] += ($result->nb_heures_session * $inscriptionsBySessions[$result->session_id]);
 	    }
-            $ret[$module]['nb_heures_sessions'] = $result->nb_heures_sessions;
-            $ret[$module]['nb_heures_stagiaires'] = $ret[$module]['nb_heures_sessions'] * $ret[$module]['nb_inscriptions'];
 	}
+
 	return $ret;
     }
 
-
+    /**
+     * Extraction de statistiques par domaine de formation.
+     */
     public function getByDomaineFormation($min_date, $max_date) {
+	$ret = array();
+
+	/** On commence par récupérer les aggrégations simples sur les domaines de formations :
+	 * - Nombre de modules
+	 * - Nombre de sessions (non annulées)
+	 * - Nombre d inscriptions validées
+	 * - Nombre de formateurs
+	 */
 	$query = "
 select 
   df.libelle as domaine, 
@@ -79,12 +115,11 @@ inner join formateur_session_jour fsj on fsj.session_jour_id = sj.id
 where 
   sj.date > :date_min and sj.date < :date_max
   and i.statut = 'validated'
+  and s.canceled = 0
 group by df.id
 	";
 
 	$results = DB::select($query, ['date_min' => $min_date, 'date_max' => $max_date]);
-
-	$ret = array();
 	foreach($results as $result) {
 	    $domaine = $result->domaine;
 	    $ret[$domaine] = array();
@@ -92,31 +127,62 @@ group by df.id
 	    $ret[$domaine]['nb_sessions'] = $result->nb_sessions;
 	    $ret[$domaine]['nb_inscriptions'] = $result->nb_inscriptions;
 	    $ret[$domaine]['nb_formateurs'] = $result->nb_formateurs;
+	    $ret[$domaine]['nb_heures_sessions'] = 0; //Sera calculé plus tard
+	    $ret[$domaine]['nb_heures_stagiaires'] = 0; //Sera calculé plus tard
 	}
 
-	$queryHeures = "
+	/**
+	 * La suite des calculs doit se faire par session, et on doit faire l aggrégation
+	 * par domaine de formation à la main...
+	 */
+
+	//On récupère le nombre d inscriptions validées à des sessions non annulées, par session
+	$queryInscriptionsBySession = "
 select
+  s.id as session_id,
+  count(distinct i.id) as nb_inscriptions
+from
+  sessions s
+  left outer join inscriptions i on i.session_id = s.id and i.statut = 'validated'
+where
+  s.canceled = 0
+group by s.id
+";
+	$resultInscriptions = DB::select($queryInscriptionsBySession);
+	$inscriptionsBySessions = array();
+	foreach($resultInscriptions as $result) {
+	    $inscriptionsBySessions[$result->session_id] = $result->nb_inscriptions;
+	}
+
+	//On récupère le nombre d'heures de chaque session non annulées et son domaine de formation
+	$queryHeuresBySession = "
+select
+  s.id as session_id,
   df.libelle as domaine,
   sum(
     (sj.heure_debut_matin is not null) * 3.5 + (sj.heure_debut_apresmidi is not null) * 3.5
-  ) as nb_heures_sessions
-from modules m
-inner join domaine_formations df on m.domaine_formation_id = df.id
-inner join sessions s on s.module_id = m.id
-inner join session_jours sj on sj.session_id = s.id
+  ) as nb_heures_session
+from
+  sessions s
+  inner join modules m on s.module_id = m.id
+  inner join domaine_formations df on m.domaine_formation_id = df.id
+  inner join session_jours sj on sj.session_id = s.id
 where
-  sj.date > :date_min and sj.date < :date_max 
-group by df.id
+  s.canceled = 0
+  and sj.date > :date_min and sj.date < :date_max
+group by s.id, df.libelle
 ";
-	$resultsHeures = DB::select($queryHeures, ['date_min' => $min_date, 'date_max' => $max_date]);
 
+	$resultsHeures = DB::select($queryHeuresBySession, ['date_min' => $min_date, 'date_max' => $max_date]);
 	foreach($resultsHeures as $result) {
-	    $domaine = $result->domaine;
-	    $ret[$domaine]['nb_heures_sessions'] = $result->nb_heures_sessions;
-	    $ret[$domaine]['nb_heures_stagiaires'] = $ret[$domaine]['nb_heures_sessions'] * $ret[$domaine]['nb_inscriptions'];
+	    //Il est possible que des sessions ne soient pas annulées mais n'aient pas d'inscriptions ou de jours...
+	    if($result->nb_heures_session > 0 && $inscriptionsBySessions[$result->session_id] > 0) {
+		$domaine = $result->domaine;
+		//On agrège par domaine de formation
+		$ret[$domaine]['nb_heures_sessions'] += $result->nb_heures_session;
+		$ret[$domaine]['nb_heures_stagiaires'] += ($result->nb_heures_session * $inscriptionsBySessions[$result->session_id]);
+	    }
 	}
-	    
-
 
 	return $ret;
     }
