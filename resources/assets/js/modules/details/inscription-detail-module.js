@@ -3,5 +3,5 @@ angular.module('inscriptionDetail', ['detail', 'ngResource', 'financeurInscripti
     .factory('stagiairesService', ['$resource', stagiairesServiceFactory])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('inscriptionDetailService', ['sharedDataService', 'stagiairesService', 'sessionsService', '$filter', '$q', '$uibModal', inscriptionDetailServiceFactory])
-    .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', '$q', detailController])
+    .controller('detailController', ['editModeService', 'inscriptionsService', 'inscriptionDetailService', '$q', '$rootScope', detailController])
 ;

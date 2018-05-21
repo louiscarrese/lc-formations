@@ -1,6 +1,8 @@
 <?php 
 namespace ModuleFormation\Repositories;
 
+use ModuleFormation\Inscription;
+
 class SessionRepository extends AbstractRepository implements SessionRepositoryInterface
 {
     protected $modelClassName = 'ModuleFormation\\Session';
@@ -31,6 +33,18 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
         $data = $this->fillMails($data);
 
         return $data;
+    }
+
+    public function afterUpdate($previousObject, $newObject) {
+	//If the session has been canceled, cancel the inscriptions
+	if($previousObject != null && $previousObject->canceled == 0 && $newObject->canceled == 1) {
+	    foreach($newObject->inscriptions as $inscription) {
+		if($inscription->statut == Inscription::STATUS_VALIDATED) {
+		    $inscription->statut = Inscription::STATUS_CANCELED;
+		    $inscription->save();
+		}
+	    }
+	}
     }
 
     protected function augmentListData($data) {

@@ -12559,7 +12559,7 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
-function detailController(editModeService, dataService, detailService, $q) {
+function detailController(editModeService, dataService, detailService, $q, $rootScope) {
     var self = this;
     self.inited = false;
 
@@ -12592,6 +12592,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
     //Just so we don't have 'undefined' in places 
     self.data = {};
+    self.previousData = {};
     self.linkedData = {};
 
     initDetail();
@@ -12650,6 +12651,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
             //It's almost like we just did a GET...
             self.getSuccess(self.data);
+	    self.previousData = angular.copy(self.data);
 
             //We are inited, tell the world !
             self.inited = true;
@@ -12670,7 +12672,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
     function refreshData() {
         dataService.get({id: self.data.id}, function(response) {
-            getSuccess(response);            
+            getSuccess(response);
         });
     }
 
@@ -12718,6 +12720,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
     function update() {
         var toSend = self.data;
+
         if(detailService != undefined && typeof detailService.preSend == 'function') {
             toSend = detailService.preSend(self.data);
         }
@@ -12728,12 +12731,17 @@ function detailController(editModeService, dataService, detailService, $q) {
                 function(value, responseHeaders) {
                     self.getSuccess(value);
                     self.setModeRead();
+
+		    $rootScope.$broadcast("detail-changed", { oldValue: self.previousData, newValue: self.data });
+		    self.previousData = angular.copy(self.data);
+
                 },
                 function(response) {
                     self.errors = self.extractErrors(response.data);
                 }
             );
         }
+
     }
 
     function del() {
@@ -12864,7 +12872,7 @@ function employeurDetailServiceFactory(sharedDataService) {
 angular.module('employeurDetail', ['detail', 'ngResource', 'myEditable'])
     .factory('employeursService', ['$resource', employeursServiceFactory])
     .factory('employeurDetailService', ['sharedDataService', employeurDetailServiceFactory])
-    .controller('detailController', ['editModeService', 'employeursService', 'employeurDetailService', '$q', detailController])
+    .controller('detailController', ['editModeService', 'employeursService', 'employeurDetailService', '$q', '$rootScope', detailController])
 ;
 
 angular.module('employeursDetailApp', ['employeurDetail']);

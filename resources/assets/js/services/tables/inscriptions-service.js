@@ -29,6 +29,10 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
             return message;
         },
 
+	detailChanged: function(newValue, oldValue) {
+	    return (oldValue.canceled == false && newValue.canceled == true);
+	},
+
         addListeners: function(ctrl) {
             ctrl.getRowClass = function(item) {
                 if(item.statut.id == 'pending') {
@@ -41,7 +45,8 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
                     return 'danger';
                 }
                 return null;
-            }
+            };
         }
     };
 }
+

@@ -67,6 +67,12 @@ abstract class AbstractRepository implements RepositoryInterface {
      */
     protected function processIncomingData($data) {return $data;}
 
+    /**
+     * This method will be called after an update of an object.
+     * It should be overloaded to trigger additional update logic.
+     */
+    protected function afterUpdate($previousObject, $newObject) {return;}
+
     public function __construct($app)
     {
         $this->model = $app->make($this->modelClassName);
@@ -259,6 +265,8 @@ abstract class AbstractRepository implements RepositoryInterface {
      * Create or update (if an id is provided) an object from an array of data.
      */
     public function store($data, $id = null) {
+	//We store previous data to allow diffing in afterUpdate
+	$previousObject = null;
 
         $data = $this->processIncomingData($data);
 
@@ -266,8 +274,11 @@ abstract class AbstractRepository implements RepositoryInterface {
         $object = null;
         if($id != null) {
             //TODO: handle the subobjects (no test case at this time)
-            $object = $this->model->findOrFail($id);            
-            $object->fill($data)->save();
+            $object = $this->model->findOrFail($id);
+
+	    $previousObject = clone $object;
+
+	    $object->fill($data)->save();
         } else {
             //If it's a create, mass assign
             $object = $this->model->create($data);
@@ -291,6 +302,10 @@ abstract class AbstractRepository implements RepositoryInterface {
 
         //Refetch the object (so it updates associated data)
         $data = $this->find($object->id, false);
+
+	//Trigger additional actions on update
+	$this->afterUpdate($previousObject, $this->model->findOrFail($object->id));
+
         return $data;
     }
 

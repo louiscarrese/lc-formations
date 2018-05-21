@@ -2,6 +2,7 @@
     @include('components.detail', [
         'controller' => 'detailCtrl',
         'sizeLabel' => 2,
+        'refreshControllers' => '[inscriptionsListController]',
         'rows' => [
             [
                 'label' => 'Module',

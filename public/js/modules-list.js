@@ -12037,7 +12037,7 @@ function myCustomFilter() {
     }
 }
 
-function editableTableController($filter, $attrs, $q, dataService, tableService) {
+function editableTableController($scope, $filter, $attrs, $q, dataService, tableService) {
     var self = this;
 
     self.dataService = dataService;
@@ -12106,6 +12106,21 @@ function editableTableController($filter, $attrs, $q, dataService, tableService)
     self.queryMethod = $attrs['queryMethod'] ? $attrs['queryMethod'] : 'query';
 
     self.refreshData();
+
+
+    //'detail-changed' will be $broadcasted by a detail controller whenever
+    // its data changes.
+    //The detailChanged method can be implemented in the tableService and
+    // should return true or false to determine if we have to reload the
+    // current table data
+    $scope.$on('detail-changed', function(event, args) {
+	if(tableService != undefined && typeof tableService.detailChanged == 'function') {
+	    if(tableService.detailChanged(args.newValue, args.oldValue)) {
+		self.refreshData();
+	    }
+	}
+
+    });
 
     function setSort(key) {
         if(self.sortProp == key) {
@@ -12466,7 +12481,7 @@ function modulesServiceFactory($resource) {
 
 angular.module('modulesList', ['ngResource', 'listTable'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
-    .controller('modulesListController', ['$filter', '$attrs', '$q', 'modulesService', editableTableController])
+    .controller('modulesListController', ['$scope', '$filter', '$attrs', '$q', 'modulesService', editableTableController])
 ;
 
 angular.module('modulesListApp', ['modulesList']);

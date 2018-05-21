@@ -19,7 +19,7 @@ angular.module('preinscriptionDetail', ['detail', 'ngResource', 'xeditable', 'ui
         'stagiairesService', 'employeursService',
         preinscriptionDetailServiceFactory])
     //generic controller
-    .controller('detailController', ['editModeService', 'preinscriptionsService', 'preinscriptionDetailService', '$q', detailController])
+    .controller('detailController', ['editModeService', 'preinscriptionsService', 'preinscriptionDetailService', '$q', '$rootScope', detailController])
     .directive('datepickerLocaldate', datepickerLocaldate)
     .directive('uiSelectSearchPrefill', uiSelectSearchPrefill)
     .directive('uiSelectSearchPlaceholder', uiSelectSearchPlaceholder)

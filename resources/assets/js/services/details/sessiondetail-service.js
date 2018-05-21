@@ -37,7 +37,6 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter,
 
         getSuccess: function(data) {
             sharedDataService.data.session_id = data.id;
-            
         },
 
         titleText: function(data) {

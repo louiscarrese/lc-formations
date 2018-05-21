@@ -3,5 +3,5 @@ angular.module('sessionDetail', ['detail', 'myEditable'])
     .factory('modulesService', ['$resource', modulesServiceFactory])
     .factory('formateursService', ['$resource', formateursServiceFactory])
     .factory('sessionDetailService', ['sharedDataService', 'modulesService', '$filter', '$uibModal', sessionDetailServiceFactory])
-    .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', '$q', detailController])
+    .controller('detailController', ['editModeService', 'sessionsService', 'sessionDetailService', '$q', '$rootScope', detailController])
 ;

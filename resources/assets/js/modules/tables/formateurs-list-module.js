@@ -1,4 +1,4 @@
 angular.module('formateursList', ['ngResource', 'listTable'])
     .factory('formateursService', ['$resource', formateursServiceFactory])
-    .controller('formateursListController', ['$filter', '$attrs', '$q', 'formateursService', editableTableController])
+    .controller('formateursListController', ['$scope', '$filter', '$attrs', '$q', 'formateursService', editableTableController])
 ;

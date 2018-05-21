@@ -11997,7 +11997,7 @@ function sharedDataServiceFactory() {
         data: {}
     };
 }
-function detailController(editModeService, dataService, detailService, $q) {
+function detailController(editModeService, dataService, detailService, $q, $rootScope) {
     var self = this;
     self.inited = false;
 
@@ -12030,6 +12030,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
     //Just so we don't have 'undefined' in places 
     self.data = {};
+    self.previousData = {};
     self.linkedData = {};
 
     initDetail();
@@ -12088,6 +12089,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
             //It's almost like we just did a GET...
             self.getSuccess(self.data);
+	    self.previousData = angular.copy(self.data);
 
             //We are inited, tell the world !
             self.inited = true;
@@ -12108,7 +12110,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
     function refreshData() {
         dataService.get({id: self.data.id}, function(response) {
-            getSuccess(response);            
+            getSuccess(response);
         });
     }
 
@@ -12156,6 +12158,7 @@ function detailController(editModeService, dataService, detailService, $q) {
 
     function update() {
         var toSend = self.data;
+
         if(detailService != undefined && typeof detailService.preSend == 'function') {
             toSend = detailService.preSend(self.data);
         }
@@ -12166,12 +12169,17 @@ function detailController(editModeService, dataService, detailService, $q) {
                 function(value, responseHeaders) {
                     self.getSuccess(value);
                     self.setModeRead();
+
+		    $rootScope.$broadcast("detail-changed", { oldValue: self.previousData, newValue: self.data });
+		    self.previousData = angular.copy(self.data);
+
                 },
                 function(response) {
                     self.errors = self.extractErrors(response.data);
                 }
             );
         }
+
     }
 
     function del() {
@@ -12943,7 +12951,7 @@ angular.module('moduleDetail', ['detail', 'ngResource', 'myEditable'])
     .factory('moduleDetailService', ['$filter', 'sharedDataService', 'domaineFormationsService', 'formateursService', 'lieuService', moduleDetailServiceFactory])
 
     //Detail controller
-    .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', '$q', detailController])
+    .controller('detailController', ['editModeService', 'modulesService', 'moduleDetailService', '$q', '$rootScope', detailController])
 ;
 
 function mySortableHeaderDirective() {
@@ -13074,7 +13082,7 @@ function myCustomFilter() {
     }
 }
 
-function editableTableController($filter, $attrs, $q, dataService, tableService) {
+function editableTableController($scope, $filter, $attrs, $q, dataService, tableService) {
     var self = this;
 
     self.dataService = dataService;
@@ -13143,6 +13151,21 @@ function editableTableController($filter, $attrs, $q, dataService, tableService)
     self.queryMethod = $attrs['queryMethod'] ? $attrs['queryMethod'] : 'query';
 
     self.refreshData();
+
+
+    //'detail-changed' will be $broadcasted by a detail controller whenever
+    // its data changes.
+    //The detailChanged method can be implemented in the tableService and
+    // should return true or false to determine if we have to reload the
+    // current table data
+    $scope.$on('detail-changed', function(event, args) {
+	if(tableService != undefined && typeof tableService.detailChanged == 'function') {
+	    if(tableService.detailChanged(args.newValue, args.oldValue)) {
+		self.refreshData();
+	    }
+	}
+
+    });
 
     function setSort(key) {
         if(self.sortProp == key) {
@@ -13452,7 +13475,7 @@ angular.module('tarifsList', ['ngResource', 'editableTable'])
     .factory('tarifsService', ['$resource', tarifsServiceFactory])
     .factory('tarifTypesService', ['$resource', tarifTypesServiceFactory])
     .factory('tarifsTableService', ['sharedDataService', 'tarifTypesService', tarifsTableServiceFactory])
-    .controller('tarifsController', ['$filter', '$attrs', '$q', 'tarifsService', 'tarifsTableService', editableTableController])
+    .controller('tarifsController', ['$scope', '$filter', '$attrs', '$q', 'tarifsService', 'tarifsTableService', editableTableController])
 ;
 
 function myPaginator() {
@@ -13604,7 +13627,7 @@ function sessionsTableServiceFactory($filter, sharedDataService) {
 angular.module('sessionsList', ['ngResource', 'listTable'])
     .factory('sessionsService', ['$resource', sessionsServiceFactory])
     .factory('sessionsTableService', ['$filter', 'sharedDataService', sessionsTableServiceFactory])
-    .controller('sessionsListController', ['$filter', '$attrs', '$q', 'sessionsService', 'sessionsTableService', editableTableController])
+    .controller('sessionsListController', ['$scope', '$filter', '$attrs', '$q', 'sessionsService', 'sessionsTableService', editableTableController])
 ;
 
 angular.module('modulesDetailApp', ['moduleDetail', 'sessionsList', 'tarifsList', 'ngResource']);
