@@ -3,6 +3,7 @@
         'title' => 'Stagiaires',
         'controllerName' => 'stagiairesListController',
         'detailUri' => 'stagiaires',
+        'localSearch' => true,
         'idField' => 'id',
         'fields' => [
             'nom' => [

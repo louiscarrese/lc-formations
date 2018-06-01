@@ -3,6 +3,7 @@
         'title' => 'Inscriptions',
         'controllerName' => 'inscriptionsListController',
         'detailUri' => 'inscriptions',
+        'localSearch' => true,
         'idField' => 'id',
         'fields' => [
             'created_at' => [

@@ -3,6 +3,7 @@
         'title' => 'Sessions',
         'controllerName' => 'sessionsListController',
         'detailUri' => 'sessions',
+        'localSearch' => true,
         'idField' => 'id',
         'fields' => [
             'module.libelle' => [

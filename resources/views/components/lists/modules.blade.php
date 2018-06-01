@@ -3,6 +3,7 @@
         'title' => 'Modules',
         'controllerName' => 'modulesListController',
         'detailUri' => 'modules',
+        'localSearch' => true,
         'idField' => 'id',
         'fields' => [
             'libelle' => [

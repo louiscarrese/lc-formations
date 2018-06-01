@@ -5,6 +5,7 @@
         'title' => 'Formateurs',
         'controllerName' => 'formateursListController',
         'detailUri' => 'formateurs',
+        'localSearch' => true,
         'idField' => 'id',
         'fields' => [
             'nom' => [

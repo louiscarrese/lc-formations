@@ -3,6 +3,7 @@
         'title' => 'Financeurs',
         'controllerName' => 'financeursListController',
         'detailUri' => 'financeurs',
+        'localSearch' => true,
         'idField' => 'id',
         'fields' => [
             'libelle' => [

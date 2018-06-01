@@ -5,6 +5,7 @@
         query-method="{{$queryMethod}}"
     @endif
 >
+    @if(isset($localSearch) && $localSearch)
     <form>
         <div class="input-group">
             <input type="text" ng-model="ctrl.searchQuery" placeholder="Recherche locale" class="form-control" />
@@ -13,6 +14,7 @@
             </span>
         </div>
     </form>
+    @endif
     <table class="table table-striped">
         <thead>
             <tr>

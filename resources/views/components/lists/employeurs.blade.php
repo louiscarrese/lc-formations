@@ -3,6 +3,7 @@
         'title' => 'Employeurs',
         'controllerName' => 'employeursListController',
         'detailUri' => 'employeurs',
+        'localSearch' => true,
         'idField' => 'id',
         'fields' => [
             'nom' => [

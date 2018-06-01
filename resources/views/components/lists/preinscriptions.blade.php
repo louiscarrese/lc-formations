@@ -3,6 +3,7 @@
         'title' => 'Préinscriptions',
         'controllerName' => 'preinscriptionsListController',
         'detailUri' => 'preinscriptions',
+        'localSearch' => true,
         'idField' => 'id',
         'fields' => [
             'created_at' => [
