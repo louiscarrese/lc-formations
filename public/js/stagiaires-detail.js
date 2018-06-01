@@ -13540,7 +13540,7 @@ function inscriptionsTableServiceFactory($filter, sharedDataService) {
         },
 
 	detailChanged: function(newValue, oldValue) {
-	    return (oldValue.canceled == false && newValue.canceled == true);
+	    return (oldValue.canceled != newValue.canceled);
 	},
 
         addListeners: function(ctrl) {

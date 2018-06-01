@@ -12937,6 +12937,7 @@ function inscriptionDetailServiceFactory(sharedDataService, stagiairesService, s
         return $q.when({'data' : [
                 {id: 'pending', libelle: 'En cours'},
                 {id: 'canceled', libelle: 'Annulée'},
+                {id: 'canceled_session', libelle: 'Annulée (session)'},
                 {id: 'validated', libelle: 'Validée'},
                 {id: 'withdrawn', libelle: 'Désistée'},
                 {id: 'waiting_list', libelle: 'Liste d\'attente'},

@@ -100,6 +100,8 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
             return 'Validée';
         } else if($statut == \ModuleFormation\Inscription::STATUS_CANCELED) {
             return 'Annulée';
+        } else if($statut == \ModuleFormation\Inscription::STATUS_CANCELED_SESSION) {
+            return 'Annulée (session)';
         } else if($statut == \ModuleFormation\Inscription::STATUS_WITHDRAWN) {
             return 'Désistée';
         } else if($statut == \ModuleFormation\Inscription::STATUS_WAITING_LIST) {

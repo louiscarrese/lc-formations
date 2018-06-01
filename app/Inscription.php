@@ -8,6 +8,7 @@ class Inscription extends AbstractModel
     const STATUS_PENDING = "pending";
     const STATUS_VALIDATED = "validated";
     const STATUS_CANCELED = "canceled";
+    const STATUS_CANCELED_SESSION = "canceled_session";
     const STATUS_WITHDRAWN = "withdrawn";
     const STATUS_WAITING_LIST = "waiting_list";
 

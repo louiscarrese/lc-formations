@@ -40,7 +40,16 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
 	if($previousObject != null && $previousObject->canceled == 0 && $newObject->canceled == 1) {
 	    foreach($newObject->inscriptions as $inscription) {
 		if($inscription->statut == Inscription::STATUS_VALIDATED) {
-		    $inscription->statut = Inscription::STATUS_CANCELED;
+		    $inscription->statut = Inscription::STATUS_CANCELED_SESSION;
+		    $inscription->save();
+		}
+	    }
+	}
+	//If the session has been un-canceled, revalidate the inscriptions
+	if($previousObject != null && $previousObject->canceled == 1 && $newObject->canceled == 0) {
+	    foreach($newObject->inscriptions as $inscription) {
+		if($inscription->statut == Inscription::STATUS_CANCELED_SESSION) {
+		    $inscription->statut = Inscription::STATUS_VALIDATED;
 		    $inscription->save();
 		}
 	    }
@@ -137,6 +146,10 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
             $data->effectifValidated = $counts[\ModuleFormation\Inscription::STATUS_VALIDATED];
         else 
             $data->effectifValidated = 0;
+
+	//Canceled(session) are counted as validated
+        if(isset($counts[\ModuleFormation\Inscription::STATUS_CANCELED_SESSION]))
+            $data->effectifValidated += $counts[\ModuleFormation\Inscription::STATUS_CANCELED_SESSION];
 
         if(isset($counts[\ModuleFormation\Inscription::STATUS_WAITING_LIST]))
             $data->effectifWaitingList = $counts[\ModuleFormation\Inscription::STATUS_WAITING_LIST];
