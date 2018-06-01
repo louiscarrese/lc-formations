@@ -48,7 +48,7 @@
                 'sortable' => true,
                 'defaultSort' => (isset($defaultSort) ? ($defaultSort == 'session.module.libelle') : true),
                 'filterable' => true,
-                'displayedField' => '<a href="modules/@{{session.module.id}}">@{{session.module.libelle}}</a>',
+                'displayedField' => '<a href="../modules/@{{session.module.id}}">@{{session.module.libelle}}</a>',
                 'tdClass' => "{'strike-through': item.session.canceled}"
             ],
             'session.libelle' => [
@@ -56,7 +56,7 @@
                 'sortable' => true,
                 'defaultSort' => (isset($defaultSort) ? ($defaultSort == 'session.libelle') : true),
                 'filterable' => true,
-                'displayedField' => '<a href="sessions/@{{session.id}}">@{{session.libelle}}</a>',
+                'displayedField' => '<a href="../sessions/@{{session.id}}">@{{session.libelle}}</a>',
                 'tdClass' => "{'strike-through': item.session.canceled}"
             ],
             'statut.libelle' => [
