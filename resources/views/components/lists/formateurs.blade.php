@@ -18,14 +18,8 @@
                 'sortable' => true,
                 'filterable' => true,
             ],
-            'tel_fixe' => [
-                'label' => 'Fixe',
-                'sortable' => true,
-                'filterable' => true,
-                'tdClass' => 'centered'
-            ],
-            'tel_portable' => [
-                'label' => 'Portable',
+            'telephone' => [
+                'label' => 'Téléphone',
                 'sortable' => true,
                 'filterable' => true,
                 'tdClass' => 'centered'

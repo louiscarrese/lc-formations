@@ -16,17 +16,11 @@
                 'sortable' => true,
                 'filterable' => true,
             ],
-            'tel_fixe' => [
-                'label' => 'Fixe',
+            'telephone' => [
+                'label' => 'Téléphone',
                 'sortable' => true,
                 'filterable' => true,
-                'tdClass' => 'centered'
-            ],
-            'tel_portable' => [
-                'label' => 'Portable',
-                'sortable' => true,
-                'filterable' => true,
-                'tdClass' => 'centered'
+                'tdClass' => 'centered',
             ],
             'email' => [
                 'label' => 'Email',
