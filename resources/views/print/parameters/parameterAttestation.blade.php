@@ -7,6 +7,11 @@
         <input class="col-sm-5" type="text" name="lieuFormation" value="{{$lieuFormation}}" />
     </p>
 
+    <p class="row">
+        <label class="col-sm-3" for="dateEdition">Date d'édition : </label>
+        <input class="col-sm-5" type="text" name="dateEdition" value="{{\Carbon\Carbon::now()->format('d/m/Y')}}" />
+    </p>
+
     <div class="buttons row">
         <button type="submit" class="btn btn-default">Générer le PDF</button>
         <button type="button" class="btn" ng-click="printParameterCtrl.close()">Fermer</button>

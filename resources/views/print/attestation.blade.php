@@ -39,7 +39,7 @@
                 </ul>
 
                 <div class="signature">
-                    <p>Fait à Rennes, le {{\Carbon\Carbon::now()->format('d/m/Y')}}</p>
+                    <p>Fait à Rennes, le {{$dateEdition}}</p>
                     <p>
                         Pour le Jardin Moderne<br/>
                     </p>

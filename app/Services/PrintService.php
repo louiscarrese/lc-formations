@@ -135,7 +135,8 @@ class PrintService implements PrintServiceInterface {
             'dureeFormation' => $this->calculateDuree($session),
             'formateurs' => $formateurs,
             'responsableFormation' => $this->parametreRepository->responsableFormation(),
-            'lieuFormation' => 'Le Jardin Moderne'
+            'lieuFormation' => 'Le Jardin Moderne',
+	    'dateEdition' => \Carbon\Carbon::now()->format('d/m/Y')
         ];
 
         return $ret;
