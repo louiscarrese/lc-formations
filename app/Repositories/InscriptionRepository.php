@@ -45,6 +45,14 @@ class InscriptionRepository extends AbstractRepository implements InscriptionRep
 
         $data = $this->fillStatut($data);
 
+	if($data->stagiaire->tel_portable != null) {
+	    $data->stagiaire->telephone = $data->stagiaire->tel_portable;
+	} else if($data->stagiaire->tel_fixe != null) {
+	    $data->stagiaire->telephone = $data->stagiaire->tel_fixe;
+	} else {
+	    $data->stagiaire->telephone = "";
+	}
+
         return $data;
     }
 

@@ -32,16 +32,10 @@
                 'filterable' => true,
                 'displayedField' => '<a href="mailto:@{{stagiaire.email}}">@{{stagiaire.email}}</a>',
             ],
-            'stagiaire.tel_portable' => [
-                'label' => 'Téléphone portable',
+            'stagiaire.telephone' => [
+                'label' => 'Téléphone',
                 'sortable' => true,
-                'defaultSort' => (isset($defaultSort) ? ($defaultSort == 'stagiaire.tel_portable') : true),
-                'filterable' => true,
-            ],
-            'stagiaire.tel_fixe' => [
-                'label' => 'Téléphone fixe',
-                'sortable' => true,
-                'defaultSort' => (isset($defaultSort) ? ($defaultSort == 'stagiaire.tel_fixe') : true),
+                'defaultSort' => (isset($defaultSort) ? ($defaultSort == 'stagiaire.telephone') : true),
                 'filterable' => true,
             ],
             'session.module.libelle' => [
