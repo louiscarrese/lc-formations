@@ -106,15 +106,15 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
     }
 
     public function upcoming() {
-        //First get 5 distinct session_ids from the session_jours table where the date is in the future
-        $session_jours = \ModuleFormation\SessionJour::where('date', '>', \Carbon\Carbon::now())
-            ->orderBy('date')
-            ->take(5)
-            ->get();
 
-        $sessions = $this->model()
-            ->whereIn('id', $session_jours->pluck('session_id'))
-            ->get();
+	$sessions = $this->model()
+			 ->select('sessions.*') //We still only want Session in the end
+			 ->join('session_jours', 'session_jours.session_id', '=', 'sessions.id') //We need session_jours to filter
+			 ->where('session_jours.date', '>', \Carbon\Carbon::now()) //Filter on those who have a date in the future
+			 ->orderBy('session_jours.date', 'asc') //Sort by date
+			 ->groupBy('sessions.id') //One line per session (may be a mysql bug to be able to select non-aggregate / non-group fields)
+			 ->take(5) //Only 5
+			 ->get(); // Go!
 
         foreach($sessions as $data) {
             $data = $this->augmentData($data);

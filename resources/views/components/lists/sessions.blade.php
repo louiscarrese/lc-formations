@@ -9,7 +9,6 @@
             'module.libelle' => [
                 'label' => 'Libelle',
                 'sortable' => true,
-                'defaultSort' => true,
                 'filterable' => true,
                 'tdClass' => "{'strike-through': item.canceled}"
             ],
@@ -17,6 +16,7 @@
                 'label' => 'Dates',
                 'sortable' => true,
                 'sortable_field' => 'firstDate',
+                'defaultSort' => true,
                 'filterable' => true,
             ],
             'effectifTotal' => [
