@@ -9,6 +9,5 @@
             </div>
 	</form>
         <a href="/intra/parametres"><span class="glyphicon glyphicon-cog"></span></a>
-        <a href="/intra/logout"><span class="glyphicon glyphicon-log-out"</span></a>
     </div>
 </div>
