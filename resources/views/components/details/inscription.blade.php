@@ -126,6 +126,7 @@
                         [
                             'label' => 'Financeur',
                             'sortable' => 'financeur_id',
+                            'size' => 3,
                             'defaultSort' => true,
                             'fields' => [
                                 'financeur_id' => [
@@ -144,11 +145,25 @@
                         [
                             'label' => 'Montant',
                             'sortable' => 'montant',
+                            'size' => 1,
                             'fields' => [
                                 'montant' => [
                                     'filterable' => true,
                                     'editable' => true,
                                     'type' => 'integer',
+                                    'addLine' => true,
+                                ],
+                            ]
+                        ],
+                        [
+                            'label' => 'Commentaire',
+                            'sortable' => 'commentaire',
+                            'size' => 6,
+                            'fields' => [
+                                'commentaire' => [
+                                    'filterable' => true,
+                                    'editable' => true,
+                                    'type' => 'text',
                                     'addLine' => true,
                                 ],
                             ]

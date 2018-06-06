@@ -4,7 +4,7 @@ namespace ModuleFormation;
 
 class FinanceurInscription extends AbstractModel
 {
-    protected $fillable = ['inscription_id', 'financeur_id', 'montant'];
+    protected $fillable = ['inscription_id', 'financeur_id', 'montant', 'commentaire'];
 
     protected $with = ['financeur'];
 
