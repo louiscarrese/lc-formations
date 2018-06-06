@@ -12,6 +12,7 @@ class ExtractionRepository implements ExtractionRepositoryInterface
 	$query = "
 select
   m.libelle as module,
+  m.id as module_id,
   count(distinct s.id) as nb_sessions,
   count(distinct i.id) as nb_inscriptions,
   count(distinct fsj.formateur_id) as nb_formateurs
@@ -30,6 +31,7 @@ group by m.id
 	$results = DB::select($query, ['date_min' => $min_date, 'date_max' => $max_date]);
 	foreach($results as $result) {
 	    $module = $result->module;
+	    $ret[$module]['module_id'] = $result->module_id;
 	    $ret[$module]['nb_sessions'] = $result->nb_sessions;
 	    $ret[$module]['nb_inscriptions'] = $result->nb_inscriptions;
 	    $ret[$module]['nb_formateurs'] = $result->nb_formateurs;

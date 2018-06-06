@@ -58,7 +58,7 @@
     <tbody>
 	@foreach($byModule as $module => $data)
 	    <tr>
-		<td>{{$module}}</td>
+		<td><a href="../modules/{{$data['module_id']}}">{{$module}}</a></td>
 		<td>{{$data['nb_sessions'] or "N/A"}}</td>
 		<td>{{$data['nb_inscriptions'] or "N/A"}}</td>
 		<td>{{$data['nb_formateurs'] or "N/A"}}</td>
