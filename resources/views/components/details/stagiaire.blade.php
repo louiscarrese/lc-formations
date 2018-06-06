@@ -90,6 +90,15 @@
                     ],
                 ]
             ],[
+                'label' => 'Adhérent',
+                'fields' => [
+                    'adherent' => [
+                        'type' => 'radio',
+                        'values' => '["Non", "Adhérent", "Adhérent actif"]',
+                        'sizeValue' => 6,
+                    ],
+                ]
+            ],[
                 'label' => 'Profession',
                 'fields' => [
                     'profession' => [

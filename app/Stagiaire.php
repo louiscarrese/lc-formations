@@ -10,7 +10,7 @@ class Stagiaire extends AbstractModel
 
     protected $fillable = ['id', 'nom', 'prenom', 'sexe', 'date_naissance', 'adresse', 
         'code_postal', 'ville', 'tel_portable', 'tel_fixe', 'email', 'profession', 'etudes', 
-        'demandeur_emploi_depuis', 'domaine_pro', 'employeur_id', 
+        'demandeur_emploi_depuis', 'domaine_pro', 'employeur_id', 'adherent',
         'stagiaire_type_id', 'niveau_formation_id'];
 
     public $searchable = ['nom', 'prenom', 'sexe', 'adresse', 
