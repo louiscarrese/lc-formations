@@ -90,7 +90,7 @@ function sessionDetailServiceFactory(sharedDataService, modulesService, $filter,
                 });
 
                 event.preventDefault();
-            }
+            };
         },
 
         populateLinkedObjects: function(dataFromUrl, linkedData) {

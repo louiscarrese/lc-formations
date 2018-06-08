@@ -211,6 +211,9 @@
                 <span>
                     <button ng-click="detailCtrl.attestation($event);" class="btn btn-default">Attestations de fin de stage</button>
                 </span>
+		<span>
+		    <a ng-href="{{$viewService->privateUrl('print/contrats/')}}@{{detailCtrl.data.id}}" target="_blank" class="btn btn-default">Tous les contrats</a>
+		</span>
             </div>
             <h3>Mails</h3>
             <div class="custom-actions">

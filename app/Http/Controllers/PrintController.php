@@ -66,6 +66,20 @@ class PrintController extends Controller
 
     }
 
+    public function allContrats($session_id, Request $request, PrintServiceInterface $printService, InscriptionRepositoryInterface $inscriptionRepository) {
+	$inscriptions = $inscriptionRepository->findBy(['session_id' => $session_id, 'statut' => 'validated'])['data'];
+
+	$parameters['inscriptions'] = array();
+	foreach($inscriptions as $inscription) {
+	    $parameters['inscriptions'][$inscription->id] = array_merge($printService->prepareContratParameters($inscription), $request->all());
+	}
+
+	$pdf = PDF::loadView('print.all-contrats', $parameters);
+	$title = 'Tous les contrats';
+
+	return $pdf->stream($title);
+    }
+
     public function convention($inscription_id, Request $request, PrintServiceInterface $printService, InscriptionRepositoryInterface $inscriptionRepository) {
 
         $inscription = $inscriptionRepository->find($inscription_id, false);
