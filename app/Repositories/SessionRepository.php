@@ -110,7 +110,7 @@ class SessionRepository extends AbstractRepository implements SessionRepositoryI
 	$sessions = $this->model()
 			 ->select('sessions.*') //We still only want Session in the end
 			 ->join('session_jours', 'session_jours.session_id', '=', 'sessions.id') //We need session_jours to filter
-			 ->where('session_jours.date', '>', \Carbon\Carbon::now()) //Filter on those who have a date in the future
+			 ->where('session_jours.date', '>=', \Carbon\Carbon::today()) //Filter on those who have a date in the future
 			 ->orderBy('session_jours.date', 'asc') //Sort by date
 			 ->groupBy('sessions.id') //One line per session (may be a mysql bug to be able to select non-aggregate / non-group fields)
 			 ->take(5) //Only 5
