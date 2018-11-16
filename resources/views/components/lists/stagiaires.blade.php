@@ -27,7 +27,6 @@
                 'label' => 'Email',
                 'sortable' => true,
                 'filterable' => true,
-                'tdClass' => 'centered',
                 'displayedField' => '<a href="mailto:@{{email}}">@{{email}}</a>',
             ],
             'stagiaire_type.id' => [
