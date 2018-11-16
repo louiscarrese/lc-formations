@@ -8,7 +8,7 @@
                 'fields' => [
                     'nom' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                         'validation' => 'required',
                     ],
                 ]
@@ -18,7 +18,7 @@
                     'prenom' => [
                         'type' => 'text',
                         'sizeLabel' => 3,
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[

@@ -8,7 +8,7 @@
                 'fields' => [
                     'nom' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[
@@ -16,7 +16,7 @@
                 'fields' => [
                     'raison_sociale' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[
@@ -33,7 +33,7 @@
                 'fields' => [
                     'code_postal' => [
                         'type' => 'text',
-                        'sizeValue' => 1,
+                        'sizeValue' => 2,
                     ],
                 ]
             ],[
@@ -41,7 +41,7 @@
                 'fields' => [
                     'ville' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[

@@ -8,7 +8,7 @@
                 'fields' => [
                     'libelle' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[
@@ -16,7 +16,7 @@
                 'fields' => [
                     'structure' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[
@@ -24,7 +24,7 @@
                 'fields' => [
                     'nom' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[
@@ -32,7 +32,7 @@
                 'fields' => [
                     'prenom' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[
@@ -49,7 +49,7 @@
                 'fields' => [
                     'code_postal' => [
                         'type' => 'text',
-                        'sizeValue' => 1,
+                        'sizeValue' => 2,
                     ],
                 ]
             ],[
@@ -57,7 +57,7 @@
                 'fields' => [
                     'ville' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 4,
                     ],
                 ]
             ],[

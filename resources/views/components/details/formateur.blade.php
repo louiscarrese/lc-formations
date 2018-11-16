@@ -8,7 +8,7 @@
                 'fields' => [
                     'nom' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                         'validation' => 'required',
                     ],
                 ]
@@ -17,7 +17,7 @@
                 'fields' => [
                     'prenom' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[
@@ -52,7 +52,7 @@
                 'fields' => [
                     'code_postal' => [
                         'type' => 'text',
-                        'sizeValue' => 1,
+                        'sizeValue' => 2,
                     ],
                 ]
             ],[
@@ -60,7 +60,7 @@
                 'fields' => [
                     'ville' => [
                         'type' => 'text',
-                        'sizeValue' => 2,
+                        'sizeValue' => 3,
                     ],
                 ]
             ],[
