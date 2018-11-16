@@ -21,7 +21,7 @@
                 'label' => 'Téléphone',
                 'sortable' => true,
                 'filterable' => true,
-                'tdClass' => 'centered',
+                'tdClass' => 'centered text-nowrap',
             ],
             'email' => [
                 'label' => 'Email',

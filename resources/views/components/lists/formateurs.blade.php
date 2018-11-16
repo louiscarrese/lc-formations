@@ -23,19 +23,19 @@
                 'label' => 'Téléphone',
                 'sortable' => true,
                 'filterable' => true,
-                'tdClass' => 'centered'
+                'tdClass' => "'centered text-nowrap'"
             ],
             'email' => [
                 'label' => 'Email',
                 'sortable' => true,
                 'filterable' => true,
-                'tdClass' => 'centered',
+                'tdClass' => "'centered'",
                 'displayedField' => '<a href="mailto:@{{email}}">@{{email}}</a>',
             ],
             'formateur_type.id' => [
                 'label' => 'Type',
                 'sortable' => true,
-                'tdClass' => 'centered',
+                'tdClass' => "'centered'",
                 'filterable' => 'formateur_type.libelle',
                 'displayedField' => '@{{formateur_type.libelle}}'
             ],

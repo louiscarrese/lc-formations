@@ -37,6 +37,7 @@
                 'sortable' => true,
                 'defaultSort' => (isset($defaultSort) ? ($defaultSort == 'stagiaire.telephone') : true),
                 'filterable' => true,
+                'tdClass' => "'centered text-nowrap'",
             ],
             'session.module.libelle' => [
                 'label' => 'Module',
