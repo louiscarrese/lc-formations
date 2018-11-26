@@ -4,6 +4,7 @@ namespace ModuleFormation\Http\Controllers;
 use Log;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use ModuleFormation\Http\Controllers\Controller;
 use ModuleFormation\Repositories\ExtractionRepositoryInterface;
 use ModuleFormation\Repositories\SessionRepositoryInterface;
@@ -112,6 +113,20 @@ class PrintController extends Controller
         return view('data_extraction', $data);
     }
 
+    public function csvInscriptions(Request $request, ExtractionRepositoryInterface $extractionRepository) {
+	$min_date = \Carbon\Carbon::now()->subYear()->startOfYear();
+	if($request->input("min_date"))
+	    $min_date = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input("min_date"));
+
+	$max_date = \Carbon\Carbon::now()->subYear()->endOfYear();
+	if($request->input("max_date"))
+	    $max_date = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input("max_date"));
+
+	$data = $extractionRepository->csvInscription($min_date, $max_date);
+	return $this->outputCsv("parInscription.csv", $data);
+
+    }
+    
     public function parameterContrat(PrintServiceInterface $printService, InscriptionRepositoryInterface $inscriptionRepository, $inscription_id) {
         $inscription = $inscriptionRepository->find($inscription_id, false);
 
@@ -134,5 +149,26 @@ class PrintController extends Controller
         $parameters = $printService->prepareAttestationParameters($session);
 
         return view('print.parameters.parameterAttestation', $parameters);
+    }
+
+    //https://stackoverflow.com/questions/32441327
+    private function outputCsv($filename, $data) {
+	$headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=" . $filename,
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+	);
+
+	$callback = function() use ($data) {
+	    $file = fopen('php://output', 'w');
+	    foreach($data as $line) {
+		fputcsv($file, $line);
+	    }
+	    fclose($file);
+	};
+
+	return Response::stream($callback, 200, $headers);
     }
 }

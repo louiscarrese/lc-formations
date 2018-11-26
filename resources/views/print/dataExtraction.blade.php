@@ -14,6 +14,9 @@
 	</div>
     </form>
 </div>
+<h2>Extractions CSV</h2>
+<div>
+    <a href="{{$viewService->privateURL('print/csv/inscriptions?min_date='.$min_date->format('Y-m-d').'&max_date='.$max_date->format('Y-m-d'))}}" class="btn btn-default" target="_blank">Par inscription</a>
 <h2>Statistiques</h2>
 <h4>Par domaine de formation</h4>
 <table class="table table-stripped">

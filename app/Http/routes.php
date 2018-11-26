@@ -91,6 +91,7 @@ Route::group(['prefix' => 'intra'], function() {
             Route::get('attestation/{session_id}', 'PrintController@attestation');
             Route::get('parameterAttestation/{session_id}', 'PrintController@parameterAttestation');
             Route::get('dataExtraction', 'PrintController@dataExtraction');
+	    Route::get('csv/inscriptions', 'PrintController@csvInscriptions');
             Route::get('contrat/{inscription_id}', 'PrintController@contrat');
 	    Route::get('contrats/{session_id}', 'PrintController@allContrats');
             Route::get('parameterContrat/{inscription_id}', 'PrintController@parameterContrat');

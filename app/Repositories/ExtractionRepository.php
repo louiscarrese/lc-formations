@@ -2,6 +2,7 @@
 namespace ModuleFormation\Repositories;
 
 use DB;
+use Log;
 use ModuleFormation\Module;
 
 class ExtractionRepository implements ExtractionRepositoryInterface
@@ -187,5 +188,62 @@ group by s.id, df.libelle
 	}
 
 	return $ret;
+    }
+
+    public function csvInscription($min_date, $max_date) {
+	$header = array('Module', 'Code formation', 'Domaine', 'Portage', 'Nom', 'Prenom', 'Sexe', 'Code postal', 'Date de naissance', 'Type stagiaire', 'Profession', 'Heures', 'Financeur 1', 'Montant 1', 'Financeur 2', 'Montant 2');
+
+	$query = "
+select 
+  m.libelle as module, 
+  m.code_formation as code_formation,
+  df.libelle as domaine, 
+  m.portage as portage,
+  st.nom as nom,
+  st.prenom as prenom,
+  st.sexe as sexe,
+  st.code_postal as code_postal,
+  st.date_naissance as date_naissance,
+  stt.libelle as type_stagiaire,
+  st.profession as profession,
+(select sum((sj.heure_debut_matin is not null) * 3.5 + (sj.heure_debut_apresmidi is not null) * 3.5)
+ from session_jours sj
+ where sj.session_id = se.id) as nombre_heures,
+(select f.libelle as libelle
+ from financeur_inscriptions fi
+ inner join financeurs f on fi.financeur_id = f.id
+ where fi.inscription_id = i.id
+ order by fi.montant desc
+ limit 1 offset 0) as financeur1,
+(select fi.montant as montant
+ from financeur_inscriptions fi
+ where fi.inscription_id = i.id
+ order by fi.montant desc
+ limit 1 offset 0) as montant1,
+(select f.libelle as libelle
+ from financeur_inscriptions fi
+ inner join financeurs f on fi.financeur_id = f.id
+ where fi.inscription_id = i.id
+ order by fi.montant desc
+ limit 1 offset 1) as financeur2,
+(select fi.montant as montant
+ from financeur_inscriptions fi
+ where fi.inscription_id = i.id
+ order by fi.montant desc
+ limit 1 offset 1) as montant2
+from inscriptions i 
+  inner join sessions se on i.session_id = se.id 
+  inner join modules m on se.module_id = m.id 
+  inner join domaine_formations df on m.domaine_formation_id = df.id 
+  inner join stagiaires st on i.stagiaire_id = st.id
+  inner join stagiaire_types stt on st.stagiaire_type_id = stt.id
+where
+  se.canceled = 0
+  and se.id in (select distinct session_id from session_jours where date > :date_min and date < :date_max)
+";
+
+	DB::setFetchMode(\PDO::FETCH_ASSOC);
+	$result = DB::select($query, ['date_min' => $min_date, 'date_max' => $max_date]);
+	return array_merge(array($header), $result);
     }
 }
