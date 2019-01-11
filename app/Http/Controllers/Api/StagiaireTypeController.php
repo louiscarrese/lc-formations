@@ -8,10 +8,10 @@ class StagiaireTypeController extends AbstractController
 {
     protected $validation_rules = [
         'libelle' => 'required',
-        'is_salarie' => 'required|boolean',
-        'is_fonctionnaire' => 'required|boolean',
-        'is_demandeur_emploi' => 'required|boolean',
-        'is_contrat_pro' => 'required|boolean',
+        'is_salarie' => 'boolean',
+        'is_fonctionnaire' => 'boolean',
+        'is_demandeur_emploi' => 'boolean',
+        'is_contrat_pro' => 'boolean',
     ];
 
     public function __construct(StagiaireTypeRepositoryInterface $repository)

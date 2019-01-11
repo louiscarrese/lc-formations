@@ -22,7 +22,7 @@
                             'filterable' => true,
                             'editable' => true,
                             'type' => 'integer',
-                            'addLine' => false,
+                            'addLine' => true,
                             'tdClass' => 'centered',
                             'additionalAttributes' => 'size=1',
                             'validation' => 'required'
