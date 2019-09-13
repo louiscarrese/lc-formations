@@ -16,7 +16,7 @@ class Inscription extends AbstractModel
     protected $with = ['stagiaire', 'session.module', 'tarif'];
 
     protected $fillable = ['id', 'profession_structure', 'experiences', 'attentes', 
-        'suggestions', 'formations_precedentes', 'statut', 'stagiaire_id', 'session_id', 'tarif_id'];
+        'suggestions', 'formations_precedentes', 'statut', 'notes', 'stagiaire_id', 'session_id', 'tarif_id'];
 
     public $searchable = ['profession_structure', 'experiences', 'attentes', 'suggestions', 'formations_precedentes', 'statut'];
 

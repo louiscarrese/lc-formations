@@ -111,6 +111,15 @@
                         'sizeValue' => 10,
                     ],
                 ]
+            ],[
+                'label' => 'Notes',
+                'fields' => [
+                    'notes' => [
+                        'type' => 'textarea',
+                        'additionalAttributes' => 'rows=7',
+                        'sizeValue' => 10,
+                    ],
+                ]
             ]
         ]
     ])
