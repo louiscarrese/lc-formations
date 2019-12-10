@@ -191,11 +191,12 @@ group by s.id, df.libelle
     }
 
     public function csvInscription($min_date, $max_date) {
-	$header = array('Module', 'Code formation', 'Domaine', 'Portage', 'Nom', 'Prenom', 'Sexe', 'Code postal', 'Date de naissance', 'Type stagiaire', 'Profession', 'Heures', 'Financeur 1', 'Montant 1', 'Financeur 2', 'Montant 2');
+	$header = array('Module', 'Date', 'Code formation', 'Domaine', 'Portage', 'Nom', 'Prenom', 'Sexe', 'Code postal', 'Date de naissance', 'Type stagiaire', 'Profession', 'Heures', 'Financeur 1', 'Montant 1', 'Financeur 2', 'Montant 2');
 
 	$query = "
 select 
   m.libelle as module, 
+  (select sj.date from session_jours sj where sj.session_id = se.id limit 1),
   m.code_formation as code_formation,
   df.libelle as domaine, 
   m.portage as portage,
@@ -239,6 +240,7 @@ from inscriptions i
   inner join stagiaire_types stt on st.stagiaire_type_id = stt.id
 where
   se.canceled = 0
+  and i.statut = 'validated'
   and se.id in (select distinct session_id from session_jours where date > :date_min and date < :date_max)
 ";
 
